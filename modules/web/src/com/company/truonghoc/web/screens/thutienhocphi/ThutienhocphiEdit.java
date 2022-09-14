@@ -3,6 +3,9 @@ package com.company.truonghoc.web.screens.thutienhocphi;
 import com.company.truonghoc.entity.Chitietthu;
 import com.company.truonghoc.entity.Hocsinh;
 import com.company.truonghoc.service.DulieuUserService;
+import com.company.truonghoc.service.ServerConfigService;
+import com.company.truonghoc.utils.GlobalFunctionHelper;
+import com.company.truonghoc.web.screens.inphieu.WebFunctionHelper;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.core.sys.AppContext;
 import com.haulmont.cuba.gui.components.*;
@@ -55,6 +58,8 @@ public class ThutienhocphiEdit extends StandardEditor<Thutienhocphi> {
     protected Table<Chitietthu> chitietthusTable;
     @Inject
     protected Button InphieuBtn;
+    @Inject
+    protected ServerConfigService serverConfigService;
 
     @Subscribe
     protected void onInit(InitEvent event) {
@@ -128,48 +133,48 @@ public class ThutienhocphiEdit extends StandardEditor<Thutienhocphi> {
 
 
     //    -----------------In phiếu-----------------
-//    private String pathPdf;
-//
-//    @Subscribe("InphieuBtn")
-//    protected void onInphieuBtnClick(Button.ClickEvent event) {
-//        Thutienhocphi thutienhocphi = getEditedEntity();
-//        Map<String, Object> parameters = new HashMap<>();
-//        parameters.put("nguoitao", thutienhocphi.getUsertao_thutienhocphi());
-//        parameters.put("donvithanhtoan", thutienhocphi.getDonvitao_thutienhocphi());
-//        parameters.put("tenkhachhang", thutienhocphi.getTenkhachhang());
-//        parameters.put("diachi", thutienhocphi.getDiachi());
-//        parameters.put("tenhocsinh", thutienhocphi.getTenhocsinh().getTenhocsinh());
-//        parameters.put("thanhtien", thutienhocphi.getThanhtien());
-//        parameters.put("hinhthucthanhtoan", thutienhocphi.getHinhthucthanhtoan());
-//
-//        String path = AppContext.getProperty("knkx.template");
-//
-//        String fileTemplate = WebFunctionHelper.modifiedTemplate(path + "/test.docx", serverConfigService, parameters);
-//        String fileName = WebFunctionHelper.convertDocToPdf(fileTemplate, pathPdf, true);
-//        if (!StringUtils.isEmpty(fileName)) {
-//            List<String> filesPrint = new ArrayList<>();
-//            filesPrint.add(fileName);
-//            WebFunctionHelper.printFiles(printerPdf, filesPrint,  callbackEvent -> {
-//                if (callbackEvent.getArguments() != null) {
-//                    String urlFile = callbackEvent.getArguments().getString(0);
-//                    if (!org.apache.commons.lang3.StringUtils.isBlank(urlFile) && !StringUtils.isEmpty(webBaseFolder)) {
-//                        GlobalFunctionHelper.deleteFile(webBaseFolder + "/" + urlFile);
-//                    }
-//                }
-//            });
-//        }
-//
-//    }
-//    private String webBaseFolder;
-//    @Inject
-//    private JavaScriptComponent printerPdf;
-//
-//    @Subscribe
-//    protected void onAfterShow1(AfterShowEvent event) {
-//        pathPdf = AppContext.getProperty("knkx.temp.printer");
-//        webBaseFolder = AppContext.getProperty("knkx.printer.web.base.folder");
-//
-//    }
+    private String pathPdf;
+
+    @Subscribe("InphieuBtn")
+    protected void onInphieuBtnClick(Button.ClickEvent event) {
+        Thutienhocphi thutienhocphi = getEditedEntity();
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("nguoitao", thutienhocphi.getUsertao_thutienhocphi());
+        parameters.put("donvithanhtoan", thutienhocphi.getDonvitao_thutienhocphi());
+        parameters.put("tenkhachhang", thutienhocphi.getTenkhachhang());
+        parameters.put("diachi", thutienhocphi.getDiachi());
+        parameters.put("tenhocsinh", thutienhocphi.getTenhocsinh().getTenhocsinh());
+        parameters.put("thanhtien", thutienhocphi.getThanhtien());
+        parameters.put("hinhthucthanhtoan", thutienhocphi.getHinhthucthanhtoan());
+
+        String path = AppContext.getProperty("knkx.template");
+
+        String fileTemplate = WebFunctionHelper.modifiedTemplate(path + "/test.docx", serverConfigService, parameters);
+        String fileName = WebFunctionHelper.convertDocToPdf(fileTemplate, pathPdf, true);
+        if (!StringUtils.isEmpty(fileName)) {
+            List<String> filesPrint = new ArrayList<>();
+            filesPrint.add(fileName);
+            WebFunctionHelper.printFiles(printerPdf, filesPrint,  callbackEvent -> {
+                if (callbackEvent.getArguments() != null) {
+                    String urlFile = callbackEvent.getArguments().getString(0);
+                    if (!org.apache.commons.lang3.StringUtils.isBlank(urlFile) && !StringUtils.isEmpty(webBaseFolder)) {
+                        GlobalFunctionHelper.deleteFile(webBaseFolder + "/" + urlFile);
+                    }
+                }
+            });
+        }
+
+    }
+    private String webBaseFolder;
+    @Inject
+    private JavaScriptComponent printerPdf;
+
+    @Subscribe
+    protected void onAfterShow1(AfterShowEvent event) {
+        pathPdf = AppContext.getProperty("knkx.temp.printer");
+        webBaseFolder = AppContext.getProperty("knkx.printer.web.base.folder");
+
+    }
 
     @Inject
     protected InstanceContainer<Thutienhocphi> thutienhocphiDc;
