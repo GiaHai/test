@@ -8,6 +8,7 @@
                   class="com.company.truonghoc.entity.Thutienhocphi"
                   view="thutienhocphi-view">
             <loader/>
+            <collection id="lkchitietthu" property="lkchitieuthu"/>
         </instance>
         <collection id="hocsinhsDc"
                     class="com.company.truonghoc.entity.Hocsinh"
@@ -15,6 +16,15 @@
             <loader id="hocsinhsDl">
                 <query>
                     <![CDATA[select e from truonghoc_Hocsinh e]]>
+                </query>
+            </loader>
+        </collection>
+        <collection id="chitietthusDc"
+                    class="com.company.truonghoc.entity.Chitietthu">
+            <view extends="chitietthu-view"/>
+            <loader id="chitietthusDl">
+                <query>
+                    <![CDATA[select e from truonghoc_Chitietthu e]]>
                 </query>
             </loader>
         </collection>
@@ -47,15 +57,6 @@
                              property="tenhocsinh"
                              optionsContainer="hocsinhsDc"
                              caption="mainMsg://thuvienhocphi.tenhocsinh"/>
-                <textField id="tenphiField"
-                           property="tenphi"
-                           caption="mainMsg://thuvienhocphi.tenphi"/>
-                <textField id="soluongField"
-                           property="soluong"
-                           caption="mainMsg://thuvienhocphi.soluong"/>
-                <textField id="dongiaField"
-                           property="dongia"
-                           caption="mainMsg://thuvienhocphi.dongia"/>
                 <textField id="thanhtienField"
                            property="thanhtien"
                            caption="mainMsg://thuvienhocphi.thanhtien"/>
@@ -67,9 +68,51 @@
                            property="tinhtrangthanhtoan"/>
             </column>
         </form>
+        <groupBox id="lkchitietthuBox" caption="Khoản thu">
+            <table id="chitietthusTable" aggregatable="true" dataContainer="lkchitietthu" width="100%" height="200px">
+                <actions>
+                    <action id="create" type="create"/>
+                    <action id="edit" type="edit"/>
+                    <action id="remove" type="remove"/>
+                    <action id="excel" type="excel"/>
+                </actions>
+                <columns>
+                    <column id="tenphi"
+                            caption="Tên phí"/>
+                    <column id="soluong"
+                            caption="Số lượng"/>
+                    <column id="dongia"
+                            caption="Đơn giá"/>
+                    <column id="tonggia"
+                            caption="Tổng">
+                        <aggregation type="SUM"/>
+                    </column>
+                </columns>
+                <rowsCount/>
+                <buttonsPanel id="buttonsPanel"
+                              alwaysVisible="true">
+                    <button id="createBtn" action="chitietthusTable.create"/>
+                    <button id="editBtn" action="chitietthusTable.edit"/>
+                    <button id="removeBtn" action="chitietthusTable.remove"/>
+                    <button id="excelBtn" action="chitietthusTable.excel"/>
+                </buttonsPanel>
+            </table>
+        </groupBox>
         <hbox id="editActions" spacing="true">
             <button id="commitAndCloseBtn" action="windowCommitAndClose"/>
             <button id="closeBtn" action="windowClose"/>
+            <button id="InphieuBtn"
+                    caption="In phiếu" icon="font-icon:PRINT"/>
+            <jsComponent id="printerJsLb" initFunctionName="knkxPrinter" height="0px" width="0px">
+                <dependencies>
+                    <dependency path="vaadin://prints/print.min.js" type="JAVASCRIPT"/>
+                </dependencies>
+            </jsComponent>
+            <jsComponent id="printerPdf" initFunctionName="knkxPrinter" height="0px" width="0px">
+                <dependencies>
+                    <dependency path="vaadin://prints/knkxPrint.js" type="JAVASCRIPT"/>
+                </dependencies>
+            </jsComponent>
         </hbox>
     </layout>
 </window>

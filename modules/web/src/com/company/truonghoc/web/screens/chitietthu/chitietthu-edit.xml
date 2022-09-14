@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://chitietthuEdit.caption"
+        focusComponent="form"
+        messagesPack="com.company.truonghoc.web.screens.chitietthu">
+    <data>
+        <instance id="chitietthuDc"
+                  class="com.company.truonghoc.entity.Chitietthu">
+            <view extends="chitietthu-view"/>
+            <loader/>
+        </instance>
+        <collection id="thutienhocphisDc"
+                    class="com.company.truonghoc.entity.Thutienhocphi"
+                    view="thutienhocphi-view">
+            <loader id="thutienhocphisDl">
+                <query>
+                    <![CDATA[select e from truonghoc_Thutienhocphi e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="editActions" spacing="true">
+        <form id="form" dataContainer="chitietthuDc">
+            <column width="350px">
+                <textField id="ten_thutienhocphiField" editable="false" property="thutienhocphi.donvitao_thutienhocphi"
+                           caption="Tên người tạo"/>
+                <textField id="tenphiField" property="tenphi"
+                           caption="Tên phí"/>
+                <textField id="soluongField" property="soluong"
+                           caption="Số lượng"/>
+                <textField id="dongiaField" property="dongia"
+                           caption="Đơn giá"/>
+                <textField id="tonggiaField" property="tonggia"
+                           caption="Tổng"/>
+            </column>
+        </form>
+        <hbox id="editActions" spacing="true">
+            <button id="commitAndCloseBtn" action="windowCommitAndClose"/>
+            <button id="closeBtn" action="windowClose"/>
+        </hbox>
+    </layout>
+</window>

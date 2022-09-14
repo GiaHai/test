@@ -44,4 +44,18 @@
     <view entity="truonghoc_Diemdanh" name="diemdanh-view" extends="_local">
         <property name="hotenhs" view="_minimal"/>
     </view>
+    <view entity="truonghoc_Chitietthu" name="chitietthu-view" extends="_local">
+        <property name="thutienhocphi" view="_minimal">
+            <property name="usertao_thutienhocphi"/>
+            <property name="donvitao_thutienhocphi"/>
+            <property name="tenkhachhang"/>
+            <property name="diachi"/>
+            <property name="tungay"/>
+            <property name="denngay"/>
+            <property name="tenhocsinh" view="_minimal"/>
+            <property name="thanhtien"/>
+            <property name="hinhthucthanhtoan"/>
+            <property name="tinhtrangthanhtoan"/>
+        </property>
+    </view>
 </views>

@@ -1,9 +1,13 @@
 package com.company.truonghoc.entity;
 
+import com.haulmont.chile.core.annotations.Composition;
 import com.haulmont.cuba.core.entity.StandardEntity;
+import com.haulmont.cuba.core.entity.annotation.OnDelete;
+import com.haulmont.cuba.core.global.DeletePolicy;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Table(name = "TRUONGHOC_THUTIENHOCPHI")
 @Entity(name = "truonghoc_Thutienhocphi")
@@ -34,15 +38,6 @@ public class Thutienhocphi extends StandardEntity {
     @JoinColumn(name = "TENHOCSINH_ID")
     private Hocsinh tenhocsinh;
 
-    @Column(name = "TENPHI")
-    private String tenphi;
-
-    @Column(name = "SOLUONG")
-    private Long soluong;
-
-    @Column(name = "DONGIA")
-    private Long dongia;
-
     @Column(name = "THANHTIEN")
     private Long thanhtien;
 
@@ -51,6 +46,19 @@ public class Thutienhocphi extends StandardEntity {
 
     @Column(name = "TINHTRANGTHANHTOAN")
     private String tinhtrangthanhtoan;
+
+    @Composition
+    @OnDelete(DeletePolicy.CASCADE)
+    @OneToMany(mappedBy = "thutienhocphi")
+    private List<Chitietthu> lkchitieuthu;
+
+    public List<Chitietthu> getLkchitieuthu() {
+        return lkchitieuthu;
+    }
+
+    public void setLkchitieuthu(List<Chitietthu> lkchitieuthu) {
+        this.lkchitieuthu = lkchitieuthu;
+    }
 
     public String getTinhtrangthanhtoan() {
         return tinhtrangthanhtoan;
@@ -108,36 +116,12 @@ public class Thutienhocphi extends StandardEntity {
         return denngay;
     }
 
-    public void setSoluong(Long soluong) {
-        this.soluong = soluong;
-    }
-
-    public Long getSoluong() {
-        return soluong;
-    }
-
-    public void setDongia(Long dongia) {
-        this.dongia = dongia;
-    }
-
-    public Long getDongia() {
-        return dongia;
-    }
-
     public void setThanhtien(Long thanhtien) {
         this.thanhtien = thanhtien;
     }
 
     public Long getThanhtien() {
         return thanhtien;
-    }
-
-    public String getTenphi() {
-        return tenphi;
-    }
-
-    public void setTenphi(String tenphi) {
-        this.tenphi = tenphi;
     }
 
     public String getDiachi() {

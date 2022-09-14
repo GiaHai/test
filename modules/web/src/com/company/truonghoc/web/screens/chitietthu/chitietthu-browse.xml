@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://chitietthuBrowse.caption"
+        focusComponent="chitietthusTable"
+        messagesPack="com.company.truonghoc.web.screens.chitietthu">
+    <data readOnly="true">
+        <collection id="chitietthusDc"
+                    class="com.company.truonghoc.entity.Chitietthu">
+            <view extends="chitietthu-view"/>
+            <loader id="chitietthusDl">
+                <query>
+                    <![CDATA[select e from truonghoc_Chitietthu e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="chitietthusTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="chitietthusTable"
+                dataLoader="chitietthusDl">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="chitietthusTable"
+                    width="100%"
+                    dataContainer="chitietthusDc">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+            </actions>
+            <columns>
+                <column id="tenphi"/>
+                <column id="soluong"/>
+                <column id="dongia"/>
+                <column id="tonggia"/>
+                <column id="thutienhocphi"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="chitietthusTable.create"/>
+                <button id="editBtn" action="chitietthusTable.edit"/>
+                <button id="removeBtn" action="chitietthusTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

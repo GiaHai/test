@@ -12,5 +12,6 @@
         <class>com.company.truonghoc.entity.Thutienhocphi</class>
         <class>com.company.truonghoc.entity.Chamconggv</class>
         <class>com.company.truonghoc.entity.Diemdanh</class>
+        <class>com.company.truonghoc.entity.Chitietthu</class>
     </persistence-unit>
 </persistence>

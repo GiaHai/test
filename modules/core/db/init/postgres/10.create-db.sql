@@ -16,9 +16,6 @@ create table TRUONGHOC_THUTIENHOCPHI (
     TUNGAY timestamp,
     DENNGAY timestamp,
     TENHOCSINH_ID uuid,
-    TENPHI varchar(255),
-    SOLUONG bigint,
-    DONGIA bigint,
     THANHTIEN bigint,
     HINHTHUCTHANHTOAN varchar(255),
     TINHTRANGTHANHTOAN varchar(255),
@@ -223,3 +220,23 @@ alter table SEC_USER add column TEXTGV varchar(255) ^
 alter table SEC_USER add column DTYPE varchar(31) ^
 update SEC_USER set DTYPE = 'truonghoc_UserExt' where DTYPE is null ^
 -- end SEC_USER
+-- begin TRUONGHOC_CHITIETTHU
+create table TRUONGHOC_CHITIETTHU (
+    ID uuid,
+    VERSION integer not null,
+    CREATE_TS timestamp,
+    CREATED_BY varchar(50),
+    UPDATE_TS timestamp,
+    UPDATED_BY varchar(50),
+    DELETE_TS timestamp,
+    DELETED_BY varchar(50),
+    --
+    TENPHI varchar(255),
+    SOLUONG bigint,
+    DONGIA bigint,
+    TONGGIA bigint,
+    THUTIENHOCPHI_ID uuid not null,
+    --
+    primary key (ID)
+)^
+-- end TRUONGHOC_CHITIETTHU
