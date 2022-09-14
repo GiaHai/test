@@ -4,9 +4,6 @@
         <item screen="truonghoc_Giaovien.browse" caption="mainMsg://menu_config.truonghoc_Giaovien.browse"/>
         <item screen="truonghoc_Donvi.browse" caption="mainMsg://menu_config.truonghoc_Donvi.browse"/>
         <item screen="truonghoc_Hocsinh.browse" caption="mainMsg://menu_config.truonghoc_Hocsinh.browse"/>
-        <item screen="truonghoc_BaocaoScreen" caption="Đan làm báo cáo tổng tất cả"/>
-        <item screen="truonghoc_Chamconggv.browse" caption="mainMsg://menu_config.truonghoc_Chamconggv.browse"/>
-        <item screen="truonghoc_Diemdanh.browse" caption="mainMsg://menu_config.truonghoc_Diemdanh.browse"/>
     </menu>
     <menu id="application-bang" caption="mainMsg://menu_config.application-truonghoc2" expanded="true">
         <item screen="truonghoc_Hocphi.browse" caption="mainMsg://menu_config.truonghoc_Hocphi.browse"/>
@@ -14,6 +11,14 @@
         <item screen="truonghoc_Thuchi.browse" caption="mainMsg://menu_config.truonghoc_Thuchi.browse"/>
         <item screen="truonghoc_Thutienhocphi.browse" caption="mainMsg://menu_config.truonghoc_Thutienhocphi.browse"/>
     </menu>
+    <menu id="application-Chấm công" caption="mainMsg://menu_config.application-truonghoc4" expanded="true">
+        <item screen="truonghoc_Diemdanh.browse" caption="mainMsg://menu_config.truonghoc_Diemdanh.browse"/>
+        <item screen="truonghoc_Chamconggv.browse" caption="mainMsg://menu_config.truonghoc_Chamconggv.browse"/>
+    </menu>
+    <menu id="application-baocao" caption="mainMsg://menu_config.application-truonghoc3" expanded="true">
+        <item screen="truonghoc_BaocaoScreen" caption="Báo cáo"/>
+    </menu>
+
     <menu id="administration">
         <item id="sec$User.browse"/>
         <item id="sec$Group.browse"/>
