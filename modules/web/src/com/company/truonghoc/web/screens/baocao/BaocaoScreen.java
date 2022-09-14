@@ -25,7 +25,6 @@ import java.util.stream.Collectors;
 @UiController("truonghoc_BaocaoScreen")
 @UiDescriptor("baocao-screen.xml")
 @LoadDataBeforeShow
-
 public class BaocaoScreen extends Screen {
     @Inject
     protected DataManager dataManager;
