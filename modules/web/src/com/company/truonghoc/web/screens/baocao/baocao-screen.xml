@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
-        xmlns:charts="http://schemas.haulmont.com/charts/charts.xsd"
+        xmlns:chart="http://schemas.haulmont.com/charts/charts.xsd"
         caption="msg://baocaoScreen.caption"
         messagesPack="com.company.truonghoc.web.screens.baocao">
     <data>
@@ -13,25 +13,267 @@
                 </query>
             </loader>
         </collection>
+        <collection id="hocphisDc"
+                    class="com.company.truonghoc.entity.Hocphi"
+                    view="hocphi-view">
+            <loader id="hocphisDl">
+                <query>
+                    <![CDATA[select e from truonghoc_Hocphi e]]>
+                </query>
+            </loader>
+        </collection>
+        <collection id="luongthangsDc"
+                    class="com.company.truonghoc.entity.Luongthang"
+                    view="luongthang-view">
+            <loader id="luongthangsDl">
+                <query>
+                    <![CDATA[select e from truonghoc_Luongthang e]]>
+                </query>
+            </loader>
+        </collection>
     </data>
-    <layout>
-        <charts:serialChart id="serialChart"
-                            width="700px"
-                            height="600px"
-                            dataContainer="donvisDc"
-                            categoryField="tendonvi">
-            <charts:graphs>
-                <charts:graph id="saleGraph"
-                              type="COLUMN"
-                              valueField="chi"
-                              fillAlphas="1"/>
-                <charts:graph id="costGraph"
-                              type="COLUMN"
-                              valueField="thu"
-                              fillAlphas="1"/>
-            </charts:graphs>
-            <charts:categoryAxis gridAlpha="0"
-                                 labelRotation="90"/>
-        </charts:serialChart>
+    <facets>
+        <dataLoadCoordinator auto="true">
+        </dataLoadCoordinator>
+    </facets>
+    <layout stylename="css-layout-baocao">
+        <tabSheet stylename="css-tabsheet">
+            <tab id="tab1"
+                 caption="Biểu đồ so sánh từng đơn vị"
+                 margin="true"
+                 stylename="css-tab1"
+                 spacing="true">
+                <vbox spacing="true"
+                      stylename="css-vbox-timkiem">
+                    <label value="Điều kiện lọc" stylename="dieukienloc"/>
+                    <hbox spacing="true"
+                          stylename="hbox-text">
+                        <dateField id="tungayField"
+                                   datatype="date"
+                                   resolution="DAY"
+                                   width="100%"
+                                   caption="mainMsg://tungay"
+                                   stylename="nhap"/>
+                        <dateField id="denngayField"
+                                   datatype="date"
+                                   resolution="DAY"
+                                   caption="mainMsg://denngay"
+                                   stylename="nhap"/>
+
+                    </hbox>
+                    <hbox stylename="css-hbox-timkiem" spacing="true">
+                        <button id="timkiem"
+                                caption="Tìm kiếm"
+                                stylename="button-clearbtn"/>
+                        <button id="clearBtn"
+                                caption="Xóa"
+                                stylename="button-clearbtn"/>
+                    </hbox>
+                </vbox>
+
+                <vbox width="100%" height="AUTO">
+                    <hbox width="100%">
+                        <chart:serialChart additionalFields="additional"
+                                           addClassNames="true"
+                                           autoMargins="false"
+                                           categoryField="title"
+                                           height="auto"
+                                           marginBottom="26"
+                                           marginLeft="100"
+                                           marginRight="8"
+                                           marginTop="10"
+                                           startDuration="1"
+                                           theme="LIGHT"
+                                           id="hocphi"
+                                           align="TOP_LEFT"
+                                           width="100%">
+                            <chart:valueAxes>
+                                <chart:axis
+                                        title="Học phí"
+                                        position="BOTTOM"/>
+                            </chart:valueAxes>
+                            <chart:balloon adjustBorderColor="false"
+                                           color="BLACK"
+                                           horizontalPadding="10"
+                                           verticalPadding="8"/>
+                            <chart:graphs>
+                                <chart:graph alphaField="alpha"
+                                             dashLengthField="dashLengthColumn"
+                                             fillAlphas="1"
+                                             title="value"
+
+                                             type="COLUMN"
+                                             valueField="value"/>
+                            </chart:graphs>
+                            <chart:categoryAxis axisAlpha="0"
+                                                gridPosition="START"
+                                                tickLength="0"/>
+                            <chart:export/>
+                        </chart:serialChart>
+                        <!--LƯƠNG THÁNG-->
+                        <chart:serialChart additionalFields="additional"
+                                           addClassNames="true"
+                                           autoMargins="false"
+                                           categoryField="title"
+                                           height="auto"
+                                           align="TOP_RIGHT"
+                                           marginBottom="26"
+                                           marginLeft="100"
+                                           marginRight="8"
+                                           marginTop="10"
+                                           startDuration="1"
+                                           theme="LIGHT"
+                                           id="luongthang"
+                                           width="100%">
+                            <chart:valueAxes>
+                                <chart:axis axisAlpha="0"
+                                            title="Lương tháng"
+                                            position="BOTTOM"/>
+                            </chart:valueAxes>
+                            <chart:balloon adjustBorderColor="false"
+                                           color="RED"
+                                           horizontalPadding="10"
+                                           verticalPadding="8"/>
+                            <chart:graphs>
+                                <chart:graph alphaField="alpha"
+                                             dashLengthField="dashLengthColumn"
+                                             fillAlphas="1"
+                                             title="value"
+                                             lineColor="#CCFF66"
+                                             type="COLUMN"
+                                             valueField="value"/>
+                            </chart:graphs>
+                            <chart:categoryAxis axisAlpha="0"
+                                                gridPosition="START"
+                                                tickLength="0"/>
+                            <chart:export/>
+                        </chart:serialChart>
+                    </hbox>
+                    <!--            THUCHITIENHOCPHI-->
+                    <hbox width="100%">
+                        <chart:serialChart additionalFields="additional"
+                                           addClassNames="true"
+                                           autoMargins="false"
+                                           categoryField="title"
+                                           height="auto"
+                                           marginBottom="26"
+                                           marginLeft="100"
+                                           marginRight="8"
+                                           marginTop="10"
+                                           startDuration="1"
+                                           theme="LIGHT"
+                                           id="thutienhocphi"
+                                           align="TOP_LEFT"
+                                           width="100%">
+                            <chart:valueAxes>
+                                <chart:axis
+                                        title="Thu chi tiền học phi"
+                                        position="BOTTOM"/>
+                            </chart:valueAxes>
+                            <chart:balloon adjustBorderColor="false"
+                                           color="BLACK"
+                                           horizontalPadding="10"
+                                           verticalPadding="8"/>
+                            <chart:graphs>
+                                <chart:graph alphaField="alpha"
+                                             dashLengthField="dashLengthColumn"
+                                             fillAlphas="1"
+                                             title="value"
+                                             type="COLUMN"
+                                             valueField="value"/>
+                            </chart:graphs>
+                            <chart:categoryAxis axisAlpha="0"
+                                                gridPosition="START"
+                                                tickLength="0"/>
+                            <chart:export/>
+                        </chart:serialChart>
+                        <!--THU CHI-->
+                        <chart:serialChart additionalFields="additional"
+                                           addClassNames="true"
+                                           autoMargins="false"
+                                           categoryField="title"
+                                           height="auto"
+                                           align="TOP_RIGHT"
+                                           marginBottom="26"
+                                           marginLeft="100"
+                                           marginRight="8"
+                                           marginTop="10"
+                                           startDuration="1"
+                                           theme="LIGHT"
+                                           id="thuchi"
+                                           width="100%">
+                            <chart:valueAxes>
+                                <chart:axis axisAlpha="0"
+                                            title="Thu chi"
+                                            position="BOTTOM"/>
+                            </chart:valueAxes>
+                            <chart:balloon adjustBorderColor="false"
+                                           color="RED"
+                                           horizontalPadding="10"
+                                           verticalPadding="8"/>
+                            <chart:graphs>
+                                <chart:graph alphaField="alpha"
+                                             dashLengthField="dashLengthColumn"
+                                             fillAlphas="1"
+                                             title="value"
+                                             lineColor="#CCFF66"
+                                             type="COLUMN"
+                                             valueField="value"/>
+                            </chart:graphs>
+                            <chart:categoryAxis axisAlpha="0"
+                                                gridPosition="START"
+                                                tickLength="0"/>
+                            <chart:export/>
+                        </chart:serialChart>
+                    </hbox>
+                </vbox>
+            </tab>
+            <tab id="tab2"
+                 caption="Tỷ lệ % của các đơn vị về thu và chi"
+                 margin="true"
+                 stylename="css-tab1"
+                 spacing="true">
+                <vbox spacing="true"
+                      stylename="css-vbox-timkiem">
+                    <label value="Điều kiện lọc" stylename="dieukienloc"/>
+                    <hbox spacing="true"
+                          stylename="hbox-text">
+                        <lookupField id="timkiemdonviField"
+                                     caption="Đơn vị"
+                                     nullName="Đơn vị"/>
+                        <dateField id="tungaytab2Field"
+                                   datatype="date"
+                                   resolution="DAY"
+                                   caption="mainMsg://tungay"
+                                   stylename="nhap"/>
+                        <dateField id="denngaytab2Field"
+                                   datatype="date"
+                                   resolution="DAY"
+                                   caption="mainMsg://denngay"
+                                   stylename="nhap"/>
+                    </hbox>
+                    <hbox stylename="css-hbox-timkiem" spacing="true">
+                        <button id="timkiemtab2"
+                                caption="Tìm kiếm"/>
+                        <button id="cleartab2Btn"
+                                caption="Xóa"/>
+                    </hbox>
+                </vbox>
+                <chart:pieChart id="donutChart"
+                                height="AUTO"
+                                width="100%"
+                                titleField="title"
+                                valueField="value"
+
+                                balloonText="[[title]]&lt;br&gt;&lt;span style='font-size:14px'&gt;
+                        &lt;strong&gt;[[value]]&lt;/strong&gt; ([[percents]]%)&lt;/span&gt;">
+                    <chart:legend autoMargins="false"
+                                  marginRight="100"
+                                  markerType="CIRCLE"
+                                  position="RIGHT"/>
+                    <chart:export/>
+                </chart:pieChart>
+            </tab>
+        </tabSheet>
     </layout>
 </window>
