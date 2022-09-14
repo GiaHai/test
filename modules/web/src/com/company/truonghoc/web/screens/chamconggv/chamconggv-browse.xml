@@ -69,7 +69,7 @@
             <columns>
                 <column id="stt" generator="stt"
                         caption="STT"/>
-                <column id="hotenGv"
+                <column id="hotengv"
                         caption="mainMsg://chamcong.hovaten"/>
                 <column id="donvigv"
                         caption="mainMsg://chamcong.donvi"/>

@@ -31,6 +31,7 @@
         <property name="loockup_donvi" view="_minimal">
             <property name="donvitrungtam"/>
         </property>
+        <property name="giaovien" view="_minimal"/>
 
     </view>
     <view entity="truonghoc_Thutienhocphi" name="thutienhocphi-view" extends="_local">
