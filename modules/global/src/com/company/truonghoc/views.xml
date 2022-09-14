@@ -37,6 +37,13 @@
     <view entity="truonghoc_Thutienhocphi" name="thutienhocphi-view" extends="_local">
         <property name="tenhocsinh" view="_minimal">
         </property>
+        <property name="lkchitieuthu" view="_minimal">
+            <property name="tenphi"/>
+            <property name="soluong"/>
+            <property name="dongia"/>
+            <property name="thutienhocphi" view="_minimal"/>
+            <property name="tonggia"/>
+        </property>
     </view>
     <view entity="truonghoc_Chamconggv" name="chamconggv-view" extends="_local">
         <property name="hotengv" view="_minimal"/>
