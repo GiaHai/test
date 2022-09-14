@@ -23,6 +23,29 @@ public class UserExt extends User {
     @Column(name = "DONVITRUNGTAM")
     private Boolean donvitrungtam;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "GIAOVIEN_ID")
+    private Giaovien giaovien;
+
+    @Column(name = "TEXTGV")
+    private String textgv;
+
+    public String getTextgv() {
+        return textgv;
+    }
+
+    public void setTextgv(String textgv) {
+        this.textgv = textgv;
+    }
+
+    public Giaovien getGiaovien() {
+        return giaovien;
+    }
+
+    public void setGiaovien(Giaovien giaovien) {
+        this.giaovien = giaovien;
+    }
+
     public void setLoockup_donvi(Donvi loockup_donvi) {
         this.loockup_donvi = loockup_donvi;
     }

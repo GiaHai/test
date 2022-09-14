@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://chamconggvBrowse.caption"
+        focusComponent="chamconggvsTable"
+        messagesPack="com.company.truonghoc.web.screens.chamconggv">
+    <data readOnly="true">
+        <collection id="chamconggvsDc"
+                    class="com.company.truonghoc.entity.Chamconggv">
+            <view extends="chamconggv-view"/>
+            <loader id="chamconggvsDl">
+                <query>
+                    <![CDATA[select e from truonghoc_Chamconggv e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="chamconggvsTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="chamconggvsTable"
+                dataLoader="chamconggvsDl">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="chamconggvsTable"
+                    width="100%"
+                    dataContainer="chamconggvsDc">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+            </actions>
+            <columns>
+                <column id="hotengv"/>
+                <column id="donvigv"/>
+                <column id="ngaylam"/>
+                <column id="buoilam"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="chamconggvsTable.create"/>
+                <button id="editBtn" action="chamconggvsTable.edit"/>
+                <button id="removeBtn" action="chamconggvsTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

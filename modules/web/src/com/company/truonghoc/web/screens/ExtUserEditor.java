@@ -1,6 +1,7 @@
 package com.company.truonghoc.web.screens;
 
 import com.company.truonghoc.entity.Donvi;
+import com.company.truonghoc.entity.Giaovien;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.core.global.UserSessionSource;
 import com.haulmont.cuba.gui.app.security.user.edit.UserEditor;
@@ -23,14 +24,30 @@ public class ExtUserEditor extends UserEditor {
     protected DataManager dataManager;
     @Inject
     protected TextField<String> tendonviField;
+    @Inject
+    protected TextField<String> TextGiaovienField;
+    @Inject
+    protected LookupField<Giaovien> tengiaovienField;
 
     @Subscribe("loockuptendonvi")
     protected void onLoockuptendonviValueChange(HasValue.ValueChangeEvent<Donvi> event) {
-//        newEntitiesDl.load();
         tendonviField.setValue(donvisDc.getItem().getTendonvi());
         donvitrungtam.setValue(donvisDc.getItem().getDonvitrungtam());
-    }
+        if (loockuptendonvi.getValue() != null){
+            tengiaovienField.setOptionsList(tengiaovien(tendonviField.getValue()));
+        }
 
+    }
+    @Subscribe("tengiaovienField")
+    protected void onTengiaovienFieldValueChange(HasValue.ValueChangeEvent<Donvi> event) {
+        TextGiaovienField.setValue(tengiaovienField.getValue().getTengiaovien());
+    }
+    private List<Giaovien> tengiaovien(String dvgiaovien) {
+        return dataManager.load(Giaovien.class)
+                .query("select e from truonghoc_Giaovien e where e.donvitao_giaovien = :dvgiaovien")
+                .parameter("dvgiaovien", dvgiaovien)
+                .list();
+    }
 
     @Subscribe
     protected void onInit(InitEvent event) {

@@ -10,5 +10,7 @@
         <class>com.company.truonghoc.entity.Thuchi</class>
         <class>com.company.truonghoc.entity.UserExt</class>
         <class>com.company.truonghoc.entity.Thutienhocphi</class>
+        <class>com.company.truonghoc.entity.Chamconggv</class>
+        <class>com.company.truonghoc.entity.Diemdanh</class>
     </persistence-unit>
 </persistence>

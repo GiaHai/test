@@ -37,4 +37,10 @@
         <property name="tenhocsinh" view="_minimal">
         </property>
     </view>
+    <view entity="truonghoc_Chamconggv" name="chamconggv-view" extends="_local">
+        <property name="hotengv" view="_minimal"/>
+    </view>
+    <view entity="truonghoc_Diemdanh" name="diemdanh-view" extends="_local">
+        <property name="hotenhs" view="_minimal"/>
+    </view>
 </views>

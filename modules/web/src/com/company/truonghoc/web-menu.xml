@@ -6,6 +6,8 @@
         <item screen="truonghoc_Hocsinh.browse" caption="mainMsg://menu_config.truonghoc_Hocsinh.browse"/>
         <item screen="truonghoc_BaocaoScreen" caption="Đan làm báo cáo tổng tất cả"/>
         <item screen="truonghoc_" caption="Đang làm báo cáo tổng theo tháng"/>
+        <item screen="truonghoc_Chamconggv.browse" caption="mainMsg://menu_config.truonghoc_Chamconggv.browse"/>
+        <item screen="truonghoc_Diemdanh.browse" caption="mainMsg://menu_config.truonghoc_Diemdanh.browse"/>
     </menu>
     <menu id="application-bang" caption="mainMsg://menu_config.application-truonghoc2" expanded="true">
         <item screen="truonghoc_Hocphi.browse" caption="mainMsg://menu_config.truonghoc_Hocphi.browse"/>

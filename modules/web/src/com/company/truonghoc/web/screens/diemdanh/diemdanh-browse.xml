@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://diemdanhBrowse.caption"
+        focusComponent="diemdanhsTable"
+        messagesPack="com.company.truonghoc.web.screens.diemdanh">
+    <data readOnly="true">
+        <collection id="diemdanhsDc"
+                    class="com.company.truonghoc.entity.Diemdanh">
+            <view extends="diemdanh-view"/>
+            <loader id="diemdanhsDl">
+                <query>
+                    <![CDATA[select e from truonghoc_Diemdanh e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="diemdanhsTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="diemdanhsTable"
+                dataLoader="diemdanhsDl">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="diemdanhsTable"
+                    width="100%"
+                    dataContainer="diemdanhsDc">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+            </actions>
+            <columns>
+                <column id="nguoitaodd"/>
+                <column id="donvidd"/>
+                <column id="hotenhs"/>
+                <column id="ngaynghi"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="diemdanhsTable.create"/>
+                <button id="editBtn" action="diemdanhsTable.edit"/>
+                <button id="removeBtn" action="diemdanhsTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>
