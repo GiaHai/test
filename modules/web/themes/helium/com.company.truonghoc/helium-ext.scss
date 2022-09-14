@@ -173,4 +173,122 @@
             }
         }
     }
+    .css-layout-baocao {
+        width: 100%;
+        height: 100%;
+        .css-tabsheet {
+            width: 100%;
+            height: 100%;
+            .css-tab1 {
+                width: 100%;
+                height: 100%;
+                .css-vbox-timkiem {
+                    border: 2px black solid;
+                    border-radius: 15px;
+                    padding: 20px;
+                }
+            }
+        }
+    }
+    .css-layout-luongthang {
+        width: 100%;
+        .css-scrollBox {
+            width: 100%;
+            .css-form {
+                width: 100%;
+                .css-hbox-form {
+                    width: 100%;
+                    .css-vbox-trai {
+                        width: 50%;
+                    }
+                    .css-vbox-phai {
+                        width: 50%;
+                        .css-timkiem {
+                            width: 100%;
+                            .css-button-color-timkiem {
+                                background-color: #deb887;
+                                color: black;
+                                border: 1px red solid;
+                                border-radius: 25px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .css-layout-diemdanh {
+        width: 100%;
+        .css-vbox-timkiem {
+            width: 100%;
+            border: 3px #7b68ee solid;
+            padding: 20px;
+            border-radius: 11px;
+            .dieukienloc {
+                font-weight: bold;
+                font-size: 16px;
+            }
+            .hbox-text {
+                width: 70%;
+                .v-slot-nhap {
+                    width: 30%;
+                    .v-caption-on-top {
+                        width: 100%;
+                        .v-filterselect.v-widget.nhap.v-filterselect-nhap {
+                            width: 100%;
+                        }
+                        .c-datefield-layout-nhap {
+                            width: 100%;
+                            .v-datefield-day {
+                                width: 100%;
+                            }
+                        }
+                    }
+                }
+            }
+            .button-clearbtn {
+                background: #00ffff;
+                color: black;
+                padding-left: 30px;
+                padding-right: 30px;
+            }
+        }
+    }
+    .css-layout-chamconggv {
+        width: 100%;
+        .css-vbox-timkiem {
+            width: 100%;
+            border: 3px #7b68ee solid;
+            padding: 20px;
+            border-radius: 11px;
+            .dieukienloc {
+                font-weight: bold;
+                font-size: 16px;
+            }
+            .hbox-text {
+                width: 70%;
+                .v-slot-nhap {
+                    width: 30%;
+                    .v-caption-on-top {
+                        width: 100%;
+                        .v-filterselect.v-widget.nhap.v-filterselect-nhap {
+                            width: 100%;
+                        }
+                        .c-datefield-layout-nhap {
+                            width: 100%;
+                            .v-datefield-day {
+                                width: 100%;
+                            }
+                        }
+                    }
+                }
+            }
+            .button-clearbtn {
+                background: #00ffff;
+                color: black;
+                padding-left: 30px;
+                padding-right: 30px;
+            }
+        }
+    }
 }

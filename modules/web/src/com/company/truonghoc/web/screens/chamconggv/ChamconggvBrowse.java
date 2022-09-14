@@ -24,7 +24,9 @@ import java.util.stream.Collectors;
 @LoadDataBeforeShow
 public class ChamconggvBrowse extends StandardLookup<Chamconggv> {
     @Inject
-    protected CollectionLoader<Chamconggv> chamcongGvsDl;
+    protected CollectionContainer<Chamconggv> chamconggvsDc;
+    @Inject
+    protected CollectionLoader<Chamconggv> chamconggvsDl;
     @Inject
     protected UiComponents uiComponents;
     @Inject
@@ -82,26 +84,26 @@ public class ChamconggvBrowse extends StandardLookup<Chamconggv> {
 
         if (tengiaovienField.getValue() == null) {
             String loaddonvi = "select e from truonghoc_ChamcongGv e where e.donvigv = :donvi ";
-            chamcongGvsDl.setQuery(loaddonvi);
+            chamconggvsDl.setQuery(loaddonvi);
         } else {
             String loadhoten = "select e from truonghoc_ChamcongGv e where e.hotenGv = :hoten and e.donvigv = :donvi";
-            chamcongGvsDl.setQuery(loadhoten);
+            chamconggvsDl.setQuery(loadhoten);
         }
         if (ngaylamField.getValue() != null){
             String loadngay = "select e from truonghoc_ChamcongGv e where e.ngaylam = :ngaylam";
-            chamcongGvsDl.setQuery(loadngay);
+            chamconggvsDl.setQuery(loadngay);
         }
 
-        chamcongGvsDl.setParameter("ngaylam", ngaylamField.getValue());
-        chamcongGvsDl.setParameter("donvi", tendonviField.getValue());
-        chamcongGvsDl.setParameter("hoten", tengiaovienField.getValue());
-        chamcongGvsDl.load();
+        chamconggvsDl.setParameter("ngaylam", ngaylamField.getValue());
+        chamconggvsDl.setParameter("donvi", tendonviField.getValue());
+        chamconggvsDl.setParameter("hoten", tengiaovienField.getValue());
+        chamconggvsDl.load();
     }
 
     public Component stt(Chamconggv entity) {
         int lineNumber = 1;
         try {
-            lineNumber = chamcongGvsDl.getContainer().getItemIndex(entity.getId()) + 1;
+            lineNumber = chamconggvsDl.getContainer().getItemIndex(entity.getId()) + 1;
         } catch (Exception ex) {
             lineNumber = 1;
         }
