@@ -14,16 +14,49 @@
                 </query>
             </loader>
         </collection>
+        <collection id="donvisDc"
+                    class="com.company.truonghoc.entity.Donvi"
+                    view="donvi-view">
+            <loader id="donvisDl">
+                <query>
+                    <![CDATA[select e from truonghoc_Donvi e]]>
+                </query>
+            </loader>
+        </collection>
     </data>
-    <dialogMode height="600"
-                width="800"/>
+    <facets>
+        <dataLoadCoordinator auto="true">
+        </dataLoadCoordinator>
+    </facets>
     <layout expand="diemdanhsTable"
-            spacing="true">
-        <filter id="filter"
-                applyTo="diemdanhsTable"
-                dataLoader="diemdanhsDl">
-            <properties include=".*"/>
-        </filter>
+            spacing="true"
+            stylename="css-layout-diemdanh">
+        <vbox spacing="true"
+              stylename="css-vbox-timkiem">
+            <label value="Điều kiện lọc" stylename="dieukienloc"/>
+            <hbox spacing="true"
+                  stylename="hbox-text">
+                <lookupField id="tendonviField"
+                             caption="Đơn vị"
+                             nullName="---Đơn vị---"
+                             stylename="nhap"/>
+                <textField id="tengiaovienField"
+                           caption="Giáo viên"
+                           editable="false"
+                           stylename="nhap"
+                           inputPrompt="Nhập tên giáo viên"/>
+                <dateField id="ngaylamField"
+                           caption="Ngày làm"
+                           stylename="nhap"
+                           resolution="DAY"/>
+                <button id="timkiem"
+                        caption="Tìm kiếm"
+                        align="BOTTOM_CENTER"
+                        stylename="button-clearbtn"/>
+                <button id="clearBtn"
+                        caption="Xóa" align="BOTTOM_CENTER"/>
+            </hbox>
+        </vbox>
         <groupTable id="diemdanhsTable"
                     width="100%"
                     dataContainer="diemdanhsDc">
@@ -33,10 +66,12 @@
                 <action id="remove" type="remove"/>
             </actions>
             <columns>
-                <column id="nguoitaodd"/>
-                <column id="donvidd"/>
-                <column id="hotenhs"/>
-                <column id="ngaynghi"/>
+                <column id="nguoitaodd" caption="Giáo viên"/>
+                <column id="donvidd" caption="Đơn vị"/>
+                <column id="hotenhs"
+                        caption="mainMsg://diemdanh.hoten"/>
+                <column id="ngaynghi"
+                        caption="mainMsg://diemdanh.ngaynghi"/>
             </columns>
             <rowsCount/>
             <buttonsPanel id="buttonsPanel"

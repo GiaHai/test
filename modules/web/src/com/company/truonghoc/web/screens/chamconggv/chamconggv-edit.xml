@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
-        caption="msg://chamconggvEdit.caption"
+        caption="mainMsg://chamconggvEdit.caption"
         focusComponent="form"
         messagesPack="com.company.truonghoc.web.screens.chamconggv">
     <data>
@@ -9,21 +9,34 @@
             <view extends="chamconggv-view"/>
             <loader/>
         </instance>
+        <collection id="giaoviensDc"
+                    class="com.company.truonghoc.entity.Giaovien"
+                    view="giaovien-view">
+            <loader id="giaoviensDl">
+                <query>
+                    <![CDATA[select e from truonghoc_Giaovien e]]>
+                </query>
+            </loader>
+        </collection>
     </data>
     <dialogMode height="600"
                 width="800"/>
     <layout expand="editActions" spacing="true">
         <form id="form" dataContainer="chamconggvDc">
             <column width="350px">
-                <pickerField id="hotengvField" property="hotengv">
-                    <actions>
-                        <action id="lookup" type="picker_lookup"/>
-                        <action id="clear" type="picker_clear"/>
-                    </actions>
-                </pickerField>
-                <textField id="donvigvField" property="donvigv"/>
-                <dateField id="ngaylamField" property="ngaylam"/>
-                <textField id="buoilamField" property="buoilam"/>
+                <lookupField id="hotenGvField"
+                             property="hotengv"
+                             caption="mainMsg://chamcong.hovaten"
+                             optionsContainer="giaoviensDc"/>
+                <textField id="donvigvField"
+                           caption="mainMsg://chamcong.donvi"
+                           property="donvigv"/>
+                <dateField id="ngaylamField"
+                           caption="mainMsg://chamcong.ngaylam"
+                           property="ngaylam"/>
+                <lookupField id="buoilamField"
+                             caption="mainMsg://chamcong.buoilam"
+                             property="buoilam"/>
             </column>
         </form>
         <hbox id="editActions" spacing="true">
