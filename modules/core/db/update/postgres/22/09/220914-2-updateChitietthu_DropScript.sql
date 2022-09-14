@@ -1,1 +1,0 @@
-alter table TRUONGHOC_CHITIETTHU drop column TEN_THUTIENHOCPHI_ID__U57686 cascade ;

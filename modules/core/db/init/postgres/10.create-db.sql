@@ -211,15 +211,6 @@ create table TRUONGHOC_DONVI (
     primary key (ID)
 )^
 -- end TRUONGHOC_DONVI
--- begin SEC_USER
-alter table SEC_USER add column LOOCKUP_DONVI_ID uuid ^
-alter table SEC_USER add column TENDONVI varchar(255) ^
-alter table SEC_USER add column DONVITRUNGTAM boolean ^
-alter table SEC_USER add column GIAOVIEN_ID uuid ^
-alter table SEC_USER add column TEXTGV varchar(255) ^
-alter table SEC_USER add column DTYPE varchar(31) ^
-update SEC_USER set DTYPE = 'truonghoc_UserExt' where DTYPE is null ^
--- end SEC_USER
 -- begin TRUONGHOC_CHITIETTHU
 create table TRUONGHOC_CHITIETTHU (
     ID uuid,
@@ -240,3 +231,12 @@ create table TRUONGHOC_CHITIETTHU (
     primary key (ID)
 )^
 -- end TRUONGHOC_CHITIETTHU
+-- begin SEC_USER
+alter table SEC_USER add column LOOCKUP_DONVI_ID uuid ^
+alter table SEC_USER add column TENDONVI varchar(255) ^
+alter table SEC_USER add column DONVITRUNGTAM boolean ^
+alter table SEC_USER add column GIAOVIEN_ID uuid ^
+alter table SEC_USER add column TEXTGV varchar(255) ^
+alter table SEC_USER add column DTYPE varchar(31) ^
+update SEC_USER set DTYPE = 'truonghoc_UserExt' where DTYPE is null ^
+-- end SEC_USER
