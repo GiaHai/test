@@ -1,0 +1,1 @@
+alter table TRUONGHOC_LUONGTHANG add HINHTHUCTHANHTOAN nvarchar(255) ;

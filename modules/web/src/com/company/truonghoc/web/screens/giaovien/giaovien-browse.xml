@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="mainMsg://giaovienBrowse.caption"
+        focusComponent="giaoviensTable"
+        messagesPack="com.company.truonghoc.web.screens.giaovien">
+    <data readOnly="true">
+        <collection id="giaoviensDc"
+                    class="com.company.truonghoc.entity.Giaovien"
+                    view="giaovien-view">
+            <loader id="giaoviensDl">
+                <query>
+                    <![CDATA[select e from truonghoc_Giaovien e]]>
+                    <condition>
+                        <and>
+                            <c:jpql>
+                                <c:where>e.donvitao_giaovien = :component_donvitao_giaovienField</c:where>
+                            </c:jpql>
+                        </and>
+                    </condition>
+                </query>
+            </loader>
+        </collection>
+        <collection id="donvisDc"
+                    class="com.company.truonghoc.entity.Donvi"
+                    view="donvi-view">
+            <loader id="donvisDl">
+                <query>
+                    <![CDATA[select e from truonghoc_Donvi e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true">
+        </dataLoadCoordinator>
+    </facets>
+
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="giaoviensTable"
+            spacing="true">
+        <hbox>
+            <lookupField id="donvitao_giaovienField"
+                       caption="Đơn vị"/>
+        </hbox>
+        <groupTable id="giaoviensTable"
+                    width="100%"
+                    dataContainer="giaoviensDc">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+            </actions>
+            <columns>
+                <column id="stt" generator="stt" caption="STT"/>
+                <column id="createdBy"
+                        caption="mainMsg://nguoitao"/>
+                <column id="donvitao_giaovien"
+                        caption="mainMsg://donvitao"/>
+                <column id="tengiaovien"
+                        caption="mainMsg://giaovien.tengiaovien"/>
+                <column id="ngaysinhgiaovien"
+                        caption="mainMsg://giaovien.ngaysinh"/>
+                <column id="quequangiaovien"
+                        caption="mainMsg://giaovien.quequan"/>
+                <column id="gioitinhgiaovien"
+                        caption="mainMsg://giaovien.gioitinh"/>
+                <column id="ghichu"
+                        caption="mainMsg://giaovien.ghichu"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="giaoviensTable.create"/>
+                <button id="editBtn" action="giaoviensTable.edit"/>
+                <button id="removeBtn" action="giaoviensTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

@@ -1,0 +1,176 @@
+/* Define your theme modifications inside next mixin */
+@mixin com_company_truonghoc-helium-ext {
+    .c-login-main-login-layout {
+        width: 100%;
+        height: 100%;
+        .c-login-panel {
+            float: right;
+            margin-top: 15%;
+            margin-right: 15%;
+            border: 5px red solid;
+            border-radius: 45px;
+        }
+    }
+    .css-layout-danhsachluongthang {
+        width: 100%;
+        height: 100%;
+        .csstimkiem {
+            width: 100%;
+            .v-slot-csstimkiemdonvi {
+                width: 50%;
+            }
+            .v-slot-csstimkiemngaythang {
+                width: 50%;
+            }
+        }
+    }
+    .css-brower-hocphi {
+        width: 100%;
+
+        .css-vbox-timkiem {
+            width: 100%;
+            border: 3px #7b68ee solid;
+            padding: 20px;
+            border-radius: 11px;
+            .dieukienloc {
+                font-weight: bold;
+                font-size: 16px;
+            }
+            .hbox-text {
+                width: 70%;
+                .v-slot-nhap {
+                    width: 30%;
+                    .v-caption-on-top {
+                        width: 100%;
+                        .v-filterselect.v-widget.nhap.v-filterselect-nhap {
+                            width: 100%;
+                        }
+                        .c-datefield-layout-nhap {
+                            width: 100%;
+                            .v-datefield-day {
+                                width: 100%;
+                            }
+                        }
+                    }
+                }
+            }
+            .button-clearbtn {
+                background: #00ffff;
+                color: black;
+                padding-left: 30px;
+                padding-right: 30px;
+            }
+        }
+    }
+    .css-layout-danhsachluongthang {
+        width: 100%;
+        .css-vbox-timkiem {
+            width: 100%;
+            border: 3px #7b68ee solid;
+            padding: 20px;
+            border-radius: 11px;
+            .dieukienloc {
+                font-weight: bold;
+                font-size: 16px;
+            }
+            .hbox-text {
+                width: 70%;
+                .v-slot-nhap {
+                    width: 30%;
+                    .v-caption-on-top {
+                        width: 100%;
+                        .v-filterselect.v-widget.nhap.v-filterselect-nhap {
+                            width: 100%;
+                        }
+                        .c-datefield-layout-nhap {
+                            width: 100%;
+                            .v-datefield-day {
+                                width: 100%;
+                            }
+                        }
+                    }
+                }
+            }
+            .button-clearbtn {
+                background: #00ffff;
+                color: black;
+                padding-left: 30px;
+                padding-right: 30px;
+            }
+        }
+    }
+    .css-layout-thutienhocphi {
+        width: 100%;
+        .css-vbox-timkiem {
+            width: 100%;
+            border: 3px #7b68ee solid;
+            padding: 20px;
+            border-radius: 11px;
+            .dieukienloc {
+                font-weight: bold;
+                font-size: 16px;
+            }
+            .hbox-text {
+                width: 70%;
+                .v-slot-nhap {
+                    width: 30%;
+                    .v-caption-on-top {
+                        width: 100%;
+                        .v-filterselect.v-widget.nhap.v-filterselect-nhap {
+                            width: 100%;
+                        }
+                        .c-datefield-layout-nhap {
+                            width: 100%;
+                            .v-datefield-day {
+                                width: 100%;
+                            }
+                        }
+                    }
+                }
+            }
+            .button-clearbtn {
+                background: #00ffff;
+                color: black;
+                padding-left: 30px;
+                padding-right: 30px;
+            }
+        }
+    }
+    .css-layout-thuchi {
+        width: 100%;
+        .css-vbox-timkiem {
+            width: 100%;
+            border: 3px #7b68ee solid;
+            padding: 20px;
+            border-radius: 11px;
+            .dieukienloc {
+                font-weight: bold;
+                font-size: 16px;
+            }
+            .hbox-text {
+                width: 70%;
+                .v-slot-nhap {
+                    width: 30%;
+                    .v-caption-on-top {
+                        width: 100%;
+                        .v-filterselect.v-widget.nhap.v-filterselect-nhap {
+                            width: 100%;
+                        }
+                        .c-datefield-layout-nhap {
+                            width: 100%;
+                            .v-datefield-day {
+                                width: 100%;
+                            }
+                        }
+                    }
+                }
+            }
+            .button-clearbtn {
+                background: #00ffff;
+                color: black;
+                padding-left: 30px;
+                padding-right: 30px;
+            }
+        }
+    }
+}

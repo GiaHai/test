@@ -1,0 +1,1 @@
+alter table TRUONGHOC_GIAOVIEN drop column DONVITAO_GIAOVIEN_ID__U07459 ;

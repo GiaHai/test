@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="mainMsg://loginWindow.caption"
+        icon="branding/app-icon-login.png"
+        messagesPack="com.company.truonghoc.web.screens">
+    <actions>
+        <action id="submit"
+                caption="mainMsg://loginWindow.okButton"
+                invoke="login" shortcut="ENTER"/>
+    </actions>
+    <layout stylename="c-login-main-login-layout" expand="loginWrapper">
+        <vbox id="loginWrapper"
+              css="background-image: url('VAADIN/themes/helium/branding/background.png');background-repeat: no-repeat;  background-size: 100% 100%">
+            <vbox id="loginMainBox"
+                  align="MIDDLE_CENTER"
+                  margin="true"
+                  stylename="c-login-panel"
+                  width="AUTO">
+                <vbox id="loginTitleBox"
+                      align="MIDDLE_CENTER"
+                      spacing="true"
+                      stylename="c-login-title">
+                    <image id="logoImage"
+                           align="MIDDLE_CENTER"
+                           height="AUTO"
+                           scaleMode="SCALE_DOWN"
+                           stylename="c-login-icon"
+                           width="AUTO"/>
+                    <label id="welcomeLabel"
+                           align="MIDDLE_LEFT"
+                           stylename="c-login-caption"
+                           value="mainMsg://loginWindow.welcomeLabel"/>
+                </vbox>
+                <capsLockIndicator id="capsLockIndicator"
+                                   align="MIDDLE_CENTER"
+                                   stylename="c-login-capslockindicator"/>
+                <vbox id="loginForm"
+                      spacing="true"
+                      stylename="c-login-form">
+                    <cssLayout id="loginCredentials"
+                               stylename="c-login-credentials">
+                        <textField id="loginField"
+                                   htmlName="loginField"
+                                   inputPrompt="mainMsg://loginWindow.login"
+                                   stylename="c-login-username"/>
+                        <passwordField id="passwordField"
+                                       autocomplete="true"
+                                       htmlName="passwordField"
+                                       inputPrompt="mainMsg://loginWindow.passwordPlaceholder"
+                                       capsLockIndicator="capsLockIndicator"
+                                       stylename="c-login-password"/>
+                    </cssLayout>
+                    <hbox id="rememberLocalesBox"
+                          stylename="c-login-remember-locales">
+                        <checkBox id="rememberMeCheckBox"
+                                  caption="mainMsg://loginWindow.rememberMe"
+                                  stylename="c-login-remember-me"/>
+                    </hbox>
+
+                    <button id="loginButton"
+                            align="MIDDLE_CENTER"
+                            action="submit"
+                            caption="mainMsg://dangnhap"
+                            stylename="c-login-submit-button"/>
+                </vbox>
+            </vbox>
+            <lookupField id="localesSelect"
+                         nullOptionVisible="false"
+                         stylename="c-login-locale"
+                         visible="false"
+                         css="text-align: right;"
+                         textInputAllowed="false"/>
+        </vbox>
+
+    </layout>
+</window>

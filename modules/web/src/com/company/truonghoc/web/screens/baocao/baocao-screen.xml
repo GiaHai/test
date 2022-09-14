@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:charts="http://schemas.haulmont.com/charts/charts.xsd"
+        caption="msg://baocaoScreen.caption"
+        messagesPack="com.company.truonghoc.web.screens.baocao">
+    <data>
+        <collection id="donvisDc"
+                    class="com.company.truonghoc.entity.Donvi"
+                    view="donvi-view">
+            <loader id="donvisDl">
+                <query>
+                    <![CDATA[select e from truonghoc_Donvi e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <layout>
+        <charts:serialChart id="serialChart"
+                            width="700px"
+                            height="600px"
+                            dataContainer="donvisDc"
+                            categoryField="tendonvi">
+            <charts:graphs>
+                <charts:graph id="saleGraph"
+                              type="COLUMN"
+                              valueField="chi"
+                              fillAlphas="1"/>
+                <charts:graph id="costGraph"
+                              type="COLUMN"
+                              valueField="thu"
+                              fillAlphas="1"/>
+            </charts:graphs>
+            <charts:categoryAxis gridAlpha="0"
+                                 labelRotation="90"/>
+        </charts:serialChart>
+    </layout>
+</window>

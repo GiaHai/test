@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://thuchiBrowse.caption"
+        focusComponent="thuchisTable"
+        messagesPack="com.company.truonghoc.web.screens.thuchi">
+    <data readOnly="true">
+        <collection id="thuchisDc"
+                    class="com.company.truonghoc.entity.Thuchi"
+                    view="thuchi-view">
+            <loader id="thuchisDl">
+                <query>
+                    <![CDATA[select e from truonghoc_Thuchi e]]>
+                    <condition>
+                        <and>
+                            <c:jpql>
+                                <c:where>e.donvitao_thuchi = :component_donvitao_thuchiField</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>e.ngaychi >= :component_tungayField</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>:component_denngayField >= e.ngaychi</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>:component_trangthaiField = e.tinhtrangchi</c:where>
+                            </c:jpql>
+                        </and>
+                    </condition>
+                </query>
+            </loader>
+        </collection>
+        <collection id="donvisDc"
+                    class="com.company.truonghoc.entity.Donvi"
+                    view="donvi-view">
+            <loader id="donvisDl">
+                <query>
+                    <![CDATA[select e from truonghoc_Donvi e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true">
+        </dataLoadCoordinator>
+    </facets>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="thuchisTable"
+            spacing="true"
+    stylename="css-layout-thuchi">
+        <vbox spacing="true"
+              stylename="css-vbox-timkiem">
+            <label value="Điều kiện lọc" stylename="dieukienloc"/>
+            <hbox spacing="true"
+                  stylename="hbox-text">
+                <lookupField id="donvitao_thuchiField"
+                             caption="Đơn vị"
+                             nullName="Lọc tất cả"
+                             stylename="nhap"/>
+                <dateField id="tungayField"
+                           datatype="date"
+                           resolution="DAY"
+                           width="100%"
+                           caption="mainMsg://tungay"
+                           stylename="nhap"/>
+                <dateField id="denngayField"
+                           datatype="date"
+                           resolution="DAY"
+                           caption="mainMsg://denngay"
+                           stylename="nhap"/>
+                <lookupField id="trangthaiField"
+                             caption="Trạng thái"
+                             nullName="Lọc tất cả"/>
+            </hbox>
+            <button id="clearBtn"
+                    caption="Clear"
+                    align="TOP_RIGHT"
+                    stylename="button-clearbtn"/>
+        </vbox>
+        <groupTable id="thuchisTable"
+                    width="100%"
+                    dataContainer="thuchisDc"
+                    aggregatable="true">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+            </actions>
+            <columns>
+                <column id="stt"
+                        generator="stt"
+                        caption="msg://Thuchi.stt"/>
+                <column id="createdBy"
+                        caption="mainMsg://nguoitao"/>
+                <column id="ngaychi"
+                        caption="Ngày chi"/>
+                <column id="donvitao_thuchi"
+                        caption="mainMsg://donvitao"/>
+                <column id="khoanchi"
+                        caption="msg://Thuchi.khoanchi"/>
+                <column id="soluong"
+                        caption="msg://Thuchi.soluong"/>
+                <column id="thanhtien"
+                        caption="msg://Thuchi.thanhtien">
+                    <aggregation type="SUM"/>
+                </column>
+                <column id="ghichu"
+                        caption="msg://Thuchi.ghichu"/>
+                <column id="checkhandong"
+                        generator="checkhanchi"
+                        caption="Trạng thái"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="thuchisTable.create"/>
+                <button id="editBtn" action="thuchisTable.edit"/>
+                <button id="removeBtn" action="thuchisTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://thuchiEdit.caption"
+        focusComponent="form"
+        messagesPack="com.company.truonghoc.web.screens.thuchi">
+    <data>
+        <instance id="thuchiDc"
+                  class="com.company.truonghoc.entity.Thuchi"
+                  view="thuchi-view">
+            <loader/>
+        </instance>
+        <collection id="thuchisDc"
+                    class="com.company.truonghoc.entity.Thuchi"
+                    view="thuchi-view">
+            <loader id="thuchisDl">
+                <query>
+                    <![CDATA[select e from truonghoc_Thuchi e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="editActions" spacing="true">
+        <form id="form" dataContainer="thuchiDc">
+            <column width="350px">
+                <textField id="usertao_thuchiField"
+                           property="usertao_thuchi"
+                           caption="mainMsg://nguoitao"/>
+                <textField id="donvitao_thuchiField"
+                           property="donvitao_thuchi"
+                           caption="mainMsg://donvitao"/>
+                <textField id="khoanchiField"
+                           property="khoanchi"
+                           caption="msg://Thuchi.khoanchi"/>
+                <dateField id="ngaychiField"
+                           property="ngaychi"
+                           caption="Ngày chi"/>
+                <dateField id="hanchiField"
+                           property="hanchi"
+                           caption="Hạn chi"/>
+                <textField id="soluongField"
+                           property="soluong"
+                           caption="msg://Thuchi.soluong"/>
+                <textField id="dongiaField"
+                           property="dongia"
+                           caption="msg://Thuchi.dongia"/>
+                <textField id="thanhtienField"
+                           property="thanhtien"
+                           caption="msg://Thuchi.thanhtien"/>
+                <textArea id="ghichuField"
+                           property="ghichu"
+                           caption="msg://Thuchi.ghichu"/>
+                <lookupField id="hinhthucthanhtoanField"
+                             property="hinhthucthanhtoan"
+                             nullName="Hình thức thanh toán"
+                             caption="Hình thức thanh toán"/>
+                <textField id="tinhtrangchiField"
+                           property="tinhtrangchi"/>
+            </column>
+        </form>
+        <hbox id="editActions" spacing="true">
+            <button id="commitAndCloseBtn"
+                    action="windowCommitAndClose"
+            caption="mainMsg://windowCommitAndClose"/>
+            <button id="closeBtn"
+                    action="windowClose"
+            caption="mainMsg://windowClose"/>
+        </hbox>
+    </layout>
+</window>

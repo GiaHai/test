@@ -1,0 +1,2 @@
+alter table TRUONGHOC_LUONGTHANG add HANNHANLUONG datetime2 ;
+alter table TRUONGHOC_LUONGTHANG add TINHTRANGNHANLUONG nvarchar(255) ;

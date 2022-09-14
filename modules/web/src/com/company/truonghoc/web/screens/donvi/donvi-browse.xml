@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="mainMsg://donviBrowse.caption"
+        focusComponent="donvisTable"
+        messagesPack="com.company.truonghoc.web.screens.donvi">
+    <data readOnly="true">
+        <collection id="donvisDc"
+                    class="com.company.truonghoc.entity.Donvi"
+                    view="donvi-view">
+            <loader id="donvisDl">
+                <query>
+                    <![CDATA[select e from truonghoc_Donvi e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="donvisTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="donvisTable"
+                dataLoader="donvisDl">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="donvisTable"
+                    width="100%"
+                    dataContainer="donvisDc">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+            </actions>
+            <columns>
+                <column id="stt" generator="stt" caption="STT"/>
+                <column id="tendonvi"
+                caption="mainMsg://donvi.tendonvi"/>
+                <column id="donvitrungtam"
+                caption="mainMsg://donvi.donvitrungtam"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="donvisTable.create"/>
+                <button id="editBtn" action="donvisTable.edit"/>
+                <button id="removeBtn" action="donvisTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

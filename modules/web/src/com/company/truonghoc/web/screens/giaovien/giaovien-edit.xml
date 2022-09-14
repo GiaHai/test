@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="mainMsg://giaovienEdit.caption"
+        focusComponent="form"
+        messagesPack="com.company.truonghoc.web.screens.giaovien">
+    <data>
+        <instance id="giaovienDc"
+                  class="com.company.truonghoc.entity.Giaovien"
+                  view="giaovien-view">
+            <loader/>
+        </instance>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="editActions" spacing="true">
+        <form id="form" dataContainer="giaovienDc">
+            <column width="350px">
+                <textField id="usertao_giaovienField"
+                           property="usertao_giaovien"
+                           caption="mainMsg://nguoitao"/>
+                <textField id="donvitao_giaovienField"
+                           property="donvitao_giaovien"
+                           caption="mainMsg://donvitao"/>
+                <textField id="tengiaovienField"
+                           property="tengiaovien"
+                           caption="mainMsg://giaovien.tengiaovien"/>
+                <dateField id="ngaysinhgiaovienField"
+                           property="ngaysinhgiaovien"
+                           caption="mainMsg://giaovien.ngaysinh"/>
+                <textField id="quequangiaovienField"
+                           property="quequangiaovien"
+                           caption="mainMsg://giaovien.quequan"/>
+                <lookupField id="gioitinhgiaovienField"
+                             property="gioitinhgiaovien"
+                             caption="mainMsg://giaovien.gioitinh"/>
+                <textField id="luongcobanField"
+                           property="luongcoban"
+                           caption="mainMsg://giaovien.luongcoban"/>
+                <textField id="ghichuField"
+                           property="ghichu"
+                           caption="mainMsg://giaovien.ghichu"/>
+            </column>
+        </form>
+        <hbox id="editActions" spacing="true">
+            <button id="commitAndCloseBtn" action="windowCommitAndClose"/>
+            <button id="closeBtn" action="windowClose"/>
+        </hbox>
+    </layout>
+</window>

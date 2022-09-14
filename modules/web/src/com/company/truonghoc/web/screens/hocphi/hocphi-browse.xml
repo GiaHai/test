@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="mainMsg://hocphiBrowse.caption"
+        focusComponent="hocphisTable"
+        messagesPack="com.company.truonghoc.web.screens.hocphi">
+    <data readOnly="true">
+        <collection id="hocphisDc"
+                    class="com.company.truonghoc.entity.Hocphi"
+                    view="hocphi-view">
+            <loader id="hocphisDl">
+                <query>
+                    <![CDATA[select e from truonghoc_Hocphi e]]>
+                    <condition>
+                        <and>
+                            <c:jpql>
+                                <c:where>e.dovitao_hocphi = :component_dovitao_hocphiField</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>e.ngaydong >= :component_tungayField</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>:component_denngayField >= e.ngaydong</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>:component_trangthaiField = e.tinhtrangthanhtoan</c:where>
+                            </c:jpql>
+                        </and>
+                    </condition>
+                </query>
+            </loader>
+        </collection>
+        <collection id="donvisDc"
+                    class="com.company.truonghoc.entity.Donvi"
+                    view="donvi-view">
+            <loader id="donvisDl">
+                <query>
+                    <![CDATA[select e from truonghoc_Donvi e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true">
+        </dataLoadCoordinator>
+    </facets>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="hocphisTable"
+            stylename="css-brower-hocphi"
+            spacing="true">
+        <vbox spacing="true"
+              stylename="css-vbox-timkiem">
+            <label value="Điều kiện lọc" stylename="dieukienloc"/>
+            <hbox spacing="true"
+                  stylename="hbox-text">
+                <lookupField id="dovitao_hocphiField"
+                             caption="Đơn vị"
+                             nullName="Lọc tất cả"
+                             stylename="nhap"/>
+                <dateField id="tungayField"
+                           datatype="date"
+                           resolution="DAY"
+                           width="100%"
+                           caption="mainMsg://tungay"
+                           stylename="nhap"/>
+                <dateField id="denngayField"
+                           datatype="date"
+                           resolution="DAY"
+                           caption="mainMsg://denngay"
+                           stylename="nhap"/>
+                <lookupField id="trangthaiField"
+                             caption="Trạng thái"
+                             nullName="Lọc tất cả"/>
+            </hbox>
+            <button id="clearBtn"
+                    caption="Clear"
+                    align="TOP_RIGHT"
+                    stylename="button-clearbtn"/>
+        </vbox>
+        <groupTable id="hocphisTable"
+                    width="100%"
+                    dataContainer="hocphisDc">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+            </actions>
+            <columns>
+                <column id="stt"
+                        generator="stt"
+                        caption="STT"/>
+                <column id="createdBy"
+                        caption="mainMsg://nguoitao"/>
+                <column id="dovitao_hocphi"
+                        caption="mainMsg://donvitao"/>
+                <column id="hovaten"
+                        caption="mainMsg://hocphi.hovaten"/>
+                <column id="namsinh"
+                        caption="mainMsg://hocphi.namsinh"/>
+                <column id="ghichu"
+                        caption="mainMsg://hocphi.ghichu"/>
+                <column id="sotientamtinh"
+                        caption="mainMsg://hocphi.sotientamtinh"/>
+                <column id="sotienthutheohd"
+                        caption="mainMsg://hocphi.sotienthutheohd"/>
+                <column id="ngaydong"
+                        caption="mainMsg://hocphi.ngaydong"/>
+                <column id="handong"
+                        caption="Hạn đóng"/>
+                <column id="hinhthucthanhtoan"
+                        caption="mainMsg://hocphi.hinhthucthanhtoan"/>
+                <column id="checkhandong"
+                        generator="checkhandong"
+                        caption="Trạng thái"/>
+                </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="hocphisTable.create"/>
+                <button id="editBtn" action="hocphisTable.edit"/>
+                <button id="removeBtn" action="hocphisTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

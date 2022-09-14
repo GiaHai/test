@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<views xmlns="http://schemas.haulmont.com/cuba/view.xsd">
+
+    <view entity="truonghoc_Donvi" name="donvi-view" extends="_local"/>
+    <view entity="truonghoc_Giaovien" name="giaovien-view" extends="_local" systemProperties="true">
+    </view>
+    <view entity="truonghoc_Hocphi" name="hocphi-view" extends="_local" systemProperties="true">
+        <property name="hovaten" view="_minimal">
+            <property name="ngaysinhhocsinh"/>
+            <property name="gioitinhhocsinh"/>
+            <property name="quequanhocsinh"/>
+            <property name="ghichu"/>
+            <property name="donvitao_hocsinh"/>
+            <property name="usertao_hocsinh"/>
+        </property>
+    </view>
+    <view entity="truonghoc_Hocsinh" name="hocsinh-view" extends="_local" systemProperties="true">
+    </view>
+    <view entity="truonghoc_Luongthang" name="luongthang-view" extends="_local" systemProperties="true">
+        <property name="hovaten" view="_minimal">
+            <property name="luongcoban"/>
+        </property>
+    </view>
+    <view entity="truonghoc_Thuchi" name="thuchi-view" extends="_local" systemProperties="true"/>
+    <view entity="truonghoc_UserExt" name="userExt-view" extends="_local" systemProperties="true">
+        <property name="group">
+            <property name="name"/>
+        </property>
+        <property name="userRoles" view="user.edit"/>
+        <property name="substitutions" view="user.edit"/>
+        <property name="loockup_donvi" view="_minimal">
+            <property name="donvitrungtam"/>
+        </property>
+
+    </view>
+    <view entity="truonghoc_Thutienhocphi" name="thutienhocphi-view" extends="_local">
+        <property name="tenhocsinh" view="_minimal">
+        </property>
+    </view>
+</views>

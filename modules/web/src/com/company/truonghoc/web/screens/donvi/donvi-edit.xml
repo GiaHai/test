@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="mainMsg://donviEdit.caption"
+        focusComponent="form"
+        messagesPack="com.company.truonghoc.web.screens.donvi">
+    <data>
+        <instance id="donviDc"
+                  class="com.company.truonghoc.entity.Donvi"
+                  view="donvi-view">
+            <loader/>
+        </instance>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="editActions" spacing="true">
+        <form id="form" dataContainer="donviDc">
+            <column width="350px">
+                <textField id="tendonviField"
+                           property="tendonvi"
+                           caption="mainMsg://donvi.tendonvi"/>
+                <checkBox id="donvitrungtamField"
+                          property="donvitrungtam"
+                          caption="mainMsg://donvi.donvitrungtam"/>
+                <textField id="thuField"
+                           property="thu"/>
+                <textField id="chiField"
+                           property="chi"/>
+            </column>
+        </form>
+        <hbox id="editActions" spacing="true">
+            <button id="commitAndCloseBtn" action="windowCommitAndClose"/>
+            <button id="closeBtn" action="windowClose"/>
+        </hbox>
+    </layout>
+</window>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="mainMsg://hocphiEdit.caption"
+        focusComponent="form"
+        messagesPack="com.company.truonghoc.web.screens.hocphi">
+    <data>
+        <instance id="hocphiDc"
+                  class="com.company.truonghoc.entity.Hocphi"
+                  view="hocphi-view">
+            <loader/>
+        </instance>
+        <collection id="hocsinhsDc"
+                    class="com.company.truonghoc.entity.Hocsinh"
+                    view="hocsinh-view">
+            <loader id="hocsinhsDl">
+                <query>
+                    <![CDATA[select e from truonghoc_Hocsinh e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="editActions" spacing="true">
+        <form id="form" dataContainer="hocphiDc">
+            <column width="350px">
+                <textField id="usertaoField"
+                           property="usertao_hocphi"
+                           caption="mainMsg://nguoitao"/>
+                <textField id="dovitao_hocphiField"
+                           property="dovitao_hocphi"
+                           caption="mainMsg://donvitao"/>
+                <lookupField id="hovatenField"
+                             property="hovaten"
+                             optionsContainer="hocsinhsDc"
+                             caption="mainMsg://hocphi.hovaten"/>
+                <dateField id="namsinhField"
+                           property="namsinh"
+                           caption="mainMsg://hocphi.namsinh"/>
+                <textArea id="ghichuField"
+                           property="ghichu"
+                           caption="mainMsg://hocphi.ghichu"/>
+                <textField id="sotientamtinhField"
+                           property="sotientamtinh"
+                           caption="mainMsg://hocphi.sotientamtinh"/>
+                <textField id="sotienthutheohdField"
+                           property="sotienthutheohd"
+                           caption="mainMsg://hocphi.sotienthutheohd"/>
+                <dateField id="ngaydongField"
+                           property="ngaydong"
+                           caption="mainMsg://hocphi.ngaydong"/>
+                <dateField id="handongField"
+                           property="handong"
+                           caption="Hạn đóng"/>
+                <lookupField id="hinhthucthanhtoanField"
+                             property="hinhthucthanhtoan"
+                             caption="mainMsg://hocphi.hinhthucthanhtoan"
+                             nullName="Hình thức thanh toán"/>
+                <textField id="tinhtrangthanhtoanFiedl"
+                           property="tinhtrangthanhtoan"
+                />
+            </column>
+        </form>
+        <hbox id="editActions" spacing="true">
+            <button id="commitAndCloseBtn" action="windowCommitAndClose"/>
+            <button id="closeBtn" action="windowClose"/>
+        </hbox>
+    </layout>
+</window>

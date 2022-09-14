@@ -1,0 +1,1 @@
+update SEC_USER set DTYPE = 'truonghoc_UserExt' where DTYPE is null ;

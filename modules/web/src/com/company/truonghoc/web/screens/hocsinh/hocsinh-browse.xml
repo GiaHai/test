@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="mainMsg://hocsinhBrowse.caption"
+        focusComponent="hocsinhsTable"
+        messagesPack="com.company.truonghoc.web.screens.hocsinh">
+    <data readOnly="true">
+        <collection id="hocsinhsDc"
+                    class="com.company.truonghoc.entity.Hocsinh"
+                    view="hocsinh-view">
+            <loader id="hocsinhsDl">
+                <query>
+                    <![CDATA[select e from truonghoc_Hocsinh e]]>
+                    <condition>
+                        <and>
+                            <c:jpql>
+                                <c:where>e.donvitao_hocsinh = :component_donvitao_hocsinhField</c:where>
+                            </c:jpql>
+                        </and>
+                    </condition>
+                </query>
+            </loader>
+        </collection>
+        <collection id="donvisDc"
+                    class="com.company.truonghoc.entity.Donvi"
+                    view="donvi-view">
+            <loader id="donvisDl">
+                <query>
+                    <![CDATA[select e from truonghoc_Donvi e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true">
+        </dataLoadCoordinator>
+    </facets>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="hocsinhsTable"
+            spacing="true">
+        <hbox>
+            <lookupField id="donvitao_hocsinhField"
+                       caption="Đơn vị"/>
+        </hbox>
+        <groupTable id="hocsinhsTable"
+                    width="100%"
+                    dataContainer="hocsinhsDc">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+            </actions>
+            <columns>
+                <column id="stt"
+                        generator="stt"
+                        caption="STT"/>
+                <column id="createdBy"
+                        caption="mainMsg://nguoitao"/>
+                <column id="donvitao_hocsinh"
+                        caption="mainMsg://donvitao"/>
+                <column id="tenhocsinh"
+                        caption="mainMsg://hocsinh.tenhocsinh"/>
+                <column id="ngaysinhhocsinh"
+                        caption="mainMsg://hocsinh.ngaysinhhocsinh"/>
+                <column id="gioitinhhocsinh"
+                        caption="mainMsg://hocsinh.gioitinhhocsinh"/>
+                <column id="quequanhocsinh"
+                        caption="mainMsg://hocsinh.quequanhocsinh"/>
+                <column id="ghichu"
+                        caption="mainMsg://hocsinh.ghichu"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="hocsinhsTable.create"/>
+                <button id="editBtn" action="hocsinhsTable.edit"/>
+                <button id="removeBtn" action="hocsinhsTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

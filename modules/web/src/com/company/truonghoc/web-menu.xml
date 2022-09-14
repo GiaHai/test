@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<menu-config xmlns="http://schemas.haulmont.com/cuba/menu.xsd">
+    <menu id="application-truonghoc" caption="mainMsg://menu_config.application-truonghoc1" expanded="true">
+        <item screen="truonghoc_Giaovien.browse" caption="mainMsg://menu_config.truonghoc_Giaovien.browse"/>
+        <item screen="truonghoc_Donvi.browse" caption="mainMsg://menu_config.truonghoc_Donvi.browse"/>
+        <item screen="truonghoc_Hocsinh.browse" caption="mainMsg://menu_config.truonghoc_Hocsinh.browse"/>
+        <item screen="truonghoc_BaocaoScreen" caption="Đan làm báo cáo tổng tất cả"/>
+        <item screen="truonghoc_" caption="Đang làm báo cáo tổng theo tháng"/>
+    </menu>
+    <menu id="application-bang" caption="mainMsg://menu_config.application-truonghoc2" expanded="true">
+        <item screen="truonghoc_Hocphi.browse" caption="mainMsg://menu_config.truonghoc_Hocphi.browse"/>
+        <item screen="truonghoc_Luongthang.browse" caption="mainMsg://menu_config.truonghoc_Luongthang.browse"/>
+        <item screen="truonghoc_Thuchi.browse" caption="mainMsg://menu_config.truonghoc_Thuchi.browse"/>
+        <item screen="truonghoc_Thutienhocphi.browse" caption="mainMsg://menu_config.truonghoc_Thutienhocphi.browse"/>
+    </menu>
+    <menu id="administration">
+        <item id="sec$User.browse"/>
+        <item id="sec$Group.browse"/>
+        <item id="sec$Role.browse"/>
+        <separator/>
+        <item id="sys$Category.browse"/>
+        <item id="sec$UserSessionEntity.browse"/>
+        <item id="sys$LockInfo.browse"/>
+        <item id="sys$FileDescriptor.browse"/>
+        <item id="sys$ScheduledTask.browse"/>
+        <item id="entityRestore"/>
+        <item id="entityInspector.browse"/>
+        <item id="appProperties"/>
+        <item id="jmxConsole"/>
+        <separator/>
+        <item id="entityLog"/>
+        <item id="sec$SessionLogEntry.browse"/>
+        <item id="sys$SendingMessage.browse"/>
+        <item id="serverLog"/>
+        <item id="screenProfiler"/>
+        <item id="performanceStatistics"/>
+    </menu>
+    <menu id="help">
+        <item id="aboutWindow" openType="DIALOG"/>
+        <item class="com.haulmont.cuba.web.app.domain.DomainProvider" id="printDomain"/>
+        <separator/>
+        <item id="settings"/>
+        <item screen="helium_ThemeSettingsScreen"/>
+    </menu>
+</menu-config>

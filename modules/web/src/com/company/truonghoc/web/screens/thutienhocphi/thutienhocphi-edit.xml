@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://thutienhocphiEdit.caption"
+        focusComponent="form"
+        messagesPack="com.company.truonghoc.web.screens.thutienhocphi">
+    <data>
+        <instance id="thutienhocphiDc"
+                  class="com.company.truonghoc.entity.Thutienhocphi"
+                  view="thutienhocphi-view">
+            <loader/>
+        </instance>
+        <collection id="hocsinhsDc"
+                    class="com.company.truonghoc.entity.Hocsinh"
+                    view="hocsinh-view">
+            <loader id="hocsinhsDl">
+                <query>
+                    <![CDATA[select e from truonghoc_Hocsinh e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="editActions" spacing="true">
+        <form id="form" dataContainer="thutienhocphiDc">
+            <column width="350px">
+                <textField id="usertaoField"
+                           property="usertao_thutienhocphi"
+                           caption="mainMsg://nguoitao"/>
+                <textField id="dovitao_thutienhocphiField"
+                           property="donvitao_thutienhocphi"
+                           caption="mainMsg://donvitao"/>
+                <textField id="tenkhachhangField"
+                           property="tenkhachhang"
+                           caption="mainMsg://thuvienhocphi.tenkhachhang"/>
+                <textField id="diachiField"
+                           property="diachi"
+                           caption="mainMsg://thuvienhocphi.diachi"/>
+                <dateField id="tungayField"
+                           property="tungay"
+                           datatype="dateTime"
+                           caption="mainMsg://thuvienhocphi.tungay"/>
+                <dateField id="denngayField"
+                           property="denngay"
+                           caption="mainMsg://thuvienhocphi.denngay"/>
+                <lookupField id="tenhocsinhField"
+                             property="tenhocsinh"
+                             optionsContainer="hocsinhsDc"
+                             caption="mainMsg://thuvienhocphi.tenhocsinh"/>
+                <textField id="tenphiField"
+                           property="tenphi"
+                           caption="mainMsg://thuvienhocphi.tenphi"/>
+                <textField id="soluongField"
+                           property="soluong"
+                           caption="mainMsg://thuvienhocphi.soluong"/>
+                <textField id="dongiaField"
+                           property="dongia"
+                           caption="mainMsg://thuvienhocphi.dongia"/>
+                <textField id="thanhtienField"
+                           property="thanhtien"
+                           caption="mainMsg://thuvienhocphi.thanhtien"/>
+                <lookupField id="hinhthucthanhtoanField"
+                             property="hinhthucthanhtoan"
+                             caption="mainMsg://hocphi.hinhthucthanhtoan"
+                             nullName="Hình thức thanh toán"/>
+                <textField id="tinhtrangthanhtoanField"
+                           property="tinhtrangthanhtoan"/>
+            </column>
+        </form>
+        <hbox id="editActions" spacing="true">
+            <button id="commitAndCloseBtn" action="windowCommitAndClose"/>
+            <button id="closeBtn" action="windowClose"/>
+        </hbox>
+    </layout>
+</window>

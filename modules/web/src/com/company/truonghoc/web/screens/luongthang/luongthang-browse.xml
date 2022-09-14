@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://luongthangBrowse.caption"
+        focusComponent="luongthangsTable"
+        messagesPack="com.company.truonghoc.web.screens.luongthang">
+    <data readOnly="true">
+        <collection id="luongthangsDc"
+                    class="com.company.truonghoc.entity.Luongthang"
+                    view="luongthang-view">
+            <loader id="luongthangsDl">
+                <query>
+                    <![CDATA[select e from truonghoc_Luongthang e]]>
+                    <condition>
+                        <and>
+                            <c:jpql>
+                                <c:where>e.donvitao_luongthang = :component_donvitao_luongthangField</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>e.ngaynhan >= :component_tungayField</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>:component_denngayField >= e.ngaynhan</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>:component_trangthaiField = e.tinhtrangnhanluong</c:where>
+                            </c:jpql>
+                        </and>
+                    </condition>
+                </query>
+            </loader>
+        </collection>
+        <collection id="donvisDc"
+                    class="com.company.truonghoc.entity.Donvi"
+                    view="donvi-view">
+            <loader id="donvisDl">
+                <query>
+                    <![CDATA[select e from truonghoc_Donvi e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true">
+        </dataLoadCoordinator>
+    </facets>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="luongthangsTable"
+            spacing="true"
+            stylename="css-layout-danhsachluongthang">
+        <vbox spacing="true"
+              stylename="css-vbox-timkiem">
+            <label value="Điều kiện lọc" stylename="dieukienloc"/>
+
+            <hbox spacing="true"
+                  stylename="hbox-text">
+                <lookupField id="donvitao_luongthangField"
+                             caption="Đơn vị"
+                             nullName="Lọc tất cả"
+                             stylename="nhap"/>
+                <dateField id="tungayField"
+                           datatype="date"
+                           resolution="DAY"
+                           width="100%"
+                           caption="mainMsg://tungay"
+                           stylename="nhap"/>
+                <dateField id="denngayField"
+                           datatype="date"
+                           resolution="DAY"
+                           caption="mainMsg://denngay"
+                           stylename="nhap"/>
+                <lookupField id="trangthaiField"
+                             caption="Trạng thái"
+                             nullName="Lọc tất cả"/>
+            </hbox>
+            <button id="clearBtn"
+                    caption="Clear"
+                    align="TOP_RIGHT"
+                    stylename="button-clearbtn"/>
+        </vbox>
+        <groupTable id="luongthangsTable"
+                    width="100%"
+                    dataContainer="luongthangsDc"
+                    aggregatable="true">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+                <action id="excel" type="excel"/>
+            </actions>
+            <columns>
+                <column id="stt"
+                        generator="stt"
+                        caption="STT"/>
+                <column id="createdBy"
+                        caption="mainMsg://nguoitao"/>
+                <column id="donvitao_luongthang"
+                        caption="mainMsg://donvitao"/>
+                <column id="hovaten"
+                        caption="mainMsg://luongthang.hovaten"/>
+                <column id="ngaynhan"
+                        caption="mainMsg://luongthang.ngaynhan"/>
+                <column id="hannhanluong"
+                        caption="Hạn nhận lương"/>
+                <column id="luongcoban"
+                        caption="mainMsg://luongthang.luongcoban"/>
+                <column id="buoilam"
+                        caption="mainMsg://luongthang.buoilam"/>
+                <column id="cangoai"
+                        caption="mainMsg://luongthang.cangoai"/>
+                <column id="casang"
+                        caption="mainMsg://luongthang.casang"/>
+                <column id="thuclinh"
+                        caption="mainMsg://luongthang.thuclinh"/>
+                <column id="daythem"
+                        caption="mainMsg://luongthang.daythem"/>
+                <column id="trocap"
+                        caption="mainMsg://luongthang.trocap"/>
+                <column id="trachnhiem"
+                        caption="mainMsg://luongthang.trachnhiem"/>
+                <column id="chuyencan"
+                        caption="mainMsg://luongthang.chuyencan"/>
+                <column id="thuong"
+                        caption="mainMsg://luongthang.thuong"/>
+                <column id="tonglinh"
+                        caption="mainMsg://luongthang.tonglinh">
+                    <aggregation type="SUM"/>
+                </column>
+                <column id="checkhannhanluong"
+                        generator="checkhannhanluong"
+                        caption="Tình trạng"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="luongthangsTable.create"/>
+                <button id="editBtn" action="luongthangsTable.edit"/>
+                <button id="removeBtn" action="luongthangsTable.remove"/>
+                <button id="excelBtn" action="luongthangsTable.excel"/>
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>
