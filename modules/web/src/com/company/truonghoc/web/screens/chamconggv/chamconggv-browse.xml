@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
         xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
-        caption="msg://chamconggvBrowse.caption"
+        caption="mainMsg://://chamconggvBrowse.caption"
         focusComponent="chamconggvsTable"
         messagesPack="com.company.truonghoc.web.screens.chamconggv">
     <data readOnly="true">
@@ -60,7 +60,7 @@
         </vbox>
         <groupTable id="chamconggvsTable"
                     width="100%"
-                    dataContainer="chamcongGvsDc">
+                    dataContainer="chamconggvsDc">
             <actions>
                 <action id="create" type="create"/>
                 <action id="edit" type="edit"/>
