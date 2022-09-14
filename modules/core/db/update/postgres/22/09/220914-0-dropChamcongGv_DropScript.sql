@@ -1,1 +1,0 @@
-drop table if exists TRUONGHOC_CHAMCONG_GV__U59096 cascade ;
