@@ -3,6 +3,7 @@ package com.company.truonghoc.entity;
 import com.haulmont.cuba.core.entity.StandardEntity;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Table(name = "TRUONGHOC_DIEMDANH")
 @Entity(name = "truonghoc_Diemdanh")
