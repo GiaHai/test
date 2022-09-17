@@ -9,7 +9,7 @@ import javax.persistence.*;
 public class Diemdanh extends StandardEntity {
     private static final long serialVersionUID = 1305572135769904742L;
 
-    @Column(name = "NGUOITAODD")
+   @Column(name = "NGUOITAODD")
     private String nguoitaodd;
 
     @Column(name = "DONVIDD")
@@ -20,7 +20,16 @@ public class Diemdanh extends StandardEntity {
     private Hocsinh hotenhs;
 
     @Column(name = "NGAYNGHI")
-    private String ngaynghi;
+    @Temporal(TemporalType.DATE)
+    private Date ngaynghi;
+
+    public void setNgaynghi(Date ngaynghi) {
+        this.ngaynghi = ngaynghi;
+    }
+
+    public Date getNgaynghi() {
+        return ngaynghi;
+    }
 
     public void setHotenhs(Hocsinh hotenhs) {
         this.hotenhs = hotenhs;
@@ -28,14 +37,6 @@ public class Diemdanh extends StandardEntity {
 
     public Hocsinh getHotenhs() {
         return hotenhs;
-    }
-
-    public String getNgaynghi() {
-        return ngaynghi;
-    }
-
-    public void setNgaynghi(String ngaynghi) {
-        this.ngaynghi = ngaynghi;
     }
 
     public String getDonvidd() {
