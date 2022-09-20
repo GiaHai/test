@@ -68,13 +68,15 @@ create table TRUONGHOC_HOCSINH (
     DELETE_TS datetime2,
     DELETED_BY nvarchar(50),
     --
-    USERTAO_HOCSINH nvarchar(255),
+    USERTAO_HOCSINH datetime2,
     DONVITAO_HOCSINH nvarchar(255),
     TENHOCSINH nvarchar(255),
     NGAYSINHHOCSINH datetime2,
     GIOITINHHOCSINH nvarchar(255),
     QUEQUANHOCSINH nvarchar(255),
     GHICHU nvarchar(255),
+    LOPHOC_ID uniqueidentifier not null,
+    DIEMDANH_ID uniqueidentifier,
     --
     primary key nonclustered (ID)
 )^
@@ -90,7 +92,6 @@ create table TRUONGHOC_GIAOVIEN (
     DELETE_TS datetime2,
     DELETED_BY nvarchar(50),
     --
-    USERTAO_GIAOVIEN nvarchar(255),
     DONVITAO_GIAOVIEN nvarchar(255),
     TENGIAOVIEN nvarchar(255) not null,
     NGAYSINHGIAOVIEN datetime2,
@@ -152,6 +153,8 @@ create table TRUONGHOC_DONVI (
 alter table SEC_USER add LOOCKUP_DONVI_ID uniqueidentifier ^
 alter table SEC_USER add TENDONVI nvarchar(255) ^
 alter table SEC_USER add DONVITRUNGTAM tinyint ^
+alter table SEC_USER add GIAOVIEN_ID uniqueidentifier ^
+alter table SEC_USER add TEXTGV nvarchar(255) ^
 alter table SEC_USER add DTYPE nvarchar(31) ^
 update SEC_USER set DTYPE = 'truonghoc_UserExt' where DTYPE is null ^
 -- end SEC_USER
@@ -173,9 +176,6 @@ create table TRUONGHOC_THUTIENHOCPHI (
     TUNGAY datetime2,
     DENNGAY datetime2,
     TENHOCSINH_ID uniqueidentifier,
-    TENPHI nvarchar(255),
-    SOLUONG bigint,
-    DONGIA bigint,
     THANHTIEN bigint,
     HINHTHUCTHANHTOAN nvarchar(255),
     TINHTRANGTHANHTOAN nvarchar(255),
@@ -183,3 +183,95 @@ create table TRUONGHOC_THUTIENHOCPHI (
     primary key nonclustered (ID)
 )^
 -- end TRUONGHOC_THUTIENHOCPHI
+-- begin TRUONGHOC_DIEMDANH
+create table TRUONGHOC_DIEMDANH (
+    ID uniqueidentifier,
+    VERSION integer not null,
+    CREATE_TS datetime2,
+    CREATED_BY nvarchar(50),
+    UPDATE_TS datetime2,
+    UPDATED_BY nvarchar(50),
+    DELETE_TS datetime2,
+    DELETED_BY nvarchar(50),
+    --
+    NGUOITAODD nvarchar(255),
+    DONVIDD nvarchar(255),
+    NGAYNGHI datetime2,
+    --
+    primary key nonclustered (ID)
+)^
+-- end TRUONGHOC_DIEMDANH
+-- begin TRUONGHOC_CHAMCONGGV
+create table TRUONGHOC_CHAMCONGGV (
+    ID uniqueidentifier,
+    VERSION integer not null,
+    CREATE_TS datetime2,
+    CREATED_BY nvarchar(50),
+    UPDATE_TS datetime2,
+    UPDATED_BY nvarchar(50),
+    DELETE_TS datetime2,
+    DELETED_BY nvarchar(50),
+    --
+    HOTENGV_ID uniqueidentifier,
+    DONVIGV nvarchar(255),
+    NGAYLAM datetime2,
+    BUOILAM nvarchar(255),
+    --
+    primary key nonclustered (ID)
+)^
+-- end TRUONGHOC_CHAMCONGGV
+-- begin TRUONGHOC_LOPHOC
+create table TRUONGHOC_LOPHOC (
+    ID uniqueidentifier,
+    VERSION integer not null,
+    CREATE_TS datetime2,
+    CREATED_BY nvarchar(50),
+    UPDATE_TS datetime2,
+    UPDATED_BY nvarchar(50),
+    DELETE_TS datetime2,
+    DELETED_BY nvarchar(50),
+    --
+    TENLOP nvarchar(255),
+    GIAOVIENCN nvarchar(255),
+    --
+    primary key nonclustered (ID)
+)^
+-- end TRUONGHOC_LOPHOC
+-- begin TRUONGHOC_CHITIETTHU
+create table TRUONGHOC_CHITIETTHU (
+    ID uniqueidentifier,
+    VERSION integer not null,
+    CREATE_TS datetime2,
+    CREATED_BY nvarchar(50),
+    UPDATE_TS datetime2,
+    UPDATED_BY nvarchar(50),
+    DELETE_TS datetime2,
+    DELETED_BY nvarchar(50),
+    --
+    TENPHI nvarchar(255),
+    SOLUONG bigint,
+    DONGIA bigint,
+    TONGGIA bigint,
+    THUTIENHOCPHI_ID uniqueidentifier not null,
+    --
+    primary key nonclustered (ID)
+)^
+-- end TRUONGHOC_CHITIETTHU
+-- begin TRUONGHOC_TENLOP
+create table TRUONGHOC_TENLOP (
+    ID uniqueidentifier,
+    VERSION integer not null,
+    CREATE_TS datetime2,
+    CREATED_BY nvarchar(50),
+    UPDATE_TS datetime2,
+    UPDATED_BY nvarchar(50),
+    DELETE_TS datetime2,
+    DELETED_BY nvarchar(50),
+    --
+    DOVI nvarchar(255),
+    TENLOP nvarchar(255),
+    GIAOVIENCN_ID uniqueidentifier,
+    --
+    primary key nonclustered (ID)
+)^
+-- end TRUONGHOC_TENLOP

@@ -93,13 +93,15 @@ create table TRUONGHOC_HOCSINH (
     DELETE_TS timestamp,
     DELETED_BY varchar(50),
     --
-    USERTAO_HOCSINH varchar(255),
+    USERTAO_HOCSINH timestamp,
     DONVITAO_HOCSINH varchar(255),
     TENHOCSINH varchar(255),
     NGAYSINHHOCSINH date,
     GIOITINHHOCSINH varchar(255),
     QUEQUANHOCSINH varchar(255),
     GHICHU varchar(255),
+    LOPHOC_ID uuid not null,
+    DIEMDANH_ID uuid,
     --
     primary key (ID)
 )^
@@ -117,8 +119,7 @@ create table TRUONGHOC_DIEMDANH (
     --
     NGUOITAODD varchar(255),
     DONVIDD varchar(255),
-    HOTENHS_ID uuid,
-    NGAYNGHI varchar(255),
+    NGAYNGHI date,
     --
     primary key (ID)
 )^
@@ -153,7 +154,6 @@ create table TRUONGHOC_GIAOVIEN (
     DELETE_TS timestamp,
     DELETED_BY varchar(50),
     --
-    USERTAO_GIAOVIEN varchar(255),
     DONVITAO_GIAOVIEN varchar(255),
     TENGIAOVIEN varchar(255) not null,
     NGAYSINHGIAOVIEN date,
@@ -240,3 +240,38 @@ create table TRUONGHOC_CHITIETTHU (
     primary key (ID)
 )^
 -- end TRUONGHOC_CHITIETTHU
+-- begin TRUONGHOC_LOPHOC
+create table TRUONGHOC_LOPHOC (
+    ID uuid,
+    VERSION integer not null,
+    CREATE_TS timestamp,
+    CREATED_BY varchar(50),
+    UPDATE_TS timestamp,
+    UPDATED_BY varchar(50),
+    DELETE_TS timestamp,
+    DELETED_BY varchar(50),
+    --
+    TENLOP varchar(255),
+    GIAOVIENCN varchar(255),
+    --
+    primary key (ID)
+)^
+-- end TRUONGHOC_LOPHOC
+-- begin TRUONGHOC_TENLOP
+create table TRUONGHOC_TENLOP (
+    ID uuid,
+    VERSION integer not null,
+    CREATE_TS timestamp,
+    CREATED_BY varchar(50),
+    UPDATE_TS timestamp,
+    UPDATED_BY varchar(50),
+    DELETE_TS timestamp,
+    DELETED_BY varchar(50),
+    --
+    DOVI varchar(255),
+    TENLOP varchar(255),
+    GIAOVIENCN_ID uuid,
+    --
+    primary key (ID)
+)^
+-- end TRUONGHOC_TENLOP
