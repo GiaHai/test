@@ -7,18 +7,14 @@ import com.company.truonghoc.entity.Lophoc.Tenlop;
 import com.haulmont.cuba.core.entity.Entity;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.gui.UiComponents;
-import com.haulmont.cuba.gui.actions.list.CreateAction;
 import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.model.CollectionContainer;
 import com.haulmont.cuba.gui.model.CollectionLoader;
-import com.haulmont.cuba.gui.model.InstanceContainer;
 import com.haulmont.cuba.gui.screen.*;
 import com.company.truonghoc.entity.Lophoc.Lophoc;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @UiController("truonghoc_Lophoc.edit")
@@ -52,8 +48,6 @@ public class LophocEdit extends StandardEditor<Lophoc> {
     protected TextField<String> giaovien;
     @Inject
     protected UiComponents uiComponents;
-    @Named("dshocsinhTable.create")
-    protected CreateAction<Hocsinh> dshocsinhTableCreate;
     @Inject
     protected Button commitAndCloseBtn;
     @Inject
