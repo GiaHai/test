@@ -1,0 +1,1 @@
+exec sp_rename 'TRUONGHOC_LOPHOC.SISO', 'SISO__U66847', 'COLUMN' ^
