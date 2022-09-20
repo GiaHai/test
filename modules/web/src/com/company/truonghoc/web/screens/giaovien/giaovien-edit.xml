@@ -15,9 +15,6 @@
     <layout expand="editActions" spacing="true">
         <form id="form" dataContainer="giaovienDc">
             <column width="350px">
-                <textField id="usertao_giaovienField"
-                           property="usertao_giaovien"
-                           caption="mainMsg://nguoitao"/>
                 <textField id="donvitao_giaovienField"
                            property="donvitao_giaovien"
                            caption="mainMsg://donvitao"/>

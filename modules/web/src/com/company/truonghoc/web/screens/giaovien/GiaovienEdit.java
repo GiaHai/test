@@ -19,8 +19,6 @@ public class GiaovienEdit extends StandardEditor<Giaovien> {
     @Inject
     protected LookupField<String> gioitinhgiaovienField;
     @Inject
-    protected TextField<String> usertao_giaovienField;
-    @Inject
     protected UserSession userSession;
     @Inject
     protected TextField<String> donvitao_giaovienField;
@@ -31,15 +29,12 @@ public class GiaovienEdit extends StandardEditor<Giaovien> {
     protected void onInit(InitEvent event) {
         List<String> list = Arrays.asList("Nam", "Nữ", "Tùy chỉnh");
         gioitinhgiaovienField.setOptionsList(list);
-        usertao_giaovienField.setEditable(false);
         donvitao_giaovienField.setEditable(false);
     }
 
     @Subscribe
     protected void onBeforeShow(BeforeShowEvent event) {
         donvitao_giaovienField.setValue(dulieuUserService.timEditdonvi(userSession.getUser().getLogin()).getTendonvi());
-        usertao_giaovienField.setValue(userSession.getUser().getLogin());
-
     }
     
 

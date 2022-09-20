@@ -13,5 +13,7 @@
         <class>com.company.truonghoc.entity.Chamconggv</class>
         <class>com.company.truonghoc.entity.Diemdanh</class>
         <class>com.company.truonghoc.entity.Chitietthu</class>
+        <class>com.company.truonghoc.entity.Lophoc.Lophoc</class>
+        <class>com.company.truonghoc.entity.Lophoc.Tenlop</class>
     </persistence-unit>
 </persistence>

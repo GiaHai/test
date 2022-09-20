@@ -15,6 +15,13 @@
         </property>
     </view>
     <view entity="truonghoc_Hocsinh" name="hocsinh-view" extends="_local" systemProperties="true">
+        <property name="lophoc" view="_minimal">
+            <property name="tenlop"/>
+            <property name="giaoviencn"/>
+        </property>
+        <property name="diemdanh" view="_minimal">
+            <property name="ngaynghi"/>
+        </property>
     </view>
     <view entity="truonghoc_Luongthang" name="luongthang-view" extends="_local" systemProperties="true">
         <property name="hovaten" view="_minimal">
@@ -63,6 +70,22 @@
             <property name="thanhtien"/>
             <property name="hinhthucthanhtoan"/>
             <property name="tinhtrangthanhtoan"/>
+        </property>
+    </view>
+    <view entity="truonghoc_Lophoc" name="lophoc-view" extends="_local">
+        <property name="dshocsinh" view="_minimal">
+            <property name="donvitao_hocsinh"/>
+            <property name="usertao_hocsinh"/>
+        </property>
+    </view>
+    <view entity="truonghoc_Tenlop" name="tenlop-view" extends="_local">
+        <property name="giaoviencn" view="_minimal">
+            <property name="donvitao_giaovien"/>
+            <property name="ngaysinhgiaovien"/>
+            <property name="quequangiaovien"/>
+            <property name="gioitinhgiaovien"/>
+            <property name="luongcoban"/>
+            <property name="ghichu"/>
         </property>
     </view>
 </views>

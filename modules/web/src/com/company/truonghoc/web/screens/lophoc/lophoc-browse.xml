@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="mainMsg://lophocBrowse.caption"
+        focusComponent="lophocsTable"
+        messagesPack="com.company.truonghoc.web.screens.lophoc">
+    <data readOnly="true">
+        <collection id="lophocsDc"
+                    class="com.company.truonghoc.entity.Lophoc.Lophoc">
+            <view extends="lophoc-view"/>
+            <loader id="lophocsDl">
+                <query>
+                    <![CDATA[select e from truonghoc_Lophoc e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="lophocsTable"
+            spacing="true"
+    stylename="css-layout-lophoc">
+        <groupBox caption="Tìm kiếm"
+                  collapsable="true"
+                  collapsed="true"
+                  stylename="css-hbox-search"
+                  spacing="true"
+                  width="100%">
+            <hbox spacing="true">
+                <textField id="searchLopField" caption="Lớp"/>
+                <textField id="searchGvcnField" caption="Giáo viên chủ nhiệm"/>
+            </hbox>
+        </groupBox>
+        <groupTable id="lophocsTable"
+                    width="100%"
+                    dataContainer="lophocsDc">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+            </actions>
+            <columns>
+                <column id="tenlop" caption="mainMsg://lophoc.tenlop"/>
+                <column id="giaoviencn" caption="mainMsg://lophoc.giaoviencn"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="lophocsTable.create"/>
+                <button id="editBtn" action="lophocsTable.edit"/>
+                <button id="removeBtn" action="lophocsTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

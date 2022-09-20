@@ -4,7 +4,11 @@
         <item screen="truonghoc_Giaovien.browse" caption="mainMsg://menu_config.truonghoc_Giaovien.browse"/>
         <item screen="truonghoc_Donvi.browse" caption="mainMsg://menu_config.truonghoc_Donvi.browse"/>
         <item screen="truonghoc_Hocsinh.browse" caption="mainMsg://menu_config.truonghoc_Hocsinh.browse"/>
-        <item screen="truonghoc_Chitietthu.browse" caption="mainMsg://menu_config.truonghoc_Chitietthu.browse"/>
+        <item screen="truonghoc_Lophoc.browse" caption="mainMsg://menu_config.truonghoc_Lophoc.browse"/>
+        <item screen="truonghoc_Tenlop.browse" caption="mainMsg://menu_config.truonghoc_Tenlop.browse"/>
+    </menu>
+    <menu id="application-nhap" caption="mainMsg://menu_config.application-truonghoc5" expanded="true">
+        <item screen="truonghoc_Lophoc.edit" caption="Nhập Lớp"/>
     </menu>
     <menu id="application-bang" caption="mainMsg://menu_config.application-truonghoc2" expanded="true">
         <item screen="truonghoc_Hocphi.browse" caption="mainMsg://menu_config.truonghoc_Hocphi.browse"/>

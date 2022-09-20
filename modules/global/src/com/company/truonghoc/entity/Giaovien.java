@@ -13,9 +13,6 @@ import java.util.Date;
 public class Giaovien extends StandardEntity {
     private static final long serialVersionUID = 8016193291854421026L;
 
-    @Column(name = "USERTAO_GIAOVIEN")
-    private String usertao_giaovien;
-
     @Column(name = "DONVITAO_GIAOVIEN")
     private String donvitao_giaovien;
 
@@ -50,14 +47,6 @@ public class Giaovien extends StandardEntity {
 
     public void setDonvitao_giaovien(String donvitao_giaovien) {
         this.donvitao_giaovien = donvitao_giaovien;
-    }
-
-    public void setUsertao_giaovien(String usertao_giaovien) {
-        this.usertao_giaovien = usertao_giaovien;
-    }
-
-    public String getUsertao_giaovien() {
-        return usertao_giaovien;
     }
 
     public void setLuongcoban(Long luongcoban) {

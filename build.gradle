@@ -40,7 +40,7 @@ dependencies {
     appComponent("com.haulmont.charts:charts-global:$cubaVersion")
 }
 
-def postgres = 'org.postgresql:postgresql:42.2.9'
+def mssql = 'com.microsoft.sqlserver:mssql-jdbc:7.2.2.jre8'
 
 configure([globalModule, coreModule, webModule, webToolkitModule]) {
     apply(plugin: 'java')
@@ -92,8 +92,8 @@ configure(coreModule) {
     dependencies {
         compile(globalModule)
         compileOnly(servletApi)
-        jdbc(postgres)
-        testRuntime(postgres)
+        jdbc(mssql) { exclude(group: 'com.microsoft.azure', module: 'azure-keyvault') }
+        testRuntime(mssql) { exclude(group: 'com.microsoft.azure', module: 'azure-keyvault') }
     }
 
     task cleanConf(description: 'Cleans up conf directory', type: Delete) {

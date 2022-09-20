@@ -35,15 +35,28 @@
         <dataLoadCoordinator auto="true">
         </dataLoadCoordinator>
     </facets>
-
     <dialogMode height="600"
                 width="800"/>
     <layout expand="giaoviensTable"
+            stylename="css-layout-giaovien"
             spacing="true">
-        <hbox>
-            <lookupField id="donvitao_giaovienField"
-                       caption="Đơn vị"/>
-        </hbox>
+        <groupBox caption="Tìm kiếm"
+                  collapsable="true"
+                  collapsed="true"
+                  stylename="css-hbox-search"
+                  spacing="true"
+                  width="100%">
+            <hbox spacing="true">
+                <lookupField id="donvitao_giaovienField"
+                             caption="Đơn vị"/>
+                <textField id="searchTenGvField"
+                           caption="Giáo viên"/>
+                <button id="timkiemBtn"
+                        caption="Tìm kiếm"
+                        stylename="Btntimkiem"
+                        invoke="timkiem" align="BOTTOM_CENTER"/>
+            </hbox>
+        </groupBox>
         <groupTable id="giaoviensTable"
                     width="100%"
                     dataContainer="giaoviensDc">
@@ -54,8 +67,6 @@
             </actions>
             <columns>
                 <column id="stt" generator="stt" caption="STT"/>
-                <column id="createdBy"
-                        caption="mainMsg://nguoitao"/>
                 <column id="donvitao_giaovien"
                         caption="mainMsg://donvitao"/>
                 <column id="tengiaovien"

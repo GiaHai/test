@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="mainMsg://lophocEdit.caption"
+        focusComponent="form"
+        messagesPack="com.company.truonghoc.web.screens.lophoc">
+    <data>
+        <instance id="lophocDc"
+                  class="com.company.truonghoc.entity.Lophoc.Lophoc">
+            <view extends="lophoc-view"/>
+            <loader/>
+            <collection id="dshocsinhDc" property="dshocsinh"/>
+        </instance>
+        <collection id="tenlopsDc"
+                    class="com.company.truonghoc.entity.Lophoc.Tenlop">
+            <view extends="tenlop-view"/>
+            <loader id="tenlopsDl">
+                <query>
+                    <![CDATA[select e from truonghoc_Tenlop e]]>
+                </query>
+            </loader>
+        </collection>
+        <collection id="hocsinhsDc"
+                    class="com.company.truonghoc.entity.Hocsinh"
+                    view="hocsinh-view">
+            <loader id="hocsinhsDl">
+                <query>
+                    <![CDATA[select e from truonghoc_Hocsinh e]]>
+                </query>
+            </loader>
+        </collection>
+        <collection id="donvisDc"
+                    class="com.company.truonghoc.entity.Donvi"
+                    view="donvi-view">
+            <loader id="donvisDl">
+                <query>
+                    <![CDATA[select e from truonghoc_Donvi e]]>
+                </query>
+            </loader>
+        </collection>
+
+        <collection id="giaoviensDc"
+                    class="com.company.truonghoc.entity.Giaovien"
+                    view="giaovien-view">
+            <loader id="giaoviensDl">
+                <query>
+                    <![CDATA[select e from truonghoc_Giaovien e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="editActions" spacing="true">
+        <form id="form" dataContainer="lophocDc">
+            <hbox width="100%" spacing="true">
+                <vbox spacing="true">
+                    <hbox spacing="true">
+                        <lookupField id="donviFiled"
+                                     nullName="--Tất cả đơn vị--"
+                                     caption="Đơn vị"/>
+                        <button id="timkiemBtn"
+                                caption="Tìm kiếm Lớp học" align="BOTTOM_CENTER"/>
+
+                    </hbox>
+                    <hbox spacing="true">
+                        <lookupField id="giaovienField"
+                                     optionsContainer="giaoviensDc"
+                                     captionProperty="tengiaovien"
+                                     nullName="---Tất cả giáo viên---"
+                                     caption="mainMsg://lophoc.giaoviencn"/>
+                        <button id="xoaBtn"
+                                css="padding-left: 60px;padding-right: 60px;"
+                                caption="Xóa" width="100%" align="BOTTOM_CENTER"/>
+                    </hbox>
+                </vbox>
+                <hbox spacing="true">
+                    <vbox spacing="true">
+                        <textField id="tenlopField"
+                                   property="tenlop"
+                                   dataContainer="lophocDc"
+                                   caption="mainMsg://lophoc.tenlop"/>
+                        <textField id="giaovien"
+                                   property="giaoviencn"
+                                   caption="mainMsg://lophoc.giaoviencn"
+                                   dataContainer="lophocDc"/>
+                    </vbox>
+                </hbox>
+            </hbox>
+        </form>
+        <groupBox id="dshocsinhBox" caption="mainMsg://hocsinhBrowse.caption">
+            <table id="dshocsinhTable" dataContainer="dshocsinhDc" width="100%" height="200px">
+                <actions>
+                    <action id="create" type="create"/>
+                    <action id="edit" type="edit"/>
+                    <action id="remove" type="remove"/>
+                </actions>
+                <columns>
+                    <column id="stt" generator="stt" caption="STT"/>
+                    <column id="tenhocsinh"
+                            caption="mainMsg://hocsinh.tenhocsinh"/>
+                    <column id="ngaysinhhocsinh"
+                            caption="mainMsg://hocsinh.ngaysinhhocsinh"/>
+                    <column id="gioitinhhocsinh"
+                            caption="mainMsg://hocsinh.gioitinhhocsinh"/>
+                    <column id="quequanhocsinh"
+                            caption="mainMsg://hocsinh.quequanhocsinh"/>
+                    <column id="ghichu"
+                            caption="mainMsg://hocsinh.ghichu"/>
+                </columns>
+                <buttonsPanel>
+                    <button action="dshocsinhTable.create"/>
+                    <button action="dshocsinhTable.edit"/>
+                    <button action="dshocsinhTable.remove"/>
+                </buttonsPanel>
+            </table>
+        </groupBox>
+        <hbox id="editActions" spacing="true">
+            <button id="commitAndCloseBtn" action="windowCommitAndClose"/>
+            <button id="closeBtn" action="windowClose"/>
+        </hbox>
+    </layout>
+</window>

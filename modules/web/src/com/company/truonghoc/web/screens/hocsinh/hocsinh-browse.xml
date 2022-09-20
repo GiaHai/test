@@ -30,6 +30,15 @@
                 </query>
             </loader>
         </collection>
+        <collection id="lophocsDc"
+                    class="com.company.truonghoc.entity.Lophoc.Lophoc">
+            <view extends="lophoc-view"/>
+            <loader id="lophocsDl">
+                <query>
+                    <![CDATA[select e from truonghoc_Lophoc e]]>
+                </query>
+            </loader>
+        </collection>
     </data>
     <facets>
         <dataLoadCoordinator auto="true">
@@ -38,46 +47,95 @@
     <dialogMode height="600"
                 width="800"/>
     <layout expand="hocsinhsTable"
-            spacing="true">
-        <hbox>
-            <lookupField id="donvitao_hocsinhField"
-                       caption="Đơn vị"/>
-        </hbox>
-        <groupTable id="hocsinhsTable"
-                    width="100%"
-                    dataContainer="hocsinhsDc">
+            spacing="true"
+            stylename="css-layout-hocsinh">
+        <groupBox caption="Tìm kiếm"
+                  collapsable="true"
+                  collapsed="true"
+                  stylename="css-hbox-search"
+                  spacing="true"
+                  width="100%">
+            <hbox spacing="true" width="100%">
+                <vbox spacing="true" width="100%">
+                    <lookupField id="donvitao_hocsinhField"
+                                 caption="Đơn vị"
+                                 width="100%"
+                                 nullName="---Tất cả đơn vị---"/>
+                    <lookupField id="sreachlopField"
+                                 caption="Lớp"
+                                 width="100%"
+                                 nullName="--Tất cả lớp---"/>
+                </vbox>
+                <vbox spacing="true" width="100%">
+                    <textField id="sreachgvFiled"
+                               caption="Giáo viên"
+                               width="100%"
+                               inputPrompt="Tên giáo viên"/>
+                    <lookupField id="sreachGtinhField"
+                                 caption="Giới tính"
+                                 width="100%"
+                                 nullName="---Tất cả giới tính---"/>
+                </vbox>
+                <vbox spacing="true" width="100%">
+                    <textField id="sreachHsField"
+                               caption="Học sinh"
+                               width="100%"
+                               inputPrompt="Tên học sinh"/>
+                    <lookupField id="selectionModeField"
+                                 caption="Chọn trường để điểm danh"
+                                 nullOptionVisible="false"
+                                 width="100%"
+                                 textInputAllowed="false"/>
+                </vbox>
+                <button id="timkiemBtn"
+                        invoke="timkiemExcute"
+                        stylename="Btntimkiem"
+                        caption="Tìm kiếm" align="BOTTOM_LEFT"/>
+            </hbox>
+        </groupBox>
+        <dataGrid id="hocsinhsTable"
+                  width="100%"
+                  dataContainer="hocsinhsDc">
             <actions>
-                <action id="create" type="create"/>
                 <action id="edit" type="edit"/>
                 <action id="remove" type="remove"/>
             </actions>
             <columns>
                 <column id="stt"
-                        generator="stt"
                         caption="STT"/>
-                <column id="createdBy"
+                <column id="usertao_hocsinh"
+                        property="usertao_hocsinh"
                         caption="mainMsg://nguoitao"/>
                 <column id="donvitao_hocsinh"
+                        property="donvitao_hocsinh"
                         caption="mainMsg://donvitao"/>
                 <column id="tenhocsinh"
+                        property="tenhocsinh"
                         caption="mainMsg://hocsinh.tenhocsinh"/>
+                <column id="lophoc.tenlop"
+                        property="lophoc.tenlop"
+                        caption="Lớp học"/>
                 <column id="ngaysinhhocsinh"
+                        property="ngaysinhhocsinh"
                         caption="mainMsg://hocsinh.ngaysinhhocsinh"/>
                 <column id="gioitinhhocsinh"
+                        property="gioitinhhocsinh"
                         caption="mainMsg://hocsinh.gioitinhhocsinh"/>
                 <column id="quequanhocsinh"
+                        property="quequanhocsinh"
                         caption="mainMsg://hocsinh.quequanhocsinh"/>
                 <column id="ghichu"
+                        property="ghichu"
                         caption="mainMsg://hocsinh.ghichu"/>
             </columns>
             <rowsCount/>
             <buttonsPanel id="buttonsPanel"
                           alwaysVisible="true">
-                <button id="createBtn" action="hocsinhsTable.create"/>
+                <!--                <button id="createBtn" action="hocsinhsTable.create"/>-->
                 <button id="editBtn" action="hocsinhsTable.edit"/>
                 <button id="removeBtn" action="hocsinhsTable.remove"/>
             </buttonsPanel>
-        </groupTable>
+        </dataGrid>
         <hbox id="lookupActions" spacing="true" visible="false">
             <button action="lookupSelectAction"/>
             <button action="lookupCancelAction"/>

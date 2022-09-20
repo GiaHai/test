@@ -1,5 +1,6 @@
 package com.company.truonghoc.entity;
 
+import com.company.truonghoc.entity.Lophoc.Lophoc;
 import com.haulmont.chile.core.annotations.NamePattern;
 import com.haulmont.cuba.core.entity.StandardEntity;
 
@@ -13,7 +14,8 @@ public class Hocsinh extends StandardEntity {
     private static final long serialVersionUID = 6396620010673039383L;
 
     @Column(name = "USERTAO_HOCSINH")
-    private String usertao_hocsinh;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date usertao_hocsinh;
 
     @Column(name = "DONVITAO_HOCSINH")
     private String donvitao_hocsinh;
@@ -34,20 +36,44 @@ public class Hocsinh extends StandardEntity {
     @Column(name = "GHICHU")
     private String ghichu;
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "LOPHOC_ID")
+    private Lophoc lophoc;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "DIEMDANH_ID")
+    private Diemdanh diemdanh;
+
+    public void setUsertao_hocsinh(Date usertao_hocsinh) {
+        this.usertao_hocsinh = usertao_hocsinh;
+    }
+
+    public Date getUsertao_hocsinh() {
+        return usertao_hocsinh;
+    }
+
+    public Diemdanh getDiemdanh() {
+        return diemdanh;
+    }
+
+    public void setDiemdanh(Diemdanh diemdanh) {
+        this.diemdanh = diemdanh;
+    }
+
+    public Lophoc getLophoc() {
+        return lophoc;
+    }
+
+    public void setLophoc(Lophoc lophoc) {
+        this.lophoc = lophoc;
+    }
+
     public String getDonvitao_hocsinh() {
         return donvitao_hocsinh;
     }
 
     public void setDonvitao_hocsinh(String donvitao_hocsinh) {
         this.donvitao_hocsinh = donvitao_hocsinh;
-    }
-
-    public String getUsertao_hocsinh() {
-        return usertao_hocsinh;
-    }
-
-    public void setUsertao_hocsinh(String usertao_hocsinh) {
-        this.usertao_hocsinh = usertao_hocsinh;
     }
 
     public void setNgaysinhhocsinh(Date ngaysinhhocsinh) {

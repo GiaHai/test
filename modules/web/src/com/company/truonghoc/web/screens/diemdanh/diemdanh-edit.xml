@@ -18,9 +18,17 @@
                 </query>
             </loader>
         </collection>
+
+        <collection id="hocsinhsDc"
+                    class="com.company.truonghoc.entity.Hocsinh"
+                    view="hocsinh-view">
+            <loader id="hocsinhsDl">
+                <query>
+                    <![CDATA[select e from truonghoc_Hocsinh e]]>
+                </query>
+            </loader>
+        </collection>
     </data>
-    <dialogMode height="600"
-                width="800"/>
     <layout expand="editActions" spacing="true">
         <form id="form" dataContainer="diemdanhDc">
             <column width="350px">
@@ -28,9 +36,10 @@
                            caption="Giáo viên"/>
                 <textField id="donviField" property="donvidd"
                            caption="Đơn vị"/>
-                <lookupField id="hotenhsField"
-                             property="hotenhs"
-                             caption="mainMsg://diemdanh.hoten"/>
+                <tokenList id="tokenListField" simple="true" property="hotenhs" caption="Danh sách học sinh nghỉ">
+                    <lookup multiselect="true" optionsContainer="hocsinhsDc" captionProperty="tenhocsinh"/>
+                    <addButton caption="Thêm" />
+                </tokenList>
                 <dateField id="ngaynghiField"
                            property="ngaynghi"
                            caption="mainMsg://diemdanh.ngaynghi"/>

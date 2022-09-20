@@ -24,34 +24,36 @@ public class DiemdanhEdit extends StandardEditor<Diemdanh> {
     @Inject
     protected UserSession userSession;
     @Inject
-    protected LookupField<Hocsinh> hotenhsField;
-    @Inject
     protected DulieuUserService dulieuUserService;
     @Inject
     protected TextField<String> nguoitaoField;
     @Inject
     protected TextField<String> donviField;
     @Inject
-    protected DateField<String> ngaynghiField;
+    protected DateField<Date> ngaynghiField;
 
     @Subscribe
     protected void onInit(InitEvent event) {
         nguoitaoField.setEditable(false);
         donviField.setEditable(false);
         ngaynghiField.setRequired(true);
+
     }
 
     @Subscribe
     protected void onBeforeShow(BeforeShowEvent event) {
         nguoitaoField.setValue(dulieuUserService.timEditdonvi(userSession.getUser().getLogin()).getTextgv());
         donviField.setValue(dulieuUserService.timEditdonvi(userSession.getUser().getLogin()).getTendonvi());
+
+        ngaynghiField.setValue(new Date());
+
     }
 
 
-    @Subscribe
-    protected void onAfterShow(AfterShowEvent event) {
-        hotenhsField.setOptionsList(test(userSession.getUser().getLogin() , dulieuUserService.timEditdonvi(userSession.getUser().getLogin()).getTendonvi()));
-    }
+//    @Subscribe
+//    protected void onAfterShow(AfterShowEvent event) {
+//        hotenhsField.setOptionsList(test(userSession.getUser().getLogin() , dulieuUserService.timEditdonvi(userSession.getUser().getLogin()).getTendonvi()));
+//    }
 
     public List<Hocsinh> test(String hocsinh , String donvitao){
         return dataManager.load(Hocsinh.class)

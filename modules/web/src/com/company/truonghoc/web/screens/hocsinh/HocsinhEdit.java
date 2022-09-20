@@ -3,6 +3,7 @@ package com.company.truonghoc.web.screens.hocsinh;
 import com.company.truonghoc.service.DulieuUserService;
 import com.haulmont.cuba.gui.components.LookupField;
 import com.haulmont.cuba.gui.components.TextField;
+import com.haulmont.cuba.gui.model.InstanceContainer;
 import com.haulmont.cuba.gui.screen.*;
 import com.company.truonghoc.entity.Hocsinh;
 import com.haulmont.cuba.security.global.UserSession;
@@ -26,6 +27,8 @@ public class HocsinhEdit extends StandardEditor<Hocsinh> {
     protected TextField<String> donvitao_hocsinhField;
     @Inject
     protected DulieuUserService dulieuUserService;
+    @Inject
+    protected InstanceContainer<Hocsinh> hocsinhDc;
 
     @Subscribe
     protected void onInit(InitEvent event) {
@@ -41,8 +44,10 @@ public class HocsinhEdit extends StandardEditor<Hocsinh> {
     }
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
-        if (usertaoField.getValue() == null){
-            usertaoField.setValue(userSession.getUser().getLogin());
-        }
+//        if (usertaoField.getValue() == null){
+//            usertaoField.setValue(dulieuUserService.timEditdonvi(userSession.getUser().getLogin()).getTextgv());
+//        }
+
+        usertaoField.setValue(hocsinhDc.getItem().getLophoc().getGiaoviencn());
     }
 }
