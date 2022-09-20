@@ -1,4 +1,4 @@
-package com.company.truonghoc.entity.Lophoc;
+package com.company.truonghoc.entity;
 
 import com.company.truonghoc.entity.Hocsinh;
 import com.haulmont.chile.core.annotations.Composition;

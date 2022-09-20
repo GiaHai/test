@@ -1,6 +1,5 @@
 package com.company.truonghoc.entity;
 
-import com.company.truonghoc.entity.Lophoc.Lophoc;
 import com.haulmont.chile.core.annotations.NamePattern;
 import com.haulmont.cuba.core.entity.StandardEntity;
 

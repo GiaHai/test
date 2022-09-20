@@ -3,7 +3,7 @@ package com.company.truonghoc.web.screens.lophoc;
 import com.company.truonghoc.entity.Donvi;
 import com.company.truonghoc.entity.Giaovien;
 import com.company.truonghoc.entity.Hocsinh;
-import com.company.truonghoc.entity.Lophoc.Tenlop;
+import com.company.truonghoc.entity.Tenlop;
 import com.haulmont.cuba.core.entity.Entity;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.gui.UiComponents;
@@ -11,7 +11,7 @@ import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.model.CollectionContainer;
 import com.haulmont.cuba.gui.model.CollectionLoader;
 import com.haulmont.cuba.gui.screen.*;
-import com.company.truonghoc.entity.Lophoc.Lophoc;
+import com.company.truonghoc.entity.Lophoc;
 
 import javax.inject.Inject;
 import java.util.List;

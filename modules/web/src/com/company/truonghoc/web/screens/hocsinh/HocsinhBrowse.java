@@ -1,7 +1,7 @@
 package com.company.truonghoc.web.screens.hocsinh;
 
 import com.company.truonghoc.entity.Donvi;
-import com.company.truonghoc.entity.Lophoc.Lophoc;
+import com.company.truonghoc.entity.Lophoc;
 import com.company.truonghoc.entity.UserExt;
 import com.company.truonghoc.service.DulieuUserService;
 import com.haulmont.cuba.core.global.DataManager;

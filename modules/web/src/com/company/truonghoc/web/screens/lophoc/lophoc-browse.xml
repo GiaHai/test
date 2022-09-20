@@ -6,7 +6,7 @@
         messagesPack="com.company.truonghoc.web.screens.lophoc">
     <data readOnly="true">
         <collection id="lophocsDc"
-                    class="com.company.truonghoc.entity.Lophoc.Lophoc">
+                    class="com.company.truonghoc.entity.Lophoc">
             <view extends="lophoc-view"/>
             <loader id="lophocsDl">
                 <query>

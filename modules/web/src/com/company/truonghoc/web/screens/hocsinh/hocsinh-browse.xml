@@ -31,7 +31,7 @@
             </loader>
         </collection>
         <collection id="lophocsDc"
-                    class="com.company.truonghoc.entity.Lophoc.Lophoc">
+                    class="com.company.truonghoc.entity.Lophoc">
             <view extends="lophoc-view"/>
             <loader id="lophocsDl">
                 <query>
