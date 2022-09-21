@@ -5,7 +5,7 @@
         messagesPack="com.company.truonghoc.web.screens.tenlop">
     <data>
         <instance id="tenlopDc"
-                  class="com.company.truonghoc.entity.Lophoc.Tenlop">
+                  class="com.company.truonghoc.entity.Tenlop">
             <view extends="tenlop-view"/>
             <loader/>
         </instance>

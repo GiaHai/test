@@ -6,7 +6,7 @@
         messagesPack="com.company.truonghoc.web.screens.tenlop">
     <data readOnly="true">
         <collection id="tenlopsDc"
-                    class="com.company.truonghoc.entity.Lophoc.Tenlop">
+                    class="com.company.truonghoc.entity.Tenlop">
             <view extends="tenlop-view"/>
             <loader id="tenlopsDl">
                 <query>
@@ -14,16 +14,38 @@
                 </query>
             </loader>
         </collection>
+
+        <collection id="donvisDc"
+                    class="com.company.truonghoc.entity.Donvi"
+                    view="donvi-view">
+            <loader id="donvisDl">
+                <query>
+                    <![CDATA[select e from truonghoc_Donvi e]]>
+                </query>
+            </loader>
+        </collection>
     </data>
     <dialogMode height="600"
                 width="800"/>
     <layout expand="tenlopsTable"
-            spacing="true">
-        <filter id="filter"
-                applyTo="tenlopsTable"
-                dataLoader="tenlopsDl">
-            <properties include=".*"/>
-        </filter>
+            spacing="true"
+            stylename="css-layout-tenlop">
+        <groupBox caption="Tìm kiếm"
+                  collapsable="true"
+                  collapsed="true"
+                  stylename="css-hbox-search"
+                  spacing="true"
+                  width="100%">
+            <hbox spacing="true">
+                <lookupField id="searchDvField" caption="Đơn vị"/>
+                <textField id="searchLopField" caption="Lớp"/>
+                <textField id="searchGvcnField" caption="Giáo viên chủ nhiệm"/>
+                <button id="timkiemBtn"
+                        invoke="timkiemExcute"
+                        stylename="Btntimkiem"
+                        caption="Tìm kiếm" align="BOTTOM_LEFT"/>
+            </hbox>
+        </groupBox>
         <groupTable id="tenlopsTable"
                     width="100%"
                     dataContainer="tenlopsDc">

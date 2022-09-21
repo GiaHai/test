@@ -13,8 +13,7 @@ public class Hocsinh extends StandardEntity {
     private static final long serialVersionUID = 6396620010673039383L;
 
     @Column(name = "USERTAO_HOCSINH")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date usertao_hocsinh;
+    private String usertao_hocsinh;
 
     @Column(name = "DONVITAO_HOCSINH")
     private String donvitao_hocsinh;
@@ -43,11 +42,11 @@ public class Hocsinh extends StandardEntity {
     @JoinColumn(name = "DIEMDANH_ID")
     private Diemdanh diemdanh;
 
-    public void setUsertao_hocsinh(Date usertao_hocsinh) {
+    public void setUsertao_hocsinh(String usertao_hocsinh) {
         this.usertao_hocsinh = usertao_hocsinh;
     }
 
-    public Date getUsertao_hocsinh() {
+    public String getUsertao_hocsinh() {
         return usertao_hocsinh;
     }
 

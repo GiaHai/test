@@ -72,7 +72,7 @@
             <property name="tinhtrangthanhtoan"/>
         </property>
     </view>
-    <view entity="truonghoc_Lophoc" name="lophoc-view" extends="_local">
+    <view entity="truonghoc_Lophoc" name="lophoc-view" extends="_local" systemProperties="true">
         <property name="dshocsinh" view="_minimal">
             <property name="donvitao_hocsinh"/>
             <property name="usertao_hocsinh"/>

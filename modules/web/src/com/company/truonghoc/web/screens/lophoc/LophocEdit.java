@@ -52,6 +52,8 @@ public class LophocEdit extends StandardEditor<Lophoc> {
     protected Button commitAndCloseBtn;
     @Inject
     protected Button closeBtn;
+    @Inject
+    protected TextField<String> DvField;
 
     @Subscribe
     protected void onInit(InitEvent event) {
@@ -90,6 +92,7 @@ public class LophocEdit extends StandardEditor<Lophoc> {
                 tenlopField.setValue(loadLop().getTenlop());
                 tenlopField.setEditable(false);
                 giaovien.setValue(giaovienField.getValue().getTengiaovien());
+                DvField.setValue(donviFiled.getValue().toString());
             }
         } catch (IllegalStateException ex) {
             tenlopField.clear();

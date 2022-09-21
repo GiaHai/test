@@ -68,7 +68,7 @@ create table TRUONGHOC_HOCSINH (
     DELETE_TS datetime2,
     DELETED_BY nvarchar(50),
     --
-    USERTAO_HOCSINH datetime2,
+    USERTAO_HOCSINH nvarchar(255),
     DONVITAO_HOCSINH nvarchar(255),
     TENHOCSINH nvarchar(255),
     NGAYSINHHOCSINH datetime2,
@@ -232,6 +232,7 @@ create table TRUONGHOC_LOPHOC (
     DELETED_BY nvarchar(50),
     --
     TENLOP nvarchar(255),
+    DONVI nvarchar(255),
     GIAOVIENCN nvarchar(255),
     --
     primary key nonclustered (ID)

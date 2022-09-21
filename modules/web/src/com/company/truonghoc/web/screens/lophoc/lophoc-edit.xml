@@ -5,13 +5,13 @@
         messagesPack="com.company.truonghoc.web.screens.lophoc">
     <data>
         <instance id="lophocDc"
-                  class="com.company.truonghoc.entity.Lophoc.Lophoc">
+                  class="com.company.truonghoc.entity.Lophoc">
             <view extends="lophoc-view"/>
             <loader/>
             <collection id="dshocsinhDc" property="dshocsinh"/>
         </instance>
         <collection id="tenlopsDc"
-                    class="com.company.truonghoc.entity.Lophoc.Tenlop">
+                    class="com.company.truonghoc.entity.Tenlop">
             <view extends="tenlop-view"/>
             <loader id="tenlopsDl">
                 <query>
@@ -75,6 +75,10 @@
                 </vbox>
                 <hbox spacing="true">
                     <vbox spacing="true">
+                        <textField id="DvField"
+                                   property="donvi"
+                                   dataContainer="lophocDc"
+                                   caption="Đơn vị"/>
                         <textField id="tenlopField"
                                    property="tenlop"
                                    dataContainer="lophocDc"

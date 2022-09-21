@@ -88,18 +88,19 @@ public class HocsinhBrowse extends StandardLookup<Hocsinh> {
     }
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
+//        khi mở màn hình với điều kiện là đơn vị không phải đơn vị chính
         if (dulieuUserService.timbrowerdonvi(userSession.getUser().getLogin()).size() == 0){
             donvitao_hocsinhField.setEditable(false);
             donvitao_hocsinhField.setValue(dulieuUserService.timEditdonvi(userSession.getUser().getLogin()).getTendonvi());
         }else {
             donvitao_hocsinhField.setEditable(true);
-
+            // lookupField cho đơn vị
             donvisDl.load();
             List<String> sessionTypeNames = donvisDc.getMutableItems().stream()
                     .map(Donvi::getTendonvi)
                     .collect(Collectors.toList());
             donvitao_hocsinhField.setOptionsList(sessionTypeNames);
-
+            // lookupField cho Lớp học
             lophocsDl.load();
             List<String> listLophoc = lophocsDc.getMutableItems().stream()
                     .map(Lophoc::getTenlop)
