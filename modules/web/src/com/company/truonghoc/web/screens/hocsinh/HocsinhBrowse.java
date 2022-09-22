@@ -89,9 +89,12 @@ public class HocsinhBrowse extends StandardLookup<Hocsinh> {
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
 //        khi mở màn hình với điều kiện là đơn vị không phải đơn vị chính
+
         if (dulieuUserService.timbrowerdonvi(userSession.getUser().getLogin()).size() == 0){
             donvitao_hocsinhField.setEditable(false);
             donvitao_hocsinhField.setValue(dulieuUserService.timEditdonvi(userSession.getUser().getLogin()).getTendonvi());
+            hocsinhsTable.setVisible(false);
+
         }else {
             donvitao_hocsinhField.setEditable(true);
             // lookupField cho đơn vị
@@ -106,6 +109,8 @@ public class HocsinhBrowse extends StandardLookup<Hocsinh> {
                     .map(Lophoc::getTenlop)
                     .collect(Collectors.toList());
             sreachlopField.setOptionsList(listLophoc);
+            hocsinhsTable.setVisible(false);
+
         }
         if (tenGv().getTextgv() == null){
             dkdonvi();
@@ -115,9 +120,10 @@ public class HocsinhBrowse extends StandardLookup<Hocsinh> {
 
             donvitao_hocsinhField.setEditable(false);
             sreachgvFiled.setEditable(false);
-            hocsinhsTable.setVisible(false);
+            hocsinhsTable.setVisible(true);
         }
         excuteSearch(true);
+
     }
 //    Điều kiện là giáo viên login vào
     private UserExt tenGv(){
@@ -126,19 +132,6 @@ public class HocsinhBrowse extends StandardLookup<Hocsinh> {
                 .parameter("admin", userSession.getUser().getLogin())
                 .one();
     }
-//    public Component stt(Hocsinh entity) {
-//        int lineNumber = 1;
-//        try {
-//            lineNumber = hocsinhsDl.getContainer().getItemIndex(entity.getId()) + 1;
-//        }
-//        catch (Exception ex)
-//        {
-//            lineNumber = 1;
-//        }
-//        Label field = uiComponents.create(Label.NAME);
-//        field.setValue(lineNumber);
-//        return field;
-//    }
     /*** tìm kiếm ***/
     public void timkiemExcute() {
         excuteSearch(true);
