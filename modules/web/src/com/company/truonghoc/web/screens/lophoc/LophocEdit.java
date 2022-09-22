@@ -89,6 +89,11 @@ public class LophocEdit extends StandardEditor<Lophoc> {
             donviFiled.setEditable(false);
             donviFiled.setValue(dulieuUserService.timEditdonvi(userSession.getUser().getLogin()).getTendonvi());
         }
+        if (dulieuUserService.timEditdonvi(userSession.getUser().getLogin()).getTextgv() != null){
+            donviFiled.setEditable(false);
+            donviFiled.setValue(dulieuUserService.timEditdonvi(userSession.getUser().getLogin()).getTendonvi());
+            
+        }
     }
 
     @Subscribe("donviFiled")

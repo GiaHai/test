@@ -117,6 +117,7 @@ public class HocsinhBrowse extends StandardLookup<Hocsinh> {
             sreachgvFiled.setEditable(false);
             hocsinhsTable.setVisible(false);
         }
+        excuteSearch(true);
     }
 //    Điều kiện là giáo viên login vào
     private UserExt tenGv(){
