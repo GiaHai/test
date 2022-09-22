@@ -69,7 +69,7 @@ public class DiemdanhBrowse extends StandardLookup<Diemdanh> {
     @Subscribe("diemdanhsTable.create")
     protected void onDiemdanhsTableCreate(Action.ActionPerformedEvent event) {
         if (dulieuUserService.timEditdonvi(userSession.getUser().getLogin()).getTextgv() != null){
-            createBtn.setAction(diemdanhsTableCreate);
+            this.diemdanhsTableCreate.execute();
         }else {
             dialogs.createMessageDialog()
                     .withCaption("THÔNG BÁO")
