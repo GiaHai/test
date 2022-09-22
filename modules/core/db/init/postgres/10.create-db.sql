@@ -93,7 +93,7 @@ create table TRUONGHOC_HOCSINH (
     DELETE_TS timestamp,
     DELETED_BY varchar(50),
     --
-    USERTAO_HOCSINH timestamp,
+    USERTAO_HOCSINH varchar(255),
     DONVITAO_HOCSINH varchar(255),
     TENHOCSINH varchar(255),
     NGAYSINHHOCSINH date,
@@ -118,6 +118,7 @@ create table TRUONGHOC_DIEMDANH (
     DELETED_BY varchar(50),
     --
     NGUOITAODD varchar(255),
+    LOPDD varchar(255),
     DONVIDD varchar(255),
     NGAYNGHI date,
     --
@@ -252,6 +253,7 @@ create table TRUONGHOC_LOPHOC (
     DELETED_BY varchar(50),
     --
     TENLOP varchar(255),
+    DONVI varchar(255),
     GIAOVIENCN varchar(255),
     --
     primary key (ID)
