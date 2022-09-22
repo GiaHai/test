@@ -24,9 +24,9 @@
     <layout expand="editActions" spacing="true">
         <form id="form" dataContainer="tenlopDc">
             <hbox width="100%" spacing="true">
-                <lookupField id="donviFiled" property="dovi" caption="Đơn vị"/>
-                <textField id="tenlopField" property="tenlop" caption="Tên lớp"/>
-                <lookupField id="giaoviencnField" property="giaoviencn" caption="Giáo viên chủ nhiệm"/>
+                <lookupField id="donviFiled" dataContainer="tenlopDc" property="dovi" caption="Đơn vị"/>
+                <textField id="tenlopField" dataContainer="tenlopDc" property="tenlop" caption="Tên lớp"/>
+                <lookupField id="giaoviencnField" dataContainer="tenlopDc" property="giaoviencn" caption="Giáo viên chủ nhiệm"/>
             </hbox>
         </form>
         <hbox id="editActions" spacing="true">
