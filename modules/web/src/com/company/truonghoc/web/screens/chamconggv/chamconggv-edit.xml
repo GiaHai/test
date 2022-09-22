@@ -22,23 +22,70 @@
     <dialogMode height="600"
                 width="800"/>
     <layout expand="editActions" spacing="true">
-        <form id="form" dataContainer="chamconggvDc">
-            <column width="350px">
-                <lookupField id="hotenGvField"
-                             property="hotengv"
-                             caption="mainMsg://chamcong.hovaten"
-                             optionsContainer="giaoviensDc"/>
-                <textField id="donvigvField"
-                           caption="mainMsg://chamcong.donvi"
-                           property="donvigv"/>
-                <dateField id="ngaylamField"
-                           caption="mainMsg://chamcong.ngaylam"
-                           property="ngaylam"/>
-                <lookupField id="buoilamField"
-                             caption="mainMsg://chamcong.buoilam"
-                             property="buoilam"/>
-            </column>
-        </form>
+        <vbox spacing="true">
+            <grid id="form" spacing="true" width="80%">
+                <columns>
+                    <column flex="1"/>
+                    <column flex="1"/>
+                    <column flex="1"/>
+                    <column flex="0.1"/>
+                    <column flex="1"/>
+                    <column flex="1"/>
+                    <column flex="1"/>
+                </columns>
+                <rows>
+                    <!--                    dòng 1-->
+                    <row>
+                        <form colspan="3" width="100%" childrenCaptionWidth="80px" dataContainer="chamconggvDc">
+                            <column>
+                                <lookupField id="hotenGvField"
+                                             property="hotengv"
+                                             width="100%"
+                                             caption="mainMsg://chamcong.hovaten"
+                                             optionsContainer="giaoviensDc"/>
+                            </column>
+                        </form>
+                        <form colspan="1" width="100%">
+                            <column>
+                                <label value=""/>
+                            </column>
+                        </form>
+                        <form colspan="3" width="100%" childrenCaptionWidth="80px" dataContainer="chamconggvDc">
+                            <column>
+                                <textField id="donvigvField"
+                                           width="100%"
+                                           caption="mainMsg://chamcong.donvi"
+                                           property="donvigv"/>
+                            </column>
+                        </form>
+                    </row>
+                    <!--                    dòng 2-->
+                    <row>
+                        <form colspan="3" width="100%" childrenCaptionWidth="80px" dataContainer="chamconggvDc">
+                            <column>
+                                <dateField id="ngaylamField"
+                                           width="100%"
+                                           caption="mainMsg://chamcong.ngaylam"
+                                           property="ngaylam"/>
+                            </column>
+                        </form>
+                        <form colspan="1" width="100%">
+                            <column>
+                                <label value=""/>
+                            </column>
+                        </form>
+                        <form colspan="3" width="100%" childrenCaptionWidth="80px" dataContainer="chamconggvDc">
+                            <column>
+                                <lookupField id="buoilamField"
+                                             width="100%"
+                                             caption="mainMsg://chamcong.buoilam"
+                                             property="buoilam"/>
+                            </column>
+                        </form>
+                    </row>
+                </rows>
+            </grid>
+        </vbox>
         <hbox id="editActions" spacing="true">
             <button id="commitAndCloseBtn" action="windowCommitAndClose"/>
             <button id="closeBtn" action="windowClose"/>

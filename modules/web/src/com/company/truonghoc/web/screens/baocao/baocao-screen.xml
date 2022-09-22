@@ -43,33 +43,67 @@
                  margin="true"
                  stylename="css-tab1"
                  spacing="true">
-                <vbox spacing="true"
-                      stylename="css-vbox-timkiem">
-                    <label value="Điều kiện lọc" stylename="dieukienloc"/>
-                    <hbox spacing="true"
-                          stylename="hbox-text">
-                        <dateField id="tungayField"
-                                   datatype="date"
-                                   resolution="DAY"
-                                   width="100%"
-                                   caption="mainMsg://tungay"
-                                   stylename="nhap"/>
-                        <dateField id="denngayField"
-                                   datatype="date"
-                                   resolution="DAY"
-                                   caption="mainMsg://denngay"
-                                   stylename="nhap"/>
+                <groupBox caption="Tìm kiếm"
+                          collapsable="true"
+                          collapsed="false"
+                          stylename="css-hbox-search"
+                          spacing="true"
+                          width="100%">
+                    <hbox spacing="true" width="100%">
+                        <vbox spacing="true">
+                            <hbox spacing="true"
+                                  stylename="hbox-text">
+                                <dateField id="tungayField"
+                                           datatype="date"
+                                           resolution="DAY"
+                                           width="100%"
+                                           caption="mainMsg://tungay"
+                                           stylename="nhap"/>
+                                <dateField id="denngayField"
+                                           datatype="date"
+                                           resolution="DAY"
+                                           caption="mainMsg://denngay"
+                                           stylename="nhap"/>
 
+                            </hbox>
+                            <hbox stylename="css-hbox-timkiem" spacing="true">
+                                <button id="timkiemBtn"
+                                        caption="Tìm kiếm"
+                                        stylename="Btntimkiem"/>
+                                <button id="clearBtn"
+                                        caption="Xóa"
+                                        stylename="Btntimkiem"/>
+                            </hbox>
+                        </vbox>
                     </hbox>
-                    <hbox stylename="css-hbox-timkiem" spacing="true">
-                        <button id="timkiem"
-                                caption="Tìm kiếm"
-                                stylename="button-clearbtn"/>
-                        <button id="clearBtn"
-                                caption="Xóa"
-                                stylename="button-clearbtn"/>
-                    </hbox>
-                </vbox>
+                </groupBox>
+<!--                <vbox spacing="true"-->
+<!--                      stylename="css-vbox-timkiem">-->
+<!--                    <label value="Điều kiện lọc" stylename="dieukienloc"/>-->
+<!--                    <hbox spacing="true"-->
+<!--                          stylename="hbox-text">-->
+<!--                        <dateField id="tungayField"-->
+<!--                                   datatype="date"-->
+<!--                                   resolution="DAY"-->
+<!--                                   width="100%"-->
+<!--                                   caption="mainMsg://tungay"-->
+<!--                                   stylename="nhap"/>-->
+<!--                        <dateField id="denngayField"-->
+<!--                                   datatype="date"-->
+<!--                                   resolution="DAY"-->
+<!--                                   caption="mainMsg://denngay"-->
+<!--                                   stylename="nhap"/>-->
+
+<!--                    </hbox>-->
+<!--                    <hbox stylename="css-hbox-timkiem" spacing="true">-->
+<!--                        <button id="timkiem"-->
+<!--                                caption="Tìm kiếm"-->
+<!--                                stylename="button-clearbtn"/>-->
+<!--                        <button id="clearBtn"-->
+<!--                                caption="Xóa"-->
+<!--                                stylename="button-clearbtn"/>-->
+<!--                    </hbox>-->
+<!--                </vbox>-->
 
                 <vbox width="100%" height="AUTO">
                     <hbox width="100%">

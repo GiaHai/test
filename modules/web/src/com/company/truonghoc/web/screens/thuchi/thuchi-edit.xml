@@ -22,50 +22,140 @@
     <dialogMode height="600"
                 width="800"/>
     <layout expand="editActions" spacing="true">
-        <form id="form" dataContainer="thuchiDc">
-            <column width="350px">
-                <textField id="usertao_thuchiField"
-                           property="usertao_thuchi"
-                           caption="mainMsg://nguoitao"/>
-                <textField id="donvitao_thuchiField"
-                           property="donvitao_thuchi"
-                           caption="mainMsg://donvitao"/>
-                <textField id="khoanchiField"
-                           property="khoanchi"
-                           caption="msg://Thuchi.khoanchi"/>
-                <dateField id="ngaychiField"
-                           property="ngaychi"
-                           caption="Ngày chi"/>
-                <dateField id="hanchiField"
-                           property="hanchi"
-                           caption="Hạn chi"/>
-                <textField id="soluongField"
-                           property="soluong"
-                           caption="msg://Thuchi.soluong"/>
-                <textField id="dongiaField"
-                           property="dongia"
-                           caption="msg://Thuchi.dongia"/>
-                <textField id="thanhtienField"
-                           property="thanhtien"
-                           caption="msg://Thuchi.thanhtien"/>
-                <textArea id="ghichuField"
-                           property="ghichu"
-                           caption="msg://Thuchi.ghichu"/>
-                <lookupField id="hinhthucthanhtoanField"
-                             property="hinhthucthanhtoan"
-                             nullName="Hình thức thanh toán"
-                             caption="Hình thức thanh toán"/>
-                <textField id="tinhtrangchiField"
-                           property="tinhtrangchi"/>
-            </column>
-        </form>
+        <vbox spacing="true">
+            <grid id="form" spacing="true" width="75%" align="TOP_CENTER">
+                <columns>
+                    <column flex="1"/>
+                    <column flex="1"/>
+                    <column flex="1"/>
+                    <column flex="0.1"/>
+                    <column flex="1"/>
+                    <column flex="1"/>
+                    <column flex="1"/>
+                </columns>
+                <rows>
+                    <!--                    dòng 1-->
+                    <row>
+                        <form colspan="3" width="100%" childrenCaptionWidth="80px" dataContainer="thuchiDc">
+                            <column>
+                                <textField id="usertao_thuchiField"
+                                           property="usertao_thuchi"
+                                           width="100%"
+                                           caption="mainMsg://nguoitaochi"/>
+                            </column>
+                        </form>
+                        <form colspan="1" width="100%">
+                            <column>
+                                <label value=""/>
+                            </column>
+                        </form>
+                        <form colspan="3" width="100%" childrenCaptionWidth="80px" dataContainer="thuchiDc">
+                            <column>
+                                <textField id="donvitao_thuchiField"
+                                           property="donvitao_thuchi"
+                                           width="100%"
+                                           caption="mainMsg://donvitao"/>
+                            </column>
+                        </form>
+                    </row>
+                    <!--                    dòng 2-->
+                    <row>
+                        <form colspan="7" width="100%" childrenCaptionWidth="80px" dataContainer="thuchiDc">
+                            <column>
+                                <textField id="khoanchiField"
+                                           property="khoanchi"
+                                           width="100%"
+                                           caption="msg://Thuchi.khoanchi"/>
+                            </column>
+                        </form>
+                    </row>
+                    <!--                    dòng 3-->
+                    <row>
+                        <form colspan="3" width="100%" childrenCaptionWidth="80px" dataContainer="thuchiDc">
+                            <column>
+                                <dateField id="ngaychiField"
+                                           property="ngaychi"
+                                           width="100%"
+                                           caption="Ngày chi"/>
+                            </column>
+                        </form>
+                        <form colspan="1" width="100%">
+                            <column>
+                                <label value=""/>
+                            </column>
+                        </form>
+                        <form colspan="3" width="100%" childrenCaptionWidth="80px" dataContainer="thuchiDc">
+                            <column>
+                                <dateField id="hanchiField"
+                                           property="hanchi"
+                                           width="100%"
+                                           caption="Hạn chi"/>
+                                <lookupField id="hinhthucthanhtoanField"
+                                             property="hinhthucthanhtoan"
+                                             width="100%"
+                                             nullName="Hình thức thanh toán"
+                                             caption="Hình thức thanh toán"/>
+                                <textField id="tinhtrangchiField"
+                                           property="tinhtrangchi"/>
+                            </column>
+                        </form>
+                    </row>
+                    <!--                    dòng 4-->
+                    <row>
+                        <form colspan="3" width="100%" childrenCaptionWidth="80px" dataContainer="thuchiDc">
+                            <column>
+                                <textField id="soluongField"
+                                           property="soluong"
+                                           width="100%"
+                                           caption="msg://Thuchi.soluong"/>
+                            </column>
+                        </form>
+                        <form colspan="1" width="100%">
+                            <column>
+                                <label value=""/>
+                            </column>
+                        </form>
+                        <form colspan="3" width="100%" childrenCaptionWidth="80px" dataContainer="thuchiDc">
+                            <column>
+                                <textField id="dongiaField"
+                                           property="dongia"
+                                           width="100%"
+                                           caption="msg://Thuchi.dongia"/>
+                            </column>
+                        </form>
+                    </row>
+                    <!--                    dòng 5-->
+                    <row>
+                        <form colspan="7" width="100%" childrenCaptionWidth="80px" dataContainer="thuchiDc">
+                            <column>
+                                <textField id="thanhtienField"
+                                           property="thanhtien"
+                                           width="100%"
+                                           caption="msg://Thuchi.thanhtien"/>
+                            </column>
+                        </form>
+                    </row>
+                    <!--                    dòng 6-->
+                    <row>
+                        <form colspan="7" width="100%" childrenCaptionWidth="80px" dataContainer="thuchiDc">
+                            <column>
+                                <textArea id="ghichuField"
+                                          property="ghichu"
+                                          width="100%"
+                                          caption="msg://Thuchi.ghichu"/>
+                            </column>
+                        </form>
+                    </row>
+                </rows>
+            </grid>
+        </vbox>
         <hbox id="editActions" spacing="true">
             <button id="commitAndCloseBtn"
                     action="windowCommitAndClose"
-            caption="mainMsg://windowCommitAndClose"/>
+                    caption="mainMsg://windowCommitAndClose"/>
             <button id="closeBtn"
                     action="windowClose"
-            caption="mainMsg://windowClose"/>
+                    caption="mainMsg://windowClose"/>
         </hbox>
     </layout>
 </window>

@@ -13,31 +13,107 @@
     <dialogMode height="600"
                 width="800"/>
     <layout expand="editActions" spacing="true">
-        <form id="form" dataContainer="hocsinhDc">
-            <column width="350px">
-                <textField id="usertaoField"
-                           property="usertao_hocsinh"
-                           caption="mainMsg://nguoitao"/>
-                <textField id="donvitao_hocsinhField"
-                           property="donvitao_hocsinh"
-                           caption="mainMsg://donvitao"/>
-                <textField id="tenhocsinhField"
-                           property="tenhocsinh"
-                           caption="mainMsg://hocsinh.tenhocsinh"/>
-                <dateField id="ngaysinhhocsinhField"
-                           property="ngaysinhhocsinh"
-                           caption="mainMsg://hocsinh.ngaysinhhocsinh"/>
-                <lookupField id="gioitinhhocsinhField"
-                             property="gioitinhhocsinh"
-                             caption="mainMsg://hocsinh.gioitinhhocsinh"/>
-                <textField id="quequanhocsinhField"
-                           property="quequanhocsinh"
-                           caption="mainMsg://hocsinh.quequanhocsinh"/>
-                <textField id="ghichuField"
-                           property="ghichu"
-                           caption="mainMsg://hocsinh.ghichu"/>
-            </column>
-        </form>
+        <vbox spacing="true">
+            <grid id="form" spacing="true" width="100%">
+                <columns>
+                    <column flex="1"/>
+                    <column flex="1"/>
+                    <column flex="1"/>
+                    <column flex="0.1"/>
+                    <column flex="1"/>
+                    <column flex="1"/>
+                    <column flex="1"/>
+                </columns>
+                <rows>
+                    <row>
+                        <form colspan="3" width="100%" childrenCaptionWidth="80px">
+                            <column>
+                                <textField id="usertaoField"
+                                           property="usertao_hocsinh"
+                                           dataContainer="hocsinhDc"
+                                           width="100%"
+                                           caption="Giáo viên chủ nhiệm"/>
+                            </column>
+                        </form>
+                        <form colspan="1" width="100%">
+                            <column>
+                                <label value=""/>
+                            </column>
+                        </form>
+                        <form colspan="3" width="100%" childrenCaptionWidth="80px">
+                            <column>
+                                <textField id="donvitao_hocsinhField"
+                                           property="donvitao_hocsinh"
+                                           dataContainer="hocsinhDc"
+                                           width="100%"
+                                           caption="mainMsg://donvitao"/>
+                            </column>
+                        </form>
+                    </row>
+                    <row>
+                        <form colspan="3" width="100%" childrenCaptionWidth="80px">
+                            <column>
+                                <textField id="tenhocsinhField"
+                                           property="tenhocsinh"
+                                           dataContainer="hocsinhDc"
+                                           width="100%"
+                                           caption="mainMsg://hocsinh.tenhocsinh"/>
+                            </column>
+                        </form>
+                        <form colspan="1" width="100%">
+                            <column>
+                                <label value=""/>
+                            </column>
+                        </form>
+                        <form colspan="3" width="100%" childrenCaptionWidth="80px">
+                            <column>
+                                <lookupField id="gioitinhhocsinhField"
+                                             property="gioitinhhocsinh"
+                                             dataContainer="hocsinhDc"
+                                             width="100%"
+                                             caption="mainMsg://hocsinh.gioitinhhocsinh"/>
+                            </column>
+                        </form>
+                    </row>
+                    <row>
+                        <form colspan="3" width="100%" childrenCaptionWidth="80px">
+                            <column>
+                                <dateField id="ngaysinhhocsinhField"
+                                           property="ngaysinhhocsinh"
+                                           dataContainer="hocsinhDc"
+                                           width="100%"
+                                           caption="mainMsg://hocsinh.ngaysinhhocsinh"/>
+                            </column>
+                        </form>
+                        <form colspan="1" width="100%">
+                            <column>
+                                <label value=""/>
+                            </column>
+                        </form>
+                        <form colspan="3" width="100%" childrenCaptionWidth="80px">
+                            <column>
+                                <textField id="quequanhocsinhField"
+                                           property="quequanhocsinh"
+                                           dataContainer="hocsinhDc"
+                                           width="100%"
+                                           caption="mainMsg://hocsinh.quequanhocsinh"/>
+                            </column>
+                        </form>
+                    </row>
+                    <row>
+                        <form colspan="7" width="100%" childrenCaptionWidth="80px">
+                            <column>
+                                <textArea id="ghichuField"
+                                           property="ghichu"
+                                           dataContainer="hocsinhDc"
+                                           width="100%"
+                                           caption="mainMsg://hocsinh.ghichu"/>
+                            </column>
+                        </form>
+                    </row>
+                </rows>
+            </grid>
+        </vbox>
         <hbox id="editActions" spacing="true">
             <button id="commitAndCloseBtn" action="windowCommitAndClose"/>
             <button id="closeBtn" action="windowClose"/>

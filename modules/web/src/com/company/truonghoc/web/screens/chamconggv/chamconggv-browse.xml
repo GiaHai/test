@@ -31,33 +31,44 @@
     <layout expand="chamconggvsTable"
             spacing="true"
             stylename="css-layout-chamconggv">
-        <vbox spacing="true"
-              stylename="css-vbox-timkiem">
-            <label value="Điều kiện lọc" stylename="dieukienloc"/>
-            <hbox spacing="true"
-                  stylename="hbox-text">
-                <lookupField id="tendonviField"
-                             caption="Đơn vị"
-                             nullName="---Đơn vị---"
-                             stylename="nhap"/>
-                <lookupField id="tengiaovienField"
-                             caption="Giáo viên"
-                             nullName="---Giáo viên---"
-                             stylename="nhap"/>
-                <dateField id="ngaylamField"
-                           caption="Ngày làm"
-                           resolution="DAY"
-                           stylename="nhap"/>
+        <groupBox caption="Tìm kiếm"
+                  collapsable="true"
+                  collapsed="false"
+                  stylename="css-hbox-search"
+                  spacing="true"
+                  width="100%">
+            <hbox spacing="true" width="100%">
+                <vbox spacing="true">
+                    <lookupField id="tendonviField"
+                                 caption="Đơn vị"
+                                 width="100%"
+                                 nullName="---Chọn tất cả---"/>
+                    <lookupField id="tengiaovienField"
+                                 caption="Giáo viên"
+                                 width="100%"
+                                 nullName="---Chọn tất cả---"/>
+                </vbox>
+                <vbox spacing="true">
+                    <dateField id="ngaylamField"
+                               caption="Ngày làm"
+                               width="100%"
+                               resolution="DAY"/>
+                    <lookupField id="buoilamField"
+                                 caption="Buổi làm"
+                                 width="100%"
+                                 nullName="---Chọn tất cả---"/>
+                </vbox>
+                <vbox align="BOTTOM_CENTER" spacing="true" width="30%">
+                    <button id="timkiemBtn"
+                            invoke="timkiemExcute"
+                            stylename="Btntimkiem"
+                            caption="Tìm kiếm" align="TOP_CENTER"/>
+                    <button id="clearBtn"
+                            caption="Clear"
+                            css="margin-top: 22%;display: grid;"/>
+                </vbox>
             </hbox>
-            <buttonsPanel>
-                <button id="timkiem"
-                        stylename="button-clearbtn"
-                        caption="Tìm kiếm" align="BOTTOM_CENTER"/>
-                <button id="clearBtn"
-                        caption="Xóa"
-                        align="BOTTOM_CENTER"/>
-            </buttonsPanel>
-        </vbox>
+        </groupBox>
         <groupTable id="chamconggvsTable"
                     width="100%"
                     dataContainer="chamconggvsDc">
@@ -69,10 +80,10 @@
             <columns>
                 <column id="stt" generator="stt"
                         caption="STT"/>
-                <column id="hotengv"
-                        caption="mainMsg://chamcong.hovaten"/>
                 <column id="donvigv"
                         caption="mainMsg://chamcong.donvi"/>
+                <column id="hotengv"
+                        caption="mainMsg://chamcong.hovaten"/>
                 <column id="ngaylam"
                         caption="mainMsg://chamcong.ngaylam"/>
                 <column id="buoilam"

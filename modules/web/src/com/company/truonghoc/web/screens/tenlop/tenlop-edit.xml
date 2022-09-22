@@ -23,11 +23,11 @@
                 width="800"/>
     <layout expand="editActions" spacing="true">
         <form id="form" dataContainer="tenlopDc">
-            <column width="350px">
-                <lookupField id="donviFiled" property="dovi" />
-                <textField id="tenlopField" property="tenlop"/>
-                <lookupField id="giaoviencnField" property="giaoviencn"/>
-            </column>
+            <hbox width="100%" spacing="true">
+                <lookupField id="donviFiled" property="dovi" caption="Đơn vị"/>
+                <textField id="tenlopField" property="tenlop" caption="Tên lớp"/>
+                <lookupField id="giaoviencnField" property="giaoviencn" caption="Giáo viên chủ nhiệm"/>
+            </hbox>
         </form>
         <hbox id="editActions" spacing="true">
             <button id="commitAndCloseBtn" action="windowCommitAndClose"/>

@@ -2,14 +2,15 @@ package com.company.truonghoc.web.screens.tenlop;
 
 import com.company.truonghoc.entity.Donvi;
 import com.company.truonghoc.service.DulieuUserService;
+import com.haulmont.cuba.core.entity.Entity;
 import com.haulmont.cuba.gui.Notifications;
-import com.haulmont.cuba.gui.components.HasValue;
-import com.haulmont.cuba.gui.components.LookupField;
-import com.haulmont.cuba.gui.components.TextField;
+import com.haulmont.cuba.gui.UiComponents;
+import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.model.CollectionContainer;
 import com.haulmont.cuba.gui.model.CollectionLoader;
 import com.haulmont.cuba.gui.screen.*;
 import com.company.truonghoc.entity.Tenlop;
+import com.haulmont.cuba.gui.screen.LookupComponent;
 import com.haulmont.cuba.security.global.UserSession;
 import org.springframework.util.StringUtils;
 
@@ -42,6 +43,8 @@ public class TenlopBrowse extends StandardLookup<Tenlop> {
     protected DulieuUserService dulieuUserService;
     @Inject
     protected UserSession userSession;
+    @Inject
+    protected UiComponents uiComponents;
 
     @Subscribe
     protected void onBeforeShow(BeforeShowEvent event) {
@@ -122,5 +125,19 @@ public class TenlopBrowse extends StandardLookup<Tenlop> {
 
         query = query + where;
         return query;
+    }
+
+    public Component stt(Entity entity) {
+        int lineNumber = 1;
+        try {
+            lineNumber = tenlopsDl.getContainer().getItemIndex(entity.getId()) + 1;
+        }
+        catch (Exception ex)
+        {
+            lineNumber = 1;
+        }
+        Label field = uiComponents.create(Label.NAME);
+        field.setValue(lineNumber);
+        return field;
     }
 }

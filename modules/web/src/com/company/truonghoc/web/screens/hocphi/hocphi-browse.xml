@@ -11,22 +11,6 @@
             <loader id="hocphisDl">
                 <query>
                     <![CDATA[select e from truonghoc_Hocphi e]]>
-                    <condition>
-                        <and>
-                            <c:jpql>
-                                <c:where>e.dovitao_hocphi = :component_dovitao_hocphiField</c:where>
-                            </c:jpql>
-                            <c:jpql>
-                                <c:where>e.ngaydong >= :component_tungayField</c:where>
-                            </c:jpql>
-                            <c:jpql>
-                                <c:where>:component_denngayField >= e.ngaydong</c:where>
-                            </c:jpql>
-                            <c:jpql>
-                                <c:where>:component_trangthaiField = e.tinhtrangthanhtoan</c:where>
-                            </c:jpql>
-                        </and>
-                    </condition>
                 </query>
             </loader>
         </collection>
@@ -44,40 +28,59 @@
         <dataLoadCoordinator auto="true">
         </dataLoadCoordinator>
     </facets>
-    <dialogMode height="600"
-                width="800"/>
     <layout expand="hocphisTable"
             stylename="css-brower-hocphi"
             spacing="true">
-        <vbox spacing="true"
-              stylename="css-vbox-timkiem">
-            <label value="Điều kiện lọc" stylename="dieukienloc"/>
-            <hbox spacing="true"
-                  stylename="hbox-text">
-                <lookupField id="dovitao_hocphiField"
-                             caption="Đơn vị"
-                             nullName="Lọc tất cả"
-                             stylename="nhap"/>
-                <dateField id="tungayField"
-                           datatype="date"
-                           resolution="DAY"
-                           width="100%"
-                           caption="mainMsg://tungay"
-                           stylename="nhap"/>
-                <dateField id="denngayField"
-                           datatype="date"
-                           resolution="DAY"
-                           caption="mainMsg://denngay"
-                           stylename="nhap"/>
-                <lookupField id="trangthaiField"
-                             caption="Trạng thái"
-                             nullName="Lọc tất cả"/>
+        <groupBox caption="Tìm kiếm"
+                  collapsable="true"
+                  collapsed="false"
+                  stylename="css-hbox-search"
+                  spacing="true"
+                  width="100%">
+            <hbox spacing="true" width="100%">
+                <vbox spacing="true">
+                    <lookupField id="dovitao_hocphiField"
+                                 caption="Đơn vị"
+                                 width="100%"
+                                 nullName="Lọc tất cả"/>
+                    <textField id="giaovienField"
+                               width="100%"
+                               inputPrompt="Họ và tên giáo viên"
+                               caption="Giáo viên"/>
+                </vbox>
+                <vbox spacing="true">
+                    <textField id="hovstenField"
+                               caption="Họ và tên"
+                               width="100%"
+                               inputPrompt="Họ và tên học sinh"/>
+                    <lookupField id="trangthaiField"
+                                 width="100%"
+                                 caption="Trạng thái"
+                                 nullName="Lọc tất cả"/>
+                </vbox>
+                <vbox spacing="true">
+                    <dateField id="tungayField"
+                               datatype="date"
+                               resolution="DAY"
+                               width="100%"
+                               caption="mainMsg://tungay"/>
+                    <dateField id="denngayField"
+                               datatype="date"
+                               resolution="DAY"
+                               width="100%"
+                               caption="mainMsg://denngay"/>
+                </vbox>
+                <vbox align="BOTTOM_CENTER" spacing="true" width="30%">
+                    <button id="timkiemBtn"
+                            invoke="timkiemExcute"
+                            stylename="Btntimkiem"
+                            caption="Tìm kiếm" align="TOP_CENTER"/>
+                    <button id="clearBtn"
+                            caption="Clear"
+                            css="margin-top: 22%;display: grid;"/>
+                </vbox>
             </hbox>
-            <button id="clearBtn"
-                    caption="Clear"
-                    align="TOP_RIGHT"
-                    stylename="button-clearbtn"/>
-        </vbox>
+        </groupBox>
         <groupTable id="hocphisTable"
                     width="100%"
                     dataContainer="hocphisDc">
@@ -90,8 +93,8 @@
                 <column id="stt"
                         generator="stt"
                         caption="STT"/>
-                <column id="createdBy"
-                        caption="mainMsg://nguoitao"/>
+                <column id="usertao_hocphi"
+                        caption="mainMsg://nguoitaothu"/>
                 <column id="dovitao_hocphi"
                         caption="mainMsg://donvitao"/>
                 <column id="hovaten"
@@ -113,10 +116,11 @@
                 <column id="checkhandong"
                         generator="checkhandong"
                         caption="Trạng thái"/>
-                </columns>
+            </columns>
             <rowsCount/>
             <buttonsPanel id="buttonsPanel"
                           alwaysVisible="true">
+<!--                <button id="createBtn" action="hocphisTable.create"/>-->
                 <button id="createBtn" action="hocphisTable.create"/>
                 <button id="editBtn" action="hocphisTable.edit"/>
                 <button id="removeBtn" action="hocphisTable.remove"/>

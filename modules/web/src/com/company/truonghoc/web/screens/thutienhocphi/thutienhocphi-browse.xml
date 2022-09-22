@@ -11,22 +11,6 @@
             <loader id="thutienhocphisDl">
                 <query>
                     <![CDATA[select e from truonghoc_Thutienhocphi e]]>
-                    <condition>
-                        <and>
-                            <c:jpql>
-                                <c:where>e.donvitao_thutienhocphi = :component_donvitao_thutienhocphiField</c:where>
-                            </c:jpql>
-                            <c:jpql>
-                                <c:where>e.tungay >= :component_tungayField</c:where>
-                            </c:jpql>
-                            <c:jpql>
-                                <c:where>:component_denngayField >= e.denngay</c:where>
-                            </c:jpql>
-                            <c:jpql>
-                                <c:where>:component_trangthaiField = e.tinhtrangthanhtoan</c:where>
-                            </c:jpql>
-                        </and>
-                    </condition>
                 </query>
             </loader>
         </collection>
@@ -44,40 +28,70 @@
         <dataLoadCoordinator auto="true">
         </dataLoadCoordinator>
     </facets>
-    <dialogMode height="600"
-                width="800"/>
     <layout expand="thutienhocphisTable"
             spacing="true"
             stylename="css-layout-thutienhocphi">
-        <vbox spacing="true"
-              stylename="css-vbox-timkiem">
-            <label value="Điều kiện lọc" stylename="dieukienloc"/>
-            <hbox spacing="true"
-                  stylename="hbox-text">
-                <lookupField id="donvitao_thutienhocphiField"
-                             caption="Đơn vị"
-                             nullName="Lọc tất cả"
-                             stylename="nhap"/>
-                <dateField id="tungayField"
-                           datatype="date"
-                           resolution="DAY"
-                           width="100%"
-                           caption="mainMsg://tungay"
-                           stylename="nhap"/>
-                <dateField id="denngayField"
-                           datatype="date"
-                           resolution="DAY"
-                           caption="mainMsg://denngay"
-                           stylename="nhap"/>
-                <lookupField id="trangthaiField"
-                             caption="Trạng thái"
-                             nullName="Lọc tất cả"/>
+        <groupBox caption="Tìm kiếm"
+                  collapsable="true"
+                  collapsed="false"
+                  stylename="css-hbox-search"
+                  spacing="true"
+                  width="100%">
+            <hbox spacing="true" width="100%">
+                <vbox spacing="true">
+                    <lookupField id="donvitao_thutienhocphiField"
+                                 caption="Đơn vị"
+                                 width="100%"
+                                 nullName="--Lọc tất cả--"/>
+                    <textField id="nguoithuField"
+                               caption="Tài khoản người thu"
+                               width="100%"
+                               inputPrompt="Tài khoản người thu"/>
+                </vbox>
+                <vbox spacing="true">
+                    <textField id="tenKhField"
+                               caption="Tên khách hàng"
+                               width="100%"
+                               inputPrompt="Họ và tên khách hàng"/>
+                    <textField id="tenHsField"
+                               caption="Tên học sinh"
+                               width="100%"
+                               inputPrompt="Họ và tên học sinh"/>
+                </vbox>
+                <vbox spacing="true">
+                    <dateField id="tungayField"
+                               datatype="date"
+                               resolution="DAY"
+                               width="100%"
+                               caption="mainMsg://tungay"/>
+                    <dateField id="denngayField"
+                               datatype="date"
+                               resolution="DAY"
+                               width="100%"
+                               caption="mainMsg://denngay"/>
+                </vbox>
+                <vbox spacing="true">
+<!--                    <textField id="tenphiField"-->
+<!--                               caption="Tên phí"-->
+<!--                               width="100%"-->
+<!--                               inputPrompt="Tên phí"/>-->
+                    <lookupField id="trangthaiField"
+                                 caption="Trạng thái"
+                                 width="100%"
+                                 nullName="--Lọc tất cả--"/>
+                </vbox>
+
+                <vbox align="BOTTOM_CENTER" spacing="true" width="30%">
+                    <button id="timkiemBtn"
+                            invoke="timkiemExcute"
+                            stylename="Btntimkiem"
+                            caption="Tìm kiếm" align="TOP_CENTER"/>
+                    <button id="clearBtn"
+                            caption="Clear"
+                            css="margin-top: 22%;display: grid;"/>
+                </vbox>
             </hbox>
-            <button id="clearBtn"
-                    caption="Clear"
-                    align="TOP_RIGHT"
-                    stylename="button-clearbtn"/>
-        </vbox>
+        </groupBox>
         <groupTable id="thutienhocphisTable"
                     width="100%"
                     dataContainer="thutienhocphisDc">
@@ -87,10 +101,11 @@
                 <action id="remove" type="remove"/>
             </actions>
             <columns>
+                <column id="stt" generator="stt" caption="STT"/>
                 <column id="usertao_thutienhocphi"
-                caption="mainMsg://thutienhocphi.usertao_thutienhocphi"/>
+                        caption="mainMsg://nguoitaothu"/>
                 <column id="donvitao_thutienhocphi"
-                caption="mainMsg://thuvienhocphi.donvitao_thutienhocphi"/>
+                        caption="mainMsg://thuvienhocphi.donvitao_thutienhocphi"/>
                 <column id="tenkhachhang"
                         caption="mainMsg://thuvienhocphi.tenkhachhang"/>
                 <column id="diachi"
@@ -101,12 +116,8 @@
                         caption="mainMsg://thuvienhocphi.denngay"/>
                 <column id="tenhocsinh"
                         caption="mainMsg://thuvienhocphi.tenhocsinh"/>
-                <column id="tenphi"
-                        caption="mainMsg://thuvienhocphi.tenphi"/>
-                <column id="soluong"
-                        caption="mainMsg://thuvienhocphi.soluong"/>
-<!--                <column id="dongia"-->
-<!--                        caption="mainMsg://thuvienhocphi.dongia"/>-->
+                <!--                <column id="dongia"-->
+                <!--                        caption="mainMsg://thuvienhocphi.dongia"/>-->
                 <column id="thanhtien"
                         caption="mainMsg://thuvienhocphi.thanhtien"/>
                 <column id="checkhan"

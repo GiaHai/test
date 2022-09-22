@@ -120,8 +120,8 @@ public class BaocaoScreen extends Screen {
 
     }
 
-    @Subscribe("timkiem")
-    protected void onTimkiemClick(Button.ClickEvent event) {
+    @Subscribe("timkiemBtn")
+    protected void onTimkiemBtnClick(Button.ClickEvent event) {
 
         List<MapDataItem> hocphis = new ArrayList<>();
         for (KeyValueEntity item : Loadhocphi(tungayField.getValue(), denngayField.getValue())) {

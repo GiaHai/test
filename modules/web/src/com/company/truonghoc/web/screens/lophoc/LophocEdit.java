@@ -4,6 +4,7 @@ import com.company.truonghoc.entity.Donvi;
 import com.company.truonghoc.entity.Giaovien;
 import com.company.truonghoc.entity.Hocsinh;
 import com.company.truonghoc.entity.Tenlop;
+import com.company.truonghoc.service.DulieuUserService;
 import com.haulmont.cuba.core.entity.Entity;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.gui.UiComponents;
@@ -12,6 +13,7 @@ import com.haulmont.cuba.gui.model.CollectionContainer;
 import com.haulmont.cuba.gui.model.CollectionLoader;
 import com.haulmont.cuba.gui.screen.*;
 import com.company.truonghoc.entity.Lophoc;
+import com.haulmont.cuba.security.global.UserSession;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -54,11 +56,15 @@ public class LophocEdit extends StandardEditor<Lophoc> {
     protected Button closeBtn;
     @Inject
     protected TextField<String> DvField;
+    @Inject
+    protected DulieuUserService dulieuUserService;
+    @Inject
+    protected UserSession userSession;
 
     @Subscribe
     protected void onInit(InitEvent event) {
         tenlopField.setRequired(true);
-
+        DvField.setEditable(false);
         giaovien.setEditable(false);
         tenlopField.setEditable(false);
         donvisDl.load();
@@ -78,6 +84,11 @@ public class LophocEdit extends StandardEditor<Lophoc> {
         }
 
         dkhienthiok();
+
+        if (dulieuUserService.timbrowerdonvi(userSession.getUser().getLogin()).size() == 0){
+            donviFiled.setEditable(false);
+            donviFiled.setValue(dulieuUserService.timEditdonvi(userSession.getUser().getLogin()).getTendonvi());
+        }
     }
 
     @Subscribe("donviFiled")

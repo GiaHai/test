@@ -54,6 +54,7 @@
                 <action id="remove" type="remove"/>
             </actions>
             <columns>
+                <column id="stt" generator="stt" caption="STT"/>
                 <column id="tenlop" caption="mainMsg://lophoc.tenlop"/>
                 <column id="giaoviencn" caption="mainMsg://lophoc.giaoviencn"/>
             </columns>

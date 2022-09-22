@@ -32,42 +32,126 @@
     <dialogMode height="600"
                 width="800"/>
     <layout expand="editActions" spacing="true">
-        <form id="form" dataContainer="thutienhocphiDc">
-            <column width="350px">
-                <textField id="usertaoField"
-                           property="usertao_thutienhocphi"
-                           caption="mainMsg://nguoitao"/>
-                <textField id="dovitao_thutienhocphiField"
-                           property="donvitao_thutienhocphi"
-                           caption="mainMsg://donvitao"/>
-                <textField id="tenkhachhangField"
-                           property="tenkhachhang"
-                           caption="mainMsg://thuvienhocphi.tenkhachhang"/>
-                <textField id="diachiField"
-                           property="diachi"
-                           caption="mainMsg://thuvienhocphi.diachi"/>
-                <dateField id="tungayField"
-                           property="tungay"
-                           datatype="dateTime"
-                           caption="mainMsg://thuvienhocphi.tungay"/>
-                <dateField id="denngayField"
-                           property="denngay"
-                           caption="mainMsg://thuvienhocphi.denngay"/>
-                <lookupField id="tenhocsinhField"
-                             property="tenhocsinh"
-                             optionsContainer="hocsinhsDc"
-                             caption="mainMsg://thuvienhocphi.tenhocsinh"/>
-                <textField id="thanhtienField"
-                           property="thanhtien"
-                           caption="mainMsg://thuvienhocphi.thanhtien"/>
-                <lookupField id="hinhthucthanhtoanField"
-                             property="hinhthucthanhtoan"
-                             caption="mainMsg://hocphi.hinhthucthanhtoan"
-                             nullName="Hình thức thanh toán"/>
-                <textField id="tinhtrangthanhtoanField"
-                           property="tinhtrangthanhtoan"/>
-            </column>
-        </form>
+        <vbox spacing="true">
+            <grid id="form" spacing="true" width="75%" align="TOP_CENTER">
+                <columns>
+                    <column flex="1"/>
+                    <column flex="1"/>
+                    <column flex="1"/>
+                    <column flex="0.1"/>
+                    <column flex="1"/>
+                    <column flex="1"/>
+                    <column flex="1"/>
+                </columns>
+                <rows>
+                    <!--                    dòng 1-->
+                    <row>
+                        <form colspan="3" width="100%" childrenCaptionWidth="80px" dataContainer="thutienhocphiDc">
+                            <column>
+                                <textField id="usertaoField"
+                                           width="100%"
+                                           property="usertao_thutienhocphi"
+                                           caption="mainMsg://nguoitaothu"/>
+                            </column>
+                        </form>
+                        <form colspan="1" width="100%">
+                            <column>
+                                <label value=""/>
+                            </column>
+                        </form>
+                        <form colspan="3" width="100%" childrenCaptionWidth="80px" dataContainer="thutienhocphiDc">
+                            <column>
+                                <textField id="dovitao_thutienhocphiField"
+                                           property="donvitao_thutienhocphi"
+                                           width="100%"
+                                           caption="mainMsg://donvitao"/>
+                            </column>
+                        </form>
+                    </row>
+                    <!--                    dòng 2-->
+                    <row>
+                        <form colspan="3" width="100%" childrenCaptionWidth="80px" dataContainer="thutienhocphiDc">
+                            <column>
+                                <textField id="tenkhachhangField"
+                                           property="tenkhachhang"
+                                           width="100%"
+                                           caption="mainMsg://thuvienhocphi.tenkhachhang"/>
+                            </column>
+                        </form>
+                        <form colspan="1" width="100%">
+                            <column>
+                                <label value=""/>
+                            </column>
+                        </form>
+                        <form colspan="3" width="100%" childrenCaptionWidth="80px" dataContainer="thutienhocphiDc">
+                            <column>
+                                <textField id="diachiField"
+                                           property="diachi"
+                                           width="100%"
+                                           caption="mainMsg://thuvienhocphi.diachi"/>
+                            </column>
+                        </form>
+                    </row>
+                    <!--                    dòng 3-->
+                    <row>
+                        <form colspan="3" width="100%" childrenCaptionWidth="80px" dataContainer="thutienhocphiDc">
+                            <column>
+                                <dateField id="tungayField"
+                                           property="tungay"
+                                           datatype="dateTime"
+                                           width="100%"
+                                           caption="mainMsg://thuvienhocphi.tungay"/>
+                            </column>
+                        </form>
+                        <form colspan="1" width="100%">
+                            <column>
+                                <label value=""/>
+                            </column>
+                        </form>
+                        <form colspan="3" width="100%" childrenCaptionWidth="80px" dataContainer="thutienhocphiDc">
+                            <column>
+                                <dateField id="denngayField"
+                                           property="denngay"
+                                           width="100%"
+                                           caption="mainMsg://thuvienhocphi.denngay"/>
+                            </column>
+                        </form>
+                    </row>
+                    <!--                    dòng 4-->
+                    <row>
+                        <form colspan="2" width="100%" childrenCaptionWidth="80px" dataContainer="thutienhocphiDc">
+                            <column>
+                                <lookupField id="tenhocsinhField"
+                                             property="tenhocsinh"
+                                             optionsContainer="hocsinhsDc"
+                                             width="100%"
+                                             caption="mainMsg://thuvienhocphi.tenhocsinh"/>
+                            </column>
+                        </form>
+                        <form colspan="3" width="100%" childrenCaptionWidth="80px" dataContainer="thutienhocphiDc">
+                            <column>
+                                <textField id="thanhtienField"
+                                           property="thanhtien"
+                                           width="100%"
+                                           caption="mainMsg://thuvienhocphi.thanhtien"/>
+                            </column>
+                        </form>
+
+                        <form colspan="2" width="100%" childrenCaptionWidth="80px" dataContainer="thutienhocphiDc">
+                            <column>
+                                <lookupField id="hinhthucthanhtoanField"
+                                             property="hinhthucthanhtoan"
+                                             caption="mainMsg://hocphi.hinhthucthanhtoan"
+                                             width="100%"
+                                             nullName="Hình thức thanh toán"/>
+                                <textField id="tinhtrangthanhtoanField"
+                                           property="tinhtrangthanhtoan"/>
+                            </column>
+                        </form>
+                    </row>
+                </rows>
+            </grid>
+        </vbox>
         <groupBox id="lkchitietthuBox" caption="Khoản thu">
             <table id="chitietthusTable" aggregatable="true" dataContainer="lkchitietthu" width="100%" height="200px">
                 <actions>

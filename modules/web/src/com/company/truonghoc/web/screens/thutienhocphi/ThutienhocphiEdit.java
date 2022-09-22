@@ -75,7 +75,7 @@ public class ThutienhocphiEdit extends StandardEditor<Thutienhocphi> {
 
     @Subscribe
     protected void onBeforeShow(BeforeShowEvent event) {
-        usertaoField.setValue(userSession.getUser().getLogin());
+        usertaoField.setValue(dulieuUserService.timEditdonvi(userSession.getUser().getLogin()).getTextgv());
         dovitao_thutienhocphiField.setValue(dulieuUserService.timEditdonvi(userSession.getUser().getLogin()).getTendonvi());
 
         Calendar calendar = Calendar.getInstance();

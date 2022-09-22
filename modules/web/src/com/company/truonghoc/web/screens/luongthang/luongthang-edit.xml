@@ -21,67 +21,283 @@
     </data>
     <dialogMode height="600"
                 width="800"/>
-    <layout expand="scrollBox" spacing="true">
-        <scrollBox id="scrollBox" spacing="true">
-            <form id="form" dataContainer="luongthangDc">
-                <column width="350px">
-                    <textField id="usertao_luongthangField"
-                               property="usertao_luongthang"
-                               caption="mainMsg://nguoitao"/>
-                    <textField id="donvitao_luongthangField"
-                               property="donvitao_luongthang"
-                               caption="mainMsg://donvitao"/>
-                    <lookupField id="hovatenField" property="hovaten"
-                                 optionsContainer="giaoviensDc"
-                                 caption="mainMsg://luongthang.hovaten"/>
-                    <dateField id="ngaynhanField"
-                               property="ngaynhan"
-                               caption="mainMsg://luongthang.ngaynhan"/>
-                    <dateField id="hannhanluongField"
-                               property="hannhanluong"
-                               caption="mainMsg://luongthang.hannhanluong"/>
-                    <textField id="luongcobanField"
-                               property="luongcoban"
-                               caption="mainMsg://luongthang.luongcoban"/>
-                    <textField id="buoilamField"
-                               property="buoilam"
-                               caption="mainMsg://luongthang.buoilam"/>
-                    <textField id="cangoaiField"
-                               property="cangoai"
-                               caption="mainMsg://luongthang.cangoai"/>
-                    <textField id="casangField"
-                               property="casang"
-                               caption="mainMsg://luongthang.casang"/>
-                    <textField id="thuclinhField"
-                               property="thuclinh"
-                               caption="mainMsg://luongthang.thuclinh"/>
-                    <textField id="daythemField"
-                               property="daythem"
-                               caption="mainMsg://luongthang.daythem"/>
-                    <textField id="trocapField"
-                               property="trocap"
-                               caption="mainMsg://luongthang.trocap"/>
-                    <textField id="trachnhiemField"
-                               property="trachnhiem"
-                               caption="mainMsg://luongthang.trachnhiem"/>
-                    <textField id="chuyencanField"
-                               property="chuyencan"
-                               caption="mainMsg://luongthang.chuyencan"/>
-                    <textField id="thuongField"
-                               property="thuong"
-                               caption="mainMsg://luongthang.thuong"/>
-                    <textField id="tonglinhField"
-                               property="tonglinh"
-                               caption="mainMsg://luongthang.tonglinh"/>
-                    <lookupField id="hinhthucthanhtoanField"
-                                 property="hinhthucthanhtoan"
-                                 nullName="Hình thức thanh toán"
-                                 caption="Hình thức thanh toán"/>
-                    <textField id="tinhtrangnhanluongField"
-                               property="tinhtrangnhanluong"/>
-                </column>
-            </form>
-        </scrollBox>
+    <layout expand="editActions" spacing="true">
+        <vbox spacing="true">
+            <grid id="form" spacing="true" width="100%">
+                <columns>
+                    <column flex="1"/>
+                    <column flex="1"/>
+<!--                    <column flex="0.1"/>-->
+                    <column flex="1"/>
+                    <column flex="1"/>
+                    <column flex="0.1"/>
+                    <column flex="1"/>
+                    <column flex="1"/>
+
+                </columns>
+                <rows>
+<!--                    dòng 1-->
+                    <row>
+                        <form colspan="3" width="100%" childrenCaptionWidth="80px" dataContainer="luongthangDc">
+                            <column>
+                                <textField id="usertao_luongthangField"
+                                           property="usertao_luongthang"
+                                           width="100%"
+                                           caption="mainMsg://nguoitaochi"/>
+                            </column>
+                        </form>
+                        <form colspan="1" width="100%">
+                            <column>
+                                <label value=""/>
+                            </column>
+                        </form>
+                        <form colspan="3" width="100%" childrenCaptionWidth="80px" dataContainer="luongthangDc">
+                            <column>
+                                <textField id="donvitao_luongthangField"
+                                           property="donvitao_luongthang"
+                                           width="100%"
+                                           caption="mainMsg://donvitao"/>
+                            </column>
+                        </form>
+                    </row>
+<!--                    dòng 2-->
+                    <row>
+                        <form colspan="3" width="100%" childrenCaptionWidth="80px" dataContainer="luongthangDc">
+                            <column>
+                                <lookupField id="hovatenField" property="hovaten"
+                                             optionsContainer="giaoviensDc"
+                                             width="100%"
+                                             caption="mainMsg://luongthang.hovaten"/>
+                            </column>
+                        </form>
+                        <form colspan="1" width="100%">
+                            <column>
+                                <label value=""/>
+                            </column>
+                        </form>
+                        <form colspan="3" width="100%" childrenCaptionWidth="80px" dataContainer="luongthangDc">
+                            <column>
+                                <textField id="luongcobanField"
+                                           property="luongcoban"
+                                           width="100%"
+                                           caption="mainMsg://luongthang.luongcoban"/>
+                            </column>
+                        </form>
+                    </row>
+<!--                    dòng 3-->
+                    <row>
+                        <form colspan="2" width="100%" childrenCaptionWidth="80px" dataContainer="luongthangDc">
+                            <column>
+                                <textField id="buoilamField"
+                                           width="100%"
+                                           property="buoilam"
+                                           caption="mainMsg://luongthang.buoilam"/>
+                            </column>
+                        </form>
+<!--                        <form colspan="1" width="100%">-->
+<!--                            <column>-->
+<!--                                <label value=""/>-->
+<!--                            </column>-->
+<!--                        </form>-->
+                        <form colspan="2" width="100%" childrenCaptionWidth="80px" dataContainer="luongthangDc">
+                            <column>
+                                <textField id="cangoaiField"
+                                           width="100%"
+                                           property="cangoai"
+                                           caption="mainMsg://luongthang.cangoai"/>
+                            </column>
+                        </form>
+                        <form colspan="1" width="100%">
+                            <column>
+                                <label value=""/>
+                            </column>
+                        </form>
+                        <form colspan="2" width="100%" childrenCaptionWidth="80px" dataContainer="luongthangDc">
+                            <column>
+                                <textField id="casangField"
+                                           width="100%"
+                                           property="casang"
+                                           caption="mainMsg://luongthang.casang"/>
+                            </column>
+                        </form>
+                    </row>
+<!--                    dòng 4-->
+                    <row>
+                        <form colspan="3" width="100%" childrenCaptionWidth="80px" dataContainer="luongthangDc">
+                            <column>
+                                <textField id="thuclinhField"
+                                           property="thuclinh"
+                                           width="100%"
+                                           caption="mainMsg://luongthang.thuclinh"/>
+                            </column>
+                        </form>
+                        <form colspan="1" width="100%">
+                            <column>
+                                <label value=""/>
+                            </column>
+                        </form>
+                        <form colspan="3" width="100%" childrenCaptionWidth="80px" dataContainer="luongthangDc">
+                            <column>
+                                <textField id="daythemField"
+                                           property="daythem"
+                                           width="100%"
+                                           caption="mainMsg://luongthang.daythem"/>
+                            </column>
+                        </form>
+                    </row>
+<!--                    dòng 5-->
+                    <row>
+                        <form colspan="3" width="100%" childrenCaptionWidth="80px" dataContainer="luongthangDc">
+                            <column>
+                                <textField id="trocapField"
+                                           property="trocap"
+                                           width="100%"
+                                           caption="mainMsg://luongthang.trocap"/>
+                            </column>
+                        </form>
+                        <form colspan="1" width="100%">
+                            <column>
+                                <label value=""/>
+                            </column>
+                        </form>
+                        <form colspan="3" width="100%" childrenCaptionWidth="80px" dataContainer="luongthangDc">
+                            <column>
+                                <textField id="trachnhiemField"
+                                           property="trachnhiem"
+                                           width="100%"
+                                           caption="mainMsg://luongthang.trachnhiem"/>
+                            </column>
+                        </form>
+                    </row>
+<!--                    dòng 6-->
+                    <row>
+                        <form colspan="3" width="100%" childrenCaptionWidth="80px" dataContainer="luongthangDc">
+                            <column>
+                                <textField id="chuyencanField"
+                                           property="chuyencan"
+                                           width="100%"
+                                           caption="mainMsg://luongthang.chuyencan"/>
+                            </column>
+                        </form>
+                        <form colspan="1" width="100%">
+                            <column>
+                                <label value=""/>
+                            </column>
+                        </form>
+                        <form colspan="3" width="100%" childrenCaptionWidth="80px" dataContainer="luongthangDc">
+                            <column>
+                                <textField id="thuongField"
+                                           property="thuong"
+                                           width="100%"
+                                           caption="mainMsg://luongthang.thuong"/>
+                            </column>
+                        </form>
+                    </row>
+<!--                    dòng 7-->
+                    <row>
+                        <form colspan="7" width="100%" childrenCaptionWidth="80px" dataContainer="luongthangDc">
+                            <column>
+                                <textField id="tonglinhField"
+                                           property="tonglinh"
+                                           width="100%"
+                                           caption="mainMsg://luongthang.tonglinh"/>
+                            </column>
+                        </form>
+                    </row>
+<!--                    dòng 8-->
+                    <row>
+                        <form colspan="3" width="100%" childrenCaptionWidth="80px" dataContainer="luongthangDc">
+                            <column>
+                                <dateField id="ngaynhanField"
+                                           property="ngaynhan"
+                                           width="100%"
+                                           caption="mainMsg://luongthang.ngaynhan"/>
+                            </column>
+                        </form>
+                        <form colspan="1" width="100%">
+                            <column>
+                                <label value=""/>
+                            </column>
+                        </form>
+                        <form colspan="3" width="100%" childrenCaptionWidth="80px" dataContainer="luongthangDc">
+                            <column>
+                                <dateField id="hannhanluongField"
+                                           property="hannhanluong"
+                                           width="100%"
+                                           caption="mainMsg://luongthang.hannhanluong"/>
+                                <lookupField id="hinhthucthanhtoanField"
+                                             property="hinhthucthanhtoan"
+                                             nullName="Hình thức thanh toán"
+                                             width="100%"
+                                             caption="Hình thức thanh toán"/>
+                                <textField id="tinhtrangnhanluongField"
+                                           property="tinhtrangnhanluong"/>
+                            </column>
+                        </form>
+                    </row>
+                </rows>
+            </grid>
+        </vbox>
+<!--        <scrollBox id="scrollBox" spacing="true">-->
+<!--            <form id="form" dataContainer="luongthangDc">-->
+<!--                <column width="350px">-->
+<!--                    <textField id="usertao_luongthangField"-->
+<!--                               property="usertao_luongthang"-->
+<!--                               caption="mainMsg://nguoitaochi"/>-->
+<!--                    <textField id="donvitao_luongthangField"-->
+<!--                               property="donvitao_luongthang"-->
+<!--                               caption="mainMsg://donvitao"/>-->
+<!--                    <lookupField id="hovatenField" property="hovaten"-->
+<!--                                 optionsContainer="giaoviensDc"-->
+<!--                                 caption="mainMsg://luongthang.hovaten"/>-->
+<!--                    <dateField id="ngaynhanField"-->
+<!--                               property="ngaynhan"-->
+<!--                               caption="mainMsg://luongthang.ngaynhan"/>-->
+<!--                    <dateField id="hannhanluongField"-->
+<!--                               property="hannhanluong"-->
+<!--                               caption="mainMsg://luongthang.hannhanluong"/>-->
+<!--                    <textField id="luongcobanField"-->
+<!--                               property="luongcoban"-->
+<!--                               caption="mainMsg://luongthang.luongcoban"/>-->
+<!--                    <textField id="buoilamField"-->
+<!--                               property="buoilam"-->
+<!--                               caption="mainMsg://luongthang.buoilam"/>-->
+<!--                    <textField id="cangoaiField"-->
+<!--                               property="cangoai"-->
+<!--                               caption="mainMsg://luongthang.cangoai"/>-->
+<!--                    <textField id="casangField"-->
+<!--                               property="casang"-->
+<!--                               caption="mainMsg://luongthang.casang"/>-->
+<!--                    <textField id="thuclinhField"-->
+<!--                               property="thuclinh"-->
+<!--                               caption="mainMsg://luongthang.thuclinh"/>-->
+<!--                    <textField id="daythemField"-->
+<!--                               property="daythem"-->
+<!--                               caption="mainMsg://luongthang.daythem"/>-->
+<!--                    <textField id="trocapField"-->
+<!--                               property="trocap"-->
+<!--                               caption="mainMsg://luongthang.trocap"/>-->
+<!--                    <textField id="trachnhiemField"-->
+<!--                               property="trachnhiem"-->
+<!--                               caption="mainMsg://luongthang.trachnhiem"/>-->
+<!--                    <textField id="chuyencanField"-->
+<!--                               property="chuyencan"-->
+<!--                               caption="mainMsg://luongthang.chuyencan"/>-->
+<!--                    <textField id="thuongField"-->
+<!--                               property="thuong"-->
+<!--                               caption="mainMsg://luongthang.thuong"/>-->
+<!--                    <textField id="tonglinhField"-->
+<!--                               property="tonglinh"-->
+<!--                               caption="mainMsg://luongthang.tonglinh"/>-->
+<!--                    <lookupField id="hinhthucthanhtoanField"-->
+<!--                                 property="hinhthucthanhtoan"-->
+<!--                                 nullName="Hình thức thanh toán"-->
+<!--                                 caption="Hình thức thanh toán"/>-->
+<!--                    <textField id="tinhtrangnhanluongField"-->
+<!--                               property="tinhtrangnhanluong"/>-->
+<!--                </column>-->
+<!--            </form>-->
+<!--        </scrollBox>-->
         <hbox id="editActions" spacing="true">
             <button id="commitAndCloseBtn" action="windowCommitAndClose"/>
             <button id="closeBtn" action="windowClose"/>

@@ -3,6 +3,8 @@ package com.company.truonghoc.web.screens.hocphi;
 import com.company.truonghoc.entity.Hocsinh;
 import com.company.truonghoc.service.DulieuUserService;
 import com.haulmont.cuba.core.global.DataManager;
+import com.haulmont.cuba.gui.Dialogs;
+import com.haulmont.cuba.gui.Notifications;
 import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.model.CollectionContainer;
 import com.haulmont.cuba.gui.model.CollectionLoader;
@@ -49,6 +51,10 @@ public class HocphiEdit extends StandardEditor<Hocphi> {
     protected TextField<String> tinhtrangthanhtoanFiedl;
     @Inject
     protected DateField<Date> ngaydongField;
+    @Inject
+    protected Notifications notifications;
+    @Inject
+    protected Dialogs dialogs;
 
     @Subscribe
     protected void onInit(InitEvent event) {
@@ -79,12 +85,13 @@ public class HocphiEdit extends StandardEditor<Hocphi> {
 
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
-         hovatenField.setOptionsList(hocsinhList(getEditedEntity().getDovitao_hocphi()));
-        if (hovatenField.getValue() != null){
+        hovatenField.setOptionsList(hocsinhList(getEditedEntity().getDovitao_hocphi()));
+        if (hovatenField.getValue() != null) {
             hovatenField.setEditable(false);
             namsinhField.setEditable(false);
         }
     }
+
     @Subscribe("hovatenField")
     protected void onHovatenFieldValueChange(HasValue.ValueChangeEvent<Hocsinh> event) {
         hovatenField.setValue((Hocsinh) hovatenField.getValue());
@@ -108,21 +115,21 @@ public class HocphiEdit extends StandardEditor<Hocphi> {
 
     @Subscribe("hinhthucthanhtoanField")
     protected void onHinhthucthanhtoanFieldValueChange(HasValue.ValueChangeEvent<String> event) {
-        if (hinhthucthanhtoanField.getValue() ==null){
+        if (hinhthucthanhtoanField.getValue() == null) {
             tinhtrangthanhtoanFiedl.setValue("Chưa thanh toán");
-        }else {
+        } else {
             tinhtrangthanhtoanFiedl.setValue("Đã thanh toán");
         }
     }
 
     @Subscribe("ngaydongField")
     protected void onNgaydongFieldValueChange(HasValue.ValueChangeEvent<Date> event) {
-        if (ngaydongField.getValue() != null){
+        if (ngaydongField.getValue() != null) {
             handongField.setVisible(false);
             handongField.clear();
             hinhthucthanhtoanField.setRequired(true);
             hinhthucthanhtoanField.setVisible(true);
-        }else {
+        } else {
             handongField.setRequired(true);
             handongField.setVisible(true);
             hinhthucthanhtoanField.setRequired(false);

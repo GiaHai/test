@@ -29,8 +29,8 @@ public class DonviEdit extends StandardEditor<Donvi> {
 
     @Subscribe
     protected void onInit(InitEvent event) {
-        thuField.setEditable(false);
-        chiField.setEditable(false);
+        thuField.setVisible(false);
+        chiField.setVisible(false);
     }
 
 

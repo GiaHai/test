@@ -13,31 +13,103 @@
     <dialogMode height="600"
                 width="800"/>
     <layout expand="editActions" spacing="true">
-        <form id="form" dataContainer="giaovienDc">
-            <column width="350px">
-                <textField id="donvitao_giaovienField"
-                           property="donvitao_giaovien"
-                           caption="mainMsg://donvitao"/>
-                <textField id="tengiaovienField"
-                           property="tengiaovien"
-                           caption="mainMsg://giaovien.tengiaovien"/>
-                <dateField id="ngaysinhgiaovienField"
-                           property="ngaysinhgiaovien"
-                           caption="mainMsg://giaovien.ngaysinh"/>
-                <textField id="quequangiaovienField"
-                           property="quequangiaovien"
-                           caption="mainMsg://giaovien.quequan"/>
-                <lookupField id="gioitinhgiaovienField"
-                             property="gioitinhgiaovien"
-                             caption="mainMsg://giaovien.gioitinh"/>
-                <textField id="luongcobanField"
-                           property="luongcoban"
-                           caption="mainMsg://giaovien.luongcoban"/>
-                <textField id="ghichuField"
-                           property="ghichu"
-                           caption="mainMsg://giaovien.ghichu"/>
-            </column>
-        </form>
+        <vbox spacing="true">
+            <grid id="form" spacing="true" width="100%">
+                <columns>
+                    <column flex="1"/>
+                    <column flex="1"/>
+                    <column flex="1"/>
+                    <column flex="0.1"/>
+                    <column flex="1"/>
+                    <column flex="1"/>
+                    <column flex="1"/>
+                </columns>
+                <rows>
+                    <row>
+                        <form colspan="3" width="100%" childrenCaptionWidth="80px">
+                            <column>
+                                <textField id="donvitao_giaovienField"
+                                           property="donvitao_giaovien"
+                                           caption="mainMsg://donvitao"
+                                           width="100%"
+                                           dataContainer="giaovienDc"/>
+                            </column>
+                        </form>
+                        <form colspan="1" width="100%">
+                            <column>
+                                <label value=""/>
+                            </column>
+                        </form>
+                        <form colspan="3" width="100%" childrenCaptionWidth="100px">
+                            <textField id="tengiaovienField"
+                                       property="tengiaovien"
+                                       width="100%"
+                                       caption="mainMsg://giaovien.tengiaovien"
+                                       dataContainer="giaovienDc"/>
+                        </form>
+                    </row>
+                    <row>
+                        <form colspan="3" width="100%" childrenCaptionWidth="80px">
+                            <column>
+                                <dateField id="ngaysinhgiaovienField"
+                                           property="ngaysinhgiaovien"
+                                           dataContainer="giaovienDc"
+                                           width="100%"
+                                           caption="mainMsg://giaovien.ngaysinh"/>
+                            </column>
+                        </form>
+                        <form colspan="1" width="100%">
+                            <column>
+                                <label value=""/>
+                            </column>
+                        </form>
+                        <form colspan="3" width="100%" childrenCaptionWidth="100px">
+                            <textField id="quequangiaovienField"
+                                       property="quequangiaovien"
+                                       dataContainer="giaovienDc"
+                                       width="99%"
+                                       caption="mainMsg://giaovien.quequan"/>
+                        </form>
+                    </row>
+                    <row>
+                        <form colspan="3" width="100%" childrenCaptionWidth="80px">
+                            <column>
+                                <lookupField id="gioitinhgiaovienField"
+                                             property="gioitinhgiaovien"
+                                             dataContainer="giaovienDc"
+                                             width="100%"
+                                             caption="mainMsg://giaovien.gioitinh"/>
+                            </column>
+                        </form>
+                        <form colspan="1" width="100%">
+                            <column>
+                                <label value=""/>
+                            </column>
+                        </form>
+                        <form colspan="3" width="100%" childrenCaptionWidth="100px">
+                            <textField id="luongcobanField"
+                                       property="luongcoban"
+                                       dataContainer="giaovienDc"
+                                       width="100%"
+                                       caption="mainMsg://giaovien.luongcoban"/>
+                        </form>
+                    </row>
+                    <row>
+                        <form colspan="7" width="100%" childrenCaptionWidth="80px">
+                            <column>
+                                <textArea id="ghichuField"
+                                          property="ghichu"
+                                          dataContainer="giaovienDc"
+                                          width="100%"
+                                          caption="mainMsg://giaovien.ghichu"/>
+                            </column>
+                        </form>
+                    </row>
+                </rows>
+
+            </grid>
+
+        </vbox>
         <hbox id="editActions" spacing="true">
             <button id="commitAndCloseBtn" action="windowCommitAndClose"/>
             <button id="closeBtn" action="windowClose"/>

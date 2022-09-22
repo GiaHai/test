@@ -4,7 +4,9 @@ import com.company.truonghoc.entity.Donvi;
 import com.company.truonghoc.service.DulieuUserService;
 import com.haulmont.cuba.core.entity.Entity;
 import com.haulmont.cuba.core.global.UserSessionSource;
+import com.haulmont.cuba.gui.Dialogs;
 import com.haulmont.cuba.gui.UiComponents;
+import com.haulmont.cuba.gui.actions.list.CreateAction;
 import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.model.CollectionContainer;
 import com.haulmont.cuba.gui.model.CollectionLoader;
@@ -13,13 +15,13 @@ import com.company.truonghoc.entity.Thuchi;
 import com.haulmont.cuba.gui.screen.LookupComponent;
 import com.haulmont.cuba.security.global.UserSession;
 import com.vaadin.ui.components.grid.FooterRow;
+import org.springframework.util.StringUtils;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @UiController("truonghoc_Thuchi.browse")
@@ -35,6 +37,20 @@ public class ThuchiBrowse extends StandardLookup<Thuchi> {
     protected UiComponents uiComponents;
     @Inject
     protected GroupTable<Thuchi> thuchisTable;
+    @Inject
+    protected DateField<Date> tungayField;
+    @Inject
+    protected TextField<String> nguoichiField;
+    @Inject
+    protected TextField<String> khoanchiField;
+    @Inject
+    protected DateField<Date> denngayField;
+    @Inject
+    protected Button createBtn;
+    @Named("thuchisTable.create")
+    protected CreateAction<Thuchi> thuchisTableCreate;
+    @Inject
+    protected Dialogs dialogs;
     private DecimalFormat percentFormat;
     @Inject
     protected DulieuUserService dulieuUserService;
@@ -57,17 +73,24 @@ public class ThuchiBrowse extends StandardLookup<Thuchi> {
 
     @Subscribe
     protected void onBeforeShow(BeforeShowEvent event) {
-        if (dulieuUserService.timbrowerdonvi(userSession.getUser().getLogin()).size() == 0){
-            donvitao_thuchiField.setEditable(false);
-            donvitao_thuchiField.setValue(dulieuUserService.timEditdonvi(userSession.getUser().getLogin()).getTendonvi());
-        }else {
-            donvitao_thuchiField.setEditable(true);
+        dkphanquyen();
+    }
 
-            donvisDl.load();
-            List<String> sessionTypeNames = donvisDc.getMutableItems().stream()
-                    .map(Donvi::getTendonvi)
-                    .collect(Collectors.toList());
-            donvitao_thuchiField.setOptionsList(sessionTypeNames);
+    @Subscribe
+    protected void onAfterShow(AfterShowEvent event) {
+        excuteSearch(true);
+    }
+
+    @Subscribe("thuchisTable.create")
+    protected void onThuchisTableCreate(Action.ActionPerformedEvent event) {
+        if (dulieuUserService.timEditdonvi(userSession.getUser().getLogin()).getTextgv() != null){
+            this.thuchisTableCreate.execute();
+        }else {
+            dialogs.createMessageDialog()
+                    .withCaption("THÔNG BÁO")
+                    .withMessage("Bạn không có quyền")
+                    .withType(Dialogs.MessageType.WARNING)
+                    .show();
         }
     }
 
@@ -85,13 +108,56 @@ public class ThuchiBrowse extends StandardLookup<Thuchi> {
         return field;
     }
 
+    @Subscribe("clearBtn")
+    protected void onClearBtnClick(Button.ClickEvent event) {
+        dkphanquyen();
+    }
 
+    //Điều kiện login
+    private void dkphanquyen() {
+        //điều kiện đơn vị trung tâm nếu
+        if (dulieuUserService.timbrowerdonvi(userSession.getUser().getLogin()).size() == 0) {
+            donvitao_thuchiField.setEditable(false);
+            donvitao_thuchiField.setValue(dulieuUserService.timEditdonvi(userSession.getUser().getLogin()).getTendonvi()); //Chèn đơn vị từ user vào text
+            //Xoá
+            nguoichiField.clear();
+            khoanchiField.clear();
+            trangthaiField.clear();
+            tungayField.clear();
+            denngayField.clear();
+        }else {
+            donvitao_thuchiField.setEditable(true);
+            //lấy dữ liệu string cho lookup
+            donvisDl.load();
+            List<String> sessionTypeNames = donvisDc.getMutableItems().stream()
+                    .map(Donvi::getTendonvi)
+                    .collect(Collectors.toList());
+            donvitao_thuchiField.setOptionsList(sessionTypeNames);
+            //xoá
+            donvitao_thuchiField.clear();
+            nguoichiField.clear();
+            khoanchiField.clear();
+            trangthaiField.clear();
+            tungayField.clear();
+            denngayField.clear();
+        }
+        if (dulieuUserService.timEditdonvi(userSession.getUser().getLogin()).getTextgv() != null){
+            donvitao_thuchiField.setEditable(false);
+            nguoichiField.setEditable(false);
+            khoanchiField.clear();
+            trangthaiField.clear();
+            tungayField.clear();
+            denngayField.clear();
+            donvitao_thuchiField.setValue(dulieuUserService.timEditdonvi(userSession.getUser().getLogin()).getTendonvi()); //Chèn đơn vị từ user vào text
+            nguoichiField.setValue(dulieuUserService.timEditdonvi(userSession.getUser().getLogin()).getTextgv());  //chèn tên giáo viên từ user vào text
+        }
+    }
     public Component checkhanchi(Thuchi entity) {
         HtmlBoxLayout htmlBoxLayout = uiComponents.create(HtmlBoxLayout.class);
         htmlBoxLayout.setHtmlSanitizerEnabled(true);
 
         if (entity.getNgaychi() != null){
-            String body = "<a style=\"background-color: #00FFFF; width: 100%;\">ĐÃ ĐÓNG</a>\n";
+            String body = "<a style=\"background-color: #00FFFF; width: 100%;\">ĐÃ THANH TOÁN</a>\n";
             htmlBoxLayout.setTemplateContents(body);
         }else {
             HtmlBoxLayout htmlBoxLayout1 = uiComponents.create(HtmlBoxLayout.class);
@@ -108,5 +174,62 @@ public class ThuchiBrowse extends StandardLookup<Thuchi> {
             return htmlBoxLayout1;
         }
         return htmlBoxLayout;
+    }
+
+    public void timkiemExcute() {
+        excuteSearch(true);
+    }
+
+    private void excuteSearch(boolean isFromSearchBtn) {
+        Object donvi = donvitao_thuchiField.getValue();
+        String ngthanhtoan = nguoichiField.getValue();
+        String khoanchi = khoanchiField.getValue();
+        Object trangthai = trangthaiField.getValue();
+        Date tungay = tungayField.getValue();
+        Date denngay = denngayField.getValue();
+
+        Map<String, Object> params = new HashMap<>();
+        String query = returnQuery(donvi, ngthanhtoan, khoanchi, trangthai, tungay, denngay, params);
+        thuchisDl.setQuery(query);
+        thuchisDl.setParameters(params);
+        thuchisDl.load();
+    }
+
+    private String returnQuery(Object donvi, String ngthanhtoan, String khoanchi, Object trangthai, Date tungay, Date denngay, Map<String, Object> params) {
+        String query = "select e from truonghoc_Thuchi e ";
+        String where = " where 1=1 ";
+
+        //Đơn vị
+        if (donvi != null){
+            where += "and e.donvitao_thuchi = :donvi ";
+            params.put("donvi", donvi);
+        }
+        //người thanh toán
+        if (!StringUtils.isEmpty(ngthanhtoan)){
+            where += "and e.usertao_thuchi = :ngthanhtoan ";
+            params.put("ngthanhtoan", ngthanhtoan);
+        }
+        //khoản chi
+        if (!StringUtils.isEmpty(khoanchi)){
+            where += "and e.khoanchi = :khoanchi ";
+            params.put("khoanchi", khoanchi);
+        }
+        //trạng thái
+        if (trangthai != null){
+            where += "and e.tinhtrangchi = :trangthai ";
+            params.put("trangthai", trangthai);
+        }
+        //từ ngày
+        if (tungay != null){
+            where += "and e.ngaychi >= :tungay ";
+            params.put("tungay", tungay);
+        }
+        //đến ngày
+        if (denngay != null){
+            where += "and :denngay >= e.ngaychi ";
+            params.put("denngay", denngay);
+        }
+        query = query + where;
+        return query;
     }
 }

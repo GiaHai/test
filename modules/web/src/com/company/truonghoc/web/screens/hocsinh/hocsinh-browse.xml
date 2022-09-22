@@ -101,11 +101,9 @@
                 <action id="remove" type="remove"/>
             </actions>
             <columns>
-                <column id="stt"
-                        caption="STT"/>
                 <column id="usertao_hocsinh"
                         property="usertao_hocsinh"
-                        caption="mainMsg://nguoitao"/>
+                        caption="Giáo viên chủ nhiệm"/>
                 <column id="donvitao_hocsinh"
                         property="donvitao_hocsinh"
                         caption="mainMsg://donvitao"/>

@@ -55,9 +55,10 @@
                 <action id="remove" type="remove"/>
             </actions>
             <columns>
-                <column id="dovi"/>
-                <column id="tenlop"/>
-                <column id="giaoviencn"/>
+                <column id="stt" generator="stt" caption="STT"/>
+                <column id="dovi" caption="Đơn vị"/>
+                <column id="tenlop" caption="Tên lớp"/>
+                <column id="giaoviencn" caption="Giáo viên chủ nhiệm"/>
             </columns>
             <rowsCount/>
             <buttonsPanel id="buttonsPanel"

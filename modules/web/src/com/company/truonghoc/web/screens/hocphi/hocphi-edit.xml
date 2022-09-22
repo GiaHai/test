@@ -22,45 +22,137 @@
     <dialogMode height="600"
                 width="800"/>
     <layout expand="editActions" spacing="true">
-        <form id="form" dataContainer="hocphiDc">
-            <column width="350px">
-                <textField id="usertaoField"
-                           property="usertao_hocphi"
-                           caption="mainMsg://nguoitao"/>
-                <textField id="dovitao_hocphiField"
-                           property="dovitao_hocphi"
-                           caption="mainMsg://donvitao"/>
-                <lookupField id="hovatenField"
-                             property="hovaten"
-                             optionsContainer="hocsinhsDc"
-                             caption="mainMsg://hocphi.hovaten"/>
-                <dateField id="namsinhField"
-                           property="namsinh"
-                           caption="mainMsg://hocphi.namsinh"/>
-                <textArea id="ghichuField"
-                           property="ghichu"
-                           caption="mainMsg://hocphi.ghichu"/>
-                <textField id="sotientamtinhField"
-                           property="sotientamtinh"
-                           caption="mainMsg://hocphi.sotientamtinh"/>
-                <textField id="sotienthutheohdField"
-                           property="sotienthutheohd"
-                           caption="mainMsg://hocphi.sotienthutheohd"/>
-                <dateField id="ngaydongField"
-                           property="ngaydong"
-                           caption="mainMsg://hocphi.ngaydong"/>
-                <dateField id="handongField"
-                           property="handong"
-                           caption="Hạn đóng"/>
-                <lookupField id="hinhthucthanhtoanField"
-                             property="hinhthucthanhtoan"
-                             caption="mainMsg://hocphi.hinhthucthanhtoan"
-                             nullName="Hình thức thanh toán"/>
-                <textField id="tinhtrangthanhtoanFiedl"
-                           property="tinhtrangthanhtoan"
-                />
-            </column>
-        </form>
+        <vbox spacing="true">
+            <grid id="form" spacing="true" width="100%">
+                <columns>
+                    <column flex="1"/>
+                    <column flex="1"/>
+                    <column flex="1"/>
+                    <column flex="0.1"/>
+                    <column flex="1"/>
+                    <column flex="1"/>
+                    <column flex="1"/>
+                </columns>
+                <rows>
+<!--                    dòng 1-->
+                    <row>
+                        <form colspan="3" width="100%" childrenCaptionWidth="80px" dataContainer="hocphiDc">
+                            <column>
+                                <textField id="usertaoField"
+                                           property="usertao_hocphi"
+                                           width="100%"
+                                           caption="mainMsg://nguoitaothu"/>
+                            </column>
+                        </form>
+                        <form colspan="1" width="100%">
+                            <column>
+                                <label value=""/>
+                            </column>
+                        </form>
+                        <form colspan="3" width="100%" childrenCaptionWidth="80px" dataContainer="hocphiDc">
+                            <column>
+                                <textField id="dovitao_hocphiField"
+                                           property="dovitao_hocphi"
+                                           width="100%"
+                                           caption="mainMsg://donvitao"/>
+                            </column>
+                        </form>
+                    </row>
+<!--                    dòng 2-->
+                    <row>
+                        <form colspan="3" width="100%" childrenCaptionWidth="80px" dataContainer="hocphiDc">
+                            <column>
+                                <lookupField id="hovatenField"
+                                             property="hovaten"
+                                             width="100%"
+                                             optionsContainer="hocsinhsDc"
+                                             caption="mainMsg://hocphi.hovaten"/>
+                            </column>
+                        </form>
+                        <form colspan="1" width="100%">
+                            <column>
+                                <label value=""/>
+                            </column>
+                        </form>
+                        <form colspan="3" width="100%" childrenCaptionWidth="80px" dataContainer="hocphiDc">
+                            <column>
+                                <dateField id="namsinhField"
+                                           property="namsinh"
+                                           width="100%"
+                                           caption="mainMsg://hocphi.namsinh"/>
+                            </column>
+                        </form>
+                    </row>
+<!--                    dòng 3-->
+                    <row>
+                        <form colspan="7" width="100%" childrenCaptionWidth="80px" dataContainer="hocphiDc">
+                            <column>
+                                <textArea id="ghichuField"
+                                          property="ghichu"
+                                          width="100%"
+                                          caption="mainMsg://hocphi.ghichu"/>
+                            </column>
+                        </form>
+                    </row>
+<!--                    dòng 4-->
+                    <row>
+                        <form colspan="3" width="100%" childrenCaptionWidth="80px" dataContainer="hocphiDc">
+                            <column>
+                                <textField id="sotientamtinhField"
+                                           property="sotientamtinh"
+                                           width="100%"
+                                           caption="mainMsg://hocphi.sotientamtinh"/>
+                            </column>
+                        </form>
+                        <form colspan="1" width="100%">
+                            <column>
+                                <label value=""/>
+                            </column>
+                        </form>
+                        <form colspan="3" width="100%" childrenCaptionWidth="80px" dataContainer="hocphiDc">
+                            <column>
+                                <textField id="sotienthutheohdField"
+                                           property="sotienthutheohd"
+                                           width="100%"
+                                           caption="mainMsg://hocphi.sotienthutheohd"/>
+                            </column>
+                        </form>
+                    </row>
+<!--                    dòng 5-->
+                    <row>
+                        <form colspan="3" width="100%" childrenCaptionWidth="80px" dataContainer="hocphiDc">
+                            <column>
+                                <dateField id="ngaydongField"
+                                           property="ngaydong"
+                                           width="100%"
+                                           caption="mainMsg://hocphi.ngaydong"/>
+                            </column>
+                        </form>
+                        <form colspan="1" width="100%">
+                            <column>
+                                <label value=""/>
+                            </column>
+                        </form>
+                        <form colspan="3" width="100%" childrenCaptionWidth="80px" dataContainer="hocphiDc">
+                            <column>
+                                <dateField id="handongField"
+                                           property="handong"
+                                           width="100%"
+                                           caption="Hạn đóng"/>
+                                <lookupField id="hinhthucthanhtoanField"
+                                             property="hinhthucthanhtoan"
+                                             width="100%"
+                                             caption="mainMsg://hocphi.hinhthucthanhtoan"
+                                             nullName="Hình thức thanh toán"/>
+                                <textField id="tinhtrangthanhtoanFiedl"
+                                           property="tinhtrangthanhtoan"
+                                />
+                            </column>
+                        </form>
+                    </row>
+                </rows>
+            </grid>
+        </vbox>
         <hbox id="editActions" spacing="true">
             <button id="commitAndCloseBtn" action="windowCommitAndClose"/>
             <button id="closeBtn" action="windowClose"/>

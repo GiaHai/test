@@ -2,16 +2,21 @@ package com.company.truonghoc.web.screens.lophoc;
 
 import com.company.truonghoc.entity.Donvi;
 import com.company.truonghoc.service.DulieuUserService;
-import com.haulmont.cuba.gui.components.LookupField;
-import com.haulmont.cuba.gui.components.TextField;
+import com.haulmont.cuba.core.entity.Entity;
+import com.haulmont.cuba.gui.Dialogs;
+import com.haulmont.cuba.gui.UiComponents;
+import com.haulmont.cuba.gui.actions.list.CreateAction;
+import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.model.CollectionContainer;
 import com.haulmont.cuba.gui.model.CollectionLoader;
 import com.haulmont.cuba.gui.screen.*;
 import com.company.truonghoc.entity.Lophoc;
+import com.haulmont.cuba.gui.screen.LookupComponent;
 import com.haulmont.cuba.security.global.UserSession;
 import org.springframework.util.StringUtils;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,6 +43,14 @@ public class LophocBrowse extends StandardLookup<Lophoc> {
     protected CollectionContainer<Donvi> donvisDc;
     @Inject
     protected CollectionLoader<Donvi> donvisDl;
+    @Inject
+    protected UiComponents uiComponents;
+    @Inject
+    protected Button createBtn;
+    @Named("lophocsTable.create")
+    protected CreateAction<Lophoc> lophocsTableCreate;
+    @Inject
+    protected Dialogs dialogs;
 
     @Subscribe
     protected void onInit(InitEvent event) {
@@ -53,6 +66,20 @@ public class LophocBrowse extends StandardLookup<Lophoc> {
         if (dulieuUserService.timbrowerdonvi(userSession.getUser().getLogin()).size() == 0){
             searchDvField.setEditable(false);
             searchDvField.setValue(dulieuUserService.timEditdonvi(userSession.getUser().getLogin()).getTendonvi());
+            excuteSearch(true);
+        }
+    }
+
+    @Subscribe("lophocsTable.create")
+    protected void onLophocsTableCreate(Action.ActionPerformedEvent event) {
+        if (dulieuUserService.timEditdonvi(userSession.getUser().getLogin()).getTextgv() != null){
+            this.lophocsTableCreate.execute();
+        }else {
+            dialogs.createMessageDialog()
+                    .withCaption("THÔNG BÁO")
+                    .withMessage("Bạn không có quyền")
+                    .withType(Dialogs.MessageType.WARNING)
+                    .show();
         }
     }
 
@@ -77,7 +104,8 @@ public class LophocBrowse extends StandardLookup<Lophoc> {
         String where = " where 1=1 ";
         //Đơn vị
         if (donvi != null){
-            where += "and e.created_by = '123' ";
+            where += "and e.donvi = :donvi ";
+            params.put("donvi", donvi);
         }
         // Tên lớp
         if (!StringUtils.isEmpty(tenlop)){
@@ -92,5 +120,19 @@ public class LophocBrowse extends StandardLookup<Lophoc> {
 
         query = query + where;
         return query;
+    }
+
+    public Component stt(Entity entity) {
+        int lineNumber = 1;
+        try {
+            lineNumber = lophocsDl.getContainer().getItemIndex(entity.getId()) + 1;
+        }
+        catch (Exception ex)
+        {
+            lineNumber = 1;
+        }
+        Label field = uiComponents.create(Label.NAME);
+        field.setValue(lineNumber);
+        return field;
     }
 }

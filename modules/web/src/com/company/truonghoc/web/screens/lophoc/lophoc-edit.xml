@@ -50,47 +50,111 @@
     </data>
     <dialogMode height="600"
                 width="800"/>
-    <layout expand="editActions" spacing="true">
-        <form id="form" dataContainer="lophocDc">
-            <hbox width="100%" spacing="true">
-                <vbox spacing="true">
-                    <hbox spacing="true">
-                        <lookupField id="donviFiled"
-                                     nullName="--Tất cả đơn vị--"
-                                     caption="Đơn vị"/>
-                        <button id="timkiemBtn"
-                                caption="Tìm kiếm Lớp học" align="BOTTOM_CENTER"/>
+    <layout expand="editActions" spacing="true" stylename="css-layout-lophocedit">
+        <vbox spacing="true" stylename="css-vbox">
+            <grid id="form" spacing="true" width="100%">
+            <columns>
+                <column flex="1"/>
+                <column flex="1"/>
+                <column flex="1"/>
+                <column flex="0.1"/>
+                <column flex="1"/>
+                <column flex="1"/>
+                <column flex="0.1"/>
+                <column flex="1"/>
+                <column flex="1"/>
+                <column flex="1"/>
+                <column flex="1"/>
+                <column flex="1"/>
+            </columns>
+                <rows >
+                    <row>
+                        <form colspan="3" width="100%" childrenCaptionWidth="80px">
+                            <column>
+                                <lookupField id="donviFiled"
+                                             nullName="--Tất cả đơn vị--"
+                                             width="100%"
+                                             caption="Đơn vị"/>
+                            </column>
+                        </form>
+                        <form colspan="1" width="100%">
+                            <column>
+                                <label value=""/>
+                            </column>
+                        </form>
+                        <form colspan="1" width="100%">
+                            <column>
+                                <button id="timkiemBtn"
+                                        width="100%"
+                                        caption="Tìm kiếm Lớp học" align="BOTTOM_CENTER"/>
+                            </column>
+                        </form>
+                        <form colspan="1" width="100%">
+                            <column>
+                                <label value=""/>
+                            </column>
+                        </form>
+                        <form colspan="3" width="100%" childrenCaptionWidth="80px">
+                            <column>
+                                <textField id="DvField"
+                                           property="donvi"
+                                           dataContainer="lophocDc"
+                                           width="100%"
+                                           caption="Đơn vị"/>
+                            </column>
+                        </form>
+                        <form colspan="3" width="100%" childrenCaptionWidth="80px">
+                            <column>
+                                <textField id="giaovien"
+                                           property="giaoviencn"
+                                           width="100%"
+                                           caption="mainMsg://lophoc.giaoviencn"
+                                           dataContainer="lophocDc"/>
+                            </column>
+                        </form>
+                    </row>
 
-                    </hbox>
-                    <hbox spacing="true">
-                        <lookupField id="giaovienField"
-                                     optionsContainer="giaoviensDc"
-                                     captionProperty="tengiaovien"
-                                     nullName="---Tất cả giáo viên---"
-                                     caption="mainMsg://lophoc.giaoviencn"/>
-                        <button id="xoaBtn"
-                                css="padding-left: 60px;padding-right: 60px;"
-                                caption="Xóa" width="100%" align="BOTTOM_CENTER"/>
-                    </hbox>
-                </vbox>
-                <hbox spacing="true">
-                    <vbox spacing="true">
-                        <textField id="DvField"
-                                   property="donvi"
-                                   dataContainer="lophocDc"
-                                   caption="Đơn vị"/>
-                        <textField id="tenlopField"
-                                   property="tenlop"
-                                   dataContainer="lophocDc"
-                                   caption="mainMsg://lophoc.tenlop"/>
-                        <textField id="giaovien"
-                                   property="giaoviencn"
-                                   caption="mainMsg://lophoc.giaoviencn"
-                                   dataContainer="lophocDc"/>
-                    </vbox>
-                </hbox>
-            </hbox>
-        </form>
+                    <row>
+                        <form colspan="3" width="100%" childrenCaptionWidth="80px">
+                            <column>
+                                <lookupField id="giaovienField"
+                                             optionsContainer="giaoviensDc"
+                                             captionProperty="tengiaovien"
+                                             nullName="---Tất cả giáo viên---"
+                                             width="100%"
+                                             caption="mainMsg://lophoc.giaoviencn"/>
+                            </column>
+                        </form>
+                        <form colspan="1" width="100%">
+                            <column>
+                                <label value=""/>
+                            </column>
+                        </form>
+                        <form colspan="1" width="100%">
+                            <column>
+                                <button id="xoaBtn"
+                                        caption="Xóa" width="100%" />
+                            </column>
+                        </form>
+                        <form colspan="1" width="100%">
+                            <column>
+                                <label value=""/>
+                            </column>
+                        </form>
+                        <form colspan="6" width="100%" childrenCaptionWidth="80px">
+                            <column>
+                                <textField id="tenlopField"
+                                           property="tenlop"
+                                           dataContainer="lophocDc"
+                                           width="100%"
+                                           caption="mainMsg://lophoc.tenlop"/>
+                            </column>
+                        </form>
+                    </row>
+                </rows>
+            </grid>
+        </vbox>
+
         <groupBox id="dshocsinhBox" caption="mainMsg://hocsinhBrowse.caption">
             <table id="dshocsinhTable" dataContainer="dshocsinhDc" width="100%" height="200px">
                 <actions>

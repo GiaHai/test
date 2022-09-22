@@ -195,6 +195,7 @@ create table TRUONGHOC_DIEMDANH (
     DELETED_BY nvarchar(50),
     --
     NGUOITAODD nvarchar(255),
+    LOPDD nvarchar(255),
     DONVIDD nvarchar(255),
     NGAYNGHI datetime2,
     --

@@ -11,22 +11,6 @@
             <loader id="thuchisDl">
                 <query>
                     <![CDATA[select e from truonghoc_Thuchi e]]>
-                    <condition>
-                        <and>
-                            <c:jpql>
-                                <c:where>e.donvitao_thuchi = :component_donvitao_thuchiField</c:where>
-                            </c:jpql>
-                            <c:jpql>
-                                <c:where>e.ngaychi >= :component_tungayField</c:where>
-                            </c:jpql>
-                            <c:jpql>
-                                <c:where>:component_denngayField >= e.ngaychi</c:where>
-                            </c:jpql>
-                            <c:jpql>
-                                <c:where>:component_trangthaiField = e.tinhtrangchi</c:where>
-                            </c:jpql>
-                        </and>
-                    </condition>
                 </query>
             </loader>
         </collection>
@@ -44,40 +28,61 @@
         <dataLoadCoordinator auto="true">
         </dataLoadCoordinator>
     </facets>
-    <dialogMode height="600"
-                width="800"/>
     <layout expand="thuchisTable"
             spacing="true"
-    stylename="css-layout-thuchi">
-        <vbox spacing="true"
-              stylename="css-vbox-timkiem">
-            <label value="Điều kiện lọc" stylename="dieukienloc"/>
-            <hbox spacing="true"
-                  stylename="hbox-text">
-                <lookupField id="donvitao_thuchiField"
-                             caption="Đơn vị"
-                             nullName="Lọc tất cả"
-                             stylename="nhap"/>
-                <dateField id="tungayField"
-                           datatype="date"
-                           resolution="DAY"
-                           width="100%"
-                           caption="mainMsg://tungay"
-                           stylename="nhap"/>
-                <dateField id="denngayField"
-                           datatype="date"
-                           resolution="DAY"
-                           caption="mainMsg://denngay"
-                           stylename="nhap"/>
-                <lookupField id="trangthaiField"
-                             caption="Trạng thái"
-                             nullName="Lọc tất cả"/>
+            stylename="css-layout-thuchi">
+        <groupBox caption="Tìm kiếm"
+                  collapsable="true"
+                  collapsed="false"
+                  stylename="css-hbox-search"
+                  spacing="true"
+                  width="100%">
+            <hbox spacing="true" width="100%">
+                <vbox spacing="true">
+                    <lookupField id="donvitao_thuchiField"
+                                 caption="Đơn vị"
+                                 width="100%"
+                                 nullName="Lọc tất cả"/>
+                    <textField id="nguoichiField"
+                               caption="Người thanh toán"
+                               width="100%"
+                               inputPrompt="Họ và tên người thanh toán"/>
+                </vbox>
+                <vbox spacing="true">
+                    <textField id="khoanchiField"
+                               caption="Khoản chi"
+                               width="100%"
+                               inputPrompt="Tên khoản chi"/>
+                    <lookupField id="trangthaiField"
+                                 caption="Trạng thái"
+                                 width="100%"
+                                 nullName="Lọc tất cả"/>
+                </vbox>
+                <vbox spacing="true">
+                    <dateField id="tungayField"
+                               datatype="date"
+                               resolution="DAY"
+                               width="100%"
+                               caption="mainMsg://tungay"
+                               stylename="nhap"/>
+                    <dateField id="denngayField"
+                               datatype="date"
+                               resolution="DAY"
+                               width="100%"
+                               caption="mainMsg://denngay"
+                               stylename="nhap"/>
+                </vbox>
+                <vbox align="BOTTOM_CENTER" spacing="true" width="30%">
+                    <button id="timkiemBtn"
+                            invoke="timkiemExcute"
+                            stylename="Btntimkiem"
+                            caption="Tìm kiếm" align="TOP_CENTER"/>
+                    <button id="clearBtn"
+                            caption="Clear"
+                            css="margin-top: 22%;display: grid;"/>
+                </vbox>
             </hbox>
-            <button id="clearBtn"
-                    caption="Clear"
-                    align="TOP_RIGHT"
-                    stylename="button-clearbtn"/>
-        </vbox>
+        </groupBox>
         <groupTable id="thuchisTable"
                     width="100%"
                     dataContainer="thuchisDc"
@@ -91,12 +96,12 @@
                 <column id="stt"
                         generator="stt"
                         caption="msg://Thuchi.stt"/>
-                <column id="createdBy"
-                        caption="mainMsg://nguoitao"/>
-                <column id="ngaychi"
-                        caption="Ngày chi"/>
                 <column id="donvitao_thuchi"
                         caption="mainMsg://donvitao"/>
+                <column id="usertao_thuchi"
+                        caption="mainMsg://nguoitaochi"/>
+                <column id="ngaychi"
+                        caption="Ngày chi"/>
                 <column id="khoanchi"
                         caption="msg://Thuchi.khoanchi"/>
                 <column id="soluong"

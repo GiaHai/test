@@ -14,8 +14,7 @@ import com.haulmont.cuba.gui.screen.LookupComponent;
 import com.haulmont.cuba.security.global.UserSession;
 
 import javax.inject.Inject;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @UiController("truonghoc_Chamconggv.browse")
@@ -46,21 +45,46 @@ public class ChamconggvBrowse extends StandardLookup<Chamconggv> {
     @Inject
     protected DataManager dataManager;
     @Inject
-    protected Button timkiem;
+    protected LookupField buoilamField;
 
     @Subscribe
-    protected void onInit(InitEvent event) {
-        if (dulieuUserService.timEditdonvi(userSession.getUser().getLogin()).getDonvitrungtam() == false) {
-            tendonviField.setEditable(false);
-            tengiaovienField.setEditable(false);
-            ngaylamField.setEditable(false);
-        }
-        donvisDl.load();
-        List<String> sessionTypeNames = donvisDc.getMutableItems().stream()
-                .map(Donvi::getTendonvi)
-                .collect(Collectors.toList());
-        tendonviField.setOptionsList(sessionTypeNames);
+    protected void onBeforeShow(BeforeShowEvent event) {
+        dkphanquyen();
+        excuteSearch(true);
+    }
 
+    @Subscribe("clearBtn")
+    protected void onClearBtnClick(Button.ClickEvent event) {
+        dkphanquyen();
+    }
+
+    //Điều kiện login
+    private void dkphanquyen() {
+        //điều kiện đơn vị trung tâm nếu
+        if (dulieuUserService.timbrowerdonvi(userSession.getUser().getLogin()).size() == 0) {
+            tendonviField.setEditable(false);
+            tendonviField.setValue(dulieuUserService.timEditdonvi(userSession.getUser().getLogin()).getTendonvi()); //Chèn đơn vị từ user vào text
+            //Xoá
+            tengiaovienField.clear();
+            ngaylamField.clear();
+            buoilamField.clear();
+        } else {
+            tendonviField.setEditable(true);
+            //lấy dữ liệu string cho lookup
+            donvisDl.load();
+            List<String> sessionTypeNames = donvisDc.getMutableItems().stream()
+                    .map(Donvi::getTendonvi)
+                    .collect(Collectors.toList());
+            tendonviField.setOptionsList(sessionTypeNames);
+            // lấy dữ liệu buổi làm
+            List<String> list = Arrays.asList("Làm cả ngày", "Ca sáng", "Ca chiều");
+            buoilamField.setOptionsList(list);
+            //Xoá
+            tengiaovienField.clear();
+            ngaylamField.clear();
+            buoilamField.clear();
+            tendonviField.clear();
+        }
     }
 
     private List<Giaovien> tengiaovien(String dvgiaovien) {
@@ -76,29 +100,8 @@ public class ChamconggvBrowse extends StandardLookup<Chamconggv> {
             tengiaovienField.setOptionsList(tengiaovien(tendonviField.getValue().toString()));
         } catch (NullPointerException ex) {
         }
-//        System.out.println(tengiaovien(tendonviField.getValue().toString()));
     }
 
-    @Subscribe("timkiem")
-    protected void onTimkiemClick(Button.ClickEvent event) {
-
-        if (tengiaovienField.getValue() == null) {
-            String loaddonvi = "select e from truonghoc_ChamcongGv e where e.donvigv = :donvi ";
-            chamconggvsDl.setQuery(loaddonvi);
-        } else {
-            String loadhoten = "select e from truonghoc_ChamcongGv e where e.hotenGv = :hoten and e.donvigv = :donvi";
-            chamconggvsDl.setQuery(loadhoten);
-        }
-        if (ngaylamField.getValue() != null){
-            String loadngay = "select e from truonghoc_ChamcongGv e where e.ngaylam = :ngaylam";
-            chamconggvsDl.setQuery(loadngay);
-        }
-
-        chamconggvsDl.setParameter("ngaylam", ngaylamField.getValue());
-        chamconggvsDl.setParameter("donvi", tendonviField.getValue());
-        chamconggvsDl.setParameter("hoten", tengiaovienField.getValue());
-        chamconggvsDl.load();
-    }
 
     public Component stt(Chamconggv entity) {
         int lineNumber = 1;
@@ -112,10 +115,51 @@ public class ChamconggvBrowse extends StandardLookup<Chamconggv> {
         return field;
     }
 
-    @Subscribe("clearBtn")
-    protected void onClearBtnClick(Button.ClickEvent event) {
-        tendonviField.clear();
-        tengiaovienField.clear();
-        ngaylamField.clear();
+
+    public void timkiemExcute() {
+        excuteSearch(true);
+    }
+
+    private void excuteSearch(boolean isFromSearchBtn) {
+        Object donvi = tendonviField.getValue();
+        Object giaovien = tengiaovienField.getValue();
+        Date ngaylam = ngaylamField.getValue();
+        Object buoilam = buoilamField.getValue();
+
+        Map<String, Object> params = new HashMap<>();
+
+        String query = returnQuery(donvi, giaovien, ngaylam, buoilam, params);
+
+        chamconggvsDl.setQuery(query);
+        chamconggvsDl.setParameters(params);
+        chamconggvsDl.load();
+    }
+
+    private String returnQuery(Object donvi, Object giaovien, Date ngaylam, Object buoilam, Map<String, Object> params) {
+        String query = "select e from truonghoc_Chamconggv e ";
+        String where = " where 1=1 ";
+
+        //đơn vị
+        if (donvi != null) {
+            where += "and e.donvigv = :donvi ";
+            params.put("donvi", donvi);
+        }
+        //giáo viên
+        if (giaovien != null) {
+            where += "and e.hotengv = :giaovien ";
+            params.put("giaovien", giaovien);
+        }
+        //ngày làm
+        if (ngaylam != null) {
+            where += "and e.ngaylam = :ngaylam ";
+            params.put("ngaylam", ngaylam);
+        }
+        //ngày làm
+        if (buoilam != null) {
+            where += "and e.buoilam = :buoilam ";
+            params.put("buoilam", buoilam);
+        }
+        query = query + where;
+        return query;
     }
 }

@@ -1,6 +1,7 @@
 package com.company.truonghoc.web.screens.thuchi;
 
 import com.company.truonghoc.service.DulieuUserService;
+import com.haulmont.cuba.gui.Dialogs;
 import com.haulmont.cuba.gui.Notifications;
 import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.model.CollectionChangeType;
@@ -45,6 +46,8 @@ public class ThuchiEdit extends StandardEditor<Thuchi> {
     protected TextField<String> tinhtrangchiField;
     @Inject
     protected LookupField<String> hinhthucthanhtoanField;
+    @Inject
+    protected Dialogs dialogs;
 
     @Subscribe
     protected void onInit(InitEvent event) {
@@ -62,10 +65,9 @@ public class ThuchiEdit extends StandardEditor<Thuchi> {
 
     @Subscribe
     protected void onBeforeShow(BeforeShowEvent event) {
+        usertao_thuchiField.setValue(dulieuUserService.timEditdonvi(userSession.getUser().getLogin()).getTextgv());
         donvitao_thuchiField.setValue(dulieuUserService.timEditdonvi(userSession.getUser().getLogin()).getTendonvi());
-        usertao_thuchiField.setValue(userSession.getUser().getLogin());
         tinhtrangchiField.setValue("Chưa thanh toán");
-
     }
 
     @Subscribe("dongiaField")
@@ -91,14 +93,14 @@ public class ThuchiEdit extends StandardEditor<Thuchi> {
 
     @Subscribe("ngaychiField")
     protected void onNgaychiFieldValueChange(HasValue.ValueChangeEvent<Date> event) {
-        if (ngaychiField.getValue() != null){
+        if (ngaychiField.getValue() != null) {
             hanchiField.setVisible(false);
             hanchiField.clear();
             tinhtrangchiField.setValue("Đã thanh toán");
             hinhthucthanhtoanField.setVisible(true);
             hinhthucthanhtoanField.setRequired(true);
             dongiaField.setRequired(true);
-        }else {
+        } else {
             hanchiField.setRequired(true);
             hanchiField.setVisible(true);
             tinhtrangchiField.setValue("Chưa thanh toán");
@@ -112,8 +114,5 @@ public class ThuchiEdit extends StandardEditor<Thuchi> {
         tinhtrangchiField.setValue("Chưa thanh toán");
     }
 
-
-
-    
 
 }

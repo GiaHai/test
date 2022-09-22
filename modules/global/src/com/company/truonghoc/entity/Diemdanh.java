@@ -14,6 +14,9 @@ public class Diemdanh extends StandardEntity {
     @Column(name = "NGUOITAODD")
     private String nguoitaodd;
 
+    @Column(name = "LOPDD")
+    private String lopdd;
+
     @Column(name = "DONVIDD")
     private String donvidd;
 
@@ -23,6 +26,14 @@ public class Diemdanh extends StandardEntity {
     @Column(name = "NGAYNGHI")
     @Temporal(TemporalType.DATE)
     private Date ngaynghi;
+
+    public String getLopdd() {
+        return lopdd;
+    }
+
+    public void setLopdd(String lopdd) {
+        this.lopdd = lopdd;
+    }
 
     public void setHotenhs(List<Hocsinh> hotenhs) {
         this.hotenhs = hotenhs;

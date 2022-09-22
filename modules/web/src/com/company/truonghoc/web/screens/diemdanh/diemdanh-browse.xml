@@ -31,32 +31,44 @@
     <layout expand="diemdanhsTable"
             spacing="true"
             stylename="css-layout-diemdanh">
-        <vbox spacing="true"
-              stylename="css-vbox-timkiem">
-            <label value="Điều kiện lọc" stylename="dieukienloc"/>
-            <hbox spacing="true"
-                  stylename="hbox-text">
-                <lookupField id="tendonviField"
-                             caption="Đơn vị"
-                             nullName="---Đơn vị---"
-                             stylename="nhap"/>
-                <textField id="tengiaovienField"
-                           caption="Giáo viên"
-                           editable="false"
-                           stylename="nhap"
-                           inputPrompt="Nhập tên giáo viên"/>
-                <dateField id="ngaylamField"
-                           caption="Ngày làm"
-                           stylename="nhap"
-                           resolution="DAY"/>
-                <button id="timkiem"
-                        caption="Tìm kiếm"
-                        align="BOTTOM_CENTER"
-                        stylename="button-clearbtn"/>
-                <button id="clearBtn"
-                        caption="Xóa" align="BOTTOM_CENTER"/>
+        <groupBox caption="Tìm kiếm"
+                  collapsable="true"
+                  collapsed="false"
+                  stylename="css-hbox-search"
+                  spacing="true"
+                  width="100%">
+            <hbox spacing="true" width="50%">
+                <vbox spacing="true">
+                    <lookupField id="tendonviField"
+                                 caption="Đơn vị"
+                                 width="100%"
+                                 nullName="---Đơn vị---"/>
+                    <textField id="tengiaovienField"
+                               caption="Giáo viên"
+                               width="100%"
+                               inputPrompt="Nhập tên giáo viên"/>
+                </vbox>
+                <vbox spacing="true">
+                    <dateField id="ngaylamField"
+                               caption="Ngày làm"
+                               width="100%"
+                               resolution="DAY"/>
+                    <textField id="lopField"
+                               width="100%"
+                               caption="Lớp"
+                               inputPrompt="Nhập tên lớp"/>
+                </vbox>
+                <vbox align="BOTTOM_CENTER" spacing="true" width="30%">
+                    <button id="timkiemBtn"
+                            invoke="timkiemExcute"
+                            stylename="Btntimkiem"
+                            caption="Tìm kiếm" align="TOP_CENTER"/>
+                    <button id="clearBtn"
+                            caption="Clear"
+                            css="margin-top: 22%;display: grid;"/>
+                </vbox>
             </hbox>
-        </vbox>
+        </groupBox>
         <groupTable id="diemdanhsTable"
                     width="100%"
                     dataContainer="diemdanhsDc">
@@ -66,10 +78,12 @@
                 <action id="remove" type="remove"/>
             </actions>
             <columns>
-                <column id="nguoitaodd" caption="Giáo viên"/>
                 <column id="donvidd" caption="Đơn vị"/>
+                <column id="nguoitaodd" caption="Giáo viên"/>
                 <column id="hotenhs"
                         caption="mainMsg://diemdanh.hoten"/>
+                <column id="lopdd"
+                        caption="Lớp"/>
                 <column id="ngaynghi"
                         caption="mainMsg://diemdanh.ngaynghi"/>
             </columns>
