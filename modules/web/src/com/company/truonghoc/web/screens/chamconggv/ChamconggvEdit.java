@@ -48,6 +48,7 @@ public class ChamconggvEdit extends StandardEditor<Chamconggv> {
 
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
+        donvigvField.setValue(dulieuUserService.timEditdonvi(userSession.getUser().getLogin()).getTendonvi());
         hotenGvField.setOptionsList(timtengiaovien(dulieuUserService.timEditdonvi(userSession.getUser().getLogin()).getTendonvi()));
     }
 

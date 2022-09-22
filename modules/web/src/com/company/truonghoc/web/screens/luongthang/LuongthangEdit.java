@@ -1,26 +1,21 @@
 package com.company.truonghoc.web.screens.luongthang;
 
+import com.company.truonghoc.entity.Chamconggv;
 import com.company.truonghoc.entity.Giaovien;
-import com.company.truonghoc.entity.Hocsinh;
 import com.company.truonghoc.service.DulieuUserService;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.gui.Notifications;
-import com.haulmont.cuba.gui.components.DateField;
-import com.haulmont.cuba.gui.components.HasValue;
-import com.haulmont.cuba.gui.components.LookupField;
-import com.haulmont.cuba.gui.components.TextField;
+import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.model.CollectionContainer;
 import com.haulmont.cuba.gui.model.CollectionLoader;
+import com.haulmont.cuba.gui.model.InstanceContainer;
 import com.haulmont.cuba.gui.screen.*;
 import com.company.truonghoc.entity.Luongthang;
 import com.haulmont.cuba.security.global.UserSession;
 
 import javax.inject.Inject;
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @UiController("truonghoc_Luongthang.edit")
 @UiDescriptor("luongthang-edit.xml")
@@ -68,6 +63,16 @@ public class LuongthangEdit extends StandardEditor<Luongthang> {
     protected DateField<Date> hannhanluongField;
     @Inject
     protected TextField<String> tinhtrangnhanluongField;
+    @Inject
+    protected InstanceContainer<Luongthang> luongthangDc;
+    @Inject
+    protected TextField<Integer> cangoaiField;
+    @Inject
+    protected TextField<Integer> casangField;
+    @Inject
+    protected DateField<Date> tungayField;
+    @Inject
+    protected DateField<Date> denngayField;
     Long a = Long.valueOf(0);
     @Inject
     protected UserSession userSession;
@@ -89,6 +94,8 @@ public class LuongthangEdit extends StandardEditor<Luongthang> {
         tinhtrangnhanluongField.setVisible(false);
         hinhthucthanhtoanField.setVisible(false);
 
+        buoilamField.setEditable(false);
+        casangField.setEditable(false);
     }
 
 
@@ -124,17 +131,19 @@ public class LuongthangEdit extends StandardEditor<Luongthang> {
         tinhthuclinh();
         tinhtonglinh();
     }
-    private void tinhthuclinh(){
+
+    private void tinhthuclinh() {
         if (luongcobanField.getValue() != null &&
-        buoilamField.getValue()  != null){
+                buoilamField.getValue() != null) {
             BigDecimal b = new BigDecimal(luongcobanField.getValue() / 26.00000000);
             BigDecimal c = b.setScale(10, BigDecimal.ROUND_HALF_EVEN);
             thuclinhField.setValue((long) (c.doubleValue() * buoilamField.getValue().doubleValue()));
             System.out.println(thuclinhField.getValue());
-        }else {
+        } else {
             thuclinhField.setValue(luongcobanField.getValue());
         }
     }
+
     private void tinhtonglinh() {
         if (thuclinhField.getValue() != null &&
                 trachnhiemField.getValue() != null &&
@@ -203,13 +212,13 @@ public class LuongthangEdit extends StandardEditor<Luongthang> {
 
     @Subscribe("ngaynhanField")
     protected void onNgaynhanFieldValueChange(HasValue.ValueChangeEvent<Date> event) {
-        if (ngaynhanField.getValue() == null){
+        if (ngaynhanField.getValue() == null) {
             hannhanluongField.setRequired(true);
             hannhanluongField.setVisible(true);
             tinhtrangnhanluongField.setValue("Chưa nhận lương");
             hinhthucthanhtoanField.setRequired(false);
             hinhthucthanhtoanField.setVisible(false);
-        }else {
+        } else {
             hannhanluongField.setVisible(false);
             hannhanluongField.clear();
             tinhtrangnhanluongField.setValue("Đã nhận lương");
@@ -224,4 +233,55 @@ public class LuongthangEdit extends StandardEditor<Luongthang> {
     }
 
 
+    public void timkiem() {
+//        excuteSearch(true);
+
+    }
+
+    @Subscribe("searchBLamBtn")
+    protected void onSearchBLamBtnClick(Button.ClickEvent event) {
+        buoilamField.setValue(BigDecimal.valueOf(cangay().size() + casang().size() * 0.5 + cachieu().size() * 0.5));
+        casangField.setValue(casang().size());
+        System.out.println("Cả ngày: "+cangay().size());
+        System.out.println("ca sáng: " + casang().size() * 0.5);
+        System.out.println("ca chiều: " + cachieu().size() * 0.5);
+    }
+
+
+    private List<Chamconggv> cangay() {
+
+        return dataManager.load(Chamconggv.class)
+                .query("select e from truonghoc_Chamconggv e where" +
+                        " e.donvigv = :donvi and e.hotengv = :giaovien and e.buoilam = 'Làm cả ngày'" +
+                        " and e.ngaylam >= :tungay and :denngay >= e.ngaylam")
+                .parameter("donvi", donvitao_luongthangField.getValue())
+                .parameter("giaovien" , hovatenField.getValue())
+                .parameter("tungay", tungayField.getValue())
+                .parameter("denngay", denngayField.getValue())
+                .list();
+    }
+    private List<Chamconggv> casang() {
+
+        return dataManager.load(Chamconggv.class)
+                .query("select e from truonghoc_Chamconggv e where" +
+                        " e.donvigv = :donvi and e.hotengv = :giaovien and e.buoilam = 'Ca sáng'" +
+                        " and e.ngaylam >= :tungay and :denngay >= e.ngaylam")
+                .parameter("donvi", donvitao_luongthangField.getValue())
+                .parameter("giaovien" , hovatenField.getValue())
+                .parameter("tungay", tungayField.getValue())
+                .parameter("denngay", denngayField.getValue())
+                .list();
+    }
+    private List<Chamconggv> cachieu() {
+
+        return dataManager.load(Chamconggv.class)
+                .query("select e from truonghoc_Chamconggv e where" +
+                        " e.donvigv = :donvi and e.hotengv = :giaovien and e.buoilam = 'Ca chiều'" +
+                        " and e.ngaylam >= :tungay and :denngay >= e.ngaylam")
+                .parameter("donvi", donvitao_luongthangField.getValue())
+                .parameter("giaovien" , hovatenField.getValue())
+                .parameter("tungay", tungayField.getValue())
+                .parameter("denngay", denngayField.getValue())
+                .list();
+    }
 }
