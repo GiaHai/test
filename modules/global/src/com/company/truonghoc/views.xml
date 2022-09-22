@@ -53,7 +53,9 @@
         </property>
     </view>
     <view entity="truonghoc_Chamconggv" name="chamconggv-view" extends="_local">
-        <property name="hotengv" view="_minimal"/>
+        <property name="hotengv" view="_minimal">
+            <property name="donvitao_giaovien"/>
+        </property>
     </view>
     <view entity="truonghoc_Diemdanh" name="diemdanh-view" extends="_local">
         <property name="hotenhs" view="_minimal"/>
