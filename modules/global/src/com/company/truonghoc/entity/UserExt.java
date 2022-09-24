@@ -4,7 +4,10 @@ import com.haulmont.cuba.core.entity.annotation.Extends;
 import com.haulmont.cuba.core.global.DbView;
 import com.haulmont.cuba.security.entity.User;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @DbView
 @Entity(name = "truonghoc_UserExt")
@@ -17,26 +20,9 @@ public class UserExt extends User {
     @ManyToOne(fetch = FetchType.LAZY)
     private Donvi loockup_donvi;
 
-    @Column(name = "TENDONVI")
-    private String tendonvi;
-
-    @Column(name = "DONVITRUNGTAM")
-    private Boolean donvitrungtam;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "GIAOVIEN_ID")
     private Giaovien giaovien;
-
-    @Column(name = "TEXTGV")
-    private String textgv;
-
-    public String getTextgv() {
-        return textgv;
-    }
-
-    public void setTextgv(String textgv) {
-        this.textgv = textgv;
-    }
 
     public Giaovien getGiaovien() {
         return giaovien;
@@ -52,22 +38,6 @@ public class UserExt extends User {
 
     public Donvi getLoockup_donvi() {
         return loockup_donvi;
-    }
-
-    public String getTendonvi() {
-        return tendonvi;
-    }
-
-    public void setTendonvi(String tendonvi) {
-        this.tendonvi = tendonvi;
-    }
-
-    public void setDonvitrungtam(Boolean donvitrungtam) {
-        this.donvitrungtam = donvitrungtam;
-    }
-
-    public Boolean getDonvitrungtam() {
-        return donvitrungtam;
     }
 
 }

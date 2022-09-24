@@ -21,10 +21,6 @@
                 <checkBox id="donvitrungtamField"
                           property="donvitrungtam"
                           caption="mainMsg://donvi.donvitrungtam"/>
-                <textField id="thuField"
-                           property="thu"/>
-                <textField id="chiField"
-                           property="chi"/>
             </column>
         </form>
         <hbox id="editActions" spacing="true">

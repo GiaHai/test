@@ -261,66 +261,6 @@
                 </rows>
             </grid>
         </vbox>
-        <!--        <scrollBox id="scrollBox" spacing="true">-->
-        <!--            <form id="form" dataContainer="luongthangDc">-->
-        <!--                <column width="350px">-->
-        <!--                    <textField id="usertao_luongthangField"-->
-        <!--                               property="usertao_luongthang"-->
-        <!--                               caption="mainMsg://nguoitaochi"/>-->
-        <!--                    <textField id="donvitao_luongthangField"-->
-        <!--                               property="donvitao_luongthang"-->
-        <!--                               caption="mainMsg://donvitao"/>-->
-        <!--                    <lookupField id="hovatenField" property="hovaten"-->
-        <!--                                 optionsContainer="giaoviensDc"-->
-        <!--                                 caption="mainMsg://luongthang.hovaten"/>-->
-        <!--                    <dateField id="ngaynhanField"-->
-        <!--                               property="ngaynhan"-->
-        <!--                               caption="mainMsg://luongthang.ngaynhan"/>-->
-        <!--                    <dateField id="hannhanluongField"-->
-        <!--                               property="hannhanluong"-->
-        <!--                               caption="mainMsg://luongthang.hannhanluong"/>-->
-        <!--                    <textField id="luongcobanField"-->
-        <!--                               property="luongcoban"-->
-        <!--                               caption="mainMsg://luongthang.luongcoban"/>-->
-        <!--                    <textField id="buoilamField"-->
-        <!--                               property="buoilam"-->
-        <!--                               caption="mainMsg://luongthang.buoilam"/>-->
-        <!--                    <textField id="cangoaiField"-->
-        <!--                               property="cangoai"-->
-        <!--                               caption="mainMsg://luongthang.cangoai"/>-->
-        <!--                    <textField id="casangField"-->
-        <!--                               property="casang"-->
-        <!--                               caption="mainMsg://luongthang.casang"/>-->
-        <!--                    <textField id="thuclinhField"-->
-        <!--                               property="thuclinh"-->
-        <!--                               caption="mainMsg://luongthang.thuclinh"/>-->
-        <!--                    <textField id="daythemField"-->
-        <!--                               property="daythem"-->
-        <!--                               caption="mainMsg://luongthang.daythem"/>-->
-        <!--                    <textField id="trocapField"-->
-        <!--                               property="trocap"-->
-        <!--                               caption="mainMsg://luongthang.trocap"/>-->
-        <!--                    <textField id="trachnhiemField"-->
-        <!--                               property="trachnhiem"-->
-        <!--                               caption="mainMsg://luongthang.trachnhiem"/>-->
-        <!--                    <textField id="chuyencanField"-->
-        <!--                               property="chuyencan"-->
-        <!--                               caption="mainMsg://luongthang.chuyencan"/>-->
-        <!--                    <textField id="thuongField"-->
-        <!--                               property="thuong"-->
-        <!--                               caption="mainMsg://luongthang.thuong"/>-->
-        <!--                    <textField id="tonglinhField"-->
-        <!--                               property="tonglinh"-->
-        <!--                               caption="mainMsg://luongthang.tonglinh"/>-->
-        <!--                    <lookupField id="hinhthucthanhtoanField"-->
-        <!--                                 property="hinhthucthanhtoan"-->
-        <!--                                 nullName="Hình thức thanh toán"-->
-        <!--                                 caption="Hình thức thanh toán"/>-->
-        <!--                    <textField id="tinhtrangnhanluongField"-->
-        <!--                               property="tinhtrangnhanluong"/>-->
-        <!--                </column>-->
-        <!--            </form>-->
-        <!--        </scrollBox>-->
         <hbox id="editActions" spacing="true">
             <button id="commitAndCloseBtn" action="windowCommitAndClose"/>
             <button id="closeBtn" action="windowClose"/>

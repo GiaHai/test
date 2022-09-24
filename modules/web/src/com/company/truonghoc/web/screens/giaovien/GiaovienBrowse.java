@@ -3,6 +3,7 @@ package com.company.truonghoc.web.screens.giaovien;
 import com.company.truonghoc.entity.Donvi;
 import com.company.truonghoc.service.DulieuUserService;
 import com.haulmont.cuba.core.entity.Entity;
+import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.gui.UiComponents;
 import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.model.CollectionContainer;
@@ -42,19 +43,26 @@ public class GiaovienBrowse extends StandardLookup<Giaovien> {
     protected CollectionContainer<Donvi> donvisDc;
     @Inject
     protected TextField<String> searchTenGvField;
+    @Inject
+    protected DataManager dataManager;
 
     @Subscribe
     protected void onBeforeShow(BeforeShowEvent event) {
-        if (dulieuUserService.timbrowerdonvi(userSession.getUser().getLogin()).size() == 0) {
-            donvitao_giaovienField.setEditable(false);
-            donvitao_giaovienField.setValue(dulieuUserService.timEditdonvi(userSession.getUser().getLogin()).getTendonvi());
-        } else {
-            donvitao_giaovienField.setEditable(true);
-            donvisDl.load();
-            List<String> sessionTypeNames = donvisDc.getMutableItems().stream()
-                    .map(Donvi::getTendonvi)
-                    .collect(Collectors.toList());
-            donvitao_giaovienField.setOptionsList(sessionTypeNames);
+        try {
+            if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() == null) {
+                donvitao_giaovienField.setEditable(false);
+                donvitao_giaovienField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi());
+                excuteSearch(true);
+            } else {
+                donvitao_giaovienField.setEditable(true);
+                donvisDl.load();
+                List<String> sessionTypeNames = donvisDc.getMutableItems().stream()
+                        .map(Donvi::getTendonvi)
+                        .collect(Collectors.toList());
+                donvitao_giaovienField.setOptionsList(sessionTypeNames);
+            }
+        } catch (NullPointerException ex){
+
         }
 
     }
@@ -79,7 +87,7 @@ public class GiaovienBrowse extends StandardLookup<Giaovien> {
     }
 
     private void excuteSearch(boolean isFromSearchBtn) {
-        String donvi = donvitao_giaovienField.getValue().toString();
+        Object donvi = donvitao_giaovienField.getValue();
         String giaovien = searchTenGvField.getValue();
 
         Map<String, Object> params = new HashMap<>();
@@ -89,12 +97,12 @@ public class GiaovienBrowse extends StandardLookup<Giaovien> {
         giaoviensDl.load();
     }
 
-    private String returnQuery(String donvi, String giaovien, Map<String, Object> params) {
+    private String returnQuery(Object donvi, String giaovien, Map<String, Object> params) {
         String query = "select e from truonghoc_Giaovien e ";
         String where = " where 1=1 ";
 
         if (donvi != null) {
-            where += "and e.donvitao_giaovien = :donvi ";
+            where += "and e.donvitao_giaovien.tendonvi = :donvi ";
             params.put("donvi", donvi);
         }
         if (!StringUtils.isEmpty(giaovien)){

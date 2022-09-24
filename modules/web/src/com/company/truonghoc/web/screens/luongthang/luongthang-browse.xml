@@ -97,7 +97,7 @@
                 <column id="stt"
                         generator="stt"
                         caption="STT"/>
-                <column id="usertao_luongthang"
+                <column id="usertao_luongthang.login"
                         caption="mainMsg://nguoitaochi"/>
                 <column id="donvitao_luongthang"
                         caption="mainMsg://donvitao"/>

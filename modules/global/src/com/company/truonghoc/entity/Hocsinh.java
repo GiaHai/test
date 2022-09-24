@@ -12,11 +12,13 @@ import java.util.Date;
 public class Hocsinh extends StandardEntity {
     private static final long serialVersionUID = 6396620010673039383L;
 
-    @Column(name = "USERTAO_HOCSINH")
-    private String usertao_hocsinh;
+    @JoinColumn(name = "USERTAO_HOCSINH_ID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Giaovien usertao_hocsinh;
 
-    @Column(name = "DONVITAO_HOCSINH")
-    private String donvitao_hocsinh;
+    @JoinColumn(name = "DONVITAO_HOCSINH_ID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Donvi donvitao_hocsinh;
 
     @Column(name = "TENHOCSINH")
     private String tenhocsinh;
@@ -42,11 +44,19 @@ public class Hocsinh extends StandardEntity {
     @JoinColumn(name = "DIEMDANH_ID")
     private Diemdanh diemdanh;
 
-    public void setUsertao_hocsinh(String usertao_hocsinh) {
+    public void setDonvitao_hocsinh(Donvi donvitao_hocsinh) {
+        this.donvitao_hocsinh = donvitao_hocsinh;
+    }
+
+    public Donvi getDonvitao_hocsinh() {
+        return donvitao_hocsinh;
+    }
+
+    public void setUsertao_hocsinh(Giaovien usertao_hocsinh) {
         this.usertao_hocsinh = usertao_hocsinh;
     }
 
-    public String getUsertao_hocsinh() {
+    public Giaovien getUsertao_hocsinh() {
         return usertao_hocsinh;
     }
 
@@ -64,14 +74,6 @@ public class Hocsinh extends StandardEntity {
 
     public void setLophoc(Lophoc lophoc) {
         this.lophoc = lophoc;
-    }
-
-    public String getDonvitao_hocsinh() {
-        return donvitao_hocsinh;
-    }
-
-    public void setDonvitao_hocsinh(String donvitao_hocsinh) {
-        this.donvitao_hocsinh = donvitao_hocsinh;
     }
 
     public void setNgaysinhhocsinh(Date ngaysinhhocsinh) {

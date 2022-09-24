@@ -74,14 +74,14 @@
                                 <label value=""/>
                             </column>
                         </form>
-                        <form colspan="3" width="100%" childrenCaptionWidth="80px" dataContainer="hocphiDc">
-                            <column>
-                                <dateField id="namsinhField"
-                                           property="namsinh"
-                                           width="100%"
-                                           caption="mainMsg://hocphi.namsinh"/>
-                            </column>
-                        </form>
+<!--                        <form colspan="3" width="100%" childrenCaptionWidth="80px" dataContainer="hocphiDc">-->
+<!--                            <column>-->
+<!--                                <textField id="namsinhField"-->
+<!--                                           property="namsinh"-->
+<!--                                           width="100%"-->
+<!--                                           caption="mainMsg://hocphi.namsinh"/>-->
+<!--                            </column>-->
+<!--                        </form>-->
                     </row>
 <!--                    dòng 3-->
                     <row>

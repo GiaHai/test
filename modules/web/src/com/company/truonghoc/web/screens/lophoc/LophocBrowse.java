@@ -63,16 +63,16 @@ public class LophocBrowse extends StandardLookup<Lophoc> {
 
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
-        if (dulieuUserService.timbrowerdonvi(userSession.getUser().getLogin()).size() == 0){
+        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() == null){
             searchDvField.setEditable(false);
-            searchDvField.setValue(dulieuUserService.timEditdonvi(userSession.getUser().getLogin()).getTendonvi());
+            searchDvField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi());
             excuteSearch(true);
         }
     }
 
     @Subscribe("lophocsTable.create")
     protected void onLophocsTableCreate(Action.ActionPerformedEvent event) {
-        if (dulieuUserService.timEditdonvi(userSession.getUser().getLogin()).getTextgv() != null){
+        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null){
             this.lophocsTableCreate.execute();
         }else {
             dialogs.createMessageDialog()
@@ -104,7 +104,7 @@ public class LophocBrowse extends StandardLookup<Lophoc> {
         String where = " where 1=1 ";
         //Đơn vị
         if (donvi != null){
-            where += "and e.donvi = :donvi ";
+            where += "and e.donvi.tendonvi = :donvi ";
             params.put("donvi", donvi);
         }
         // Tên lớp

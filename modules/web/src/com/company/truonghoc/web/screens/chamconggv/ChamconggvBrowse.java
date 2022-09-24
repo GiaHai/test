@@ -61,9 +61,10 @@ public class ChamconggvBrowse extends StandardLookup<Chamconggv> {
     //Điều kiện login
     private void dkphanquyen() {
         //điều kiện đơn vị trung tâm nếu
-        if (dulieuUserService.timbrowerdonvi(userSession.getUser().getLogin()).size() == 0) {
+        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() == null) {
             tendonviField.setEditable(false);
-            tendonviField.setValue(dulieuUserService.timEditdonvi(userSession.getUser().getLogin()).getTendonvi()); //Chèn đơn vị từ user vào text
+            tendonviField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi()); //Chèn đơn vị từ user vào text
+//            tengiaovienField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien().getTengiaovien());
             //Xoá
             tengiaovienField.clear();
             ngaylamField.clear();
@@ -87,9 +88,9 @@ public class ChamconggvBrowse extends StandardLookup<Chamconggv> {
         }
     }
 
-    private List<Giaovien> tengiaovien(String dvgiaovien) {
+    private List<Giaovien> tengiaovien(Object dvgiaovien) {
         return dataManager.load(Giaovien.class)
-                .query("select e from truonghoc_Giaovien e where e.donvitao_giaovien = :dvgiaovien")
+                .query("select e from truonghoc_Giaovien e where e.donvitao_giaovien.tendonvi = :dvgiaovien")
                 .parameter("dvgiaovien", dvgiaovien)
                 .list();
     }
@@ -97,7 +98,7 @@ public class ChamconggvBrowse extends StandardLookup<Chamconggv> {
     @Subscribe("tendonviField")
     protected void onTendonviFieldValueChange(HasValue.ValueChangeEvent event) {
         try {
-            tengiaovienField.setOptionsList(tengiaovien(tendonviField.getValue().toString()));
+            tengiaovienField.setOptionsList(tengiaovien(tendonviField.getValue()));
         } catch (NullPointerException ex) {
         }
     }
@@ -141,7 +142,7 @@ public class ChamconggvBrowse extends StandardLookup<Chamconggv> {
 
         //đơn vị
         if (donvi != null) {
-            where += "and e.donvigv = :donvi ";
+            where += "and e.donvigv.tendonvi = :donvi ";
             params.put("donvi", donvi);
         }
         //giáo viên

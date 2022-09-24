@@ -55,6 +55,7 @@
             </actions>
             <columns>
                 <column id="stt" generator="stt" caption="STT"/>
+                <column id="donvi" caption="Đơn vị"/>
                 <column id="tenlop" caption="mainMsg://lophoc.tenlop"/>
                 <column id="giaoviencn" caption="mainMsg://lophoc.giaoviencn"/>
             </columns>

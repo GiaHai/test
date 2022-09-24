@@ -11,14 +11,17 @@ import java.util.List;
 public class Diemdanh extends StandardEntity {
     private static final long serialVersionUID = 1305572135769904742L;
 
-    @Column(name = "NGUOITAODD")
-    private String nguoitaodd;
+    @JoinColumn(name = "NGUOITAODD_ID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Giaovien nguoitaodd;
 
-    @Column(name = "LOPDD")
-    private String lopdd;
+    @JoinColumn(name = "LOPDD_ID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Lophoc lopdd;
 
-    @Column(name = "DONVIDD")
-    private String donvidd;
+    @JoinColumn(name = "DONVIDD_ID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Donvi donvidd;
 
     @OneToMany(mappedBy = "diemdanh")
     private List<Hocsinh> hotenhs;
@@ -27,12 +30,28 @@ public class Diemdanh extends StandardEntity {
     @Temporal(TemporalType.DATE)
     private Date ngaynghi;
 
-    public String getLopdd() {
+    public void setDonvidd(Donvi donvidd) {
+        this.donvidd = donvidd;
+    }
+
+    public Donvi getDonvidd() {
+        return donvidd;
+    }
+
+    public void setLopdd(Lophoc lopdd) {
+        this.lopdd = lopdd;
+    }
+
+    public Lophoc getLopdd() {
         return lopdd;
     }
 
-    public void setLopdd(String lopdd) {
-        this.lopdd = lopdd;
+    public void setNguoitaodd(Giaovien nguoitaodd) {
+        this.nguoitaodd = nguoitaodd;
+    }
+
+    public Giaovien getNguoitaodd() {
+        return nguoitaodd;
     }
 
     public void setHotenhs(List<Hocsinh> hotenhs) {
@@ -49,22 +68,6 @@ public class Diemdanh extends StandardEntity {
 
     public Date getNgaynghi() {
         return ngaynghi;
-    }
-
-    public String getDonvidd() {
-        return donvidd;
-    }
-
-    public void setDonvidd(String donvidd) {
-        this.donvidd = donvidd;
-    }
-
-    public String getNguoitaodd() {
-        return nguoitaodd;
-    }
-
-    public void setNguoitaodd(String nguoitaodd) {
-        this.nguoitaodd = nguoitaodd;
     }
 
 }

@@ -24,34 +24,12 @@ public class Donvi extends StandardEntity {
     @Column(name = "DONVITRUNGTAM")
     private Boolean donvitrungtam;
 
-    @Column(name = "THU")
-    private Long thu;
-
-    @Column(name = "CHI")
-    private Long chi;
-
     public void setUpdate(Date update) {
         this.update = update;
     }
 
     public Date getUpdate() {
         return update;
-    }
-
-    public void setThu(Long thu) {
-        this.thu = thu;
-    }
-
-    public Long getThu() {
-        return thu;
-    }
-
-    public void setChi(Long chi) {
-        this.chi = chi;
-    }
-
-    public Long getChi() {
-        return chi;
     }
 
     public Boolean getDonvitrungtam() {

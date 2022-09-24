@@ -14,11 +14,13 @@ import java.util.List;
 public class Thutienhocphi extends StandardEntity {
     private static final long serialVersionUID = 3866939199245638055L;
 
-    @Column(name = "USERTAO_THUTIENHOCPHI")
-    private String usertao_thutienhocphi;
+    @JoinColumn(name = "USERTAO_THUTIENHOCPHI_ID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Giaovien usertao_thutienhocphi;
 
-    @Column(name = "DONVITAO_THUTIENHOCPHI")
-    private String donvitao_thutienhocphi;
+    @JoinColumn(name = "DONVITAO_THUTIENHOCPHI_ID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Donvi donvitao_thutienhocphi;
 
     @Column(name = "TENKHACHHANG")
     private String tenkhachhang;
@@ -52,6 +54,22 @@ public class Thutienhocphi extends StandardEntity {
     @OneToMany(mappedBy = "thutienhocphi")
     private List<Chitietthu> lkchitieuthu;
 
+    public void setDonvitao_thutienhocphi(Donvi donvitao_thutienhocphi) {
+        this.donvitao_thutienhocphi = donvitao_thutienhocphi;
+    }
+
+    public Donvi getDonvitao_thutienhocphi() {
+        return donvitao_thutienhocphi;
+    }
+
+    public void setUsertao_thutienhocphi(Giaovien usertao_thutienhocphi) {
+        this.usertao_thutienhocphi = usertao_thutienhocphi;
+    }
+
+    public Giaovien getUsertao_thutienhocphi() {
+        return usertao_thutienhocphi;
+    }
+
     public List<Chitietthu> getLkchitieuthu() {
         return lkchitieuthu;
     }
@@ -74,22 +92,6 @@ public class Thutienhocphi extends StandardEntity {
 
     public void setHinhthucthanhtoan(String hinhthucthanhtoan) {
         this.hinhthucthanhtoan = hinhthucthanhtoan;
-    }
-
-    public String getDonvitao_thutienhocphi() {
-        return donvitao_thutienhocphi;
-    }
-
-    public void setDonvitao_thutienhocphi(String donvitao_thutienhocphi) {
-        this.donvitao_thutienhocphi = donvitao_thutienhocphi;
-    }
-
-    public String getUsertao_thutienhocphi() {
-        return usertao_thutienhocphi;
-    }
-
-    public void setUsertao_thutienhocphi(String usertao_thutienhocphi) {
-        this.usertao_thutienhocphi = usertao_thutienhocphi;
     }
 
     public void setTenhocsinh(Hocsinh tenhocsinh) {

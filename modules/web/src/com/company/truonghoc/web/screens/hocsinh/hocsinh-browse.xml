@@ -11,13 +11,6 @@
             <loader id="hocsinhsDl">
                 <query>
                     <![CDATA[select e from truonghoc_Hocsinh e]]>
-                    <condition>
-                        <and>
-                            <c:jpql>
-                                <c:where>e.donvitao_hocsinh = :component_donvitao_hocsinhField</c:where>
-                            </c:jpql>
-                        </and>
-                    </condition>
                 </query>
             </loader>
         </collection>
@@ -44,8 +37,6 @@
         <dataLoadCoordinator auto="true">
         </dataLoadCoordinator>
     </facets>
-    <dialogMode height="600"
-                width="800"/>
     <layout expand="hocsinhsTable"
             spacing="true"
             stylename="css-layout-hocsinh">
@@ -61,10 +52,10 @@
                                  caption="Đơn vị"
                                  width="100%"
                                  nullName="---Tất cả đơn vị---"/>
-                    <lookupField id="sreachlopField"
+                    <textField id="sreachlopField"
                                  caption="Lớp"
                                  width="100%"
-                                 nullName="--Tất cả lớp---"/>
+                                 inputPrompt="--Tất cả lớp---"/>
                 </vbox>
                 <vbox spacing="true" width="100%">
                     <textField id="sreachgvFiled"
@@ -102,7 +93,7 @@
             </actions>
             <columns>
                 <column id="usertao_hocsinh"
-                        property="usertao_hocsinh"
+                        property="usertao_hocsinh.tengiaovien"
                         caption="Giáo viên chủ nhiệm"/>
                 <column id="donvitao_hocsinh"
                         property="donvitao_hocsinh"
@@ -130,7 +121,7 @@
             <buttonsPanel id="buttonsPanel"
                           alwaysVisible="true">
                 <!--                <button id="createBtn" action="hocsinhsTable.create"/>-->
-                <button id="editBtn" action="hocsinhsTable.edit"/>
+                <button id="editBtn" caption="Chỉnh sửa"/>
                 <button id="removeBtn" action="hocsinhsTable.remove"/>
             </buttonsPanel>
         </dataGrid>

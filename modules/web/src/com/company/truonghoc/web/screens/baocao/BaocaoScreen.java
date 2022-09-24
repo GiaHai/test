@@ -69,7 +69,7 @@ public class BaocaoScreen extends Screen {
 
 
     private List<KeyValueEntity> Loadhocphi(Date tungay, Date dengay) {
-        String queryStr = "select sum(e.sotienthutheohd) sotien, e.dovitao_hocphi donvi from truonghoc_Hocphi e" +
+        String queryStr = "select sum(e.sotienthutheohd) sotien, e.dovitao_hocphi.tendonvi donvi from truonghoc_Hocphi e" +
                 " where e.sotienthutheohd is not null and e.hinhthucthanhtoan is not null and e.ngaydong >= :tungay and :denngay >= e.ngaydong";
         queryStr += " group by e.dovitao_hocphi ";
 
@@ -82,7 +82,7 @@ public class BaocaoScreen extends Screen {
     }
 
     private List<KeyValueEntity> Loadluongthang(Date tungay, Date dengay) {
-        String queryStr = "select sum(e.tonglinh) sotien, e.donvitao_luongthang donvi from truonghoc_Luongthang e" +
+        String queryStr = "select sum(e.tonglinh) sotien, e.donvitao_luongthang.tendonvi donvi from truonghoc_Luongthang e" +
                 " where e.tonglinh is not null and e.hinhthucthanhtoan is not null and e.ngaynhan >= :tungay and :denngay >= e.ngaynhan";
         queryStr += " group by e.donvitao_luongthang ";
 
@@ -95,7 +95,7 @@ public class BaocaoScreen extends Screen {
     }
 
     private List<KeyValueEntity> Loadthuchi(Date tungay, Date dengay) {
-        String queryStr = "select sum(e.thanhtien) sotien, e.donvitao_thuchi donvi from truonghoc_Thuchi e" +
+        String queryStr = "select sum(e.thanhtien) sotien, e.donvitao_thuchi.tendonvi donvi from truonghoc_Thuchi e" +
                 " where e.thanhtien is not null and e.hinhthucthanhtoan is not null and e.ngaychi >= :tungay and :denngay >= e.ngaychi";
         queryStr += " group by e.donvitao_thuchi ";
 
@@ -108,7 +108,7 @@ public class BaocaoScreen extends Screen {
     }
 
     private List<KeyValueEntity> Loadthutienhocphi(Date tungay, Date dengay) {
-        String queryStr = "select sum(e.thanhtien) sotien, e.donvitao_thutienhocphi donvi from truonghoc_Thutienhocphi e" +
+        String queryStr = "select sum(e.thanhtien) sotien, e.donvitao_thutienhocphi.tendonvi donvi from truonghoc_Thutienhocphi e" +
                 " where e.thanhtien is not null and e.hinhthucthanhtoan is not null and e.denngay >= :tungay and :denngay >= e.denngay";
         queryStr += " group by e.donvitao_thutienhocphi ";
 
@@ -194,7 +194,7 @@ public class BaocaoScreen extends Screen {
     }
 
     private List<KeyValueEntity> Loadhocphi1() {
-        String queryStr = "select sum(e.sotienthutheohd) sotien, e.dovitao_hocphi donvi from truonghoc_Hocphi e" +
+        String queryStr = "select sum(e.sotienthutheohd) sotien, e.dovitao_hocphi.tendonvi donvi from truonghoc_Hocphi e" +
                 " where e.sotienthutheohd is not null and e.hinhthucthanhtoan is not null";
         queryStr += " group by e.dovitao_hocphi ";
 
@@ -205,7 +205,7 @@ public class BaocaoScreen extends Screen {
     }
 
     private List<KeyValueEntity> Loadluongthang1() {
-        String queryStr = "select sum(e.tonglinh) sotien, e.donvitao_luongthang donvi from truonghoc_Luongthang e" +
+        String queryStr = "select sum(e.tonglinh) sotien, e.donvitao_luongthang.tendonvi donvi from truonghoc_Luongthang e" +
                 " where e.tonglinh is not null and e.hinhthucthanhtoan is not null";
         queryStr += " group by e.donvitao_luongthang ";
 
@@ -216,7 +216,7 @@ public class BaocaoScreen extends Screen {
     }
 
     private List<KeyValueEntity> Loadthuchi1() {
-        String queryStr = "select sum(e.thanhtien) sotien, e.donvitao_thuchi donvi from truonghoc_Thuchi e" +
+        String queryStr = "select sum(e.thanhtien) sotien, e.donvitao_thuchi.tendonvi donvi from truonghoc_Thuchi e" +
                 " where e.thanhtien is not null and e.hinhthucthanhtoan is not null";
         queryStr += " group by e.donvitao_thuchi ";
 
@@ -227,7 +227,7 @@ public class BaocaoScreen extends Screen {
     }
 
     private List<KeyValueEntity> Loadthutienhocphi1() {
-        String queryStr = "select sum(e.thanhtien) sotien, e.donvitao_thutienhocphi donvi from truonghoc_Thutienhocphi e" +
+        String queryStr = "select sum(e.thanhtien) sotien, e.donvitao_thutienhocphi.tendonvi donvi from truonghoc_Thutienhocphi e" +
                 " where e.thanhtien is not null and e.hinhthucthanhtoan is not null";
         queryStr += " group by e.donvitao_thutienhocphi ";
 
@@ -288,7 +288,7 @@ public class BaocaoScreen extends Screen {
     }
     public Long LoadhocphiTab2(String donvi,Date tungay, Date dengay) {
         return dataManager.loadValue("select sum(e.sotienthutheohd) from truonghoc_Hocphi e" +
-                        " where e.dovitao_hocphi= :donvi and e.sotienthutheohd is not null and e.hinhthucthanhtoan is not null and e.ngaydong >= :tungay and :denngay >= e.ngaydong"
+                        " where e.dovitao_hocphi.tendonvi = :donvi and e.sotienthutheohd is not null and e.hinhthucthanhtoan is not null and e.ngaydong >= :tungay and :denngay >= e.ngaydong"
                 ,Long.class)
                 .parameter("donvi", donvi)
                 .parameter("tungay", tungay)
@@ -297,7 +297,7 @@ public class BaocaoScreen extends Screen {
     }
     public Long LoadthutienhocphiTab2(String donvi,Date tungay, Date dengay) {
         return dataManager.loadValue("select sum(e.thanhtien) from truonghoc_Thutienhocphi e" +
-                        " where e.donvitao_thutienhocphi= :donvi and e.thanhtien is not null and e.hinhthucthanhtoan is not null and e.denngay >= :tungay and :denngay >= e.denngay"
+                        " where e.donvitao_thutienhocphi.tendonvi = :donvi and e.thanhtien is not null and e.hinhthucthanhtoan is not null and e.denngay >= :tungay and :denngay >= e.denngay"
                 ,Long.class)
                 .parameter("donvi", donvi)
                 .parameter("tungay", tungay)
@@ -306,7 +306,7 @@ public class BaocaoScreen extends Screen {
     }
     public Long LoadluongthangTab2(String donvi,Date tungay, Date dengay) {
         return dataManager.loadValue("select sum(e.tonglinh) from truonghoc_Luongthang e" +
-                        " where e.donvitao_luongthang= :donvi and e.tonglinh is not null and e.hinhthucthanhtoan is not null and e.ngaynhan >= :tungay and :denngay >= e.ngaynhan"
+                        " where e.donvitao_luongthang.tendonvi = :donvi and e.tonglinh is not null and e.hinhthucthanhtoan is not null and e.ngaynhan >= :tungay and :denngay >= e.ngaynhan"
                 ,Long.class)
                 .parameter("donvi", donvi)
                 .parameter("tungay", tungay)
@@ -316,7 +316,7 @@ public class BaocaoScreen extends Screen {
 
     public Long LoadthuchiTab2(String donvi,Date tungay, Date dengay) {
         return dataManager.loadValue("select sum(e.thanhtien) from truonghoc_Thuchi e" +
-                        " where e.donvitao_thuchi= :donvi and e.thanhtien is not null and e.hinhthucthanhtoan is not null and e.ngaychi >= :tungay and :denngay >= e.ngaychi"
+                        " where e.donvitao_thuchi.tendonvi = :donvi and e.thanhtien is not null and e.hinhthucthanhtoan is not null and e.ngaychi >= :tungay and :denngay >= e.ngaychi"
                 ,Long.class)
                 .parameter("donvi", donvi)
                 .parameter("tungay", tungay)

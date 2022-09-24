@@ -88,9 +88,9 @@ public class LuongthangBrowse extends StandardLookup<Luongthang> {
     //Điều kiện login
     private void dkphanquyen() {
         //điều kiện đơn vị trung tâm nếu
-        if (dulieuUserService.timbrowerdonvi(userSession.getUser().getLogin()).size() == 0) {
+        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() == null) {
             donvitao_luongthangField.setEditable(false);
-            donvitao_luongthangField.setValue(dulieuUserService.timEditdonvi(userSession.getUser().getLogin()).getTendonvi());
+            donvitao_luongthangField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi());
 
             //Xoá
             nguoichiField.clear();
@@ -98,6 +98,12 @@ public class LuongthangBrowse extends StandardLookup<Luongthang> {
             trangthaiField.clear();
             tungayField.clear();
             denngayField.clear();
+            if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null){
+                giaovienField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien().getTengiaovien());
+                nguoichiField.setValue(userSession.getUser().getLogin());
+                giaovienField.setEditable(false);
+                nguoichiField.setEditable(false);
+            }
         } else {
             donvitao_luongthangField.setEditable(true);
             //lấy dữ liệu string cho lookup
@@ -164,12 +170,12 @@ public class LuongthangBrowse extends StandardLookup<Luongthang> {
 
         //Đơn vị
         if (donvi != null) {
-            where += "and e.donvitao_luongthang = :donvi ";
+            where += "and e.donvitao_luongthang.tendonvi = :donvi ";
             params.put("donvi", donvi);
         }
         //Người chi
         if (ngthanhtoan != null) {
-            where += "and e.usertao_luongthang like :ngthanhtoan ";
+            where += "and e.usertao_luongthang.login like :ngthanhtoan ";
             params.put("ngthanhtoan", "%" + ngthanhtoan + "%");
         }
         //Giáo viên

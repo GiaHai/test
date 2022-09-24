@@ -99,8 +99,8 @@
                         caption="mainMsg://donvitao"/>
                 <column id="hovaten"
                         caption="mainMsg://hocphi.hovaten"/>
-                <column id="namsinh"
-                        caption="mainMsg://hocphi.namsinh"/>
+<!--                <column id="namsinh"-->
+<!--                        caption="mainMsg://hocphi.namsinh"/>-->
                 <column id="ghichu"
                         caption="mainMsg://hocphi.ghichu"/>
                 <column id="sotientamtinh"

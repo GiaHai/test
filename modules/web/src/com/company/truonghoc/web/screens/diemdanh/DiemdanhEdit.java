@@ -1,14 +1,11 @@
 package com.company.truonghoc.web.screens.diemdanh;
 
-import com.company.truonghoc.entity.Giaovien;
-import com.company.truonghoc.entity.Hocsinh;
-import com.company.truonghoc.entity.Tenlop;
+import com.company.truonghoc.entity.*;
 import com.company.truonghoc.service.DulieuUserService;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.gui.components.DateField;
 import com.haulmont.cuba.gui.components.TextField;
 import com.haulmont.cuba.gui.screen.*;
-import com.company.truonghoc.entity.Diemdanh;
 import com.haulmont.cuba.security.global.UserSession;
 
 import javax.inject.Inject;
@@ -27,13 +24,13 @@ public class DiemdanhEdit extends StandardEditor<Diemdanh> {
     @Inject
     protected DulieuUserService dulieuUserService;
     @Inject
-    protected TextField<String> nguoitaoField;
+    protected TextField<Donvi> donviField;
     @Inject
-    protected TextField<String> donviField;
+    protected TextField<Giaovien> nguoitaoField;
     @Inject
     protected DateField<Date> ngaynghiField;
     @Inject
-    protected TextField<String> lopField;
+    protected TextField<Lophoc> lopField;
 
     @Subscribe
     protected void onInit(InitEvent event) {
@@ -45,8 +42,8 @@ public class DiemdanhEdit extends StandardEditor<Diemdanh> {
 
     @Subscribe
     protected void onBeforeShow(BeforeShowEvent event) {
-        nguoitaoField.setValue(dulieuUserService.timEditdonvi(userSession.getUser().getLogin()).getTextgv());
-        donviField.setValue(dulieuUserService.timEditdonvi(userSession.getUser().getLogin()).getTendonvi());
+        nguoitaoField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien());
+        donviField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
 
         ngaynghiField.setValue(new Date());
 
@@ -55,15 +52,15 @@ public class DiemdanhEdit extends StandardEditor<Diemdanh> {
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
 //        System.out.println(loadlopdd().getTenlop());
-        lopField.setValue(loadlopdd().getTenlop());
+        lopField.setValue(loadlopdd(donviField.getValue().getTendonvi() , nguoitaoField.getValue().getTengiaovien()));
     }
 
-    private Tenlop loadlopdd() {
-        String query = "select e from truonghoc_Tenlop e where e.dovi = :donvi and e.giaoviencn.tengiaovien = :tengv";
-        return dataManager.load(Tenlop.class)
+    private Lophoc loadlopdd(Object donvi, Object tengv) {
+        String query = "select e from truonghoc_Lophoc e where e.donvi.tendonvi = :donvi and e.giaoviencn.tengiaovien = :tengv";
+        return dataManager.load(Lophoc.class)
                 .query(query)
-                .parameter("donvi", donviField.getValue())
-                .parameter("tengv", nguoitaoField.getValue())
+                .parameter("donvi", donvi)
+                .parameter("tengv", tengv)
                 .one();
     }
 

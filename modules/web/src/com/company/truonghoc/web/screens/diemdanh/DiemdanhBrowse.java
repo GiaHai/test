@@ -59,6 +59,7 @@ public class DiemdanhBrowse extends StandardLookup<Diemdanh> {
     protected void onBeforeShow(BeforeShowEvent event) {
         dkphanquyen();
         excuteSearch(true);
+//        tengiaovienField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien().getTengiaovien());
     }
 
     @Subscribe("clearBtn")
@@ -68,7 +69,7 @@ public class DiemdanhBrowse extends StandardLookup<Diemdanh> {
 
     @Subscribe("diemdanhsTable.create")
     protected void onDiemdanhsTableCreate(Action.ActionPerformedEvent event) {
-        if (dulieuUserService.timEditdonvi(userSession.getUser().getLogin()).getTextgv() != null){
+        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null){
             this.diemdanhsTableCreate.execute();
         }else {
             dialogs.createMessageDialog()
@@ -83,13 +84,22 @@ public class DiemdanhBrowse extends StandardLookup<Diemdanh> {
     //Điều kiện login
     private void dkphanquyen() {
         //điều kiện đơn vị trung tâm nếu
-        if (dulieuUserService.timbrowerdonvi(userSession.getUser().getLogin()).size() == 0) {
+        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() == null) {
             tendonviField.setEditable(false);
-            tendonviField.setValue(dulieuUserService.timEditdonvi(userSession.getUser().getLogin()).getTendonvi()); //Chèn đơn vị từ user vào text
+            tendonviField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi()); //Chèn đơn vị từ user vào text
             //Xoá
             tengiaovienField.clear();
             ngaylamField.clear();
             lopField.clear();
+
+            if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null) {
+                tendonviField.setEditable(false);
+                tengiaovienField.setEditable(false);
+                ngaylamField.clear();
+                lopField.setVisible(false);
+                tendonviField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi()); //Chèn đơn vị từ user vào text
+                tengiaovienField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien().getTengiaovien());  //chèn tên giáo viên từ user vào text
+            }
         } else {
             donvisDl.load();
             List<String> sessionTypeNames = donvisDc.getMutableItems().stream()
@@ -103,14 +113,7 @@ public class DiemdanhBrowse extends StandardLookup<Diemdanh> {
             ngaylamField.clear();
             lopField.clear();
         }
-        if (dulieuUserService.timEditdonvi(userSession.getUser().getLogin()).getTextgv() != null) {
-            tendonviField.setEditable(false);
-            tengiaovienField.setEditable(false);
-            ngaylamField.clear();
-            lopField.setVisible(false);
-            tendonviField.setValue(dulieuUserService.timEditdonvi(userSession.getUser().getLogin()).getTendonvi()); //Chèn đơn vị từ user vào text
-            tengiaovienField.setValue(dulieuUserService.timEditdonvi(userSession.getUser().getLogin()).getTextgv());  //chèn tên giáo viên từ user vào text
-        }
+
     }
 
     public void timkiemExcute() {
@@ -137,12 +140,12 @@ public class DiemdanhBrowse extends StandardLookup<Diemdanh> {
 
         //Tên đơn vị
         if (donvi != null) {
-            where += "and e.donvidd = :donvi ";
+            where += "and e.donvidd.tendonvi = :donvi ";
             params.put("donvi", donvi);
         }
         //giáo viên
         if (!StringUtils.isEmpty(giaovien)) {
-            where += "and e.nguoitaodd = :giaovien ";
+            where += "and e.nguoitaodd.tengiaovien = :giaovien ";
             params.put("giaovien", giaovien);
         }
         //Ngày làm
@@ -152,7 +155,7 @@ public class DiemdanhBrowse extends StandardLookup<Diemdanh> {
         }
         //Lớp
         if (!StringUtils.isEmpty(lop)) {
-            where += "and e.lopdd = :lop ";
+            where += "and e.lopdd.tenlop.tenlop = :lop ";
             params.put("lop", lop);
         }
         query = query + where;

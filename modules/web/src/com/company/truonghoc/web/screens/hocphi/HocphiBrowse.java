@@ -75,16 +75,18 @@ public class HocphiBrowse extends StandardLookup<Hocphi> {
 
     @Subscribe("hocphisTable.create")
     protected void onHocphisTableCreate(Action.ActionPerformedEvent event) {
-        if (dulieuUserService.timEditdonvi(userSession.getUser().getLogin()).getTextgv() != null){
+        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null){
             this.hocphisTableCreate.execute();
+
         }else {
             dialogs.createMessageDialog()
                     .withCaption("THÔNG BÁO")
                     .withMessage("Bạn không có quyền")
                     .withType(Dialogs.MessageType.WARNING)
                     .show();
-            System.out.println("hahah");
         }
+
+
     }
 
     @Subscribe
@@ -112,15 +114,27 @@ public class HocphiBrowse extends StandardLookup<Hocphi> {
     //Điều kiện login
     private void dkphanquyen() {
         //điều kiện đơn vị trung tâm nếu
-        if (dulieuUserService.timbrowerdonvi(userSession.getUser().getLogin()).size() == 0) {
+        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() == null) {
             dovitao_hocphiField.setEditable(false);
-            dovitao_hocphiField.setValue(dulieuUserService.timEditdonvi(userSession.getUser().getLogin()).getTendonvi()); //Chèn đơn vị từ user vào text
+            dovitao_hocphiField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi()); //Chèn đơn vị từ user vào text
             //Xoá
             denngayField.clear();
             tungayField.clear();
             trangthaiField.clear();
             giaovienField.clear();
             hovstenField.clear();
+
+            if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null) {
+                dovitao_hocphiField.setEditable(false);
+                giaovienField.setEditable(false);
+                denngayField.clear();
+                tungayField.clear();
+                trangthaiField.clear();
+                hovstenField.clear();
+                dovitao_hocphiField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi()); //Chèn đơn vị từ user vào text
+                giaovienField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien().getTengiaovien());  //chèn tên giáo viên từ user vào text
+            }
+
         } else {
             dovitao_hocphiField.setEditable(true);
             //lấy dữ liệu string cho lookup
@@ -137,16 +151,7 @@ public class HocphiBrowse extends StandardLookup<Hocphi> {
             tungayField.clear();
             trangthaiField.clear();
         }
-        if (dulieuUserService.timEditdonvi(userSession.getUser().getLogin()).getTextgv() != null) {
-            dovitao_hocphiField.setEditable(false);
-            giaovienField.setEditable(false);
-            denngayField.clear();
-            tungayField.clear();
-            trangthaiField.clear();
-            hovstenField.clear();
-            dovitao_hocphiField.setValue(dulieuUserService.timEditdonvi(userSession.getUser().getLogin()).getTendonvi()); //Chèn đơn vị từ user vào text
-            giaovienField.setValue(dulieuUserService.timEditdonvi(userSession.getUser().getLogin()).getTextgv());  //chèn tên giáo viên từ user vào text
-        }
+
     }
 
     public Component checkhandong(Hocphi entity) {
@@ -200,7 +205,7 @@ public class HocphiBrowse extends StandardLookup<Hocphi> {
 
         //Giáo viên
         if (!StringUtils.isEmpty(giaovien)) {
-            where += "and e.usertao_hocphi like :giaovien ";
+            where += "and e.usertao_hocphi.tengiaovien like :giaovien ";
             params.put("giaovien", "%" + giaovien + "%");
         }
         //Học sinh
@@ -217,7 +222,7 @@ public class HocphiBrowse extends StandardLookup<Hocphi> {
 
         //Đơn vị
         if (donvi != null) {
-            where += "and e.dovitao_hocphi = :donvi ";
+            where += "and e.dovitao_hocphi.tendonvi = :donvi ";
             params.put("donvi", donvi);
         }
         //Từ ngày

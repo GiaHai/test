@@ -17,42 +17,36 @@ public class ExtUserEditor extends UserEditor {
     @Inject
     protected CollectionDatasource<Donvi, UUID> donvisDc;
     @Inject
-    protected CheckBox donvitrungtam;
-    @Inject
     protected LookupField<Donvi> loockuptendonvi;
     @Inject
     protected DataManager dataManager;
-    @Inject
-    protected TextField<String> tendonviField;
-    @Inject
-    protected TextField<String> TextGiaovienField;
     @Inject
     protected LookupField<Giaovien> tengiaovienField;
 
     @Subscribe("loockuptendonvi")
     protected void onLoockuptendonviValueChange(HasValue.ValueChangeEvent<Donvi> event) {
-        tendonviField.setValue(donvisDc.getItem().getTendonvi());
-        donvitrungtam.setValue(donvisDc.getItem().getDonvitrungtam());
+//        tendonviField.setValue(donvisDc.getItem().getTendonvi());
+//        donvitrungtam.setValue(donvisDc.getItem().getDonvitrungtam());
         if (loockuptendonvi.getValue() != null){
-            tengiaovienField.setOptionsList(tengiaovien(tendonviField.getValue()));
+            tengiaovienField.setOptionsList(tengiaovien(loockuptendonvi.getValue()));
         }
 
     }
-    @Subscribe("tengiaovienField")
-    protected void onTengiaovienFieldValueChange(HasValue.ValueChangeEvent<Donvi> event) {
-        TextGiaovienField.setValue(tengiaovienField.getValue().getTengiaovien());
-    }
-    private List<Giaovien> tengiaovien(String dvgiaovien) {
+////    @Subscribe("tengiaovienField")
+////    protected void onTengiaovienFieldValueChange(HasValue.ValueChangeEvent<Donvi> event) {
+////        TextGiaovienField.setValue(tengiaovienField.getValue().getTengiaovien());
+////    }
+    private List<Giaovien> tengiaovien(Object dvgiaovien) {
         return dataManager.load(Giaovien.class)
                 .query("select e from truonghoc_Giaovien e where e.donvitao_giaovien = :dvgiaovien")
                 .parameter("dvgiaovien", dvgiaovien)
                 .list();
     }
-
-    @Subscribe
-    protected void onInit(InitEvent event) {
-        tendonviField.setVisible(false);
-        donvitrungtam.setEditable(false);
-    }
+//
+//    @Subscribe
+//    protected void onInit(InitEvent event) {
+////        tendonviField.setVisible(false);
+//        donvitrungtam.setEditable(false);
+//    }
 
 }

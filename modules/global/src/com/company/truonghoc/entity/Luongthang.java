@@ -1,6 +1,7 @@
 package com.company.truonghoc.entity;
 
 import com.haulmont.cuba.core.entity.StandardEntity;
+import com.haulmont.cuba.security.entity.User;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -12,11 +13,13 @@ import java.util.Date;
 public class Luongthang extends StandardEntity {
     private static final long serialVersionUID = 4883554460814975042L;
 
-    @Column(name = "USERTAO_LUONGTHANG")
-    private String usertao_luongthang;
+    @JoinColumn(name = "USERTAO_LUONGTHANG_ID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User usertao_luongthang;
 
-    @Column(name = "DONVITAO_LUONGTHANG")
-    private String donvitao_luongthang;
+    @JoinColumn(name = "DONVITAO_LUONGTHANG_ID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Donvi donvitao_luongthang;
 
     @JoinColumn(name = "HOVATEN_ID")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -70,6 +73,22 @@ public class Luongthang extends StandardEntity {
     @Column(name = "TINHTRANGNHANLUONG")
     private String tinhtrangnhanluong;
 
+    public void setUsertao_luongthang(User usertao_luongthang) {
+        this.usertao_luongthang = usertao_luongthang;
+    }
+
+    public User getUsertao_luongthang() {
+        return usertao_luongthang;
+    }
+
+    public void setDonvitao_luongthang(Donvi donvitao_luongthang) {
+        this.donvitao_luongthang = donvitao_luongthang;
+    }
+
+    public Donvi getDonvitao_luongthang() {
+        return donvitao_luongthang;
+    }
+
     public String getHinhthucthanhtoan() {
         return hinhthucthanhtoan;
     }
@@ -100,22 +119,6 @@ public class Luongthang extends StandardEntity {
 
     public void setNgaynhan(Date ngaynhan) {
         this.ngaynhan = ngaynhan;
-    }
-
-    public String getDonvitao_luongthang() {
-        return donvitao_luongthang;
-    }
-
-    public void setDonvitao_luongthang(String donvitao_luongthang) {
-        this.donvitao_luongthang = donvitao_luongthang;
-    }
-
-    public String getUsertao_luongthang() {
-        return usertao_luongthang;
-    }
-
-    public void setUsertao_luongthang(String usertao_luongthang) {
-        this.usertao_luongthang = usertao_luongthang;
     }
 
     public void setBuoilam(BigDecimal buoilam) {

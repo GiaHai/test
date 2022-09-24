@@ -9,6 +9,16 @@
                   view="giaovien-view">
             <loader/>
         </instance>
+
+        <collection id="donvisDc"
+                    class="com.company.truonghoc.entity.Donvi"
+                    view="donvi-view">
+            <loader id="donvisDl">
+                <query>
+                    <![CDATA[select e from truonghoc_Donvi e]]>
+                </query>
+            </loader>
+        </collection>
     </data>
     <dialogMode height="600"
                 width="800"/>
@@ -28,11 +38,12 @@
                     <row>
                         <form colspan="3" width="100%" childrenCaptionWidth="80px">
                             <column>
-                                <textField id="donvitao_giaovienField"
-                                           property="donvitao_giaovien"
-                                           caption="mainMsg://donvitao"
-                                           width="100%"
-                                           dataContainer="giaovienDc"/>
+                                <lookupField id="donvitao_giaovienField"
+                                             property="donvitao_giaovien"
+                                             caption="mainMsg://donvitao"
+                                             width="100%"
+                                             dataContainer="giaovienDc"
+                                />
                             </column>
                         </form>
                         <form colspan="1" width="100%">

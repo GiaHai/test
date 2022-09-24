@@ -18,6 +18,15 @@
                 </query>
             </loader>
         </collection>
+        <collection id="donvisDc"
+                    class="com.company.truonghoc.entity.Donvi"
+                    view="donvi-view">
+            <loader id="donvisDl">
+                <query>
+                    <![CDATA[select e from truonghoc_Donvi e]]>
+                </query>
+            </loader>
+        </collection>
     </data>
     <dialogMode height="600"
                 width="800"/>
@@ -52,10 +61,10 @@
                         </form>
                         <form colspan="3" width="100%" childrenCaptionWidth="80px" dataContainer="chamconggvDc">
                             <column>
-                                <textField id="donvigvField"
-                                           width="100%"
-                                           caption="mainMsg://chamcong.donvi"
-                                           property="donvigv"/>
+                                <lookupField id="donvigvField"
+                                             width="100%"
+                                             caption="mainMsg://chamcong.donvi"
+                                             property="donvigv"/>
                             </column>
                         </form>
                     </row>

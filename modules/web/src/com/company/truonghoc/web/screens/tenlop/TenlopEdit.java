@@ -30,7 +30,7 @@ public class TenlopEdit extends StandardEditor<Tenlop> {
     @Inject
     protected LookupField<Giaovien> giaoviencnField;
     @Inject
-    protected LookupField<String> donviFiled;
+    protected LookupField<Donvi> donviFiled;
     @Inject
     protected UserSession userSession;
     @Inject
@@ -40,16 +40,21 @@ public class TenlopEdit extends StandardEditor<Tenlop> {
     protected void onInit(InitEvent event) {
         donvisDl.load();
 
-        List<String> sessionTypeNames = donvisDc.getMutableItems().stream()
-                .map(Donvi::getTendonvi)
-                .collect(Collectors.toList());
-        donviFiled.setOptionsList(sessionTypeNames);
+//        List<String> sessionTypeNames = donvisDc.getMutableItems().stream()
+//                .map(Donvi::getTendonvi)
+//                .collect(Collectors.toList());
+//        donviFiled.setOptionsList(sessionTypeNames);
+        donviFiled.setOptionsList(loaddonvi());
     }
-
+    private List<Donvi> loaddonvi(){
+        return dataManager.load(Donvi.class)
+                .query("select e from truonghoc_Donvi e")
+                .list();
+    }
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
-        if (dulieuUserService.timEditdonvi(userSession.getUser().getLogin()).getDonvitrungtam() == null) {
-            donviFiled.setValue(dulieuUserService.timEditdonvi(userSession.getUser().getLogin()).getTendonvi());
+        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() == null) {
+            donviFiled.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
             donviFiled.setEditable(false);
         }
     }

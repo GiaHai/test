@@ -1,48 +1,58 @@
 package com.company.truonghoc.entity;
 
 import com.haulmont.chile.core.annotations.Composition;
+import com.haulmont.chile.core.annotations.NamePattern;
 import com.haulmont.cuba.core.entity.StandardEntity;
 import com.haulmont.cuba.core.entity.annotation.OnDelete;
 import com.haulmont.cuba.core.global.DeletePolicy;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.List;
 
 @Table(name = "TRUONGHOC_LOPHOC")
 @Entity(name = "truonghoc_Lophoc")
+@NamePattern("%s|tenlop")
 public class Lophoc extends StandardEntity {
     private static final long serialVersionUID = -7972786784091409232L;
 
-    @Column(name = "TENLOP")
-    private String tenlop;
+    @JoinColumn(name = "TENLOP_ID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Tenlop tenlop;
 
-    @Column(name = "DONVI")
-    private String donvi;
+    @JoinColumn(name = "DONVI_ID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Donvi donvi;
 
-    @Column(name = "GIAOVIENCN")
-    private String giaoviencn;
+    @JoinColumn(name = "GIAOVIENCN_ID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Giaovien giaoviencn;
 
     @Composition
     @OnDelete(DeletePolicy.CASCADE)
     @OneToMany(mappedBy = "lophoc")
     private List<Hocsinh> dshocsinh;
 
-    public String getDonvi() {
-        return donvi;
+    public void setTenlop(Tenlop tenlop) {
+        this.tenlop = tenlop;
     }
 
-    public void setDonvi(String donvi) {
+    public Tenlop getTenlop() {
+        return tenlop;
+    }
+
+    public void setDonvi(Donvi donvi) {
         this.donvi = donvi;
     }
 
-    public void setGiaoviencn(String giaoviencn) {
+    public Donvi getDonvi() {
+        return donvi;
+    }
+
+    public void setGiaoviencn(Giaovien giaoviencn) {
         this.giaoviencn = giaoviencn;
     }
 
-    public String getGiaoviencn() {
+    public Giaovien getGiaoviencn() {
         return giaoviencn;
     }
 
@@ -54,11 +64,4 @@ public class Lophoc extends StandardEntity {
         this.dshocsinh = dshocsinh;
     }
 
-    public String getTenlop() {
-        return tenlop;
-    }
-
-    public void setTenlop(String tenlop) {
-        this.tenlop = tenlop;
-    }
 }

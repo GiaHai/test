@@ -11,4 +11,6 @@ public interface DulieuUserService {
 
     UserExt timEditdonvi(String login);
 
+    UserExt timdovi(String login);
+
 }

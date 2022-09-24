@@ -1,6 +1,7 @@
 package com.company.truonghoc.web.screens.luongthang;
 
 import com.company.truonghoc.entity.Chamconggv;
+import com.company.truonghoc.entity.Donvi;
 import com.company.truonghoc.entity.Giaovien;
 import com.company.truonghoc.service.DulieuUserService;
 import com.haulmont.cuba.core.global.DataManager;
@@ -11,6 +12,7 @@ import com.haulmont.cuba.gui.model.CollectionLoader;
 import com.haulmont.cuba.gui.model.InstanceContainer;
 import com.haulmont.cuba.gui.screen.*;
 import com.company.truonghoc.entity.Luongthang;
+import com.haulmont.cuba.security.entity.User;
 import com.haulmont.cuba.security.global.UserSession;
 
 import javax.inject.Inject;
@@ -48,9 +50,9 @@ public class LuongthangEdit extends StandardEditor<Luongthang> {
     @Inject
     protected Notifications notifications;
     @Inject
-    protected TextField<String> usertao_luongthangField;
+    protected TextField<User> usertao_luongthangField;
     @Inject
-    protected TextField<String> donvitao_luongthangField;
+    protected TextField<Donvi> donvitao_luongthangField;
     @Inject
     protected DulieuUserService dulieuUserService;
     @Inject
@@ -110,13 +112,14 @@ public class LuongthangEdit extends StandardEditor<Luongthang> {
         thuclinhField.setValue(a);
         tinhtonglinh();
 
-        donvitao_luongthangField.setValue(dulieuUserService.timEditdonvi(userSession.getUser().getLogin()).getTendonvi());
-        usertao_luongthangField.setValue(userSession.getUser().getLogin());
+        donvitao_luongthangField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
+        usertao_luongthangField.setValue(userSession.getUser());
     }
 
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
-        hovatenField.setOptionsList(giaovienList(getEditedEntity().getDonvitao_luongthang()));
+//        hovatenField.setOptionsList(giaovienList(getEditedEntity().getDonvitao_luongthang()));
+        hovatenField.setOptionsList(giaovienList(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi()));
     }
 
     @Subscribe("hovatenField")
@@ -202,7 +205,7 @@ public class LuongthangEdit extends StandardEditor<Luongthang> {
     }
 
 
-    private List<Giaovien> giaovienList(String dovitao_luongthang) {
+    private List<Giaovien> giaovienList(Object dovitao_luongthang) {
         return
                 dataManager.load(Giaovien.class)
                         .query("select e from truonghoc_Giaovien e where e.donvitao_giaovien = :donvitao_luongthangField")

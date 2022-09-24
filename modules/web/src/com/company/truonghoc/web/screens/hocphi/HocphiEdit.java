@@ -1,10 +1,10 @@
 package com.company.truonghoc.web.screens.hocphi;
 
+import com.company.truonghoc.entity.Donvi;
+import com.company.truonghoc.entity.Giaovien;
 import com.company.truonghoc.entity.Hocsinh;
 import com.company.truonghoc.service.DulieuUserService;
 import com.haulmont.cuba.core.global.DataManager;
-import com.haulmont.cuba.gui.Dialogs;
-import com.haulmont.cuba.gui.Notifications;
 import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.model.CollectionContainer;
 import com.haulmont.cuba.gui.model.CollectionLoader;
@@ -26,13 +26,11 @@ public class HocphiEdit extends StandardEditor<Hocphi> {
     @Inject
     protected CollectionLoader<Hocsinh> hocsinhsDl;
     @Inject
-    protected DateField<Date> namsinhField;
+    protected TextField<Giaovien> usertaoField;
     @Inject
     protected CollectionContainer<Hocsinh> hocsinhsDc;
     @Inject
-    protected TextField<String> dovitao_hocphiField;
-    @Inject
-    protected TextField<String> usertaoField;
+    protected TextField<Donvi> dovitao_hocphiField;
     @Inject
     protected UserSession userSession;
     @Inject
@@ -51,25 +49,19 @@ public class HocphiEdit extends StandardEditor<Hocphi> {
     protected TextField<String> tinhtrangthanhtoanFiedl;
     @Inject
     protected DateField<Date> ngaydongField;
-    @Inject
-    protected Notifications notifications;
-    @Inject
-    protected Dialogs dialogs;
-
     @Subscribe
     protected void onInit(InitEvent event) {
         List<String> list = Arrays.asList("Tiền mặt", "Chuyển khoản");
         hinhthucthanhtoanField.setOptionsList(list);
         dovitao_hocphiField.setEditable(false);
         usertaoField.setEditable(false);
-        namsinhField.setEditable(false);
         tinhtrangthanhtoanFiedl.setVisible(false);
     }
 
     @Subscribe
     protected void onBeforeShow(BeforeShowEvent event) {
-        usertaoField.setValue(dulieuUserService.timEditdonvi(userSession.getUser().getLogin()).getTextgv());
-        dovitao_hocphiField.setValue(dulieuUserService.timEditdonvi(userSession.getUser().getLogin()).getTendonvi());
+        usertaoField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien());
+        dovitao_hocphiField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
 
         Calendar calendar = Calendar.getInstance();
 
@@ -85,25 +77,19 @@ public class HocphiEdit extends StandardEditor<Hocphi> {
 
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
-        hovatenField.setOptionsList(hocsinhList(getEditedEntity().getDovitao_hocphi()));
+//        hovatenField.setOptionsList(hocsinhList(getEditedEntity().getDovitao_hocphi()));
         if (hovatenField.getValue() != null) {
             hovatenField.setEditable(false);
-            namsinhField.setEditable(false);
         }
     }
 
-    @Subscribe("hovatenField")
-    protected void onHovatenFieldValueChange(HasValue.ValueChangeEvent<Hocsinh> event) {
-        hovatenField.setValue((Hocsinh) hovatenField.getValue());
-        namsinhField.setValue(((Hocsinh) hovatenField.getValue()).getNgaysinhhocsinh());
-    }
-
-    private List<Hocsinh> hocsinhList(String dovitao_hocphi) {
+    private Hocsinh hocsinhList(Object dovitao_hocphi, Object tenhs) {
         return
                 dataManager.load(Hocsinh.class)
-                        .query("select e from truonghoc_Hocsinh e where e.donvitao_hocsinh = :donvitao_hocphiField")
+                        .query("select e from truonghoc_Hocsinh e where e.donvitao_hocsinh = :donvitao_hocphiField and e.tenhocsinh = :tenhs")
                         .parameter("donvitao_hocphiField", dovitao_hocphi)
-                        .list();
+                        .parameter("tenhs", tenhs)
+                        .one();
     }
 
     @Subscribe("sotienthutheohdField")

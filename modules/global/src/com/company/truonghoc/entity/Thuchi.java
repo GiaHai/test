@@ -11,11 +11,13 @@ import java.util.Date;
 public class Thuchi extends StandardEntity {
     private static final long serialVersionUID = 90251412791812808L;
 
-    @Column(name = "USERTAO_THUCHI")
-    private String usertao_thuchi;
+    @JoinColumn(name = "USERTAO_THUCHI_ID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Giaovien usertao_thuchi;
 
-    @Column(name = "DONVITAO_THUCHI")
-    private String donvitao_thuchi;
+    @JoinColumn(name = "DONVITAO_THUCHI_ID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Donvi donvitao_thuchi;
 
     @Column(name = "KHOANCHI")
     @NotNull(message = "{msg://truonghoc_Thuchi.khoanchi.validation.NotNull}")
@@ -47,6 +49,22 @@ public class Thuchi extends StandardEntity {
     @Column(name = "TINHTRANGCHI")
     private String tinhtrangchi;
 
+    public void setDonvitao_thuchi(Donvi donvitao_thuchi) {
+        this.donvitao_thuchi = donvitao_thuchi;
+    }
+
+    public Donvi getDonvitao_thuchi() {
+        return donvitao_thuchi;
+    }
+
+    public void setUsertao_thuchi(Giaovien usertao_thuchi) {
+        this.usertao_thuchi = usertao_thuchi;
+    }
+
+    public Giaovien getUsertao_thuchi() {
+        return usertao_thuchi;
+    }
+
     public String getHinhthucthanhtoan() {
         return hinhthucthanhtoan;
     }
@@ -77,22 +95,6 @@ public class Thuchi extends StandardEntity {
 
     public void setNgaychi(Date ngaychi) {
         this.ngaychi = ngaychi;
-    }
-
-    public String getDonvitao_thuchi() {
-        return donvitao_thuchi;
-    }
-
-    public void setDonvitao_thuchi(String donvitao_thuchi) {
-        this.donvitao_thuchi = donvitao_thuchi;
-    }
-
-    public String getUsertao_thuchi() {
-        return usertao_thuchi;
-    }
-
-    public void setUsertao_thuchi(String usertao_thuchi) {
-        this.usertao_thuchi = usertao_thuchi;
     }
 
     public void setDongia(Long dongia) {

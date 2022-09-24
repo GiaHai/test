@@ -1,21 +1,21 @@
 package com.company.truonghoc.web.screens.hocsinh;
 
-import com.company.truonghoc.entity.Donvi;
-import com.company.truonghoc.entity.Lophoc;
-import com.company.truonghoc.entity.UserExt;
+import com.company.truonghoc.entity.*;
 import com.company.truonghoc.service.DulieuUserService;
 import com.haulmont.cuba.core.global.DataManager;
+import com.haulmont.cuba.gui.Dialogs;
 import com.haulmont.cuba.gui.UiComponents;
+import com.haulmont.cuba.gui.actions.list.EditAction;
 import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.model.CollectionContainer;
 import com.haulmont.cuba.gui.model.CollectionLoader;
 import com.haulmont.cuba.gui.screen.*;
-import com.company.truonghoc.entity.Hocsinh;
 import com.haulmont.cuba.gui.screen.LookupComponent;
 import com.haulmont.cuba.security.global.UserSession;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -49,7 +49,7 @@ public class HocsinhBrowse extends StandardLookup<Hocsinh> {
     @Inject
     protected CollectionContainer<Lophoc> lophocsDc;
     @Inject
-    protected LookupField sreachlopField;
+    protected TextField<String> sreachlopField;
     @Inject
     protected TextField<String> sreachHsField;
     @Inject
@@ -58,6 +58,10 @@ public class HocsinhBrowse extends StandardLookup<Hocsinh> {
     protected DataManager dataManager;
     @Inject
     protected Button timkiemBtn;
+    @Named("hocsinhsTable.edit")
+    protected EditAction<Hocsinh> hocsinhsTableEdit;
+    @Inject
+    protected Dialogs dialogs;
 
     /**** tokenlist****/
     @Subscribe
@@ -69,7 +73,7 @@ public class HocsinhBrowse extends StandardLookup<Hocsinh> {
         selectionModeField.setOptionsMap(selectionModeMap);
         selectionModeField.setValue(hocsinhsTable.getSelectionMode());
 //        Chọn trường trong token list Field
-        Map<String , DataGrid.SelectionMode> truongchon = new LinkedHashMap<>();
+        Map<String, DataGrid.SelectionMode> truongchon = new LinkedHashMap<>();
         truongchon.put("Chọn một trường", DataGrid.SelectionMode.SINGLE);
         truongchon.put("Chọn nhiều trường", DataGrid.SelectionMode.MULTI_CHECK);
 
@@ -86,16 +90,24 @@ public class HocsinhBrowse extends StandardLookup<Hocsinh> {
     protected void onSelectionModeFieldValueChange(HasValue.ValueChangeEvent<DataGrid.SelectionMode> event) {
         hocsinhsTable.setSelectionMode(event.getValue());
     }
+
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
 //        khi mở màn hình với điều kiện là đơn vị không phải đơn vị chính
 
-        if (dulieuUserService.timbrowerdonvi(userSession.getUser().getLogin()).size() == 0){
+        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() == null) {
             donvitao_hocsinhField.setEditable(false);
-            donvitao_hocsinhField.setValue(dulieuUserService.timEditdonvi(userSession.getUser().getLogin()).getTendonvi());
-            hocsinhsTable.setVisible(false);
+            donvitao_hocsinhField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi());
 
-        }else {
+            if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null) {
+                sreachgvFiled.setEditable(false);
+                sreachgvFiled.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien().getTengiaovien());
+//                sreachlopField.setValue(loadlop().getTenlop());
+//                sreachlopField.setEditable(false);
+//                sreachlopField.setValue(dvvagvtimlop().getTenlop());
+
+            }
+        } else {
             donvitao_hocsinhField.setEditable(true);
             // lookupField cho đơn vị
             donvisDl.load();
@@ -104,34 +116,41 @@ public class HocsinhBrowse extends StandardLookup<Hocsinh> {
                     .collect(Collectors.toList());
             donvitao_hocsinhField.setOptionsList(sessionTypeNames);
             // lookupField cho Lớp học
-            lophocsDl.load();
-            List<String> listLophoc = lophocsDc.getMutableItems().stream()
-                    .map(Lophoc::getTenlop)
-                    .collect(Collectors.toList());
-            sreachlopField.setOptionsList(listLophoc);
-            hocsinhsTable.setVisible(false);
+//            lophocsDl.load();
+//            List<String> listLophoc = lophocsDc.getMutableItems().stream()
+//                    .map(Lophoc::getTenlop)
+//                    .collect(Collectors.toList());
+//            sreachlopField.setOptionsList(listLophoc);
 
-        }
-        if (tenGv().getTextgv() == null){
-            dkdonvi();
-        }else {
-            donvitao_hocsinhField.setValue(tenGv().getTendonvi());
-            sreachgvFiled.setValue(tenGv().getTextgv());
-
-            donvitao_hocsinhField.setEditable(false);
-            sreachgvFiled.setEditable(false);
-            hocsinhsTable.setVisible(true);
         }
         excuteSearch(true);
+    }
 
+
+
+    //    Điều kiện là giáo viên login vào
+    @Subscribe("editBtn")
+    protected void onEditBtnClick(Button.ClickEvent event) {
+        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null){
+            this.hocsinhsTableEdit.execute();
+        }else {
+            dialogs.createMessageDialog()
+                    .withCaption("THÔNG BÁO")
+                    .withMessage("Bạn không có quyền")
+                    .withType(Dialogs.MessageType.WARNING)
+                    .show();
+        }
     }
-//    Điều kiện là giáo viên login vào
-    private UserExt tenGv(){
-        return dataManager.load(UserExt.class)
-                .query("Select e from truonghoc_UserExt e where e.login = :admin")
-                .parameter("admin", userSession.getUser().getLogin())
-                .one();
+
+    // Load lớp
+    private List<Tenlop> loadlop(String donvi, String giaoviencn){
+        return dataManager.load(Tenlop.class)
+                .query("select e from truonghoc_Tenlop e where e.dovi.tendonvi = :donvi and e.giaoviencn.tengiaovien = :giaoviencn")
+                .parameter("donvi", donvi)
+                .parameter("giaoviencn", giaoviencn)
+                .list();
     }
+    
     /*** tìm kiếm ***/
     public void timkiemExcute() {
         excuteSearch(true);
@@ -140,7 +159,7 @@ public class HocsinhBrowse extends StandardLookup<Hocsinh> {
 
     private void excuteSearch(boolean isFromSearchBtn) {
         String giaovien = sreachgvFiled.getValue();
-        String lophoc = (String) sreachlopField.getValue();
+        String lophoc =  sreachlopField.getValue();
         String hocsinh = sreachHsField.getValue();
         String gioitinh = (String) sreachGtinhField.getValue();
         String donvi = (String) donvitao_hocsinhField.getValue();
@@ -157,51 +176,31 @@ public class HocsinhBrowse extends StandardLookup<Hocsinh> {
         String where = " where 1=1 ";
 
         // Đơn vị
-        if (donvi != null){
-            where += "and e.donvitao_hocsinh = :donvi ";
+        if (donvi != null) {
+            where += "and e.donvitao_hocsinh.tendonvi = :donvi ";
             params.put("donvi", donvi);
         }
         //Họ và tên Giáo viên
-        if (!StringUtils.isEmpty(giaovien)) {
-            where += "and e.usertao_hocsinh like :giaoVien ";
-            params.put("giaoVien", "%" + giaovien + "%");
+        if (giaovien != null) {
+            where += "and e.usertao_hocsinh.tengiaovien like :giaoVien ";
+            params.put("giaoVien", giaovien);
         }
         //Lớp học
-        if (lophoc != null){
-            where += "and e.lophoc.tenlop = :lophoc ";
+        if (lophoc != null) {
+            where += "and e.lophoc.tenlop.tenlop = :lophoc ";
             params.put("lophoc", lophoc);
         }
         //Học sinh
-        if (!StringUtils.isEmpty(hocsinh)){
-            where +="and e.tenhocsinh like :tenhocsinh ";
+        if (!StringUtils.isEmpty(hocsinh)) {
+            where += "and e.tenhocsinh like :tenhocsinh ";
             params.put("tenhocsinh", hocsinh);
         }
-        if (gioitinh != null){
+        if (gioitinh != null) {
             where += "and e.gioitinhhocsinh = :gioitinh ";
             params.put("gioitinh", gioitinh);
         }
         query = query + where;
         return query;
-    }
-
-    /*** các điều kiện **/
-
-    @Subscribe("donvitao_hocsinhField")
-    protected void onDonvitao_hocsinhFieldValueChange(HasValue.ValueChangeEvent event) {
-        dkdonvi();
-    }
-    private void dkdonvi(){
-        if (donvitao_hocsinhField.getValue() == null){
-            sreachHsField.setEditable(false);
-            sreachGtinhField.setEditable(false);
-            sreachgvFiled.setEditable(false);
-            sreachlopField.setEditable(false);
-        }else {
-            sreachHsField.setEditable(true);
-            sreachGtinhField.setEditable(true);
-            sreachgvFiled.setEditable(true);
-            sreachlopField.setEditable(true);
-        }
     }
 
 }

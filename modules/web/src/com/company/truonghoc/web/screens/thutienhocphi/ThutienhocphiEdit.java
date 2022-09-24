@@ -1,14 +1,12 @@
 package com.company.truonghoc.web.screens.thutienhocphi;
 
-import com.company.truonghoc.entity.Chitietthu;
-import com.company.truonghoc.entity.Hocsinh;
+import com.company.truonghoc.entity.*;
 import com.company.truonghoc.service.DulieuUserService;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.core.sys.AppContext;
 import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.model.InstanceContainer;
 import com.haulmont.cuba.gui.screen.*;
-import com.company.truonghoc.entity.Thutienhocphi;
 import com.haulmont.cuba.security.global.UserSession;
 import com.haulmont.cuba.web.gui.components.JavaScriptComponent;
 import org.springframework.util.StringUtils;
@@ -31,11 +29,11 @@ public class ThutienhocphiEdit extends StandardEditor<Thutienhocphi> {
     @Inject
     protected DateField<Date> tungayField;
     @Inject
+    protected TextField<Giaovien> usertaoField;
+    @Inject
     protected TextField<Long> thanhtienField;
     @Inject
-    protected TextField<String> usertaoField;
-    @Inject
-    protected TextField<String> dovitao_thutienhocphiField;
+    protected TextField<Donvi> dovitao_thutienhocphiField;
     @Inject
     protected UserSession userSession;
     @Inject
@@ -75,8 +73,8 @@ public class ThutienhocphiEdit extends StandardEditor<Thutienhocphi> {
 
     @Subscribe
     protected void onBeforeShow(BeforeShowEvent event) {
-        usertaoField.setValue(dulieuUserService.timEditdonvi(userSession.getUser().getLogin()).getTextgv());
-        dovitao_thutienhocphiField.setValue(dulieuUserService.timEditdonvi(userSession.getUser().getLogin()).getTendonvi());
+        usertaoField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien());
+        dovitao_thutienhocphiField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
 
         Calendar calendar = Calendar.getInstance();
         tungayField.setValue(calendar.getTime());
@@ -91,13 +89,13 @@ public class ThutienhocphiEdit extends StandardEditor<Thutienhocphi> {
 
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
-        tenhocsinhField.setOptionsList(hocsinhList(getEditedEntity().getDonvitao_thutienhocphi()));
+        tenhocsinhField.setOptionsList(hocsinhList(getEditedEntity().getDonvitao_thutienhocphi().getTendonvi()));
     }
 
-    private List<Hocsinh> hocsinhList(String dovitao_hocphi) {
+    private List<Hocsinh> hocsinhList(Object dovitao_hocphi) {
         return
                 dataManager.load(Hocsinh.class)
-                        .query("select e from truonghoc_Hocsinh e where e.donvitao_hocsinh = :donvitao_hocphiField")
+                        .query("select e from truonghoc_Hocsinh e where e.donvitao_hocsinh.tendonvi = :donvitao_hocphiField")
                         .parameter("donvitao_hocphiField", dovitao_hocphi)
                         .list();
     }

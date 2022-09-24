@@ -46,16 +46,15 @@
                                          datasource="userDs"
                                          optionsDatasource="donvisDc"
                                          captionProperty="tendonvi"/>
-                            <textField id="tendonviField" property="tendonvi" datasource="userDs"/>
-                            <checkBox id="donvitrungtam" datasource="userDs" property="donvitrungtam"  caption="ĐƠn vị trung tâm" />
+<!--                            <textField id="tendonviField" property="tendonvi" datasource="userDs"/>-->
+<!--                            <checkBox id="donvitrungtam" datasource="userDs" property="donvitrungtam"  caption="ĐƠn vị trung tâm" />-->
                             <lookupField id="tengiaovienField"
                                          caption="Giáo viên"
                                          datasource="userDs"
                                          property="giaovien"
                                          optionsDatasource="giaoviensDc"
-                                         captionProperty="tengiaovien"
                                          nullName="---Giáo viên---"/>
-                            <textField id="TextGiaovienField" datasource="userDs" property="textgv" editable="false" visible="false"/>
+<!--                            <textField id="TextGiaovienField" datasource="userDs" property="textgv" editable="false" visible="false"/>-->
                         </vbox>
                     </row>
                 </rows>

@@ -1,16 +1,19 @@
 package com.company.truonghoc.entity;
 
+import com.haulmont.chile.core.annotations.NamePattern;
 import com.haulmont.cuba.core.entity.StandardEntity;
 
 import javax.persistence.*;
 
 @Table(name = "TRUONGHOC_TENLOP")
 @Entity(name = "truonghoc_Tenlop")
+@NamePattern("%s|tenlop")
 public class Tenlop extends StandardEntity {
     private static final long serialVersionUID = 4124330793891358741L;
 
-    @Column(name = "DOVI")
-    private String dovi;
+    @JoinColumn(name = "DOVI_ID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Donvi dovi;
 
     @Column(name = "TENLOP")
     private String tenlop;
@@ -19,11 +22,11 @@ public class Tenlop extends StandardEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private Giaovien giaoviencn;
 
-    public void setDovi(String dovi) {
+    public void setDovi(Donvi dovi) {
         this.dovi = dovi;
     }
 
-    public String getDovi() {
+    public Donvi getDovi() {
         return dovi;
     }
 

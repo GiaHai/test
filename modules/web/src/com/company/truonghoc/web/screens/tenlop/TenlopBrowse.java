@@ -48,8 +48,6 @@ public class TenlopBrowse extends StandardLookup<Tenlop> {
 
     @Subscribe
     protected void onBeforeShow(BeforeShowEvent event) {
-        searchLopField.setEditable(false);
-        searchGvcnField.setEditable(false);
         donvisDl.load();
         List<String> sessionTypeNames = donvisDc.getMutableItems().stream()
                 .map(Donvi::getTendonvi)
@@ -59,24 +57,14 @@ public class TenlopBrowse extends StandardLookup<Tenlop> {
 
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
-        if (dulieuUserService.timbrowerdonvi(userSession.getUser().getLogin()).size() == 0){
+        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() == null){
             searchDvField.setEditable(false);
-            searchDvField.setValue(dulieuUserService.timEditdonvi(userSession.getUser().getLogin()).getTendonvi());
+            searchDvField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi());
 
             excuteSearch(true);
         }
     }
 
-    @Subscribe("searchDvField")
-    protected void onSearchDvFieldValueChange(HasValue.ValueChangeEvent event) {
-        if (searchDvField.getValue() == null){
-            searchLopField.setEditable(false);
-            searchGvcnField.setEditable(false);
-        }else {
-            searchLopField.setEditable(true);
-            searchGvcnField.setEditable(true);
-        }
-    }
     public void timkiemExcute() {
         try {
             excuteSearch(true);
@@ -109,7 +97,7 @@ public class TenlopBrowse extends StandardLookup<Tenlop> {
 
         //Đơn vị
         if (donvi != null){
-            where += "and e.dovi = :donvi ";
+            where += "and e.dovi.tendonvi = :donvi ";
             params.put("donvi", donvi);
         }
         //Tên lớp

@@ -14,8 +14,9 @@ public class Chamconggv extends StandardEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private Giaovien hotengv;
 
-    @Column(name = "DONVIGV")
-    private String donvigv;
+    @JoinColumn(name = "DONVIGV_ID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Donvi donvigv;
 
     @Column(name = "NGAYLAM")
     @Temporal(TemporalType.DATE)
@@ -23,6 +24,14 @@ public class Chamconggv extends StandardEntity {
 
     @Column(name = "BUOILAM")
     private String buoilam;
+
+    public void setDonvigv(Donvi donvigv) {
+        this.donvigv = donvigv;
+    }
+
+    public Donvi getDonvigv() {
+        return donvigv;
+    }
 
     public void setNgaylam(Date ngaylam) {
         this.ngaylam = ngaylam;
@@ -46,14 +55,6 @@ public class Chamconggv extends StandardEntity {
 
     public void setBuoilam(String buoilam) {
         this.buoilam = buoilam;
-    }
-
-    public String getDonvigv() {
-        return donvigv;
-    }
-
-    public void setDonvigv(String donvigv) {
-        this.donvigv = donvigv;
     }
 
 }

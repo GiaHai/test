@@ -1,6 +1,5 @@
 package com.company.truonghoc.service;
 
-import com.company.truonghoc.entity.Hocsinh;
 import com.company.truonghoc.entity.UserExt;
 import com.haulmont.cuba.core.global.DataManager;
 import org.springframework.stereotype.Service;
@@ -26,11 +25,11 @@ public class DulieuUserServiceBean implements DulieuUserService {
                 .list();
     }
 //    -----------------------------------------
-    String abc;
+    Object abc;
     @Override
     public UserExt timEditdonvi(String login) {
         UserExt userExt = LoadtimEditdonvi(login);
-        abc = userExt.getTendonvi();
+        abc = userExt.getLoockup_donvi();
         return userExt;
     }
 
@@ -42,4 +41,13 @@ public class DulieuUserServiceBean implements DulieuUserService {
                 .one();
     }
     //    -----------------------------------------
+
+    @Override
+    public UserExt timdovi(String login) {
+        return dataManager.load(UserExt.class)
+                .query("select e from truonghoc_UserExt e where e.login = :login")
+                .parameter("login",login )
+                .view("userExt-view")
+                .one();
+    }
 }

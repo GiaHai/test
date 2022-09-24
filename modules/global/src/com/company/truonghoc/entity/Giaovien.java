@@ -13,8 +13,9 @@ import java.util.Date;
 public class Giaovien extends StandardEntity {
     private static final long serialVersionUID = 8016193291854421026L;
 
-    @Column(name = "DONVITAO_GIAOVIEN")
-    private String donvitao_giaovien;
+    @JoinColumn(name = "DONVITAO_GIAOVIEN_ID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Donvi donvitao_giaovien;
 
     @Column(name = "TENGIAOVIEN", nullable = false)
     @NotNull(message = "{msg://truonghoc_Giaovien.tengiaovien.validation.NotNull}")
@@ -37,16 +38,16 @@ public class Giaovien extends StandardEntity {
     @Column(name = "GHICHU")
     private String ghichu;
 
-    public void setTengiaovien(String tengiaovien) {
-        this.tengiaovien = tengiaovien;
+    public void setDonvitao_giaovien(Donvi donvitao_giaovien) {
+        this.donvitao_giaovien = donvitao_giaovien;
     }
 
-    public String getDonvitao_giaovien() {
+    public Donvi getDonvitao_giaovien() {
         return donvitao_giaovien;
     }
 
-    public void setDonvitao_giaovien(String donvitao_giaovien) {
-        this.donvitao_giaovien = donvitao_giaovien;
+    public void setTengiaovien(String tengiaovien) {
+        this.tengiaovien = tengiaovien;
     }
 
     public void setLuongcoban(Long luongcoban) {

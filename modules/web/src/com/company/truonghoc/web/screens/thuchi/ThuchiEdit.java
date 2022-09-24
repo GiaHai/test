@@ -1,5 +1,7 @@
 package com.company.truonghoc.web.screens.thuchi;
 
+import com.company.truonghoc.entity.Donvi;
+import com.company.truonghoc.entity.Giaovien;
 import com.company.truonghoc.service.DulieuUserService;
 import com.haulmont.cuba.gui.Dialogs;
 import com.haulmont.cuba.gui.Notifications;
@@ -29,11 +31,11 @@ public class ThuchiEdit extends StandardEditor<Thuchi> {
     @Inject
     protected Notifications notifications;
     @Inject
+    protected TextField<Donvi> donvitao_thuchiField;
+    @Inject
     protected Button commitAndCloseBtn;
     @Inject
-    protected TextField<String> usertao_thuchiField;
-    @Inject
-    protected TextField<String> donvitao_thuchiField;
+    protected TextField<Giaovien> usertao_thuchiField;
     @Inject
     protected DulieuUserService dulieuUserService;
     @Inject
@@ -65,8 +67,8 @@ public class ThuchiEdit extends StandardEditor<Thuchi> {
 
     @Subscribe
     protected void onBeforeShow(BeforeShowEvent event) {
-        usertao_thuchiField.setValue(dulieuUserService.timEditdonvi(userSession.getUser().getLogin()).getTextgv());
-        donvitao_thuchiField.setValue(dulieuUserService.timEditdonvi(userSession.getUser().getLogin()).getTendonvi());
+        usertao_thuchiField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien());
+        donvitao_thuchiField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
         tinhtrangchiField.setValue("Chưa thanh toán");
     }
 

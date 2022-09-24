@@ -3,6 +3,7 @@
 
     <view entity="truonghoc_Donvi" name="donvi-view" extends="_local"/>
     <view entity="truonghoc_Giaovien" name="giaovien-view" extends="_local" systemProperties="true">
+        <property name="donvitao_giaovien" view="_minimal"/>
     </view>
     <view entity="truonghoc_Hocphi" name="hocphi-view" extends="_local" systemProperties="true">
         <property name="hovaten" view="_minimal">
@@ -13,22 +14,34 @@
             <property name="donvitao_hocsinh"/>
             <property name="usertao_hocsinh"/>
         </property>
+        <property name="usertao_hocphi" view="_minimal"/>
+        <property name="dovitao_hocphi" view="_minimal"/>
     </view>
-    <view entity="truonghoc_Hocsinh" name="hocsinh-view" extends="_local" systemProperties="true">
+    <view entity="truonghoc_Hocsinh" name="hocsinh-view" extends="_local">
         <property name="lophoc" view="_minimal">
-            <property name="tenlop"/>
             <property name="giaoviencn"/>
         </property>
         <property name="diemdanh" view="_minimal">
             <property name="ngaynghi"/>
         </property>
+        <property name="createTs"/>
+        <property name="createdBy"/>
+        <property name="updateTs"/>
+        <property name="updatedBy"/>
+        <property name="usertao_hocsinh" view="_minimal"/>
+        <property name="donvitao_hocsinh" view="_minimal"/>
     </view>
     <view entity="truonghoc_Luongthang" name="luongthang-view" extends="_local" systemProperties="true">
         <property name="hovaten" view="_minimal">
             <property name="luongcoban"/>
         </property>
+        <property name="donvitao_luongthang" view="_minimal"/>
+        <property name="usertao_luongthang" view="_minimal"/>
     </view>
-    <view entity="truonghoc_Thuchi" name="thuchi-view" extends="_local" systemProperties="true"/>
+    <view entity="truonghoc_Thuchi" name="thuchi-view" extends="_local" systemProperties="true">
+        <property name="usertao_thuchi" view="_minimal"/>
+        <property name="donvitao_thuchi" view="_minimal"/>
+    </view>
     <view entity="truonghoc_UserExt" name="userExt-view" extends="_local" systemProperties="true">
         <property name="group">
             <property name="name"/>
@@ -51,14 +64,23 @@
             <property name="thutienhocphi" view="_minimal"/>
             <property name="tonggia"/>
         </property>
+        <property name="donvitao_thutienhocphi" view="_minimal"/>
+        <property name="usertao_thutienhocphi" view="_minimal"/>
     </view>
     <view entity="truonghoc_Chamconggv" name="chamconggv-view" extends="_local">
         <property name="hotengv" view="_minimal">
             <property name="donvitao_giaovien"/>
         </property>
+        <property name="donvigv" view="_minimal">
+            <property name="update"/>
+            <property name="donvitrungtam"/>
+        </property>
     </view>
     <view entity="truonghoc_Diemdanh" name="diemdanh-view" extends="_local">
         <property name="hotenhs" view="_minimal"/>
+        <property name="donvidd" view="_minimal"/>
+        <property name="lopdd" view="_minimal"/>
+        <property name="nguoitaodd" view="_minimal"/>
     </view>
     <view entity="truonghoc_Chitietthu" name="chitietthu-view" extends="_local">
         <property name="thutienhocphi" view="_minimal">
@@ -79,6 +101,11 @@
             <property name="donvitao_hocsinh"/>
             <property name="usertao_hocsinh"/>
         </property>
+        <property name="giaoviencn" view="_minimal"/>
+        <property name="donvi" view="_minimal"/>
+        <property name="tenlop" view="_minimal">
+            <property name="tenlop"/>
+        </property>
     </view>
     <view entity="truonghoc_Tenlop" name="tenlop-view" extends="_local">
         <property name="giaoviencn" view="_minimal">
@@ -89,5 +116,6 @@
             <property name="luongcoban"/>
             <property name="ghichu"/>
         </property>
+        <property name="dovi" view="_minimal"/>
     </view>
 </views>
