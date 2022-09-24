@@ -1,0 +1,2 @@
+alter table TRUONGHOC_HOCPHI drop column USERTAO_HOCPHI__U31760 ;
+alter table TRUONGHOC_HOCPHI drop column DOVITAO_HOCPHI__U06237 ;

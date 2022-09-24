@@ -1,0 +1,2 @@
+alter table TRUONGHOC_HOCSINH drop column USERTAO_HOCSINH__U01034 ;
+alter table TRUONGHOC_HOCSINH drop column DONVITAO_HOCSINH__U09349 ;

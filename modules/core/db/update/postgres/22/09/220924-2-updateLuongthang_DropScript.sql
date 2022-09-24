@@ -1,0 +1,2 @@
+alter table TRUONGHOC_LUONGTHANG drop column USERTAO_LUONGTHANG__U12278 cascade ;
+alter table TRUONGHOC_LUONGTHANG drop column DONVITAO_LUONGTHANG__U58769 cascade ;
