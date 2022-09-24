@@ -1,1 +1,0 @@
-alter table TRUONGHOC_GIAOVIEN drop column USERTAO_GIAOVIEN__U19809 ;

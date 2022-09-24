@@ -1,4 +1,0 @@
-exec sp_rename 'TRUONGHOC_TENLOP.DOVI_ID', 'DOVI_ID__U50841', 'COLUMN' ^
-alter table TRUONGHOC_TENLOP drop constraint FK_TRUONGHOC_TENLOP_ON_DOVI ;
-drop index IDX_TRUONGHOC_TENLOP_ON_DOVI on TRUONGHOC_TENLOP ;
-alter table TRUONGHOC_TENLOP add DOVI nvarchar(255) ;

@@ -1,2 +1,0 @@
-exec sp_rename 'TRUONGHOC_LOPHOC.GIAOVIENCN', 'GIAOVIENCN__U53440', 'COLUMN' ^
-alter table TRUONGHOC_LOPHOC add GIAOVIENCN_ID uniqueidentifier ;

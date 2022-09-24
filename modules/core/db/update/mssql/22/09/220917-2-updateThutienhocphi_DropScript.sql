@@ -1,3 +1,0 @@
-alter table TRUONGHOC_THUTIENHOCPHI drop column TENPHI__U43931 ;
-alter table TRUONGHOC_THUTIENHOCPHI drop column SOLUONG__U65190 ;
-alter table TRUONGHOC_THUTIENHOCPHI drop column DONGIA__U49331 ;

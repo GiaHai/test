@@ -1,1 +1,0 @@
-alter table TRUONGHOC_HOCPHI add TINHTRANGTHANHTOAN nvarchar(255) ;
