@@ -120,12 +120,13 @@ public class LuongthangEdit extends StandardEditor<Luongthang> {
         }
         donvitao_luongthangField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
         usertao_luongthangField.setValue(userSession.getUser());
+
+        hovatenField.setOptionsList(giaovienList(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi()));
+
     }
 
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
-//        hovatenField.setOptionsList(giaovienList(getEditedEntity().getDonvitao_luongthang()));
-        hovatenField.setOptionsList(giaovienList(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi()));
     }
 
     @Subscribe("hovatenField")
@@ -147,9 +148,10 @@ public class LuongthangEdit extends StandardEditor<Luongthang> {
             BigDecimal b = new BigDecimal(luongcobanField.getValue() / 26.00000000);
             BigDecimal c = b.setScale(10, BigDecimal.ROUND_HALF_EVEN);
             thuclinhField.setValue((long) (c.doubleValue() * buoilamField.getValue().doubleValue()));
-            System.out.println(thuclinhField.getValue());
         } else {
-            thuclinhField.setValue(luongcobanField.getValue());
+            if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() == null){
+                thuclinhField.setValue(luongcobanField.getValue());
+            }
         }
     }
 
@@ -207,7 +209,6 @@ public class LuongthangEdit extends StandardEditor<Luongthang> {
     @Subscribe("thuongField")
     protected void onThuongFieldValueChange(HasValue.ValueChangeEvent<Long> event) {
         tinhtonglinh();
-
     }
 
 
@@ -251,9 +252,6 @@ public class LuongthangEdit extends StandardEditor<Luongthang> {
     protected void onSearchBLamBtnClick(Button.ClickEvent event) {
         buoilamField.setValue(BigDecimal.valueOf(cangay().size() + casang().size() * 0.5 + cachieu().size() * 0.5));
         casangField.setValue(casang().size());
-        System.out.println("Cả ngày: "+cangay().size());
-        System.out.println("ca sáng: " + casang().size() * 0.5);
-        System.out.println("ca chiều: " + cachieu().size() * 0.5);
     }
 
 
