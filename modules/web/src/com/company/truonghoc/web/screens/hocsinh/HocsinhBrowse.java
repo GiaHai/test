@@ -102,9 +102,6 @@ public class HocsinhBrowse extends StandardLookup<Hocsinh> {
             if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null) {
                 sreachgvFiled.setEditable(false);
                 sreachgvFiled.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien().getTengiaovien());
-//                sreachlopField.setValue(loadlop().getTenlop());
-//                sreachlopField.setEditable(false);
-//                sreachlopField.setValue(dvvagvtimlop().getTenlop());
 
             }
         } else {
@@ -115,12 +112,6 @@ public class HocsinhBrowse extends StandardLookup<Hocsinh> {
                     .map(Donvi::getTendonvi)
                     .collect(Collectors.toList());
             donvitao_hocsinhField.setOptionsList(sessionTypeNames);
-            // lookupField cho Lớp học
-//            lophocsDl.load();
-//            List<String> listLophoc = lophocsDc.getMutableItems().stream()
-//                    .map(Lophoc::getTenlop)
-//                    .collect(Collectors.toList());
-//            sreachlopField.setOptionsList(listLophoc);
 
         }
         excuteSearch(true);

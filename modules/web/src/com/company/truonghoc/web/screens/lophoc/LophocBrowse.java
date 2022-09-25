@@ -69,12 +69,12 @@ public class LophocBrowse extends StandardLookup<Lophoc> {
         if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() == null){
             searchDvField.setEditable(false);
             searchDvField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi());
+            excuteSearch(true);
             if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null){
                 searchGvcnField.setValue((dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien().getTengiaovien()));
                 searchGvcnField.setEditable(false);
             }
         }
-        excuteSearch(true);
     }
 
     @Subscribe("lophocsTable.create")
