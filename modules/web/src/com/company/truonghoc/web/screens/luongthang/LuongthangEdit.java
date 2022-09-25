@@ -75,6 +75,8 @@ public class LuongthangEdit extends StandardEditor<Luongthang> {
     protected DateField<Date> tungayField;
     @Inject
     protected DateField<Date> denngayField;
+    @Inject
+    protected Button searchBLamBtn;
     Long a = Long.valueOf(0);
     @Inject
     protected UserSession userSession;
@@ -111,7 +113,11 @@ public class LuongthangEdit extends StandardEditor<Luongthang> {
         thuongField.setValue(a);
         thuclinhField.setValue(a);
         tinhtonglinh();
-
+        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() != null){
+            tungayField.setVisible(false);
+            denngayField.setVisible(false);
+            searchBLamBtn.setVisible(false);
+        }
         donvitao_luongthangField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
         usertao_luongthangField.setValue(userSession.getUser());
     }

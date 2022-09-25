@@ -3,6 +3,7 @@ package com.company.truonghoc.web.screens.lophoc;
 import com.company.truonghoc.entity.Donvi;
 import com.company.truonghoc.service.DulieuUserService;
 import com.haulmont.cuba.core.entity.Entity;
+import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.gui.Dialogs;
 import com.haulmont.cuba.gui.UiComponents;
 import com.haulmont.cuba.gui.actions.list.CreateAction;
@@ -51,6 +52,8 @@ public class LophocBrowse extends StandardLookup<Lophoc> {
     protected CreateAction<Lophoc> lophocsTableCreate;
     @Inject
     protected Dialogs dialogs;
+    @Inject
+    protected DataManager dataManager;
 
     @Subscribe
     protected void onInit(InitEvent event) {
@@ -66,8 +69,12 @@ public class LophocBrowse extends StandardLookup<Lophoc> {
         if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() == null){
             searchDvField.setEditable(false);
             searchDvField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi());
-            excuteSearch(true);
+            if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null){
+                searchGvcnField.setValue((dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien().getTengiaovien()));
+                searchGvcnField.setEditable(false);
+            }
         }
+        excuteSearch(true);
     }
 
     @Subscribe("lophocsTable.create")
@@ -114,7 +121,7 @@ public class LophocBrowse extends StandardLookup<Lophoc> {
         }
         // Tên giáo viên
         if (!StringUtils.isEmpty(tengv)){
-            where += "and e.giaoviencn like :tengv";
+            where += "and e.giaoviencn.tengiaovien like :tengv";
             params.put("tengv", tengv);
         }
 

@@ -1,8 +1,10 @@
 package com.company.truonghoc.web.screens.tenlop;
 
 import com.company.truonghoc.entity.Donvi;
+import com.company.truonghoc.entity.Lophoc;
 import com.company.truonghoc.service.DulieuUserService;
 import com.haulmont.cuba.core.entity.Entity;
+import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.gui.Notifications;
 import com.haulmont.cuba.gui.UiComponents;
 import com.haulmont.cuba.gui.components.*;
@@ -18,6 +20,7 @@ import javax.inject.Inject;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @UiController("truonghoc_Tenlop.browse")
@@ -45,6 +48,8 @@ public class TenlopBrowse extends StandardLookup<Tenlop> {
     protected UserSession userSession;
     @Inject
     protected UiComponents uiComponents;
+    @Inject
+    protected DataManager dataManager;
 
     @Subscribe
     protected void onBeforeShow(BeforeShowEvent event) {
@@ -63,6 +68,14 @@ public class TenlopBrowse extends StandardLookup<Tenlop> {
 
             excuteSearch(true);
         }
+    }
+
+
+    private List<Tenlop> loadlop(Object donvi){
+        return dataManager.load(Tenlop.class)
+                .query("select e from truonghoc_Tenlop e where e.dovi.tendonvi = :donvi")
+                .parameter("donvi", donvi)
+                .list();
     }
 
     public void timkiemExcute() {

@@ -14,6 +14,7 @@ import com.haulmont.cuba.security.global.UserSession;
 
 import javax.inject.Inject;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @UiController("truonghoc_Tenlop.edit")
@@ -61,7 +62,6 @@ public class TenlopEdit extends StandardEditor<Tenlop> {
         }else {
             donviFiled.setEditable(false);
         }
-
     }
 
     @Subscribe("donviFiled")
