@@ -53,10 +53,15 @@ public class TenlopEdit extends StandardEditor<Tenlop> {
     }
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
-        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() == null) {
-            donviFiled.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
+        if (getEditedEntity().getCreatedBy() == null){
+            if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() == null) {
+                donviFiled.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
+                donviFiled.setEditable(false);
+            }
+        }else {
             donviFiled.setEditable(false);
         }
+
     }
 
     @Subscribe("donviFiled")

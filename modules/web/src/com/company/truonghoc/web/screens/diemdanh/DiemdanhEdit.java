@@ -52,7 +52,9 @@ public class DiemdanhEdit extends StandardEditor<Diemdanh> {
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
 //        System.out.println(loadlopdd().getTenlop());
-        lopField.setValue(loadlopdd(donviField.getValue().getTendonvi() , nguoitaoField.getValue().getTengiaovien()));
+        if (getEditedEntity().getCreatedBy() == null){
+            lopField.setValue(loadlopdd(donviField.getValue().getTendonvi() , nguoitaoField.getValue().getTengiaovien()));
+        }
     }
 
     private Lophoc loadlopdd(Object donvi, Object tengv) {
@@ -64,11 +66,11 @@ public class DiemdanhEdit extends StandardEditor<Diemdanh> {
                 .one();
     }
 
-    public List<Hocsinh> test(String hocsinh, String donvitao) {
-        return dataManager.load(Hocsinh.class)
-                .query("select e from truonghoc_Hocsinh e where e.usertao_hocsinh = :user and e.donvitao_hocsinh = :donvitao")
-                .parameter("user", hocsinh)
-                .parameter("donvitao", donvitao)
-                .list();
-    }
+//    public List<Hocsinh> test(String hocsinh, String donvitao) {
+//        return dataManager.load(Hocsinh.class)
+//                .query("select e from truonghoc_Hocsinh e where e.usertao_hocsinh = :user and e.donvitao_hocsinh = :donvitao")
+//                .parameter("user", hocsinh)
+//                .parameter("donvitao", donvitao)
+//                .list();
+//    }
 }

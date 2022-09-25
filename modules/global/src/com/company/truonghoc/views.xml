@@ -75,12 +75,14 @@
             <property name="update"/>
             <property name="donvitrungtam"/>
         </property>
+        <property name="createdBy"/>
     </view>
     <view entity="truonghoc_Diemdanh" name="diemdanh-view" extends="_local">
         <property name="hotenhs" view="_minimal"/>
         <property name="donvidd" view="_minimal"/>
         <property name="lopdd" view="_minimal"/>
         <property name="nguoitaodd" view="_minimal"/>
+        <property name="createdBy"/>
     </view>
     <view entity="truonghoc_Chitietthu" name="chitietthu-view" extends="_local">
         <property name="thutienhocphi" view="_minimal">
@@ -117,5 +119,6 @@
             <property name="ghichu"/>
         </property>
         <property name="dovi" view="_minimal"/>
+        <property name="createdBy"/>
     </view>
 </views>

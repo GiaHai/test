@@ -64,7 +64,11 @@ public class GiaovienBrowse extends StandardLookup<Giaovien> {
         } catch (NullPointerException ex){
 
         }
+    }
 
+    @Subscribe("donvitao_giaovienField")
+    protected void onDonvitao_giaovienFieldValueChange(HasValue.ValueChangeEvent event) {
+        System.out.println(donvitao_giaovienField.getValue());
     }
 
     public Component stt(Entity entity) {

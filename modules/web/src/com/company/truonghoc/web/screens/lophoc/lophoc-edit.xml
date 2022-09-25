@@ -69,26 +69,6 @@
             </columns>
                 <rows >
                     <row>
-<!--                        <form colspan="3" width="100%" childrenCaptionWidth="80px">-->
-<!--                            <column>-->
-<!--                                <lookupField id="donviFiled"-->
-<!--                                             nullName="&#45;&#45;Tất cả đơn vị&#45;&#45;"-->
-<!--                                             width="100%"-->
-<!--                                             caption="Đơn vị"/>-->
-<!--                            </column>-->
-<!--                        </form>-->
-<!--                        <form colspan="1" width="100%">-->
-<!--                            <column>-->
-<!--                                <label value=""/>-->
-<!--                            </column>-->
-<!--                        </form>-->
-<!--                        <form colspan="1" width="100%">-->
-<!--                            <column>-->
-<!--                                <button id="timkiemBtn"-->
-<!--                                        width="100%"-->
-<!--                                        caption="Tìm kiếm Lớp học" align="BOTTOM_CENTER"/>-->
-<!--                            </column>-->
-<!--                        </form>-->
                         <form colspan="1" width="100%">
                             <column>
                                 <label value=""/>
@@ -115,27 +95,6 @@
                     </row>
 
                     <row>
-<!--                        <form colspan="3" width="100%" childrenCaptionWidth="80px">-->
-<!--                            <column>-->
-<!--                                <lookupField id="giaovienField"-->
-<!--                                             optionsContainer="giaoviensDc"-->
-<!--                                             captionProperty="tengiaovien"-->
-<!--                                             nullName="-&#45;&#45;Tất cả giáo viên-&#45;&#45;"-->
-<!--                                             width="100%"-->
-<!--                                             caption="mainMsg://lophoc.giaoviencn"/>-->
-<!--                            </column>-->
-<!--                        </form>-->
-<!--                        <form colspan="1" width="100%">-->
-<!--                            <column>-->
-<!--                                <label value=""/>-->
-<!--                            </column>-->
-<!--                        </form>-->
-<!--                        <form colspan="1" width="100%">-->
-<!--                            <column>-->
-<!--                                <button id="xoaBtn"-->
-<!--                                        caption="Xóa" width="100%" />-->
-<!--                            </column>-->
-<!--                        </form>-->
                         <form colspan="1" width="100%">
                             <column>
                                 <label value=""/>
@@ -147,6 +106,7 @@
                                            property="tenlop"
                                            dataContainer="lophocDc"
                                            width="100%"
+                                             nullName="---Chọn tên lớp---"
                                            caption="mainMsg://lophoc.tenlop"/>
                             </column>
                         </form>

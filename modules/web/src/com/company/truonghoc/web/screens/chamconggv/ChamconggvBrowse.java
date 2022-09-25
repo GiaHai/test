@@ -69,6 +69,11 @@ public class ChamconggvBrowse extends StandardLookup<Chamconggv> {
             tengiaovienField.clear();
             ngaylamField.clear();
             buoilamField.clear();
+            if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null){
+                tendonviField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi());
+                tengiaovienField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien());
+                tengiaovienField.setEditable(false);
+            }
         } else {
             tendonviField.setEditable(true);
             //lấy dữ liệu string cho lookup
@@ -97,9 +102,11 @@ public class ChamconggvBrowse extends StandardLookup<Chamconggv> {
 
     @Subscribe("tendonviField")
     protected void onTendonviFieldValueChange(HasValue.ValueChangeEvent event) {
-        try {
-            tengiaovienField.setOptionsList(tengiaovien(tendonviField.getValue()));
-        } catch (NullPointerException ex) {
+        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() == null){
+            try {
+                tengiaovienField.setOptionsList(tengiaovien(tendonviField.getValue()));
+            } catch (NullPointerException ex) {
+            }
         }
     }
 

@@ -48,11 +48,17 @@ public class ChamconggvEdit extends StandardEditor<Chamconggv> {
 
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
-        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() == null){
-            donvigvField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
-            donvigvField.setEditable(false);
-        }else {
-            donvigvField.setOptionsList(load());
+        if (getEditedEntity().getCreatedBy() == null){
+            if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() == null){
+                donvigvField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
+                donvigvField.setEditable(false);
+                if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null){
+                    hotenGvField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien());
+                    hotenGvField.setEditable(false);
+                }
+            }else {
+                donvigvField.setOptionsList(load());
+            }
         }
     }
 
