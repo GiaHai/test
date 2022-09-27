@@ -19,6 +19,7 @@ import java.util.List;
 @EditedEntityContainer("diemdanhDc")
 @LoadDataBeforeShow
 public class DiemdanhEdit extends StandardEditor<Diemdanh> {
+
     @Inject
     protected DataManager dataManager;
     @Inject
@@ -64,5 +65,5 @@ public class DiemdanhEdit extends StandardEditor<Diemdanh> {
     protected void onNguoitaoFieldValueChange(HasValue.ValueChangeEvent<Giaovien> event) {
         lopField.setOptionsList(loadlopdd(donviField.getValue().getTendonvi(), nguoitaoField.getValue().getTengiaovien()));
     }
-    
+
 }

@@ -1,6 +1,7 @@
 package com.company.truonghoc.service;
 
 import com.company.truonghoc.entity.Giaovien;
+import com.company.truonghoc.entity.Hocsinh;
 import com.company.truonghoc.entity.Tenlop;
 import com.haulmont.cuba.core.global.DataManager;
 import org.springframework.stereotype.Service;
@@ -38,6 +39,14 @@ public class SearchedServiceBean implements SearchedService {
                 .query("select e from truonghoc_Tenlop e where e.dovi.tendonvi = :donvi and e.giaoviencn.tengiaovien = :giaovien")
                 .parameter("donvi", donvi)
                 .parameter("giaovien", giaovien)
+                .list();
+    }
+
+    @Override
+    public List<Hocsinh> loadHs(Object donvi) {
+        return  dataManager.load(Hocsinh.class)
+                .query("select e from truonghoc_Hocsinh e where e.donvitao_hocsinh.tendonvi = :tendonvi and e.lophoc.giaoviencn is null")
+                .parameter("donvi", donvi)
                 .list();
     }
 }

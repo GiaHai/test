@@ -33,15 +33,25 @@ public class Hocsinh extends StandardEntity {
     @Column(name = "GHICHU")
     private String ghichu;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "LOPHOC_ID")
-    private Lophoc lophoc;
-
     @JoinTable(name = "TRUONGHOC_DIEMDANH_HOCSINH_LINK",
             joinColumns = @JoinColumn(name = "HOCSINH_ID"),
             inverseJoinColumns = @JoinColumn(name = "DIEMDANH_ID"))
     @ManyToMany
     private List<Diemdanh> diemdanhs;
+
+    @JoinTable(name = "TRUONGHOC_LOPHOC_HOCSINH_LINK",
+            joinColumns = @JoinColumn(name = "HOCSINH_ID"),
+            inverseJoinColumns = @JoinColumn(name = "LOPHOC_ID"))
+    @ManyToMany
+    private List<Lophoc> lophocs;
+
+    public List<Lophoc> getLophocs() {
+        return lophocs;
+    }
+
+    public void setLophocs(List<Lophoc> lophocs) {
+        this.lophocs = lophocs;
+    }
 
     public List<Diemdanh> getDiemdanhs() {
         return diemdanhs;
@@ -49,14 +59,6 @@ public class Hocsinh extends StandardEntity {
 
     public void setDiemdanhs(List<Diemdanh> diemdanhs) {
         this.diemdanhs = diemdanhs;
-    }
-
-    public void setLophoc(Lophoc lophoc) {
-        this.lophoc = lophoc;
-    }
-
-    public Lophoc getLophoc() {
-        return lophoc;
     }
 
     public void setDonvitao_hocsinh(Donvi donvitao_hocsinh) {

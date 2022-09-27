@@ -7,14 +7,14 @@
     <option name="savedDbProperties">
       <list>
         <SavedDbProperties>
-          <option name="databaseName" value="truonghoc" />
+          <option name="databaseName" value="truonghoctest" />
           <option name="dbType" value="mssql" />
           <option name="dbmsVersion" value="2012" />
           <option name="host" value="localhost" />
           <option name="pass" value="123456" />
           <option name="systemPassword" value="" />
           <option name="systemUser" value="" />
-          <option name="url" value="jdbc:sqlserver://localhost;databaseName=truonghoc" />
+          <option name="url" value="jdbc:sqlserver://localhost;databaseName=truonghoctest" />
           <option name="user" value="sa" />
         </SavedDbProperties>
         <SavedDbProperties>

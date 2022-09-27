@@ -1,6 +1,7 @@
 package com.company.truonghoc.service;
 
 import com.company.truonghoc.entity.Giaovien;
+import com.company.truonghoc.entity.Hocsinh;
 import com.company.truonghoc.entity.Tenlop;
 
 import java.util.List;
@@ -14,4 +15,5 @@ public interface SearchedService {
 
     List<Tenlop> loadlop(Object donvi, Object giaovien);
 
+    List<Hocsinh> loadHs(Object donvi);
 }

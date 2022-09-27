@@ -78,6 +78,9 @@
                                  width="100%"
                                  textInputAllowed="false"/>
                 </vbox>
+<!--                <vbox>-->
+<!--                    <lookupField id="thanghocField" />-->
+<!--                </vbox>-->
                 <vbox align="MIDDLE_LEFT" spacing="true">
                     <button id="diemdanhBtn"
                             stylename="Btntimkiem"
@@ -86,6 +89,7 @@
                             invoke="timkiemExcute"
                             stylename="Btntimkiem"
                             caption="Tìm kiếm" align="BOTTOM_LEFT"/>
+<!--                    <button id="test"/>-->
                 </vbox>
             </hbox>
         </groupBox>
@@ -101,15 +105,11 @@
                 <column id="donvitao_hocsinh"
                         property="donvitao_hocsinh"
                         caption="mainMsg://donvitao"/>
-                <column id="lophoc.giaoviencn"
-                        property="lophoc.giaoviencn"
-                        caption="Giáo viên chủ nhiệm"/>
+
                 <column id="tenhocsinh"
                         property="tenhocsinh"
                         caption="mainMsg://hocsinh.tenhocsinh"/>
-                <column id="lophoc.tenlop"
-                        property="lophoc.tenlop"
-                        caption="Lớp học"/>
+
                 <column id="ngaysinhhocsinh"
                         property="ngaysinhhocsinh"
                         caption="mainMsg://hocsinh.ngaysinhhocsinh"/>
@@ -124,6 +124,8 @@
                         caption="mainMsg://hocsinh.ghichu"/>
 <!--                <column id="diemdanh.ngaynghi"-->
 <!--                        property="diemdanh.ngaynghi"/>-->
+<!--                <column id="lophocs.tenlop.dovi"-->
+<!--                        property="lophocs.tenlop.dovi"/>-->
             </columns>
             <rowsCount/>
             <buttonsPanel id="buttonsPanel"

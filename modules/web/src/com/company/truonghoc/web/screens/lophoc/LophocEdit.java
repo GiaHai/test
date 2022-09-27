@@ -5,6 +5,7 @@ import com.company.truonghoc.entity.Giaovien;
 import com.company.truonghoc.entity.Hocsinh;
 import com.company.truonghoc.entity.Tenlop;
 import com.company.truonghoc.service.DulieuUserService;
+import com.company.truonghoc.service.SearchedService;
 import com.haulmont.cuba.core.entity.Entity;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.gui.UiComponents;
@@ -16,6 +17,7 @@ import com.company.truonghoc.entity.Lophoc;
 import com.haulmont.cuba.security.global.UserSession;
 
 import javax.inject.Inject;
+import java.util.Date;
 import java.util.List;
 
 @UiController("truonghoc_Lophoc.edit")
@@ -35,8 +37,6 @@ public class LophocEdit extends StandardEditor<Lophoc> {
     protected CollectionContainer<Donvi> donvisDc;
     @Inject
     protected CollectionLoader<Donvi> donvisDl;
-    //    @Inject
-//    protected LookupField donviFiled;
     @Inject
     protected TextField<Giaovien> giaovien;
     @Inject
@@ -53,6 +53,10 @@ public class LophocEdit extends StandardEditor<Lophoc> {
     protected UserSession userSession;
     @Inject
     protected LookupField<Tenlop> tenlopField;
+    @Inject
+    protected SearchedService searchedService;
+    @Inject
+    protected TextField<String> thanghocField;
 
     @Subscribe
     protected void onInit(InitEvent event) {
@@ -72,17 +76,20 @@ public class LophocEdit extends StandardEditor<Lophoc> {
                     giaovien.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien());
                     tenlopField.setOptionsList(loadlop(DvField.getValue(), giaovien.getValue()));
                 }
+            }else {
+                DvField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
+                giaovien.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien());
             }
         }else {
             tenlopField.setOptionsList(loadlop(DvField.getValue(), giaovien.getValue()));
         }
     }
 
-    @Subscribe("closeBtn")
-    protected void onCloseBtnClick(Button.ClickEvent event) {
-
+    @Subscribe("giaovien")
+    protected void onGiaovienValueChange(HasValue.ValueChangeEvent<Giaovien> event) {
+        tenlopField.setOptionsList(searchedService.loadlopDK(DvField.getValue().getTendonvi(), giaovien.getValue().getTengiaovien()));
     }
-
+    
     private List<Tenlop> loadlop(Object donvi, Object giaoviencn){
         return dataManager.load(Tenlop.class)
                 .query("select e from truonghoc_Tenlop e where e.dovi = :donvi and e.giaoviencn = :giaoviencn and e.tinhtranglop = true")
@@ -94,6 +101,15 @@ public class LophocEdit extends StandardEditor<Lophoc> {
         return dataManager.load(Donvi.class)
                 .query("select e from truonghoc_Donvi e")
                 .list();
+    }
+
+    @Subscribe("tenlopField")
+    protected void onTenlopFieldValueChange(HasValue.ValueChangeEvent<Tenlop> event) {
+        if (tenlopField.getValue() == null){
+            thanghocField.clear();
+        }else {
+            thanghocField.setValue(tenlopField.getValue().getThanghoc());
+        }
     }
 
     public Component stt(Entity entity) {

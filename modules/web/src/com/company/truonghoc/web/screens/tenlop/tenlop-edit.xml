@@ -31,12 +31,12 @@
                 <vbox>
                     <lookupField id="giaoviencnField" dataContainer="tenlopDc" property="giaoviencn"
                                  caption="Giáo viên chủ nhiệm"/>
-                    <dateField id="thanghocField" dataContainer="tenlopDc" property="thanghoc" caption="Tháng học"
-                               resolution="MONTH" />
+                    <lookupField id="thanghocField" dataContainer="tenlopDc" property="thanghoc" caption="Tháng học"/>
                 </vbox>
                 <vbox align="BOTTOM_CENTER">
                     <checkBox id="ttLopcheck" caption="Tình trạng lớp" dataContainer="tenlopDc"
                               property="tinhtranglop" align="BOTTOM_CENTER"/>
+                    <textField id="namhocField" dataContainer="tenlopDc" property="namhoc" caption="Năm học"/>
                 </vbox>
             </hbox>
         </form>

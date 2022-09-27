@@ -114,15 +114,11 @@ public class LuongthangEdit extends StandardEditor<Luongthang> {
             tungayField.setVisible(false);
             denngayField.setVisible(false);
             searchBLamBtn.setVisible(false);
+
         }
         donvitao_luongthangField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
-
         hovatenField.setOptionsList(giaovienList(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi()));
 
-    }
-
-    @Subscribe
-    protected void onAfterShow(AfterShowEvent event) {
     }
 
     @Subscribe("hovatenField")

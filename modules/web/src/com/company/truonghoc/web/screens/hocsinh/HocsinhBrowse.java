@@ -45,6 +45,8 @@ public class HocsinhBrowse extends StandardLookup<Hocsinh> {
     protected DataGrid<Hocsinh> hocsinhsTable;
     @Inject
     protected LookupField<Giaovien> sreachgvFiled;
+//    @Inject
+//    protected LookupField thanghocField;
     @Inject
     protected LookupField<Lophoc> searchLopField;
     @Inject
@@ -70,6 +72,7 @@ public class HocsinhBrowse extends StandardLookup<Hocsinh> {
     @Inject
     protected Button diemdanhBtn;
 
+
     /**** tokenlist****/
     @Subscribe
     protected void onInit(InitEvent event) {
@@ -85,12 +88,25 @@ public class HocsinhBrowse extends StandardLookup<Hocsinh> {
         truongchon.put("Chọn nhiều trường", DataGrid.SelectionMode.MULTI_CHECK);
 
         selectionModeField.setOptionsMap(truongchon);
+
+//        Search đơn vị
+        donvisDl.load();
+        List<String> sessionTypeNames = donvisDc.getMutableItems().stream()
+                .map(Donvi::getTendonvi)
+                .collect(Collectors.toList());
+        donvitao_hocsinhField.setOptionsList(sessionTypeNames);
 //        Search giới tính
         List<String> gioitinh = new ArrayList<>();
         gioitinh.add("Nam");
         gioitinh.add("Nữ");
 
         sreachGtinhField.setOptionsList(gioitinh);
+
+        // tháng
+        List<String> thang = Arrays.asList(
+                "Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"
+        );
+//        thanghocField.setOptionsList(thang);
     }
 
     @Subscribe("selectionModeField")
@@ -100,37 +116,13 @@ public class HocsinhBrowse extends StandardLookup<Hocsinh> {
 
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
-//        khi mở màn hình với điều kiện là đơn vị không phải đơn vị chính
-        try {
-            if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() == null) {
-                donvitao_hocsinhField.setEditable(false);
-                donvitao_hocsinhField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi());
-                searchLopField.setEditable(false);
-                if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null) {
-
-                    if (lookupActions.isVisible() == false) {
-                        sreachgvFiled.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien());
-                        excuteSearch(true);
-                    } else {
-                        searchLopField.setEditable(false);
-                        diemdanhBtn.setVisible(true);
-                        excuteSearch(true);
-                    }
-                    sreachgvFiled.setEditable(false);
-                }
-            } else {
-                donvitao_hocsinhField.setEditable(true);
-                // lookupField cho đơn vị
-                donvisDl.load();
-                List<String> sessionTypeNames = donvisDc.getMutableItems().stream()
-                        .map(Donvi::getTendonvi)
-                        .collect(Collectors.toList());
-                donvitao_hocsinhField.setOptionsList(sessionTypeNames);
-
-            }
+        if (lookupActions.isVisible() == true) {
+            donvitao_hocsinhField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi());
+            searchLopField.setEditable(false);
+            donvitao_hocsinhField.setEditable(false);
+            sreachgvFiled.setEditable(false);
+            diemdanhBtn.setVisible(true);
             excuteSearch(true);
-        } catch (NullPointerException ex) {
-
         }
     }
 
@@ -188,32 +180,46 @@ public class HocsinhBrowse extends StandardLookup<Hocsinh> {
         }
 //        //Họ và tên Giáo viên
 
-        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() != null) {
-            // là đơn vị trung tâm
-            if (giaovien != null) {
-                where += "and e.lophoc.giaoviencn.tengiaovien = :giaoVien ";
-                params.put("giaoVien", sreachgvFiled.getValue().getTengiaovien());
-            }
+//        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() != null) {
+//            // là đơn vị trung tâm
+//            if (giaovien != null) {
+//                where += "and e.lophoc.giaoviencn.tengiaovien = :giaoVien ";
+//                params.put("giaoVien", sreachgvFiled.getValue().getTengiaovien());
+//            }
+//        } else {
+//            // không phải dơn vị trung tâm
+//            if (giaovien != null) {
+//                where += "and e.lophoc.giaoviencn.tengiaovien = :giaoVien ";
+//                params.put("giaoVien", sreachgvFiled.getValue().getTengiaovien());
+//                //đăng nhập bằng tài khoản giáo viên và thêm học sinh và lớp theo trường hợp học sinh chưa có lớp học
+//                if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null) {
+//                    if (lookupActions.isVisible() == false) {
+//                        where += "and e.lophoc.giaoviencn.tengiaovien = :giaoVien ";
+//                        params.put("giaoVien", sreachgvFiled.getValue().getTengiaovien());
+//                    }
+//                }
+//            } else {
+//                if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null) {
+//                    if (lookupActions.isVisible() == true) {
+//                        where += "and e.lophoc is null ";
+//                    }
+//                }
+//            }
+        if (lookupActions.isVisible() == true) {
+//            where += "and e.lophoc is null ";
         } else {
-            // không phải dơn vị trung tâm
-            if (giaovien != null) {
-                where += "and e.lophoc.giaoviencn.tengiaovien = :giaoVien ";
-                params.put("giaoVien", sreachgvFiled.getValue().getTengiaovien());
-                //đăng nhập bằng tài khoản giáo viên và thêm học sinh và lớp theo trường hợp học sinh chưa có lớp học
-                if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null) {
-                    if (lookupActions.isVisible() == false) {
-                        where += "and e.lophoc.giaoviencn.tengiaovien = :giaoVien ";
-                        params.put("giaoVien", sreachgvFiled.getValue().getTengiaovien());
-                    }
+            if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() != null) {
+                // là đơn vị trung tâm
+                if (giaovien != null) {
+                    where += "and e.lophoc.giaoviencn.tengiaovien = :giaoVien ";
+                    params.put("giaoVien", sreachgvFiled.getValue().getTengiaovien());
                 }
             } else {
-                if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null) {
-                    if (lookupActions.isVisible() == true) {
-                        where += "and e.lophoc is null ";
-                    }
-                }
+                where += "and e.lophoc.giaoviencn.tengiaovien = :giaoVien ";
+                params.put("giaoVien", sreachgvFiled.getValue().getTengiaovien());
             }
         }
+//        }
         //Lớp học
         if (lophoc != null) {
             where += "and e.lophoc.tenlop.tenlop = :lophoc ";
@@ -249,13 +255,6 @@ public class HocsinhBrowse extends StandardLookup<Hocsinh> {
         }
     }
 
-    private List<Lophoc> loadlopDK() {
-        return dataManager.load(Lophoc.class)
-                .query("select e from truonghoc_Lophoc e where e.donvi.tendonvi = :donvi and e.tenlop.tinhtranglop = true")
-                .parameter("donvi", donvitao_hocsinhField.getValue())
-                .list();
-    }
-
     private List<Lophoc> loadlop() {
         return dataManager.load(Lophoc.class)
                 .query("select e from truonghoc_Lophoc e where e.donvi.tendonvi = :donvi and e.giaoviencn.tengiaovien = :giaovien")
@@ -263,4 +262,18 @@ public class HocsinhBrowse extends StandardLookup<Hocsinh> {
                 .parameter("giaovien", sreachgvFiled.getValue().getTengiaovien())
                 .list();
     }
+
+//    private List<Hocsinh> test(){
+//        return dataManager.load(Hocsinh.class)
+//                .query("select e from truonghoc_Hocsinh e where e.lophocs.tenlop.tenlop is null")
+//                .parameter("thanghoc", thanghocField.getValue())
+//                .view("hocsinh-view")
+//                .list();
+//    }
+
+//    @Subscribe("test")
+//    protected void onTestClick(Button.ClickEvent event) {
+//        System.out.println(test());
+//    }
+
 }

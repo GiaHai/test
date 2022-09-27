@@ -27,15 +27,18 @@ public class Lophoc extends StandardEntity {
     private Giaovien giaoviencn;
 
     @OnDelete(DeletePolicy.CASCADE)
-    @OneToMany(mappedBy = "lophoc")
+    @ManyToMany
+    @JoinTable(name = "TRUONGHOC_LOPHOC_HOCSINH_LINK",
+            joinColumns = @JoinColumn(name = "LOPHOC_ID"),
+            inverseJoinColumns = @JoinColumn(name = "HOCSINH_ID"))
     private List<Hocsinh> dshocsinh;
-
-    public List<Hocsinh> getDshocsinh() {
-        return dshocsinh;
-    }
 
     public void setDshocsinh(List<Hocsinh> dshocsinh) {
         this.dshocsinh = dshocsinh;
+    }
+
+    public List<Hocsinh> getDshocsinh() {
+        return dshocsinh;
     }
 
     public void setTenlop(Tenlop tenlop) {

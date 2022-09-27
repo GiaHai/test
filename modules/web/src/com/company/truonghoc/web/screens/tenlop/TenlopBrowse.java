@@ -140,9 +140,12 @@ public class TenlopBrowse extends StandardLookup<Tenlop> {
     }
     public Component tinhtranglop(Tenlop entity) {
         Label label = uiComponents.create(Label.class);
-
-        if (entity.getTinhtranglop() == true){
-            label.setValue("Mở");
+        if (entity.getTinhtranglop() != null){
+            if (entity.getTinhtranglop() == true){
+                label.setValue("Mở");
+            }else {
+                label.setValue("Đóng");
+            }
         }else {
             label.setValue("Đóng");
         }
@@ -152,15 +155,6 @@ public class TenlopBrowse extends StandardLookup<Tenlop> {
     protected void onSearchDvFieldValueChange(HasValue.ValueChangeEvent event) {
         searchGvcnField.setOptionsList(searchedService.loadgiaovien(searchDvField.getValue()));
     }
-
-//    private List<Giaovien> loadgiaovien() {
-//
-//        return dataManager.load(Giaovien.class)
-//                .query("select e from truonghoc_Giaovien e where e.donvitao_giaovien.tendonvi = :donvi")
-//                .parameter("donvi", searchDvField.getValue())
-//                .view("giaovien-view")
-//                .list();
-//    }
 
     @Subscribe("searchGvcnField")
     protected void onSearchGvcnFieldValueChange(HasValue.ValueChangeEvent event) {

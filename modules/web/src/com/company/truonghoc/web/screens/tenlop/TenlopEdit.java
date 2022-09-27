@@ -13,6 +13,7 @@ import com.company.truonghoc.entity.Tenlop;
 import com.haulmont.cuba.security.global.UserSession;
 
 import javax.inject.Inject;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -36,16 +37,18 @@ public class TenlopEdit extends StandardEditor<Tenlop> {
     protected UserSession userSession;
     @Inject
     protected DulieuUserService dulieuUserService;
+    @Inject
+    protected LookupField<String> thanghocField;
 
     @Subscribe
     protected void onInit(InitEvent event) {
         donvisDl.load();
-
-//        List<String> sessionTypeNames = donvisDc.getMutableItems().stream()
-//                .map(Donvi::getTendonvi)
-//                .collect(Collectors.toList());
-//        donviFiled.setOptionsList(sessionTypeNames);
         donviFiled.setOptionsList(loaddonvi());
+
+        List<String> thang = Arrays.asList(
+                "Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"
+        );
+        thanghocField.setOptionsList(thang);
     }
     private List<Donvi> loaddonvi(){
         return dataManager.load(Donvi.class)

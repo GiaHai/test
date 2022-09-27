@@ -4,7 +4,6 @@ import com.haulmont.chile.core.annotations.NamePattern;
 import com.haulmont.cuba.core.entity.StandardEntity;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 
 @Table(name = "TRUONGHOC_TENLOP")
 @Entity(name = "truonghoc_Tenlop")
@@ -24,17 +23,28 @@ public class Tenlop extends StandardEntity {
     private Giaovien giaoviencn;
 
     @Column(name = "THANGHOC")
-    private LocalDate thanghoc;
+    private String thanghoc;
+
+    @Column(name = "NAMHOC")
+    private Integer namhoc;
 
     @Column(name = "TINHTRANGLOP")
     private Boolean tinhtranglop;
 
-    public void setThanghoc(LocalDate thanghoc) {
+    public void setThanghoc(String thanghoc) {
         this.thanghoc = thanghoc;
     }
 
-    public LocalDate getThanghoc() {
+    public String getThanghoc() {
         return thanghoc;
+    }
+
+    public Integer getNamhoc() {
+        return namhoc;
+    }
+
+    public void setNamhoc(Integer namhoc) {
+        this.namhoc = namhoc;
     }
 
     public Boolean getTinhtranglop() {

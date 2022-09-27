@@ -16,25 +16,21 @@
         <property name="usertao_hocphi" view="_minimal"/>
         <property name="dovitao_hocphi" view="_minimal"/>
     </view>
-    <view entity="truonghoc_Hocsinh" name="hocsinh-view" extends="_local">
-        <property name="lophoc" view="_minimal">
-            <property name="giaoviencn">
-                <property name="tengiaovien"/>
-            </property>
-            <property name="tenlop" view="_minimal">
-                <property name="tinhtranglop"/>
-            </property>
-        </property>
-<!--        <property name="diemdanh" view="_minimal">-->
-<!--            <property name="ngaynghi"/>-->
-<!--        </property>-->
-        <property name="createTs"/>
-        <property name="createdBy"/>
-        <property name="updateTs"/>
-        <property name="updatedBy"/>
+    <view entity="truonghoc_Hocsinh" name="hocsinh-view" extends="_local" systemProperties="true">
         <property name="donvitao_hocsinh" view="_minimal"/>
         <property name="diemdanhs" view="_minimal">
             <property name="nguoitaodd" view="_minimal"/>
+            <property name="donvidd" view="_minimal"/>
+        </property>
+        <property name="lophocs" view="_minimal">
+            <property name="tenlop" view="_minimal">
+                <property name="giaoviencn" view="_minimal"/>
+                <property name="thanghoc"/>
+                <property name="dovi" view="_minimal"/>
+            </property>
+            <property name="donvi" view="_minimal"/>
+            <property name="dshocsinh" view="_minimal"/>
+            <property name="giaoviencn" view="_minimal"/>
         </property>
     </view>
     <view entity="truonghoc_Luongthang" name="luongthang-view" extends="_local" systemProperties="true">
@@ -89,6 +85,7 @@
             <property name="tenlop" view="_minimal">
                 <property name="tinhtranglop"/>
             </property>
+            <property name="dshocsinh" view="_minimal"/>
         </property>
         <property name="nguoitaodd" view="_minimal"/>
         <property name="createdBy"/>
@@ -115,6 +112,7 @@
         <property name="donvi" view="_minimal"/>
         <property name="tenlop" view="_minimal">
             <property name="tinhtranglop"/>
+            <property name="thanghoc"/>
         </property>
     </view>
     <view entity="truonghoc_Tenlop" name="tenlop-view" extends="_local">
