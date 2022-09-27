@@ -1,8 +1,11 @@
 package com.company.truonghoc.web.screens.hocphi;
 
 import com.company.truonghoc.entity.Donvi;
+import com.company.truonghoc.entity.Giaovien;
 import com.company.truonghoc.service.DulieuUserService;
+import com.company.truonghoc.service.SearchedService;
 import com.haulmont.cuba.core.entity.Entity;
+import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.gui.Dialogs;
 import com.haulmont.cuba.gui.Notifications;
 import com.haulmont.cuba.gui.ScreenBuilders;
@@ -52,7 +55,7 @@ public class HocphiBrowse extends StandardLookup<Hocphi> {
     @Inject
     protected TextField<String> hovstenField;
     @Inject
-    protected TextField<String> giaovienField;
+    protected LookupField<Giaovien> giaovienField;
     @Inject
     protected Notifications notifications;
     @Named("hocphisTable.create")
@@ -61,6 +64,10 @@ public class HocphiBrowse extends StandardLookup<Hocphi> {
     protected Button createBtn;
     @Inject
     protected Dialogs dialogs;
+    @Inject
+    protected DataManager dataManager;
+    @Inject
+    protected SearchedService searchedService;
 
     @Subscribe
     protected void onInit(InitEvent event) {
@@ -132,7 +139,7 @@ public class HocphiBrowse extends StandardLookup<Hocphi> {
                 trangthaiField.clear();
                 hovstenField.clear();
                 dovitao_hocphiField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi()); //Chèn đơn vị từ user vào text
-                giaovienField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien().getTengiaovien());  //chèn tên giáo viên từ user vào text
+                giaovienField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien());  //chèn tên giáo viên từ user vào text
             }
 
         } else {
@@ -185,7 +192,7 @@ public class HocphiBrowse extends StandardLookup<Hocphi> {
 
     private void excuteSearch(boolean isFromSearchBtn) {
         Object donvi = dovitao_hocphiField.getValue();
-        String giaovien = giaovienField.getValue();
+        Object giaovien = giaovienField.getValue();
         String hocsinh = hovstenField.getValue();
         Object trangthai = trangthaiField.getValue();
         Date tungay = tungayField.getValue();
@@ -198,15 +205,15 @@ public class HocphiBrowse extends StandardLookup<Hocphi> {
         hocphisDl.load();
     }
 
-    private String returnQuery(Object donvi, String giaovien, String hocsinh, Object trangthai, Date tungay, Date denngay, Map<String, Object> params) {
+    private String returnQuery(Object donvi, Object giaovien, String hocsinh, Object trangthai, Date tungay, Date denngay, Map<String, Object> params) {
         String query = "select e from truonghoc_Hocphi e ";
         String where = " where 1=1 ";
 
 
         //Giáo viên
-        if (!StringUtils.isEmpty(giaovien)) {
-            where += "and e.usertao_hocphi.tengiaovien like :giaovien ";
-            params.put("giaovien", "%" + giaovien + "%");
+        if (giaovien != null) {
+            where += "and e.usertao_hocphi.tengiaovien = :giaovien ";
+            params.put("giaovien", giaovienField.getValue().getTengiaovien());
         }
         //Học sinh
         if (!StringUtils.isEmpty(hocsinh)) {
@@ -240,5 +247,16 @@ public class HocphiBrowse extends StandardLookup<Hocphi> {
         return query;
     }
 
+    @Subscribe("dovitao_hocphiField")
+    protected void onDovitao_hocphiFieldValueChange(HasValue.ValueChangeEvent event) {
+        giaovienField.setOptionsList(searchedService.loadgiaovien(dovitao_hocphiField.getValue()));
+    }
+
+//    private List<Giaovien> loadGv(Object donvi){
+//        return dataManager.load(Giaovien.class)
+//                .query("select e from truonghoc_Giaovien e where e.donvitao_giaovien.tendonvi = :donvi")
+//                .parameter("donvi", donvi)
+//                .list();
+//    }
 
 }

@@ -13,6 +13,7 @@
             <map>
                 <entry key="truonghoc_DulieuUserService" value="com.company.truonghoc.service.DulieuUserService"/>
                 <entry key="truonghoc_ThuchiService" value="com.company.truonghoc.service.ThuchiService"/>
+                <entry key="truonghoc_SearchedService" value="com.company.truonghoc.service.SearchedService"/>
             </map>
         </property>
     </bean>

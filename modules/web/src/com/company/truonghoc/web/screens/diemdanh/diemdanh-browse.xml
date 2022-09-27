@@ -43,7 +43,7 @@
                                  caption="Đơn vị"
                                  width="100%"
                                  nullName="---Đơn vị---"/>
-                    <textField id="tengiaovienField"
+                    <lookupField id="tengiaovienField"
                                caption="Giáo viên"
                                width="100%"
                                inputPrompt="Nhập tên giáo viên"/>
@@ -53,7 +53,7 @@
                                caption="Ngày làm"
                                width="100%"
                                resolution="DAY"/>
-                    <textField id="lopField"
+                    <lookupField id="lopField"
                                width="100%"
                                caption="Lớp"
                                inputPrompt="Nhập tên lớp"/>

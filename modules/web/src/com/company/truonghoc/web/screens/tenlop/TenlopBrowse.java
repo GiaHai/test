@@ -1,8 +1,9 @@
 package com.company.truonghoc.web.screens.tenlop;
 
 import com.company.truonghoc.entity.Donvi;
-import com.company.truonghoc.entity.Lophoc;
+import com.company.truonghoc.entity.Giaovien;
 import com.company.truonghoc.service.DulieuUserService;
+import com.company.truonghoc.service.SearchedService;
 import com.haulmont.cuba.core.entity.Entity;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.gui.Notifications;
@@ -17,10 +18,10 @@ import com.haulmont.cuba.security.global.UserSession;
 import org.springframework.util.StringUtils;
 
 import javax.inject.Inject;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @UiController("truonghoc_Tenlop.browse")
@@ -33,11 +34,11 @@ public class TenlopBrowse extends StandardLookup<Tenlop> {
     @Inject
     protected CollectionContainer<Donvi> donvisDc;
     @Inject
-    protected TextField<String> searchGvcnField;
-    @Inject
     protected LookupField searchDvField;
     @Inject
-    protected TextField<String> searchLopField;
+    protected LookupField<Giaovien> searchGvcnField;
+    @Inject
+    protected LookupField<Tenlop> searchLopField;
     @Inject
     protected CollectionLoader<Tenlop> tenlopsDl;
     @Inject
@@ -50,6 +51,8 @@ public class TenlopBrowse extends StandardLookup<Tenlop> {
     protected UiComponents uiComponents;
     @Inject
     protected DataManager dataManager;
+    @Inject
+    protected SearchedService searchedService;
 
     @Subscribe
     protected void onBeforeShow(BeforeShowEvent event) {
@@ -62,26 +65,21 @@ public class TenlopBrowse extends StandardLookup<Tenlop> {
 
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
-        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() == null){
-            searchDvField.setEditable(false);
-            searchDvField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi());
+        try {
+            if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() == null) {
+                searchDvField.setEditable(false);
+                searchDvField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi());
+                excuteSearch(true);
+            }
+        }catch (NullPointerException ex){
 
-            excuteSearch(true);
         }
-    }
-
-
-    private List<Tenlop> loadlop(Object donvi){
-        return dataManager.load(Tenlop.class)
-                .query("select e from truonghoc_Tenlop e where e.dovi.tendonvi = :donvi")
-                .parameter("donvi", donvi)
-                .list();
     }
 
     public void timkiemExcute() {
         try {
             excuteSearch(true);
-        }catch (NullPointerException ex){
+        } catch (NullPointerException ex) {
             notifications.create()
                     .withCaption("Bạn chưa nhập thông tin cần tìm kiếm")
                     .withPosition(Notifications.Position.BOTTOM_RIGHT)
@@ -92,9 +90,10 @@ public class TenlopBrowse extends StandardLookup<Tenlop> {
     }
 
     private void excuteSearch(boolean isFromSearchBtn) {
+
         String donvi = searchDvField.getValue().toString();
-        String tenlop = searchLopField.getValue();
-        String tengv = searchGvcnField.getValue();
+        Object tenlop = searchLopField.getValue();
+        Object tengv = searchGvcnField.getValue();
         Map<String, Object> params = new HashMap<>();
         String query = returnQuery(donvi, tenlop, tengv, params);
 
@@ -103,25 +102,25 @@ public class TenlopBrowse extends StandardLookup<Tenlop> {
         tenlopsDl.load();
     }
 
-    private String returnQuery(String donvi, String tenlop, String tengv, Map<String, Object> params) {
+    private String returnQuery(String donvi, Object tenlop, Object tengv, Map<String, Object> params) {
 
         String query = "select e from truonghoc_Tenlop e ";
         String where = " where 1=1 ";
 
         //Đơn vị
-        if (donvi != null){
+        if (donvi != null) {
             where += "and e.dovi.tendonvi = :donvi ";
             params.put("donvi", donvi);
         }
         //Tên lớp
-        if (!StringUtils.isEmpty(tenlop)){
-            where += "and e.tenlop like :tenlop ";
-            params.put("tenlop", tenlop);
+        if (tenlop != null) {
+            where += "and e.tenlop = :tenlop ";
+            params.put("tenlop", searchLopField.getValue().getTenlop());
         }
         //Tên giáo viên
-        if (!StringUtils.isEmpty(tengv)){
+        if (tengv != null) {
             where += "and e.giaoviencn.tengiaovien like :giaovien ";
-            params.put("giaovien", tengv);
+            params.put("giaovien", searchGvcnField.getValue().getTengiaovien());
         }
 
         query = query + where;
@@ -132,13 +131,49 @@ public class TenlopBrowse extends StandardLookup<Tenlop> {
         int lineNumber = 1;
         try {
             lineNumber = tenlopsDl.getContainer().getItemIndex(entity.getId()) + 1;
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             lineNumber = 1;
         }
         Label field = uiComponents.create(Label.NAME);
         field.setValue(lineNumber);
         return field;
     }
+    public Component tinhtranglop(Tenlop entity) {
+        Label label = uiComponents.create(Label.class);
+
+        if (entity.getTinhtranglop() == true){
+            label.setValue("Mở");
+        }else {
+            label.setValue("Đóng");
+        }
+        return label;
+    }
+    @Subscribe("searchDvField")
+    protected void onSearchDvFieldValueChange(HasValue.ValueChangeEvent event) {
+        searchGvcnField.setOptionsList(searchedService.loadgiaovien(searchDvField.getValue()));
+    }
+
+//    private List<Giaovien> loadgiaovien() {
+//
+//        return dataManager.load(Giaovien.class)
+//                .query("select e from truonghoc_Giaovien e where e.donvitao_giaovien.tendonvi = :donvi")
+//                .parameter("donvi", searchDvField.getValue())
+//                .view("giaovien-view")
+//                .list();
+//    }
+
+    @Subscribe("searchGvcnField")
+    protected void onSearchGvcnFieldValueChange(HasValue.ValueChangeEvent event) {
+        searchLopField.setOptionsList(loadlop(searchDvField.getValue(), searchGvcnField.getValue().getTengiaovien()));
+    }
+
+    private List<Tenlop> loadlop(Object donvi, Object giaovien) {
+        return dataManager.load(Tenlop.class)
+                .query("select e from truonghoc_Tenlop e where e.dovi.tendonvi = :donvi and e.giaoviencn.tengiaovien = :giaovien")
+                .parameter("donvi", donvi)
+                .parameter("giaovien", giaovien)
+                .list();
+    }
+
+
 }

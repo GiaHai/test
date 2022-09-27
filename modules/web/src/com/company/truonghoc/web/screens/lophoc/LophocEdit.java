@@ -27,16 +27,8 @@ public class LophocEdit extends StandardEditor<Lophoc> {
     protected CollectionContainer<Tenlop> tenlopsDc;
     @Inject
     protected CollectionLoader<Tenlop> tenlopsDl;
-    //    @Inject
-//    protected LookupField<Giaovien> giaovienField;
     @Inject
     protected DataManager dataManager;
-    //    @Inject
-//    protected TextField<String> tenlopField;
-    @Inject
-    protected Table<Hocsinh> dshocsinhTable;
-    @Inject
-    protected GroupBoxLayout dshocsinhBox;
     @Inject
     protected CollectionLoader<Hocsinh> hocsinhsDl;
     @Inject
@@ -93,7 +85,7 @@ public class LophocEdit extends StandardEditor<Lophoc> {
 
     private List<Tenlop> loadlop(Object donvi, Object giaoviencn){
         return dataManager.load(Tenlop.class)
-                .query("select e from truonghoc_Tenlop e where e.dovi = :donvi and e.giaoviencn = :giaoviencn")
+                .query("select e from truonghoc_Tenlop e where e.dovi = :donvi and e.giaoviencn = :giaoviencn and e.tinhtranglop = true")
                 .parameter("donvi", donvi)
                 .parameter("giaoviencn", giaoviencn)
                 .list();

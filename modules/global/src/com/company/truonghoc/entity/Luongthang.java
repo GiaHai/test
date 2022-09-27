@@ -1,7 +1,6 @@
 package com.company.truonghoc.entity;
 
 import com.haulmont.cuba.core.entity.StandardEntity;
-import com.haulmont.cuba.security.entity.User;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -12,10 +11,6 @@ import java.util.Date;
 @Entity(name = "truonghoc_Luongthang")
 public class Luongthang extends StandardEntity {
     private static final long serialVersionUID = 4883554460814975042L;
-
-    @JoinColumn(name = "USERTAO_LUONGTHANG_ID")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private User usertao_luongthang;
 
     @JoinColumn(name = "DONVITAO_LUONGTHANG_ID")
     @ManyToOne(fetch = FetchType.LAZY)
@@ -72,14 +67,6 @@ public class Luongthang extends StandardEntity {
 
     @Column(name = "TINHTRANGNHANLUONG")
     private String tinhtrangnhanluong;
-
-    public void setUsertao_luongthang(User usertao_luongthang) {
-        this.usertao_luongthang = usertao_luongthang;
-    }
-
-    public User getUsertao_luongthang() {
-        return usertao_luongthang;
-    }
 
     public void setDonvitao_luongthang(Donvi donvitao_luongthang) {
         this.donvitao_luongthang = donvitao_luongthang;

@@ -41,27 +41,27 @@
             spacing="true"
             stylename="css-layout-hocsinh">
         <groupBox caption="Tìm kiếm"
-                  collapsable="true"
                   collapsed="true"
                   stylename="css-hbox-search"
                   spacing="true"
-                  width="100%">
-            <hbox spacing="true" width="100%">
+
+                  width="100%" outerMargin="true">
+            <hbox width="100%" spacing="true">
                 <vbox spacing="true" width="100%">
                     <lookupField id="donvitao_hocsinhField"
                                  caption="Đơn vị"
                                  width="100%"
                                  nullName="---Tất cả đơn vị---"/>
-                    <textField id="sreachlopField"
+                    <lookupField id="searchLopField"
                                  caption="Lớp"
                                  width="100%"
-                                 inputPrompt="--Tất cả lớp---"/>
+                                 nullName="--Tất cả lớp---"/>
                 </vbox>
                 <vbox spacing="true" width="100%">
-                    <textField id="sreachgvFiled"
-                               caption="Giáo viên"
-                               width="100%"
-                               inputPrompt="Tên giáo viên"/>
+                    <lookupField id="sreachgvFiled"
+                                 caption="Giáo viên"
+                                 width="100%"
+                                 nullName="---Tất cả giáo viên---"/>
                     <lookupField id="sreachGtinhField"
                                  caption="Giới tính"
                                  width="100%"
@@ -78,26 +78,32 @@
                                  width="100%"
                                  textInputAllowed="false"/>
                 </vbox>
-                <button id="timkiemBtn"
-                        invoke="timkiemExcute"
-                        stylename="Btntimkiem"
-                        caption="Tìm kiếm" align="BOTTOM_LEFT"/>
+                <vbox align="MIDDLE_LEFT" spacing="true">
+                    <button id="diemdanhBtn"
+                            stylename="Btntimkiem"
+                            caption="Điểm danh" align="TOP_LEFT" visible="false"/>
+                    <button id="timkiemBtn"
+                            invoke="timkiemExcute"
+                            stylename="Btntimkiem"
+                            caption="Tìm kiếm" align="BOTTOM_LEFT"/>
+                </vbox>
             </hbox>
         </groupBox>
         <dataGrid id="hocsinhsTable"
                   width="100%"
                   dataContainer="hocsinhsDc">
             <actions>
+                <action id="create" type="create"/>
                 <action id="edit" type="edit"/>
                 <action id="remove" type="remove"/>
             </actions>
             <columns>
-                <column id="usertao_hocsinh"
-                        property="usertao_hocsinh.tengiaovien"
-                        caption="Giáo viên chủ nhiệm"/>
                 <column id="donvitao_hocsinh"
                         property="donvitao_hocsinh"
                         caption="mainMsg://donvitao"/>
+                <column id="lophoc.giaoviencn"
+                        property="lophoc.giaoviencn"
+                        caption="Giáo viên chủ nhiệm"/>
                 <column id="tenhocsinh"
                         property="tenhocsinh"
                         caption="mainMsg://hocsinh.tenhocsinh"/>
@@ -116,11 +122,13 @@
                 <column id="ghichu"
                         property="ghichu"
                         caption="mainMsg://hocsinh.ghichu"/>
+<!--                <column id="diemdanh.ngaynghi"-->
+<!--                        property="diemdanh.ngaynghi"/>-->
             </columns>
             <rowsCount/>
             <buttonsPanel id="buttonsPanel"
                           alwaysVisible="true">
-                <!--                <button id="createBtn" action="hocsinhsTable.create"/>-->
+                <button id="createBtn" action="hocsinhsTable.create"/>
                 <button id="editBtn" caption="Chỉnh sửa"/>
                 <button id="removeBtn" action="hocsinhsTable.remove"/>
             </buttonsPanel>

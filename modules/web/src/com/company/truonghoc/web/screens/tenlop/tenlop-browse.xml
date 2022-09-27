@@ -37,9 +37,15 @@
                   spacing="true"
                   width="100%">
             <hbox spacing="true">
-                <lookupField id="searchDvField" caption="Đơn vị"/>
-                <textField id="searchLopField" caption="Lớp"/>
-                <textField id="searchGvcnField" caption="Giáo viên chủ nhiệm"/>
+                <lookupField id="searchDvField"
+                             caption="Đơn vị"
+                             nullName="---Lọc tất cả---"/>
+                <lookupField id="searchGvcnField"
+                             caption="Giáo viên chủ nhiệm"
+                             nullName="---Lọc tất cả---"/>
+                <lookupField id="searchLopField"
+                             caption="Lớp"
+                             nullName="---Lọc tất cả---"/>
                 <button id="timkiemBtn"
                         invoke="timkiemExcute"
                         stylename="Btntimkiem"
@@ -59,6 +65,9 @@
                 <column id="dovi" caption="Đơn vị"/>
                 <column id="tenlop" caption="Tên lớp"/>
                 <column id="giaoviencn" caption="Giáo viên chủ nhiệm"/>
+                <column id="thanghoc" caption="Tháng học"/>
+                <column id="tinhtranglop"/>
+                <column id="tinhtranglopss" generator="tinhtranglop" caption="Tình trạng lớp"/>
             </columns>
             <rowsCount/>
             <buttonsPanel id="buttonsPanel"

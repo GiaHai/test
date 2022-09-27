@@ -36,9 +36,9 @@
                   spacing="true"
                   width="100%">
             <hbox spacing="true">
-                <lookupField id="searchDvField" caption="Đơn vị"/>
-                <textField id="searchLopField" caption="Lớp"/>
-                <textField id="searchGvcnField" caption="Giáo viên chủ nhiệm"/>
+                <lookupField id="searchDvField" caption="Đơn vị" nullName="---Tất cả đơn vị---"/>
+                <lookupField id="searchGvcnField" caption="Giáo viên chủ nhiệm" nullName="---Tất cả giáo viên---"/>
+                <lookupField id="searchLopField" caption="Lớp" nullName="---Tất cả lớp---"/>
                 <button id="timkiemBtn"
                         invoke="timkiemExcute"
                         stylename="Btntimkiem"

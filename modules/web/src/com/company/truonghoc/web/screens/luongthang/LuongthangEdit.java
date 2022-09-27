@@ -50,8 +50,6 @@ public class LuongthangEdit extends StandardEditor<Luongthang> {
     @Inject
     protected Notifications notifications;
     @Inject
-    protected TextField<User> usertao_luongthangField;
-    @Inject
     protected TextField<Donvi> donvitao_luongthangField;
     @Inject
     protected DulieuUserService dulieuUserService;
@@ -92,7 +90,6 @@ public class LuongthangEdit extends StandardEditor<Luongthang> {
         thuclinhField.setEditable(false);
         tonglinhField.setEditable(false);
         luongcobanField.setEditable(false);
-        usertao_luongthangField.setEditable(false);
         donvitao_luongthangField.setEditable(false);
         ngaynhanField.setValue(new Date());
         tinhtrangnhanluongField.setVisible(false);
@@ -119,7 +116,6 @@ public class LuongthangEdit extends StandardEditor<Luongthang> {
             searchBLamBtn.setVisible(false);
         }
         donvitao_luongthangField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
-        usertao_luongthangField.setValue(userSession.getUser());
 
         hovatenField.setOptionsList(giaovienList(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi()));
 

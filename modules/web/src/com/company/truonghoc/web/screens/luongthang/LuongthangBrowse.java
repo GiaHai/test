@@ -1,7 +1,9 @@
 package com.company.truonghoc.web.screens.luongthang;
 
 import com.company.truonghoc.entity.Donvi;
+import com.company.truonghoc.entity.Giaovien;
 import com.company.truonghoc.service.DulieuUserService;
+import com.company.truonghoc.service.SearchedService;
 import com.haulmont.cuba.core.entity.Entity;
 import com.haulmont.cuba.gui.UiComponents;
 import com.haulmont.cuba.gui.actions.list.ExcelAction;
@@ -47,9 +49,9 @@ public class LuongthangBrowse extends StandardLookup<Luongthang> {
     @Inject
     protected LookupField trangthaiField;
     @Inject
-    protected TextField<String> nguoichiField;
+    protected LookupField<Giaovien> giaovienField;
     @Inject
-    protected TextField<String> giaovienField;
+    protected SearchedService searchedService;
 
     @Subscribe
     protected void onInit(InitEvent event) {
@@ -93,16 +95,13 @@ public class LuongthangBrowse extends StandardLookup<Luongthang> {
             donvitao_luongthangField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi());
 
             //Xoá
-            nguoichiField.clear();
             giaovienField.clear();
             trangthaiField.clear();
             tungayField.clear();
             denngayField.clear();
             if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null){
-                giaovienField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien().getTengiaovien());
-                nguoichiField.setValue(userSession.getUser().getLogin());
+                giaovienField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien());
                 giaovienField.setEditable(false);
-                nguoichiField.setEditable(false);
             }
         } else {
             donvitao_luongthangField.setEditable(true);
@@ -114,7 +113,6 @@ public class LuongthangBrowse extends StandardLookup<Luongthang> {
             donvitao_luongthangField.setOptionsList(sessionTypeNames);
             //xoá
             donvitao_luongthangField.clear();
-            nguoichiField.clear();
             giaovienField.clear();
             trangthaiField.clear();
             tungayField.clear();
@@ -151,20 +149,19 @@ public class LuongthangBrowse extends StandardLookup<Luongthang> {
 
     private void excuteSearch(boolean isFromSearchBtn) {
         Object donvi = donvitao_luongthangField.getValue();
-        String ngthanhtoan = nguoichiField.getValue();
-        String giaovien = giaovienField.getValue();
+        Object giaovien = giaovienField.getValue();
         Object trangthai = trangthaiField.getValue();
         Date tungay = tungayField.getValue();
         Date denngay = denngayField.getValue();
         Map<String, Object> params = new HashMap<>();
 
-        String query = returnQuery(donvi, ngthanhtoan, giaovien, trangthai, tungay, denngay, params);
+        String query = returnQuery(donvi , giaovien, trangthai, tungay, denngay, params);
         luongthangsDl.setQuery(query);
         luongthangsDl.setParameters(params);
         luongthangsDl.load();
     }
 
-    private String returnQuery(Object donvi, String ngthanhtoan, String giaovien, Object trangthai, Date tungay, Date denngay, Map<String, Object> params) {
+    private String returnQuery(Object donvi, Object giaovien, Object trangthai, Date tungay, Date denngay, Map<String, Object> params) {
         String query = "select e from truonghoc_Luongthang e ";
         String where = " where 1=1 ";
 
@@ -173,15 +170,10 @@ public class LuongthangBrowse extends StandardLookup<Luongthang> {
             where += "and e.donvitao_luongthang.tendonvi = :donvi ";
             params.put("donvi", donvi);
         }
-        //Người chi
-        if (ngthanhtoan != null) {
-            where += "and e.usertao_luongthang.login like :ngthanhtoan ";
-            params.put("ngthanhtoan", "%" + ngthanhtoan + "%");
-        }
         //Giáo viên
         if (giaovien != null) {
-            where += "and e.hovaten.tengiaovien like :giaovien ";
-            params.put("giaovien", "%" + giaovien + "%");
+            where += "and e.hovaten.tengiaovien = :giaovien ";
+            params.put("giaovien", giaovienField.getValue().getTengiaovien());
         }
         //Trạng thái
         if (trangthai != null) {
@@ -201,4 +193,10 @@ public class LuongthangBrowse extends StandardLookup<Luongthang> {
         query = query + where;
         return query;
     }
+
+    @Subscribe("donvitao_luongthangField")
+    protected void onDonvitao_luongthangFieldValueChange(HasValue.ValueChangeEvent event) {
+        giaovienField.setOptionsList(searchedService.loadgiaovien(donvitao_luongthangField.getValue()));
+    }
+    
 }

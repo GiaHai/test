@@ -42,21 +42,17 @@
                     <lookupField id="donvitao_luongthangField"
                                  caption="Đơn vị"
                                  width="100%"
-                                 nullName="Lọc tất cả"/>
-                    <textField id="nguoichiField"
-                               width="100%"
-                               caption="Tài khoản thanh toán"
-                               inputPrompt="Họ và tên người thanh toán"/>
+                                 nullName="---Lọc tất cả---"/>
                 </vbox>
                 <vbox spacing="true">
-                    <textField id="giaovienField"
+                    <lookupField id="giaovienField"
                                caption="Họ tên giáo viên"
                                width="100%"
-                               inputPrompt="Họ và tên giáo viên nhận tiền"/>
+                               nullName="---Lọc tất cả---"/>
                     <lookupField id="trangthaiField"
                                  caption="Trạng thái"
                                  width="100%"
-                                 nullName="Lọc tất cả"/>
+                                 nullName="---Lọc tất cả---"/>
                 </vbox>
                 <vbox spacing="true">
                     <dateField id="tungayField"
@@ -97,8 +93,6 @@
                 <column id="stt"
                         generator="stt"
                         caption="STT"/>
-                <column id="usertao_luongthang.login"
-                        caption="mainMsg://nguoitaochi"/>
                 <column id="donvitao_luongthang"
                         caption="mainMsg://donvitao"/>
                 <column id="hovaten"

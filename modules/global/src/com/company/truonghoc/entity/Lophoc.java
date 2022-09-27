@@ -1,6 +1,5 @@
 package com.company.truonghoc.entity;
 
-import com.haulmont.chile.core.annotations.Composition;
 import com.haulmont.chile.core.annotations.NamePattern;
 import com.haulmont.cuba.core.entity.StandardEntity;
 import com.haulmont.cuba.core.entity.annotation.OnDelete;
@@ -27,10 +26,17 @@ public class Lophoc extends StandardEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private Giaovien giaoviencn;
 
-    @Composition
     @OnDelete(DeletePolicy.CASCADE)
     @OneToMany(mappedBy = "lophoc")
     private List<Hocsinh> dshocsinh;
+
+    public List<Hocsinh> getDshocsinh() {
+        return dshocsinh;
+    }
+
+    public void setDshocsinh(List<Hocsinh> dshocsinh) {
+        this.dshocsinh = dshocsinh;
+    }
 
     public void setTenlop(Tenlop tenlop) {
         this.tenlop = tenlop;
@@ -54,14 +60,6 @@ public class Lophoc extends StandardEntity {
 
     public Giaovien getGiaoviencn() {
         return giaoviencn;
-    }
-
-    public List<Hocsinh> getDshocsinh() {
-        return dshocsinh;
-    }
-
-    public void setDshocsinh(List<Hocsinh> dshocsinh) {
-        this.dshocsinh = dshocsinh;
     }
 
 }

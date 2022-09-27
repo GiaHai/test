@@ -2,6 +2,7 @@ package com.company.truonghoc.web.screens.hocsinh;
 
 import com.company.truonghoc.entity.*;
 import com.company.truonghoc.service.DulieuUserService;
+import com.company.truonghoc.service.SearchedService;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.gui.Dialogs;
 import com.haulmont.cuba.gui.UiComponents;
@@ -43,13 +44,13 @@ public class HocsinhBrowse extends StandardLookup<Hocsinh> {
     @Inject
     protected DataGrid<Hocsinh> hocsinhsTable;
     @Inject
-    protected TextField<String> sreachgvFiled;
+    protected LookupField<Giaovien> sreachgvFiled;
+    @Inject
+    protected LookupField<Lophoc> searchLopField;
     @Inject
     protected CollectionLoader<Lophoc> lophocsDl;
     @Inject
     protected CollectionContainer<Lophoc> lophocsDc;
-    @Inject
-    protected TextField<String> sreachlopField;
     @Inject
     protected TextField<String> sreachHsField;
     @Inject
@@ -62,6 +63,12 @@ public class HocsinhBrowse extends StandardLookup<Hocsinh> {
     protected EditAction<Hocsinh> hocsinhsTableEdit;
     @Inject
     protected Dialogs dialogs;
+    @Inject
+    protected SearchedService searchedService;
+    @Inject
+    protected HBoxLayout lookupActions;
+    @Inject
+    protected Button diemdanhBtn;
 
     /**** tokenlist****/
     @Subscribe
@@ -94,37 +101,53 @@ public class HocsinhBrowse extends StandardLookup<Hocsinh> {
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
 //        khi mở màn hình với điều kiện là đơn vị không phải đơn vị chính
+        try {
+            if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() == null) {
+                donvitao_hocsinhField.setEditable(false);
+                donvitao_hocsinhField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi());
+                searchLopField.setEditable(false);
+                if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null) {
 
-        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() == null) {
-            donvitao_hocsinhField.setEditable(false);
-            donvitao_hocsinhField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi());
-
-            if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null) {
-                sreachgvFiled.setEditable(false);
-                sreachgvFiled.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien().getTengiaovien());
+                    if (lookupActions.isVisible() == false) {
+                        sreachgvFiled.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien());
+                        excuteSearch(true);
+                    } else {
+                        searchLopField.setEditable(false);
+                        diemdanhBtn.setVisible(true);
+                        excuteSearch(true);
+                    }
+                    sreachgvFiled.setEditable(false);
+                }
+            } else {
+                donvitao_hocsinhField.setEditable(true);
+                // lookupField cho đơn vị
+                donvisDl.load();
+                List<String> sessionTypeNames = donvisDc.getMutableItems().stream()
+                        .map(Donvi::getTendonvi)
+                        .collect(Collectors.toList());
+                donvitao_hocsinhField.setOptionsList(sessionTypeNames);
 
             }
-        } else {
-            donvitao_hocsinhField.setEditable(true);
-            // lookupField cho đơn vị
-            donvisDl.load();
-            List<String> sessionTypeNames = donvisDc.getMutableItems().stream()
-                    .map(Donvi::getTendonvi)
-                    .collect(Collectors.toList());
-            donvitao_hocsinhField.setOptionsList(sessionTypeNames);
+            excuteSearch(true);
+        } catch (NullPointerException ex) {
 
         }
-        excuteSearch(true);
     }
 
+    @Subscribe("diemdanhBtn")
+    protected void onDiemdanhBtnClick(Button.ClickEvent event) {
+        sreachgvFiled.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien());
+        searchLopField.setEditable(true);
+
+    }
 
 
     //    Điều kiện là giáo viên login vào
     @Subscribe("editBtn")
     protected void onEditBtnClick(Button.ClickEvent event) {
-        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null){
+        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null) {
             this.hocsinhsTableEdit.execute();
-        }else {
+        } else {
             dialogs.createMessageDialog()
                     .withCaption("THÔNG BÁO")
                     .withMessage("Bạn không có quyền")
@@ -133,15 +156,7 @@ public class HocsinhBrowse extends StandardLookup<Hocsinh> {
         }
     }
 
-    // Load lớp
-    private List<Tenlop> loadlop(String donvi, String giaoviencn){
-        return dataManager.load(Tenlop.class)
-                .query("select e from truonghoc_Tenlop e where e.dovi.tendonvi = :donvi and e.giaoviencn.tengiaovien = :giaoviencn")
-                .parameter("donvi", donvi)
-                .parameter("giaoviencn", giaoviencn)
-                .list();
-    }
-    
+
     /*** tìm kiếm ***/
     public void timkiemExcute() {
         excuteSearch(true);
@@ -149,8 +164,8 @@ public class HocsinhBrowse extends StandardLookup<Hocsinh> {
     }
 
     private void excuteSearch(boolean isFromSearchBtn) {
-        String giaovien = sreachgvFiled.getValue();
-        String lophoc =  sreachlopField.getValue();
+        Object giaovien = sreachgvFiled.getValue();
+        Object lophoc = searchLopField.getValue();
         String hocsinh = sreachHsField.getValue();
         String gioitinh = (String) sreachGtinhField.getValue();
         String donvi = (String) donvitao_hocsinhField.getValue();
@@ -162,7 +177,7 @@ public class HocsinhBrowse extends StandardLookup<Hocsinh> {
         hocsinhsDl.load();
     }
 
-    private String returnQuery(String donvi, String giaovien, Map<String, Object> params, String lophoc, String hocsinh, String gioitinh) {
+    private String returnQuery(String donvi, Object giaovien, Map<String, Object> params, Object lophoc, String hocsinh, String gioitinh) {
         String query = "select e from truonghoc_Hocsinh e ";
         String where = " where 1=1 ";
 
@@ -171,16 +186,40 @@ public class HocsinhBrowse extends StandardLookup<Hocsinh> {
             where += "and e.donvitao_hocsinh.tendonvi = :donvi ";
             params.put("donvi", donvi);
         }
-        //Họ và tên Giáo viên
-        if (giaovien != null) {
-            where += "and e.usertao_hocsinh.tengiaovien like :giaoVien ";
-            params.put("giaoVien", giaovien);
+//        //Họ và tên Giáo viên
+
+        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() != null) {
+            // là đơn vị trung tâm
+            if (giaovien != null) {
+                where += "and e.lophoc.giaoviencn.tengiaovien = :giaoVien ";
+                params.put("giaoVien", sreachgvFiled.getValue().getTengiaovien());
+            }
+        } else {
+            // không phải dơn vị trung tâm
+            if (giaovien != null) {
+                where += "and e.lophoc.giaoviencn.tengiaovien = :giaoVien ";
+                params.put("giaoVien", sreachgvFiled.getValue().getTengiaovien());
+                //đăng nhập bằng tài khoản giáo viên và thêm học sinh và lớp theo trường hợp học sinh chưa có lớp học
+                if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null) {
+                    if (lookupActions.isVisible() == false) {
+                        where += "and e.lophoc.giaoviencn.tengiaovien = :giaoVien ";
+                        params.put("giaoVien", sreachgvFiled.getValue().getTengiaovien());
+                    }
+                }
+            } else {
+                if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null) {
+                    if (lookupActions.isVisible() == true) {
+                        where += "and e.lophoc is null ";
+                    }
+                }
+            }
         }
         //Lớp học
         if (lophoc != null) {
             where += "and e.lophoc.tenlop.tenlop = :lophoc ";
-            params.put("lophoc", lophoc);
+            params.put("lophoc", searchLopField.getValue().getTenlop().getTenlop());
         }
+
         //Học sinh
         if (!StringUtils.isEmpty(hocsinh)) {
             where += "and e.tenhocsinh like :tenhocsinh ";
@@ -194,4 +233,34 @@ public class HocsinhBrowse extends StandardLookup<Hocsinh> {
         return query;
     }
 
+    @Subscribe("donvitao_hocsinhField")
+    protected void onDonvitao_hocsinhFieldValueChange(HasValue.ValueChangeEvent event) {
+        sreachgvFiled.setOptionsList(searchedService.loadgiaovien(donvitao_hocsinhField.getValue()));
+    }
+
+    @Subscribe("sreachgvFiled")
+    protected void onSreachgvFiledValueChange(HasValue.ValueChangeEvent event) {
+        if (sreachgvFiled.getValue() == null) {
+            searchLopField.clear();
+            searchLopField.setEditable(false);
+        } else {
+            searchLopField.setOptionsList(loadlop());
+            searchLopField.setEditable(true);
+        }
+    }
+
+    private List<Lophoc> loadlopDK() {
+        return dataManager.load(Lophoc.class)
+                .query("select e from truonghoc_Lophoc e where e.donvi.tendonvi = :donvi and e.tenlop.tinhtranglop = true")
+                .parameter("donvi", donvitao_hocsinhField.getValue())
+                .list();
+    }
+
+    private List<Lophoc> loadlop() {
+        return dataManager.load(Lophoc.class)
+                .query("select e from truonghoc_Lophoc e where e.donvi.tendonvi = :donvi and e.giaoviencn.tengiaovien = :giaovien")
+                .parameter("donvi", donvitao_hocsinhField.getValue())
+                .parameter("giaovien", sreachgvFiled.getValue().getTengiaovien())
+                .list();
+    }
 }

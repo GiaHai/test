@@ -111,37 +111,23 @@
                             </column>
                         </form>
                     </row>
+                    <row>
+                        <form colspan="7" width="100%">
+                            <column>
+                                <tokenList id="tokenListField" simple="true" width="100%"
+                                           property="dshocsinh" dataContainer="lophocDc" caption="Danh sách học sinh">
+                                    <lookup multiselect="true" optionsContainer="hocsinhsDc" captionProperty="tenhocsinh"/>
+                                    <addButton caption="Thêm"/>
+                                </tokenList>
+                            </column>
+                        </form>
+                    </row>
                 </rows>
             </grid>
         </vbox>
 
-        <groupBox id="dshocsinhBox" caption="mainMsg://hocsinhBrowse.caption">
-            <table id="dshocsinhTable" dataContainer="dshocsinhDc" width="100%" height="200px">
-                <actions>
-                    <action id="create" type="create"/>
-                    <action id="edit" type="edit"/>
-                    <action id="remove" type="remove"/>
-                </actions>
-                <columns>
-                    <column id="stt" generator="stt" caption="STT"/>
-                    <column id="tenhocsinh"
-                            caption="mainMsg://hocsinh.tenhocsinh"/>
-                    <column id="ngaysinhhocsinh"
-                            caption="mainMsg://hocsinh.ngaysinhhocsinh"/>
-                    <column id="gioitinhhocsinh"
-                            caption="mainMsg://hocsinh.gioitinhhocsinh"/>
-                    <column id="quequanhocsinh"
-                            caption="mainMsg://hocsinh.quequanhocsinh"/>
-                    <column id="ghichu"
-                            caption="mainMsg://hocsinh.ghichu"/>
-                </columns>
-                <buttonsPanel>
-                    <button action="dshocsinhTable.create"/>
-                    <button action="dshocsinhTable.edit"/>
-                    <button action="dshocsinhTable.remove"/>
-                </buttonsPanel>
-            </table>
-        </groupBox>
+
+
         <hbox id="editActions" spacing="true">
             <button id="commitAndCloseBtn" action="windowCommitAndClose"/>
             <button id="closeBtn" action="windowClose"/>

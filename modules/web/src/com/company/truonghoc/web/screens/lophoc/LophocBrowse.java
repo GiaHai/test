@@ -1,7 +1,10 @@
 package com.company.truonghoc.web.screens.lophoc;
 
 import com.company.truonghoc.entity.Donvi;
+import com.company.truonghoc.entity.Giaovien;
+import com.company.truonghoc.entity.Tenlop;
 import com.company.truonghoc.service.DulieuUserService;
+import com.company.truonghoc.service.SearchedService;
 import com.haulmont.cuba.core.entity.Entity;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.gui.Dialogs;
@@ -29,9 +32,9 @@ import java.util.stream.Collectors;
 @LoadDataBeforeShow
 public class LophocBrowse extends StandardLookup<Lophoc> {
     @Inject
-    protected TextField<String> searchGvcnField;
+    protected LookupField<Giaovien> searchGvcnField;
     @Inject
-    protected TextField<String> searchLopField;
+    protected LookupField<Tenlop> searchLopField;
     @Inject
     protected CollectionLoader<Lophoc> lophocsDl;
     @Inject
@@ -54,6 +57,8 @@ public class LophocBrowse extends StandardLookup<Lophoc> {
     protected Dialogs dialogs;
     @Inject
     protected DataManager dataManager;
+    @Inject
+    protected SearchedService searchedService;
 
     @Subscribe
     protected void onInit(InitEvent event) {
@@ -66,14 +71,19 @@ public class LophocBrowse extends StandardLookup<Lophoc> {
 
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
-        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() == null){
-            searchDvField.setEditable(false);
-            searchDvField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi());
-            excuteSearch(true);
-            if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null){
-                searchGvcnField.setValue((dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien().getTengiaovien()));
-                searchGvcnField.setEditable(false);
+        try {
+            if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() == null){
+                searchDvField.setEditable(false);
+                searchDvField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi());
+                excuteSearch(true);
+                if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null){
+                    searchGvcnField.setValue((dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien()));
+                    searchGvcnField.setEditable(false);
+                    excuteSearch(true);
+                }
             }
+        }catch (NullPointerException ex){
+
         }
     }
 
@@ -96,17 +106,17 @@ public class LophocBrowse extends StandardLookup<Lophoc> {
 
     private void excuteSearch(boolean isFromSearchBtn) {
         String donvi = searchDvField.getValue().toString();
-        String tenlop = searchLopField.getValue();
-        String tengv = searchGvcnField.getValue();
+        Object tengv = searchGvcnField.getValue();
+        Object tenlop = searchLopField.getValue();
+
         Map<String, Object> params = new HashMap<>();
         String query = returnQuery(donvi, tenlop, tengv, params);
-
         lophocsDl.setQuery(query);
         lophocsDl.setParameters(params);
         lophocsDl.load();
     }
 
-    private String returnQuery(String donvi, String tenlop, String tengv, Map<String, Object> params) {
+    private String returnQuery(String donvi, Object tenlop, Object tengv, Map<String, Object> params) {
         String query = "select e from truonghoc_Lophoc e ";
         String where = " where 1=1 ";
         //Đơn vị
@@ -115,16 +125,23 @@ public class LophocBrowse extends StandardLookup<Lophoc> {
             params.put("donvi", donvi);
         }
         // Tên lớp
-        if (!StringUtils.isEmpty(tenlop)){
-            where += "and e.tenlop like :tenlop ";
-            params.put("tenlop", tenlop);
+        if (tenlop != null){
+            where += "and e.tenlop.tenlop = :tenlop ";
+            params.put("tenlop", searchLopField.getValue().getTenlop());
         }
         // Tên giáo viên
-        if (!StringUtils.isEmpty(tengv)){
-            where += "and e.giaoviencn.tengiaovien like :tengv";
-            params.put("tengv", tengv);
+        //load nếu lớp học bằng true thì giáo viên mới xem được
+        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null){
+            if (tengv != null){
+                where += "and e.giaoviencn.tengiaovien like :tengv and e.tenlop.tinhtranglop = true ";
+                params.put("tengv", searchGvcnField.getValue().getTengiaovien());
+            }
+        }else {
+            if (tengv != null){
+                where += "and e.giaoviencn.tengiaovien like :tengv ";
+                params.put("tengv", searchGvcnField.getValue().getTengiaovien());
+            }
         }
-
         query = query + where;
         return query;
     }
@@ -142,4 +159,15 @@ public class LophocBrowse extends StandardLookup<Lophoc> {
         field.setValue(lineNumber);
         return field;
     }
+
+    @Subscribe("searchDvField")
+    protected void onSearchDvFieldValueChange(HasValue.ValueChangeEvent event) {
+        searchGvcnField.setOptionsList(searchedService.loadgiaovien(searchDvField.getValue()));
+    }
+
+    @Subscribe("searchGvcnField")
+    protected void onSearchGvcnFieldValueChange(HasValue.ValueChangeEvent event) {
+        searchLopField.setOptionsList(searchedService.loadlop(searchDvField.getValue(), searchGvcnField.getValue().getTengiaovien()));
+    }
+
 }

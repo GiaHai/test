@@ -42,11 +42,11 @@
                     <lookupField id="donvitao_thuchiField"
                                  caption="Đơn vị"
                                  width="100%"
-                                 nullName="Lọc tất cả"/>
-                    <textField id="nguoichiField"
+                                 nullName="---Lọc tất cả---"/>
+                    <lookupField id="nguoichiField"
                                caption="Người thanh toán"
                                width="100%"
-                               inputPrompt="Họ và tên người thanh toán"/>
+                               nullName="---Lọc tất cả---"/>
                 </vbox>
                 <vbox spacing="true">
                     <textField id="khoanchiField"
@@ -56,7 +56,7 @@
                     <lookupField id="trangthaiField"
                                  caption="Trạng thái"
                                  width="100%"
-                                 nullName="Lọc tất cả"/>
+                                 nullName="---Lọc tất cả---"/>
                 </vbox>
                 <vbox spacing="true">
                     <dateField id="tungayField"

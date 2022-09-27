@@ -1,7 +1,10 @@
 package com.company.truonghoc.web.screens.diemdanh;
 
 import com.company.truonghoc.entity.Donvi;
+import com.company.truonghoc.entity.Giaovien;
+import com.company.truonghoc.entity.Tenlop;
 import com.company.truonghoc.service.DulieuUserService;
+import com.company.truonghoc.service.SearchedService;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.gui.Dialogs;
 import com.haulmont.cuba.gui.actions.list.CreateAction;
@@ -38,21 +41,23 @@ public class DiemdanhBrowse extends StandardLookup<Diemdanh> {
     @Inject
     protected CollectionLoader<Diemdanh> diemdanhsDl;
     @Inject
-    protected TextField<String> tengiaovienField;
-    @Inject
     protected DulieuUserService dulieuUserService;
     @Inject
     protected UserSession userSession;
     @Inject
     protected DateField<Date> ngaylamField;
     @Inject
-    protected TextField<String> lopField;
+    protected LookupField<Tenlop> lopField;
+    @Inject
+    protected LookupField<Giaovien> tengiaovienField;
     @Inject
     protected Button createBtn;
     @Named("diemdanhsTable.create")
     protected CreateAction<Diemdanh> diemdanhsTableCreate;
     @Inject
     protected Dialogs dialogs;
+    @Inject
+    protected SearchedService searchedService;
 
 
     @Subscribe
@@ -69,9 +74,9 @@ public class DiemdanhBrowse extends StandardLookup<Diemdanh> {
 
     @Subscribe("diemdanhsTable.create")
     protected void onDiemdanhsTableCreate(Action.ActionPerformedEvent event) {
-        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null){
+        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null) {
             this.diemdanhsTableCreate.execute();
-        }else {
+        } else {
             dialogs.createMessageDialog()
                     .withCaption("THÔNG BÁO")
                     .withMessage("Bạn không có quyền")
@@ -96,9 +101,8 @@ public class DiemdanhBrowse extends StandardLookup<Diemdanh> {
                 tendonviField.setEditable(false);
                 tengiaovienField.setEditable(false);
                 ngaylamField.clear();
-                lopField.setVisible(false);
                 tendonviField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi()); //Chèn đơn vị từ user vào text
-                tengiaovienField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien().getTengiaovien());  //chèn tên giáo viên từ user vào text
+                tengiaovienField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien());  //chèn tên giáo viên từ user vào text
             }
         } else {
             donvisDl.load();
@@ -122,9 +126,9 @@ public class DiemdanhBrowse extends StandardLookup<Diemdanh> {
 
     private void excuteSearch(boolean isFromSearchBtn) {
         Object donvi = tendonviField.getValue();
-        String giaovien = tengiaovienField.getValue();
+        Object giaovien = tengiaovienField.getValue();
         Date ngaylam = ngaylamField.getValue();
-        String lop = lopField.getValue();
+        Object lop = lopField.getValue();
 
         Map<String, Object> params = new HashMap<>();
         String query = returnQuery(donvi, giaovien, ngaylam, lop, params);
@@ -134,9 +138,10 @@ public class DiemdanhBrowse extends StandardLookup<Diemdanh> {
         diemdanhsDl.load();
     }
 
-    private String returnQuery(Object donvi, String giaovien, Date ngaylam, String lop, Map<String, Object> params) {
+    private String returnQuery(Object donvi, Object giaovien, Date ngaylam, Object lop, Map<String, Object> params) {
         String query = "select e from truonghoc_Diemdanh e ";
         String where = " where 1=1 ";
+
 
         //Tên đơn vị
         if (donvi != null) {
@@ -144,9 +149,9 @@ public class DiemdanhBrowse extends StandardLookup<Diemdanh> {
             params.put("donvi", donvi);
         }
         //giáo viên
-        if (!StringUtils.isEmpty(giaovien)) {
+        if (giaovien != null) {
             where += "and e.nguoitaodd.tengiaovien = :giaovien ";
-            params.put("giaovien", giaovien);
+            params.put("giaovien", tengiaovienField.getValue().getTengiaovien());
         }
         //Ngày làm
         if (ngaylam != null) {
@@ -154,11 +159,37 @@ public class DiemdanhBrowse extends StandardLookup<Diemdanh> {
             params.put("ngaylam", ngaylam);
         }
         //Lớp
-        if (!StringUtils.isEmpty(lop)) {
-            where += "and e.lopdd.tenlop.tenlop = :lop ";
-            params.put("lop", lop);
+        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null){
+            if (lop == null) {
+                where += "and e.lopdd.tenlop.tinhtranglop = true ";
+            }else {
+                if (lop != null) {
+                    where += "and e.lopdd.tenlop.tenlop = :lop ";
+                    params.put("lop", lopField.getValue().getTenlop());
+                }
+            }
+        }else {
+            if (lop != null) {
+                where += "and e.lopdd.tenlop.tenlop = :lop ";
+                params.put("lop", lopField.getValue().getTenlop());
+            }
         }
         query = query + where;
         return query;
     }
+
+    @Subscribe("tendonviField")
+    protected void onTendonviFieldValueChange(HasValue.ValueChangeEvent event) {
+        tengiaovienField.setOptionsList(searchedService.loadgiaovien(tendonviField.getValue()));
+    }
+
+    @Subscribe("tengiaovienField")
+    protected void onTengiaovienFieldValueChange(HasValue.ValueChangeEvent event) {
+        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null) {
+            lopField.setOptionsList(searchedService.loadlopDK(tendonviField.getValue(), tengiaovienField.getValue().getTengiaovien()));
+        } else {
+            lopField.setOptionsList(searchedService.loadlop(tendonviField.getValue(), tengiaovienField.getValue().getTengiaovien()));
+        }
+    }
+
 }

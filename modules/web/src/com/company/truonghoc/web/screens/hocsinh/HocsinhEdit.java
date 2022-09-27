@@ -22,8 +22,6 @@ public class HocsinhEdit extends StandardEditor<Hocsinh> {
     @Inject
     protected LookupField<String> gioitinhhocsinhField;
     @Inject
-    protected TextField<Giaovien> usertaoField;
-    @Inject
     protected UserSession userSession;
 
     @Inject
@@ -37,7 +35,6 @@ public class HocsinhEdit extends StandardEditor<Hocsinh> {
     protected void onInit(InitEvent event) {
         List<String> list = Arrays.asList("Nam", "Nữ", "Tùy chỉnh");
         gioitinhhocsinhField.setOptionsList(list);
-        usertaoField.setEditable(false);
         donvitao_hocsinhField.setEditable(false);
     }
 
@@ -48,6 +45,6 @@ public class HocsinhEdit extends StandardEditor<Hocsinh> {
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
 
-        usertaoField.setValue(hocsinhDc.getItem().getLophoc().getGiaoviencn());
+//        usertaoField.setValue(hocsinhDc.getItem().getLophoc().getGiaoviencn());
     }
 }

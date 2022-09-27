@@ -1,7 +1,9 @@
 package com.company.truonghoc.web.screens.thutienhocphi;
 
 import com.company.truonghoc.entity.Donvi;
+import com.company.truonghoc.entity.Giaovien;
 import com.company.truonghoc.service.DulieuUserService;
+import com.company.truonghoc.service.SearchedService;
 import com.haulmont.cuba.core.entity.Entity;
 import com.haulmont.cuba.gui.Dialogs;
 import com.haulmont.cuba.gui.UiComponents;
@@ -46,7 +48,7 @@ public class ThutienhocphiBrowse extends StandardLookup<Thutienhocphi> {
     @Inject
     protected DateField<Date> tungayField;
     @Inject
-    protected TextField<String> nguoithuField;
+    protected LookupField<Giaovien> nguoithuField;
     @Inject
     protected DateField<Date> denngayField;
     @Inject
@@ -57,6 +59,8 @@ public class ThutienhocphiBrowse extends StandardLookup<Thutienhocphi> {
     protected CreateAction<Thutienhocphi> thutienhocphisTableCreate;
     @Inject
     protected Dialogs dialogs;
+    @Inject
+    protected SearchedService searchedService;
 
     @Subscribe
     protected void onInit(InitEvent event) {
@@ -112,7 +116,7 @@ public class ThutienhocphiBrowse extends StandardLookup<Thutienhocphi> {
                 denngayField.clear();
                 trangthaiField.clear();
                 donvitao_thutienhocphiField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi()); //Chèn đơn vị từ user vào text
-                nguoithuField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien().getTengiaovien());  //chèn tên giáo viên từ user vào text
+                nguoithuField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien());  //chèn tên giáo viên từ user vào text
             }
         } else {
             donvitao_thutienhocphiField.setEditable(true);
@@ -178,7 +182,7 @@ public class ThutienhocphiBrowse extends StandardLookup<Thutienhocphi> {
 
     private void excuteSearch(boolean b) {
         Object donvi = donvitao_thutienhocphiField.getValue();
-        String ngthu = nguoithuField.getValue();
+        Object ngthu = nguoithuField.getValue();
         String Kh = tenKhField.getValue();
         String tenHs = tenHsField.getValue();
         Date tungay = tungayField.getValue();
@@ -193,7 +197,7 @@ public class ThutienhocphiBrowse extends StandardLookup<Thutienhocphi> {
         thutienhocphisDl.load();
     }
 
-    private String returnQuery(Object donvi, String ngthu, String kh, String tenHs, Date tungay, Date denngay, Object trangthai, Map<String, Object> params) {
+    private String returnQuery(Object donvi, Object ngthu, String kh, String tenHs, Date tungay, Date denngay, Object trangthai, Map<String, Object> params) {
         String query = "select e from truonghoc_Thutienhocphi e ";
         String where = " where 1=1 ";
 
@@ -203,9 +207,9 @@ public class ThutienhocphiBrowse extends StandardLookup<Thutienhocphi> {
             params.put("donvi", donvi);
         }
         //người thu
-        if (!StringUtils.isEmpty(ngthu)) {
+        if (ngthu != null) {
             where += "and e.usertao_thutienhocphi.tengiaovien = :ngthu ";
-            params.put("ngthu", ngthu);
+            params.put("ngthu", nguoithuField.getValue().getTengiaovien());
         }
         //Khách hàng
         if (!StringUtils.isEmpty(kh)) {
@@ -234,6 +238,11 @@ public class ThutienhocphiBrowse extends StandardLookup<Thutienhocphi> {
         }
         query = query + where;
         return query;
+    }
+
+    @Subscribe("donvitao_thutienhocphiField")
+    protected void onDonvitao_thutienhocphiFieldValueChange(HasValue.ValueChangeEvent event) {
+        nguoithuField.setOptionsList(searchedService.loadgiaovien(donvitao_thutienhocphiField.getValue()));
     }
 
 

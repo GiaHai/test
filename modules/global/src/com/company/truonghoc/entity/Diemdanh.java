@@ -23,12 +23,23 @@ public class Diemdanh extends StandardEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private Donvi donvidd;
 
-    @OneToMany(mappedBy = "diemdanh")
+    @ManyToMany
+    @JoinTable(name = "TRUONGHOC_DIEMDANH_HOCSINH_LINK",
+            joinColumns = @JoinColumn(name = "DIEMDANH_ID"),
+            inverseJoinColumns = @JoinColumn(name = "HOCSINH_ID"))
     private List<Hocsinh> hotenhs;
 
     @Column(name = "NGAYNGHI")
     @Temporal(TemporalType.DATE)
     private Date ngaynghi;
+
+    public void setHotenhs(List<Hocsinh> hotenhs) {
+        this.hotenhs = hotenhs;
+    }
+
+    public List<Hocsinh> getHotenhs() {
+        return hotenhs;
+    }
 
     public void setDonvidd(Donvi donvidd) {
         this.donvidd = donvidd;
@@ -52,14 +63,6 @@ public class Diemdanh extends StandardEntity {
 
     public Giaovien getNguoitaodd() {
         return nguoitaodd;
-    }
-
-    public void setHotenhs(List<Hocsinh> hotenhs) {
-        this.hotenhs = hotenhs;
-    }
-
-    public List<Hocsinh> getHotenhs() {
-        return hotenhs;
     }
 
     public void setNgaynghi(Date ngaynghi) {

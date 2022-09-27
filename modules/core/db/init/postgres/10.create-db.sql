@@ -34,7 +34,6 @@ create table TRUONGHOC_LUONGTHANG (
     DELETE_TS timestamp,
     DELETED_BY varchar(50),
     --
-    USERTAO_LUONGTHANG_ID uuid,
     DONVITAO_LUONGTHANG_ID uuid,
     HOVATEN_ID uuid not null,
     NGAYNHAN date,
@@ -93,15 +92,13 @@ create table TRUONGHOC_HOCSINH (
     DELETE_TS timestamp,
     DELETED_BY varchar(50),
     --
-    USERTAO_HOCSINH_ID uuid,
     DONVITAO_HOCSINH_ID uuid,
     TENHOCSINH varchar(255),
     NGAYSINHHOCSINH date,
     GIOITINHHOCSINH varchar(255),
     QUEQUANHOCSINH varchar(255),
     GHICHU varchar(255),
-    LOPHOC_ID uuid not null,
-    DIEMDANH_ID uuid,
+    LOPHOC_ID uuid,
     --
     primary key (ID)
 )^
@@ -120,6 +117,8 @@ create table TRUONGHOC_TENLOP (
     DOVI_ID uuid,
     TENLOP varchar(255),
     GIAOVIENCN_ID uuid,
+    THANGHOC date,
+    TINHTRANGLOP boolean,
     --
     primary key (ID)
 )^
@@ -271,3 +270,10 @@ alter table SEC_USER add column GIAOVIEN_ID uuid ^
 alter table SEC_USER add column DTYPE varchar(31) ^
 update SEC_USER set DTYPE = 'truonghoc_UserExt' where DTYPE is null ^
 -- end SEC_USER
+-- begin TRUONGHOC_DIEMDANH_HOCSINH_LINK
+create table TRUONGHOC_DIEMDANH_HOCSINH_LINK (
+    DIEMDANH_ID uuid,
+    HOCSINH_ID uuid,
+    primary key (DIEMDANH_ID, HOCSINH_ID)
+)^
+-- end TRUONGHOC_DIEMDANH_HOCSINH_LINK

@@ -24,9 +24,20 @@
     <layout expand="editActions" spacing="true">
         <form id="form" dataContainer="tenlopDc">
             <hbox width="100%" spacing="true">
-                <lookupField id="donviFiled" dataContainer="tenlopDc" property="dovi" caption="Đơn vị"/>
-                <textField id="tenlopField" dataContainer="tenlopDc" property="tenlop" caption="Tên lớp"/>
-                <lookupField id="giaoviencnField" dataContainer="tenlopDc" property="giaoviencn" caption="Giáo viên chủ nhiệm"/>
+                <vbox>
+                    <lookupField id="donviFiled" dataContainer="tenlopDc" property="dovi" caption="Đơn vị"/>
+                    <textField id="tenlopField" dataContainer="tenlopDc" property="tenlop" caption="Tên lớp"/>
+                </vbox>
+                <vbox>
+                    <lookupField id="giaoviencnField" dataContainer="tenlopDc" property="giaoviencn"
+                                 caption="Giáo viên chủ nhiệm"/>
+                    <dateField id="thanghocField" dataContainer="tenlopDc" property="thanghoc" caption="Tháng học"
+                               resolution="MONTH" />
+                </vbox>
+                <vbox align="BOTTOM_CENTER">
+                    <checkBox id="ttLopcheck" caption="Tình trạng lớp" dataContainer="tenlopDc"
+                              property="tinhtranglop" align="BOTTOM_CENTER"/>
+                </vbox>
             </hbox>
         </form>
         <hbox id="editActions" spacing="true">

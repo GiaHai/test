@@ -43,10 +43,10 @@
                                  caption="Đơn vị"
                                  width="100%"
                                  nullName="--Lọc tất cả--"/>
-                    <textField id="nguoithuField"
+                    <lookupField id="nguoithuField"
                                caption="Tài khoản người thu"
                                width="100%"
-                               inputPrompt="Tài khoản người thu"/>
+                               nullName="---Lọc tất cả---"/>
                 </vbox>
                 <vbox spacing="true">
                     <textField id="tenKhField"
@@ -71,10 +71,6 @@
                                caption="mainMsg://denngay"/>
                 </vbox>
                 <vbox spacing="true">
-<!--                    <textField id="tenphiField"-->
-<!--                               caption="Tên phí"-->
-<!--                               width="100%"-->
-<!--                               inputPrompt="Tên phí"/>-->
                     <lookupField id="trangthaiField"
                                  caption="Trạng thái"
                                  width="100%"

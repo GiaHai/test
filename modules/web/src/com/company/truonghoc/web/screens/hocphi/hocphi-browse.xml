@@ -42,10 +42,10 @@
                     <lookupField id="dovitao_hocphiField"
                                  caption="Đơn vị"
                                  width="100%"
-                                 nullName="Lọc tất cả"/>
-                    <textField id="giaovienField"
+                                 nullName="---Lọc tất cả---"/>
+                    <lookupField id="giaovienField"
                                width="100%"
-                               inputPrompt="Họ và tên giáo viên"
+                               nullName="---Lọc tất cả---"
                                caption="Giáo viên"/>
                 </vbox>
                 <vbox spacing="true">
@@ -56,7 +56,7 @@
                     <lookupField id="trangthaiField"
                                  width="100%"
                                  caption="Trạng thái"
-                                 nullName="Lọc tất cả"/>
+                                 nullName="---Lọc tất cả---"/>
                 </vbox>
                 <vbox spacing="true">
                     <dateField id="tungayField"

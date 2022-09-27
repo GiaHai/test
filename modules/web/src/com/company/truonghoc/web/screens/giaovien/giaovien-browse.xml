@@ -39,7 +39,8 @@
                   width="100%">
             <hbox spacing="true">
                 <lookupField id="donvitao_giaovienField"
-                             caption="Đơn vị"/>
+                             caption="Đơn vị"
+                             nullName="---Lọc tất cả---"/>
                 <textField id="searchTenGvField"
                            caption="Giáo viên"/>
                 <button id="timkiemBtn"

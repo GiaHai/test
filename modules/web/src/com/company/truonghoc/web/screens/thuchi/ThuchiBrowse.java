@@ -1,7 +1,9 @@
 package com.company.truonghoc.web.screens.thuchi;
 
 import com.company.truonghoc.entity.Donvi;
+import com.company.truonghoc.entity.Giaovien;
 import com.company.truonghoc.service.DulieuUserService;
+import com.company.truonghoc.service.SearchedService;
 import com.haulmont.cuba.core.entity.Entity;
 import com.haulmont.cuba.core.global.UserSessionSource;
 import com.haulmont.cuba.gui.Dialogs;
@@ -40,7 +42,7 @@ public class ThuchiBrowse extends StandardLookup<Thuchi> {
     @Inject
     protected DateField<Date> tungayField;
     @Inject
-    protected TextField<String> nguoichiField;
+    protected LookupField<Giaovien> nguoichiField;
     @Inject
     protected TextField<String> khoanchiField;
     @Inject
@@ -51,6 +53,8 @@ public class ThuchiBrowse extends StandardLookup<Thuchi> {
     protected CreateAction<Thuchi> thuchisTableCreate;
     @Inject
     protected Dialogs dialogs;
+    @Inject
+    protected SearchedService searchedService;
     private DecimalFormat percentFormat;
     @Inject
     protected DulieuUserService dulieuUserService;
@@ -134,7 +138,7 @@ public class ThuchiBrowse extends StandardLookup<Thuchi> {
                 tungayField.clear();
                 denngayField.clear();
                 donvitao_thuchiField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi()); //Chèn đơn vị từ user vào text
-                nguoichiField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien().getTengiaovien());  //chèn tên giáo viên từ user vào text
+                nguoichiField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien());  //chèn tên giáo viên từ user vào text
             }
         }else {
             donvitao_thuchiField.setEditable(true);
@@ -184,7 +188,7 @@ public class ThuchiBrowse extends StandardLookup<Thuchi> {
 
     private void excuteSearch(boolean isFromSearchBtn) {
         Object donvi = donvitao_thuchiField.getValue();
-        String ngthanhtoan = nguoichiField.getValue();
+        Object ngthanhtoan = nguoichiField.getValue();
         String khoanchi = khoanchiField.getValue();
         Object trangthai = trangthaiField.getValue();
         Date tungay = tungayField.getValue();
@@ -197,7 +201,7 @@ public class ThuchiBrowse extends StandardLookup<Thuchi> {
         thuchisDl.load();
     }
 
-    private String returnQuery(Object donvi, String ngthanhtoan, String khoanchi, Object trangthai, Date tungay, Date denngay, Map<String, Object> params) {
+    private String returnQuery(Object donvi, Object ngthanhtoan, String khoanchi, Object trangthai, Date tungay, Date denngay, Map<String, Object> params) {
         String query = "select e from truonghoc_Thuchi e ";
         String where = " where 1=1 ";
 
@@ -207,9 +211,9 @@ public class ThuchiBrowse extends StandardLookup<Thuchi> {
             params.put("donvi", donvi);
         }
         //người thanh toán
-        if (!StringUtils.isEmpty(ngthanhtoan)){
+        if (ngthanhtoan != null){
             where += "and e.usertao_thuchi.tengiaovien = :ngthanhtoan ";
-            params.put("ngthanhtoan", ngthanhtoan);
+            params.put("ngthanhtoan", nguoichiField.getValue().getTengiaovien());
         }
         //khoản chi
         if (!StringUtils.isEmpty(khoanchi)){
@@ -234,4 +238,11 @@ public class ThuchiBrowse extends StandardLookup<Thuchi> {
         query = query + where;
         return query;
     }
+
+    @Subscribe("donvitao_thuchiField")
+    protected void onDonvitao_thuchiFieldValueChange(HasValue.ValueChangeEvent event) {
+        nguoichiField.setOptionsList(searchedService.loadgiaovien(donvitao_thuchiField.getValue()));
+    }
+
+    
 }
