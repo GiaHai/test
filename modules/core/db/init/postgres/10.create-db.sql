@@ -98,7 +98,6 @@ create table TRUONGHOC_HOCSINH (
     GIOITINHHOCSINH varchar(255),
     QUEQUANHOCSINH varchar(255),
     GHICHU varchar(255),
-    LOPHOC_ID uuid,
     --
     primary key (ID)
 )^
@@ -117,7 +116,8 @@ create table TRUONGHOC_TENLOP (
     DOVI_ID uuid,
     TENLOP varchar(255),
     GIAOVIENCN_ID uuid,
-    THANGHOC date,
+    THANGHOC varchar(255),
+    NAMHOC integer,
     TINHTRANGLOP boolean,
     --
     primary key (ID)
@@ -277,3 +277,10 @@ create table TRUONGHOC_DIEMDANH_HOCSINH_LINK (
     primary key (DIEMDANH_ID, HOCSINH_ID)
 )^
 -- end TRUONGHOC_DIEMDANH_HOCSINH_LINK
+-- begin TRUONGHOC_LOPHOC_HOCSINH_LINK
+create table TRUONGHOC_LOPHOC_HOCSINH_LINK (
+    LOPHOC_ID uuid,
+    HOCSINH_ID uuid,
+    primary key (LOPHOC_ID, HOCSINH_ID)
+)^
+-- end TRUONGHOC_LOPHOC_HOCSINH_LINK
