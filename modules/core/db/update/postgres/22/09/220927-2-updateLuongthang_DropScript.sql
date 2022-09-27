@@ -1,0 +1,1 @@
+alter table TRUONGHOC_LUONGTHANG drop column USERTAO_LUONGTHANG_ID__U51915 cascade ;

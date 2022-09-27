@@ -1,0 +1,3 @@
+alter table TRUONGHOC_LUONGTHANG rename column usertao_luongthang_id to usertao_luongthang_id__u51915 ;
+alter table TRUONGHOC_LUONGTHANG drop constraint FK_TRUONGHOC_LUONGTHANG_ON_USERTAO_LUONGTHANG ;
+drop index IDX_TRUONGHOC_LUONGTHANG_ON_USERTAO_LUONGTHANG ;
