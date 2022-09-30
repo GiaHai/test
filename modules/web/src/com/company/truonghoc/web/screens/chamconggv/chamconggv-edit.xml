@@ -51,6 +51,7 @@
                                              property="hotengv"
                                              width="100%"
                                              caption="mainMsg://chamcong.hovaten"
+                                             nullName="--Lọc tất cả---"
                                              optionsContainer="giaoviensDc"/>
                             </column>
                         </form>
@@ -64,6 +65,7 @@
                                 <lookupField id="donvigvField"
                                              width="100%"
                                              caption="mainMsg://chamcong.donvi"
+                                             nullName="--Lọc tất cả---"
                                              property="donvigv"/>
                             </column>
                         </form>
@@ -88,6 +90,7 @@
                                 <lookupField id="buoilamField"
                                              width="100%"
                                              caption="mainMsg://chamcong.buoilam"
+                                             nullName="--Lọc tất cả---"
                                              property="buoilam"/>
                             </column>
                         </form>

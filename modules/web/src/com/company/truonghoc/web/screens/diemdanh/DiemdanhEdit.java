@@ -2,6 +2,7 @@ package com.company.truonghoc.web.screens.diemdanh;
 
 import com.company.truonghoc.entity.*;
 import com.company.truonghoc.service.DulieuUserService;
+import com.company.truonghoc.service.SearchedService;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.gui.components.DateField;
 import com.haulmont.cuba.gui.components.HasValue;
@@ -27,29 +28,34 @@ public class DiemdanhEdit extends StandardEditor<Diemdanh> {
     @Inject
     protected DulieuUserService dulieuUserService;
     @Inject
-    protected TextField<Donvi> donviField;
+    protected LookupField<Donvi> donviField;
     @Inject
-    protected TextField<Giaovien> nguoitaoField;
+    protected LookupField<Giaovien> nguoitaoField;
     @Inject
     protected DateField<Date> ngaynghiField;
     @Inject
     protected LookupField<Lophoc> lopField;
+    @Inject
+    protected SearchedService searchedService;
 
     @Subscribe
     protected void onInit(InitEvent event) {
-        nguoitaoField.setEditable(false);
-        donviField.setEditable(false);
+//        quyền
+//        nguoitaoField.setEditable(false);
+//        donviField.setEditable(false);
         ngaynghiField.setRequired(true);
 
     }
 
     @Subscribe
     protected void onBeforeShow(BeforeShowEvent event) {
-        donviField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
-        nguoitaoField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien());
+//        quyền
+//        donviField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
+//        nguoitaoField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien());
 
         ngaynghiField.setValue(new Date());
-
+        donviField.setOptionsList(searchedService.loaddonvi());
+//        nguoitaoField.setOptionsList(searchedService.loadgiaovien(donviField.getValue().getTendonvi()));
     }
 
     private List<Lophoc> loadlopdd(Object donvi, Object tengv) {
@@ -59,6 +65,11 @@ public class DiemdanhEdit extends StandardEditor<Diemdanh> {
                 .parameter("donvi", donvi)
                 .parameter("tengv", tengv)
                 .list();
+    }
+
+    @Subscribe("donviField")
+    protected void onDonviFieldValueChange(HasValue.ValueChangeEvent<Donvi> event) {
+        nguoitaoField.setOptionsList(searchedService.loadgiaovien(donviField.getValue().getTendonvi()));
     }
 
     @Subscribe("nguoitaoField")

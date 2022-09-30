@@ -38,10 +38,11 @@
                     <row>
                         <form colspan="3" width="100%" childrenCaptionWidth="80px" dataContainer="hocphiDc">
                             <column>
-                                <textField id="usertaoField"
+                                <lookupField id="usertaoField"
                                            property="usertao_hocphi"
                                            width="100%"
-                                           caption="mainMsg://nguoitaothu"/>
+                                             nullName="---Lọc tất cả---"
+                                             caption="mainMsg://nguoitaothu"/>
                             </column>
                         </form>
                         <form colspan="1" width="100%">
@@ -51,10 +52,11 @@
                         </form>
                         <form colspan="3" width="100%" childrenCaptionWidth="80px" dataContainer="hocphiDc">
                             <column>
-                                <textField id="dovitao_hocphiField"
+                                <lookupField id="dovitao_hocphiField"
                                            property="dovitao_hocphi"
                                            width="100%"
-                                           caption="mainMsg://donvitao"/>
+                                             nullName="---Lọc tất cả---"
+                                             caption="mainMsg://donvitao"/>
                             </column>
                         </form>
                     </row>
@@ -65,7 +67,7 @@
                                 <lookupField id="hovatenField"
                                              property="hovaten"
                                              width="100%"
-                                             optionsContainer="hocsinhsDc"
+                                             nullName="---Lọc tất cả---"
                                              caption="mainMsg://hocphi.hovaten"/>
                             </column>
                         </form>
@@ -83,6 +85,8 @@
 <!--                            </column>-->
 <!--                        </form>-->
                     </row>
+
+
 <!--                    dòng 3-->
                     <row>
                         <form colspan="7" width="100%" childrenCaptionWidth="80px" dataContainer="hocphiDc">

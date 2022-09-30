@@ -38,7 +38,7 @@ public class LophocEdit extends StandardEditor<Lophoc> {
     @Inject
     protected CollectionLoader<Donvi> donvisDl;
     @Inject
-    protected TextField<Giaovien> giaovien;
+    protected LookupField<Giaovien> giaovien;
     @Inject
     protected UiComponents uiComponents;
     @Inject
@@ -60,15 +60,15 @@ public class LophocEdit extends StandardEditor<Lophoc> {
 
     @Subscribe
     protected void onInit(InitEvent event) {
-        DvField.setEditable(false);
-        giaovien.setEditable(false);
+//        DvField.setEditable(false);
+//        giaovien.setEditable(false);
         DvField.setOptionsList(loaddonvi());
         tenlopField.setRequired(true);
     }
 
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
-        if (getEditedEntity().getCreatedBy() == null){
+        if (getEditedEntity().getCreatedBy() == null) {
             if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() == null) {
                 DvField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
                 if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null) {
@@ -76,27 +76,41 @@ public class LophocEdit extends StandardEditor<Lophoc> {
                     giaovien.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien());
                     tenlopField.setOptionsList(loadlop(DvField.getValue(), giaovien.getValue()));
                 }
-            }else {
-                DvField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
-                giaovien.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien());
+            } else {
+//                phân quyền
+//                DvField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
+//                giaovien.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien());
             }
-        }else {
+        } else {
             tenlopField.setOptionsList(loadlop(DvField.getValue(), giaovien.getValue()));
         }
+    }
+
+    @Subscribe("DvField")
+    protected void onDvFieldValueChange(HasValue.ValueChangeEvent<Donvi> event) {
+        giaovien.setOptionsList(loadgiaovien(DvField.getValue()));
     }
 
     @Subscribe("giaovien")
     protected void onGiaovienValueChange(HasValue.ValueChangeEvent<Giaovien> event) {
         tenlopField.setOptionsList(searchedService.loadlopDK(DvField.getValue().getTendonvi(), giaovien.getValue().getTengiaovien()));
     }
-    
-    private List<Tenlop> loadlop(Object donvi, Object giaoviencn){
+
+    private List<Giaovien> loadgiaovien(Object donvi) {
+        return dataManager.load(Giaovien.class)
+                .query("select e from truonghoc_Giaovien e where e.donvitao_giaovien = :donvi")
+                .parameter("donvi", donvi)
+                .list();
+    }
+
+    private List<Tenlop> loadlop(Object donvi, Object giaoviencn) {
         return dataManager.load(Tenlop.class)
                 .query("select e from truonghoc_Tenlop e where e.dovi = :donvi and e.giaoviencn = :giaoviencn and e.tinhtranglop = true")
                 .parameter("donvi", donvi)
                 .parameter("giaoviencn", giaoviencn)
                 .list();
     }
+
     private List<Donvi> loaddonvi() {
         return dataManager.load(Donvi.class)
                 .query("select e from truonghoc_Donvi e")
@@ -105,9 +119,9 @@ public class LophocEdit extends StandardEditor<Lophoc> {
 
     @Subscribe("tenlopField")
     protected void onTenlopFieldValueChange(HasValue.ValueChangeEvent<Tenlop> event) {
-        if (tenlopField.getValue() == null){
+        if (tenlopField.getValue() == null) {
             thanghocField.clear();
-        }else {
+        } else {
             thanghocField.setValue(tenlopField.getValue().getThanghoc());
         }
     }

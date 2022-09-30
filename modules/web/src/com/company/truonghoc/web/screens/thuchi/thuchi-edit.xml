@@ -38,10 +38,11 @@
                     <row>
                         <form colspan="3" width="100%" childrenCaptionWidth="80px" dataContainer="thuchiDc">
                             <column>
-                                <textField id="usertao_thuchiField"
-                                           property="usertao_thuchi"
-                                           width="100%"
-                                           caption="mainMsg://nguoitaochi"/>
+                                <lookupField id="usertao_thuchiField"
+                                             property="usertao_thuchi"
+                                             width="100%"
+                                             inputPrompt="---Lọc tất cả---"
+                                             caption="mainMsg://nguoitaochi"/>
                             </column>
                         </form>
                         <form colspan="1" width="100%">
@@ -51,10 +52,11 @@
                         </form>
                         <form colspan="3" width="100%" childrenCaptionWidth="80px" dataContainer="thuchiDc">
                             <column>
-                                <textField id="donvitao_thuchiField"
-                                           property="donvitao_thuchi"
-                                           width="100%"
-                                           caption="mainMsg://donvitao"/>
+                                <lookupField id="donvitao_thuchiField"
+                                             property="donvitao_thuchi"
+                                             width="100%"
+                                             inputPrompt="---Lọc tất cả---"
+                                             caption="mainMsg://donvitao"/>
                             </column>
                         </form>
                     </row>

@@ -4,6 +4,7 @@ import com.company.truonghoc.entity.Donvi;
 import com.company.truonghoc.entity.Giaovien;
 import com.company.truonghoc.entity.Hocsinh;
 import com.company.truonghoc.service.DulieuUserService;
+import com.company.truonghoc.service.SearchedService;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.model.CollectionContainer;
@@ -26,11 +27,11 @@ public class HocphiEdit extends StandardEditor<Hocphi> {
     @Inject
     protected CollectionLoader<Hocsinh> hocsinhsDl;
     @Inject
-    protected TextField<Giaovien> usertaoField;
+    protected LookupField<Giaovien> usertaoField;
+    @Inject
+    protected LookupField<Donvi> dovitao_hocphiField;
     @Inject
     protected CollectionContainer<Hocsinh> hocsinhsDc;
-    @Inject
-    protected TextField<Donvi> dovitao_hocphiField;
     @Inject
     protected UserSession userSession;
     @Inject
@@ -49,19 +50,23 @@ public class HocphiEdit extends StandardEditor<Hocphi> {
     protected TextField<String> tinhtrangthanhtoanFiedl;
     @Inject
     protected DateField<Date> ngaydongField;
+    @Inject
+    protected SearchedService searchedService;
+
     @Subscribe
     protected void onInit(InitEvent event) {
         List<String> list = Arrays.asList("Tiền mặt", "Chuyển khoản");
         hinhthucthanhtoanField.setOptionsList(list);
-        dovitao_hocphiField.setEditable(false);
-        usertaoField.setEditable(false);
+//        dovitao_hocphiField.setEditable(false);
+//        usertaoField.setEditable(false);
         tinhtrangthanhtoanFiedl.setVisible(false);
     }
 
     @Subscribe
     protected void onBeforeShow(BeforeShowEvent event) {
-        usertaoField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien());
-        dovitao_hocphiField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
+//        quyền
+//        usertaoField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien());
+//        dovitao_hocphiField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
 
         Calendar calendar = Calendar.getInstance();
 
@@ -72,7 +77,7 @@ public class HocphiEdit extends StandardEditor<Hocphi> {
         handongField.setValue(calendar.getTime());
 
         tinhtrangthanhtoanFiedl.setValue("Chưa thanh toán");
-
+        dovitao_hocphiField.setOptionsList(searchedService.loaddonvi());
     }
 
     @Subscribe
@@ -129,5 +134,12 @@ public class HocphiEdit extends StandardEditor<Hocphi> {
         hinhthucthanhtoanField.setVisible(false);
     }
 
+    @Subscribe("dovitao_hocphiField")
+    protected void onDovitao_hocphiFieldValueChange(HasValue.ValueChangeEvent<Donvi> event) {
+        usertaoField.setOptionsList(searchedService.loadgiaovien(dovitao_hocphiField.getValue().getTendonvi()));
+        hovatenField.setOptionsList(searchedService.loadHs(dovitao_hocphiField.getValue().getTendonvi()));
+    }
+
+    
 
 }

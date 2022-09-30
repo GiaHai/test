@@ -2,6 +2,7 @@ package com.company.truonghoc.web.screens.thutienhocphi;
 
 import com.company.truonghoc.entity.*;
 import com.company.truonghoc.service.DulieuUserService;
+import com.company.truonghoc.service.SearchedService;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.core.sys.AppContext;
 import com.haulmont.cuba.gui.components.*;
@@ -29,11 +30,11 @@ public class ThutienhocphiEdit extends StandardEditor<Thutienhocphi> {
     @Inject
     protected DateField<Date> tungayField;
     @Inject
-    protected TextField<Giaovien> usertaoField;
+    protected LookupField<Giaovien> usertaoField;
+    @Inject
+    protected LookupField<Donvi> dovitao_thutienhocphiField;
     @Inject
     protected TextField<Long> thanhtienField;
-    @Inject
-    protected TextField<Donvi> dovitao_thutienhocphiField;
     @Inject
     protected UserSession userSession;
     @Inject
@@ -53,14 +54,16 @@ public class ThutienhocphiEdit extends StandardEditor<Thutienhocphi> {
     protected Table<Chitietthu> chitietthusTable;
     @Inject
     protected Button InphieuBtn;
+    @Inject
+    protected SearchedService searchedService;
 
     @Subscribe
     protected void onInit(InitEvent event) {
         List<String> list = Arrays.asList("Tiền mặt", "Chuyển khoản");
         hinhthucthanhtoanField.setOptionsList(list);
-
-        dovitao_thutienhocphiField.setEditable(false);
-        usertaoField.setEditable(false);
+//        quyền
+//        dovitao_thutienhocphiField.setEditable(false);
+//        usertaoField.setEditable(false);
         thanhtienField.setEditable(false);
         tinhtrangthanhtoanField.setVisible(false);
         if (hinhthucthanhtoanField.getValue() == null)
@@ -73,8 +76,9 @@ public class ThutienhocphiEdit extends StandardEditor<Thutienhocphi> {
 
     @Subscribe
     protected void onBeforeShow(BeforeShowEvent event) {
-        usertaoField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien());
-        dovitao_thutienhocphiField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
+//        quyền
+//        usertaoField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien());
+//        dovitao_thutienhocphiField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
 
         Calendar calendar = Calendar.getInstance();
         tungayField.setValue(calendar.getTime());
@@ -85,21 +89,14 @@ public class ThutienhocphiEdit extends StandardEditor<Thutienhocphi> {
         denngayField.setValue(calendar.getTime());
 
         tinhtrangthanhtoanField.setValue("Chưa thanh toán");
+
+        dovitao_thutienhocphiField.setOptionsList(searchedService.loaddonvi());
     }
 
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
-        tenhocsinhField.setOptionsList(hocsinhList(getEditedEntity().getDonvitao_thutienhocphi().getTendonvi()));
+//        tenhocsinhField.setOptionsList(hocsinhList(getEditedEntity().getDonvitao_thutienhocphi().getTendonvi()));
     }
-
-    private List<Hocsinh> hocsinhList(Object dovitao_hocphi) {
-        return
-                dataManager.load(Hocsinh.class)
-                        .query("select e from truonghoc_Hocsinh e where e.donvitao_hocsinh.tendonvi = :donvitao_hocphiField")
-                        .parameter("donvitao_hocphiField", dovitao_hocphi)
-                        .list();
-    }
-
 
 
     @Subscribe(id = "lkchitietthu", target = Target.DATA_CONTAINER)
@@ -110,6 +107,11 @@ public class ThutienhocphiEdit extends StandardEditor<Thutienhocphi> {
         thanhtienField.setValue((Long) resluts.get(priceId));
     }
 
+    @Subscribe("dovitao_thutienhocphiField")
+    protected void onDovitao_thutienhocphiFieldValueChange(HasValue.ValueChangeEvent<Donvi> event) {
+        usertaoField.setOptionsList(searchedService.loadgiaovien(dovitao_thutienhocphiField.getValue().getTendonvi()));
+        tenhocsinhField.setOptionsList(searchedService.loadHs(dovitao_thutienhocphiField.getValue().getTendonvi()));
+    }
     @Subscribe("hinhthucthanhtoanField")
     protected void onHinhthucthanhtoanFieldValueChange(HasValue.ValueChangeEvent<String> event) {
         if (hinhthucthanhtoanField.getValue() ==null){

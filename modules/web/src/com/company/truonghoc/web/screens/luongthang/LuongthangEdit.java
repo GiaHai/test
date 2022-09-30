@@ -4,6 +4,7 @@ import com.company.truonghoc.entity.Chamconggv;
 import com.company.truonghoc.entity.Donvi;
 import com.company.truonghoc.entity.Giaovien;
 import com.company.truonghoc.service.DulieuUserService;
+import com.company.truonghoc.service.SearchedService;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.gui.Notifications;
 import com.haulmont.cuba.gui.components.*;
@@ -50,7 +51,7 @@ public class LuongthangEdit extends StandardEditor<Luongthang> {
     @Inject
     protected Notifications notifications;
     @Inject
-    protected TextField<Donvi> donvitao_luongthangField;
+    protected LookupField<Donvi> donvitao_luongthangField;
     @Inject
     protected DulieuUserService dulieuUserService;
     @Inject
@@ -75,6 +76,8 @@ public class LuongthangEdit extends StandardEditor<Luongthang> {
     protected DateField<Date> denngayField;
     @Inject
     protected Button searchBLamBtn;
+    @Inject
+    protected SearchedService searchedService;
     Long a = Long.valueOf(0);
     @Inject
     protected UserSession userSession;
@@ -90,7 +93,7 @@ public class LuongthangEdit extends StandardEditor<Luongthang> {
         thuclinhField.setEditable(false);
         tonglinhField.setEditable(false);
         luongcobanField.setEditable(false);
-        donvitao_luongthangField.setEditable(false);
+//        donvitao_luongthangField.setEditable(false);
         ngaynhanField.setValue(new Date());
         tinhtrangnhanluongField.setVisible(false);
         hinhthucthanhtoanField.setVisible(false);
@@ -103,6 +106,7 @@ public class LuongthangEdit extends StandardEditor<Luongthang> {
     @Subscribe
     protected void onBeforeShow(BeforeShowEvent event) {
 
+        donvitao_luongthangField.setOptionsList(searchedService.loaddonvi());
         trachnhiemField.setValue(a);
         daythemField.setValue(a);
         trocapField.setValue(a);
@@ -111,12 +115,13 @@ public class LuongthangEdit extends StandardEditor<Luongthang> {
         thuclinhField.setValue(a);
         tinhtonglinh();
         if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() != null){
-            tungayField.setVisible(false);
-            denngayField.setVisible(false);
-            searchBLamBtn.setVisible(false);
-
+//            quyền
+//            tungayField.setVisible(false);
+//            denngayField.setVisible(false);
+//            searchBLamBtn.setVisible(false);
         }
-        donvitao_luongthangField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
+//        quyền
+//        donvitao_luongthangField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
         hovatenField.setOptionsList(giaovienList(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi()));
 
     }
@@ -203,7 +208,12 @@ public class LuongthangEdit extends StandardEditor<Luongthang> {
         tinhtonglinh();
     }
 
+    @Subscribe("donvitao_luongthangField")
+    protected void onDonvitao_luongthangFieldValueChange(HasValue.ValueChangeEvent<Donvi> event) {
+        hovatenField.setOptionsList(searchedService.loadgiaovien(donvitao_luongthangField.getValue().getTendonvi()));
+    }
 
+    
     private List<Giaovien> giaovienList(Object dovitao_luongthang) {
         return
                 dataManager.load(Giaovien.class)
@@ -211,7 +221,7 @@ public class LuongthangEdit extends StandardEditor<Luongthang> {
                         .parameter("donvitao_luongthangField", dovitao_luongthang)
                         .list();
     }
-
+    
     @Subscribe("ngaynhanField")
     protected void onNgaynhanFieldValueChange(HasValue.ValueChangeEvent<Date> event) {
         if (ngaynhanField.getValue() == null) {

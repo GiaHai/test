@@ -29,19 +29,20 @@ public class HocsinhEdit extends StandardEditor<Hocsinh> {
     @Inject
     protected InstanceContainer<Hocsinh> hocsinhDc;
     @Inject
-    protected TextField<Donvi> donvitao_hocsinhField;
+    protected LookupField<Donvi> donvitao_hocsinhField;
 
     @Subscribe
     protected void onInit(InitEvent event) {
         List<String> list = Arrays.asList("Nam", "Nữ", "Tùy chỉnh");
         gioitinhhocsinhField.setOptionsList(list);
-        donvitao_hocsinhField.setEditable(false);
+//        donvitao_hocsinhField.setEditable(false);
     }
 
     @Subscribe
     protected void onBeforeShow(BeforeShowEvent event) {
         donvitao_hocsinhField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
     }
+
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
 

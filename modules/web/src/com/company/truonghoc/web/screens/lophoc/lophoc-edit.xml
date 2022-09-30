@@ -53,21 +53,21 @@
     <layout expand="editActions" spacing="true" stylename="css-layout-lophocedit">
         <vbox spacing="true" stylename="css-vbox">
             <grid id="form" spacing="true" width="100%">
-            <columns>
-                <column flex="1"/>
-                <column flex="1"/>
-                <column flex="1"/>
-                <column flex="0.1"/>
-                <column flex="1"/>
-                <column flex="1"/>
-                <column flex="0.1"/>
-                <column flex="1"/>
-                <column flex="1"/>
-                <column flex="1"/>
-                <column flex="1"/>
-                <column flex="1"/>
-            </columns>
-                <rows >
+                <columns>
+                    <column flex="1"/>
+                    <column flex="1"/>
+                    <column flex="1"/>
+                    <column flex="0.1"/>
+                    <column flex="1"/>
+                    <column flex="1"/>
+                    <column flex="0.1"/>
+                    <column flex="1"/>
+                    <column flex="1"/>
+                    <column flex="1"/>
+                    <column flex="1"/>
+                    <column flex="1"/>
+                </columns>
+                <rows>
                     <row>
                         <form colspan="1" width="100%">
                             <column>
@@ -77,19 +77,21 @@
                         <form colspan="3" width="100%" childrenCaptionWidth="80px">
                             <column>
                                 <lookupField id="DvField"
-                                           property="donvi"
-                                           dataContainer="lophocDc"
-                                           width="100%"
-                                           caption="Đơn vị"/>
+                                             property="donvi"
+                                             dataContainer="lophocDc"
+                                             width="100%"
+                                             nullName="---Lọc tất cả---"
+                                             caption="Đơn vị"/>
                             </column>
                         </form>
                         <form colspan="3" width="100%" childrenCaptionWidth="80px">
                             <column>
-                                <textField id="giaovien"
-                                           property="giaoviencn"
-                                           width="100%"
-                                           caption="mainMsg://lophoc.giaoviencn"
-                                           dataContainer="lophocDc"/>
+                                <lookupField id="giaovien"
+                                             property="giaoviencn"
+                                             width="100%"
+                                             nullName="---Lọc tất cả---"
+                                             caption="mainMsg://lophoc.giaoviencn"
+                                             dataContainer="lophocDc"/>
                             </column>
                         </form>
                     </row>
@@ -103,11 +105,11 @@
                         <form colspan="3" width="100%" childrenCaptionWidth="80px">
                             <column>
                                 <lookupField id="tenlopField"
-                                           property="tenlop"
-                                           dataContainer="lophocDc"
-                                           width="100%"
+                                             property="tenlop"
+                                             dataContainer="lophocDc"
+                                             width="100%"
                                              nullName="---Chọn tên lớp---"
-                                           caption="mainMsg://lophoc.tenlop"/>
+                                             caption="mainMsg://lophoc.tenlop"/>
                             </column>
                         </form>
 
@@ -115,6 +117,7 @@
                             <column>
                                 <textField id="thanghocField"
                                            width="100%"
+                                           editable="false"
                                            caption="Tháng học"/>
                             </column>
                         </form>
@@ -124,7 +127,8 @@
                             <column>
                                 <tokenList id="tokenListField" simple="true" width="100%"
                                            property="dshocsinh" dataContainer="lophocDc" caption="Danh sách học sinh">
-                                    <lookup multiselect="true" optionsContainer="hocsinhsDc" captionProperty="tenhocsinh"/>
+                                    <lookup multiselect="true" optionsContainer="hocsinhsDc"
+                                            captionProperty="tenhocsinh"/>
                                     <addButton caption="Thêm"/>
                                 </tokenList>
                             </column>
@@ -133,7 +137,6 @@
                 </rows>
             </grid>
         </vbox>
-
 
 
         <hbox id="editActions" spacing="true">

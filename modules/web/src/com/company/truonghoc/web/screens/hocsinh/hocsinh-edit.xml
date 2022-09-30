@@ -9,6 +9,16 @@
                   view="hocsinh-view">
             <loader/>
         </instance>
+
+        <collection id="donvisDc"
+                    class="com.company.truonghoc.entity.Donvi"
+                    view="donvi-view">
+            <loader id="donvisDl">
+                <query>
+                    <![CDATA[select e from truonghoc_Donvi e]]>
+                </query>
+            </loader>
+        </collection>
     </data>
     <dialogMode height="600"
                 width="800"/>
@@ -34,10 +44,12 @@
                         </form>
                         <form colspan="3" width="100%" childrenCaptionWidth="80px">
                             <column>
-                                <textField id="donvitao_hocsinhField"
+                                <lookupField id="donvitao_hocsinhField"
                                            property="donvitao_hocsinh"
                                            dataContainer="hocsinhDc"
                                            width="100%"
+                                             optionsContainer="donvisDc"
+                                             captionProperty="tendonvi"
                                            caption="mainMsg://donvitao"/>
                             </column>
                         </form>

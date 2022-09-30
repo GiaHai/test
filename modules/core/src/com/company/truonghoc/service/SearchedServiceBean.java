@@ -1,5 +1,6 @@
 package com.company.truonghoc.service;
 
+import com.company.truonghoc.entity.Donvi;
 import com.company.truonghoc.entity.Giaovien;
 import com.company.truonghoc.entity.Hocsinh;
 import com.company.truonghoc.entity.Tenlop;
@@ -19,7 +20,7 @@ public class SearchedServiceBean implements SearchedService {
     public List<Giaovien> loadgiaovien(Object giaovien) {
         return dataManager.load(Giaovien.class)
                 .query("select e from truonghoc_Giaovien e where e.donvitao_giaovien.tendonvi = :donvi")
-                .parameter("donvi",giaovien)
+                .parameter("donvi", giaovien)
                 .view("giaovien-view")
                 .list();
     }
@@ -44,9 +45,27 @@ public class SearchedServiceBean implements SearchedService {
 
     @Override
     public List<Hocsinh> loadHs(Object donvi) {
-        return  dataManager.load(Hocsinh.class)
-                .query("select e from truonghoc_Hocsinh e where e.donvitao_hocsinh.tendonvi = :tendonvi and e.lophoc.giaoviencn is null")
-                .parameter("donvi", donvi)
+        return dataManager.load(Hocsinh.class)
+                .query("select e from truonghoc_Hocsinh e where e.donvitao_hocsinh.tendonvi = :tendonvi")
+                .parameter("tendonvi", donvi)
                 .list();
     }
+
+//    @Override
+//    public List<Hocsinh> loadHsDk(String tendonvi, String tengiaovien) {
+//        return dataManager.load(Hocsinh.class)
+//                .query("select e from truonghoc_Hocsinh e where e.donvitao_hocsinh.tendonvi = :tendonvi and ")
+//                .parameter("tendonvi", tendonvi)
+//                .list();
+//    }
+
+    @Override
+    public List<Donvi> loaddonvi() {
+        return dataManager.load(Donvi.class)
+                .query("select e from truonghoc_Donvi e")
+                .view("donvi-view")
+                .list();
+    }
+
+
 }

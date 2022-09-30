@@ -46,10 +46,11 @@
                     <row>
                         <form colspan="3" width="100%" childrenCaptionWidth="180px" dataContainer="diemdanhDc">
                             <column>
-                                <textField id="donviField"
-                                           property="donvidd"
-                                           width="100%"
-                                           caption="Đơn vị"/>
+                                <lookupField id="donviField"
+                                             property="donvidd"
+                                             width="100%"
+                                             nullName="--Lọc tất cả---"
+                                             caption="Đơn vị"/>
                             </column>
                         </form>
                         <form colspan="1" width="100%">
@@ -59,10 +60,11 @@
                         </form>
                         <form colspan="3" width="100%" childrenCaptionWidth="80px" dataContainer="diemdanhDc">
                             <column>
-                                <textField id="nguoitaoField"
-                                           property="nguoitaodd"
-                                           width="100%"
-                                           caption="Giáo viên"/>
+                                <lookupField id="nguoitaoField"
+                                             property="nguoitaodd"
+                                             width="100%"
+                                             nullName="--Lọc tất cả---"
+                                             caption="Giáo viên"/>
                             </column>
                         </form>
                     </row>
@@ -71,9 +73,10 @@
                         <form colspan="7" width="100%" childrenCaptionWidth="180px" dataContainer="diemdanhDc">
                             <column>
                                 <lookupField id="lopField"
-                                           property="lopdd"
-                                           width="100%"
-                                           caption="Lớp chủ nhiệm"/>
+                                             property="lopdd"
+                                             width="100%"
+                                             nullName="--Lọc tất cả---"
+                                             caption="Lớp chủ nhiệm"/>
                             </column>
                         </form>
                     </row>
@@ -83,7 +86,8 @@
                             <column>
                                 <tokenList id="tokenListField" simple="true" width="100%"
                                            property="hotenhs" caption="Danh sách học sinh nghỉ">
-                                    <lookup multiselect="true" optionsContainer="hocsinhsDc" captionProperty="tenhocsinh"/>
+                                    <lookup multiselect="true" optionsContainer="hocsinhsDc"
+                                            captionProperty="tenhocsinh"/>
                                     <addButton caption="Thêm"/>
                                 </tokenList>
                             </column>
