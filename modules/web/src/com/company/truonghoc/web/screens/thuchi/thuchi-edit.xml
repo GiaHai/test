@@ -36,15 +36,6 @@
                 <rows>
                     <!--                    dòng 1-->
                     <row>
-                        <form colspan="3" width="100%" childrenCaptionWidth="80px" dataContainer="thuchiDc">
-                            <column>
-                                <lookupField id="usertao_thuchiField"
-                                             property="usertao_thuchi"
-                                             width="100%"
-                                             inputPrompt="---Lọc tất cả---"
-                                             caption="mainMsg://nguoitaochi"/>
-                            </column>
-                        </form>
                         <form colspan="1" width="100%">
                             <column>
                                 <label value=""/>

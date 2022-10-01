@@ -96,47 +96,49 @@ public class ThutienhocphiBrowse extends StandardLookup<Thutienhocphi> {
     //Điều kiện login
     private void dkphanquyen() {
         //điều kiện đơn vị trung tâm nếu
-        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() == null) {
-            donvitao_thutienhocphiField.setEditable(false);
-            donvitao_thutienhocphiField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi()); //Chèn đơn vị từ user vào text
-            //Xoá
-            nguoithuField.clear();
-            tenHsField.clear();
-            tenKhField.clear();
-            tungayField.clear();
-            denngayField.clear();
-            trangthaiField.clear();
-
-            if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null) {
+        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi() != null) {
+            if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() == null) {
                 donvitao_thutienhocphiField.setEditable(false);
-                nguoithuField.setEditable(false);
+                donvitao_thutienhocphiField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi()); //Chèn đơn vị từ user vào text
+                //Xoá
+                nguoithuField.clear();
                 tenHsField.clear();
                 tenKhField.clear();
                 tungayField.clear();
                 denngayField.clear();
                 trangthaiField.clear();
-                donvitao_thutienhocphiField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi()); //Chèn đơn vị từ user vào text
-                nguoithuField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien());  //chèn tên giáo viên từ user vào text
+
+                if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null) {
+                    donvitao_thutienhocphiField.setEditable(false);
+                    nguoithuField.setEditable(false);
+                    tenHsField.clear();
+                    tenKhField.clear();
+                    tungayField.clear();
+                    denngayField.clear();
+                    trangthaiField.clear();
+                    donvitao_thutienhocphiField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi()); //Chèn đơn vị từ user vào text
+                    nguoithuField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien());  //chèn tên giáo viên từ user vào text
+                }
+            } else {
+                donvitao_thutienhocphiField.setEditable(true);
+
+                donvisDl.load();
+                List<String> sessionTypeNames = donvisDc.getMutableItems().stream()
+                        .map(Donvi::getTendonvi)
+                        .collect(Collectors.toList());
+                donvitao_thutienhocphiField.setOptionsList(sessionTypeNames);
+
+                //Xoá
+                donvitao_thutienhocphiField.clear();
+                nguoithuField.clear();
+                tenHsField.clear();
+                tenKhField.clear();
+                tungayField.clear();
+                denngayField.clear();
+                trangthaiField.clear();
             }
-        } else {
-            donvitao_thutienhocphiField.setEditable(true);
 
-            donvisDl.load();
-            List<String> sessionTypeNames = donvisDc.getMutableItems().stream()
-                    .map(Donvi::getTendonvi)
-                    .collect(Collectors.toList());
-            donvitao_thutienhocphiField.setOptionsList(sessionTypeNames);
-
-            //Xoá
-            donvitao_thutienhocphiField.clear();
-            nguoithuField.clear();
-            tenHsField.clear();
-            tenKhField.clear();
-            tungayField.clear();
-            denngayField.clear();
-            trangthaiField.clear();
         }
-
     }
 
     public Component stt(Entity entity) {

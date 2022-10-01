@@ -98,8 +98,6 @@
             </actions>
             <columns>
                 <column id="stt" generator="stt" caption="STT"/>
-                <column id="usertao_thutienhocphi"
-                        caption="mainMsg://nguoitaothu"/>
                 <column id="donvitao_thutienhocphi"
                         caption="mainMsg://thuvienhocphi.donvitao_thutienhocphi"/>
                 <column id="tenkhachhang"

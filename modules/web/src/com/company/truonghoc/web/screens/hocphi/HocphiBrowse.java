@@ -82,10 +82,10 @@ public class HocphiBrowse extends StandardLookup<Hocphi> {
 
     @Subscribe("hocphisTable.create")
     protected void onHocphisTableCreate(Action.ActionPerformedEvent event) {
-        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null){
+        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null) {
             this.hocphisTableCreate.execute();
 
-        }else {
+        } else {
             dialogs.createMessageDialog()
                     .withCaption("THÔNG BÁO")
                     .withMessage("Bạn không có quyền")
@@ -121,44 +121,45 @@ public class HocphiBrowse extends StandardLookup<Hocphi> {
     //Điều kiện login
     private void dkphanquyen() {
         //điều kiện đơn vị trung tâm nếu
-        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() == null) {
-            dovitao_hocphiField.setEditable(false);
-            dovitao_hocphiField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi()); //Chèn đơn vị từ user vào text
-            //Xoá
-            denngayField.clear();
-            tungayField.clear();
-            trangthaiField.clear();
-            giaovienField.clear();
-            hovstenField.clear();
-
-            if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null) {
+        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi() != null) {
+            if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() == null) {
                 dovitao_hocphiField.setEditable(false);
-                giaovienField.setEditable(false);
+                dovitao_hocphiField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi()); //Chèn đơn vị từ user vào text
+                //Xoá
                 denngayField.clear();
                 tungayField.clear();
                 trangthaiField.clear();
+                giaovienField.clear();
                 hovstenField.clear();
-                dovitao_hocphiField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi()); //Chèn đơn vị từ user vào text
-                giaovienField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien());  //chèn tên giáo viên từ user vào text
+
+                if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null) {
+                    dovitao_hocphiField.setEditable(false);
+                    giaovienField.setEditable(false);
+                    denngayField.clear();
+                    tungayField.clear();
+                    trangthaiField.clear();
+                    hovstenField.clear();
+                    dovitao_hocphiField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi()); //Chèn đơn vị từ user vào text
+                    giaovienField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien());  //chèn tên giáo viên từ user vào text
+                }
+
+            } else {
+                dovitao_hocphiField.setEditable(true);
+                //lấy dữ liệu string cho lookup
+                donvisDl.load();
+                List<String> sessionTypeNames = donvisDc.getMutableItems().stream()
+                        .map(Donvi::getTendonvi)
+                        .collect(Collectors.toList());
+                dovitao_hocphiField.setOptionsList(sessionTypeNames);
+                //xoá
+                giaovienField.clear();
+                hovstenField.clear();
+                dovitao_hocphiField.clear();
+                denngayField.clear();
+                tungayField.clear();
+                trangthaiField.clear();
             }
-
-        } else {
-            dovitao_hocphiField.setEditable(true);
-            //lấy dữ liệu string cho lookup
-            donvisDl.load();
-            List<String> sessionTypeNames = donvisDc.getMutableItems().stream()
-                    .map(Donvi::getTendonvi)
-                    .collect(Collectors.toList());
-            dovitao_hocphiField.setOptionsList(sessionTypeNames);
-            //xoá
-            giaovienField.clear();
-            hovstenField.clear();
-            dovitao_hocphiField.clear();
-            denngayField.clear();
-            tungayField.clear();
-            trangthaiField.clear();
         }
-
     }
 
     public Component checkhandong(Hocphi entity) {

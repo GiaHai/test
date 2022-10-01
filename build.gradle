@@ -40,7 +40,7 @@ dependencies {
     appComponent("com.haulmont.charts:charts-global:$cubaVersion")
 }
 
-def postgres = 'org.postgresql:postgresql:42.2.9'
+def mssql = 'com.microsoft.sqlserver:mssql-jdbc:7.2.2.jre8'
 
 configure([globalModule, coreModule, webModule, webToolkitModule]) {
     apply(plugin: 'java')
@@ -92,8 +92,8 @@ configure(coreModule) {
     dependencies {
         compile(globalModule)
         compileOnly(servletApi)
-        jdbc(postgres)
-        testRuntime(postgres)
+        jdbc(mssql) { exclude(group: 'com.microsoft.azure', module: 'azure-keyvault') }
+        testRuntime(mssql) { exclude(group: 'com.microsoft.azure', module: 'azure-keyvault') }
     }
 
     task cleanConf(description: 'Cleans up conf directory', type: Delete) {
@@ -248,3 +248,24 @@ task stage(dependsOn: ['setupTomcat', ":${modulePrefix}-core:deploy", ":${module
     }
 }
 
+task buildWar(type: CubaWarBuilding) {
+    appHome = '../app_home'
+    singleWar = false
+    appProperties = [
+            'cuba.automaticDatabaseUpdate'       : true,
+            'cuba.webPort'                       : 8888,
+            'cuba.connectionUrlList'             : 'http://127.0.0.1:8888/app-core',
+            'cuba.web.loginDialogDefaultUser'    : '',
+            'cuba.web.loginDialogDefaultPassword': '',
+            'cuba.dataSource.username'    : 'sa',
+            'cuba.dataSource.password'    : 'sql2016@',
+            'cuba.dataSource.dbName'      : 'truonghoc',
+            'cuba.dataSource.host'        : '203.162.235.52',
+            'cuba.dataSource.port'        : '',
+            'cuba.web.productionMode'            : true
+    ]
+    includeJdbcDriver = true
+    includeContextXml = true
+    coreContextXmlPath = 'modules/core/web/META-INF/context.xml'
+    logbackConfigurationFile = 'etc/war-logback.xml'
+}

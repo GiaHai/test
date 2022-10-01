@@ -9,7 +9,6 @@ create table TRUONGHOC_THUTIENHOCPHI (
     DELETE_TS datetime2,
     DELETED_BY nvarchar(50),
     --
-    USERTAO_THUTIENHOCPHI_ID uniqueidentifier,
     DONVITAO_THUTIENHOCPHI_ID uniqueidentifier,
     TENKHACHHANG nvarchar(255),
     DIACHI nvarchar(255),
@@ -66,7 +65,6 @@ create table TRUONGHOC_THUCHI (
     DELETE_TS datetime2,
     DELETED_BY nvarchar(50),
     --
-    USERTAO_THUCHI_ID uniqueidentifier,
     DONVITAO_THUCHI_ID uniqueidentifier,
     KHOANCHI nvarchar(255),
     NGAYCHI datetime2,

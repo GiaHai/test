@@ -87,9 +87,9 @@ public class ThuchiBrowse extends StandardLookup<Thuchi> {
 
     @Subscribe("thuchisTable.create")
     protected void onThuchisTableCreate(Action.ActionPerformedEvent event) {
-        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null){
+        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null) {
             this.thuchisTableCreate.execute();
-        }else {
+        } else {
             dialogs.createMessageDialog()
                     .withCaption("THÔNG BÁO")
                     .withMessage("Bạn không có quyền")
@@ -102,9 +102,7 @@ public class ThuchiBrowse extends StandardLookup<Thuchi> {
         int lineNumber = 1;
         try {
             lineNumber = thuchisDl.getContainer().getItemIndex(entity.getId()) + 1;
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             lineNumber = 1;
         }
         Label field = uiComponents.create(Label.NAME);
@@ -120,60 +118,64 @@ public class ThuchiBrowse extends StandardLookup<Thuchi> {
     //Điều kiện login
     private void dkphanquyen() {
         //điều kiện đơn vị trung tâm nếu
-        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() == null) {
-            donvitao_thuchiField.setEditable(false);
-            donvitao_thuchiField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi()); //Chèn đơn vị từ user vào text
-            //Xoá
-            nguoichiField.clear();
-            khoanchiField.clear();
-            trangthaiField.clear();
-            tungayField.clear();
-            denngayField.clear();
+        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi() != null) {
 
-            if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null){
+            if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() == null) {
                 donvitao_thuchiField.setEditable(false);
-                nguoichiField.setEditable(false);
+                donvitao_thuchiField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi()); //Chèn đơn vị từ user vào text
+                //Xoá
+                nguoichiField.clear();
                 khoanchiField.clear();
                 trangthaiField.clear();
                 tungayField.clear();
                 denngayField.clear();
-                donvitao_thuchiField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi()); //Chèn đơn vị từ user vào text
-                nguoichiField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien());  //chèn tên giáo viên từ user vào text
-            }
-        }else {
-            donvitao_thuchiField.setEditable(true);
-            //lấy dữ liệu string cho lookup
-            donvisDl.load();
-            List<String> sessionTypeNames = donvisDc.getMutableItems().stream()
-                    .map(Donvi::getTendonvi)
-                    .collect(Collectors.toList());
-            donvitao_thuchiField.setOptionsList(sessionTypeNames);
-            //xoá
-            donvitao_thuchiField.clear();
-            nguoichiField.clear();
-            khoanchiField.clear();
-            trangthaiField.clear();
-            tungayField.clear();
-            denngayField.clear();
-        }
 
+                if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null) {
+                    donvitao_thuchiField.setEditable(false);
+                    nguoichiField.setEditable(false);
+                    khoanchiField.clear();
+                    trangthaiField.clear();
+                    tungayField.clear();
+                    denngayField.clear();
+                    donvitao_thuchiField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi()); //Chèn đơn vị từ user vào text
+                    nguoichiField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien());  //chèn tên giáo viên từ user vào text
+                }
+            } else {
+                donvitao_thuchiField.setEditable(true);
+                //lấy dữ liệu string cho lookup
+                donvisDl.load();
+                List<String> sessionTypeNames = donvisDc.getMutableItems().stream()
+                        .map(Donvi::getTendonvi)
+                        .collect(Collectors.toList());
+                donvitao_thuchiField.setOptionsList(sessionTypeNames);
+                //xoá
+                donvitao_thuchiField.clear();
+                nguoichiField.clear();
+                khoanchiField.clear();
+                trangthaiField.clear();
+                tungayField.clear();
+                denngayField.clear();
+            }
+
+        }
     }
+
     public Component checkhanchi(Thuchi entity) {
         HtmlBoxLayout htmlBoxLayout = uiComponents.create(HtmlBoxLayout.class);
         htmlBoxLayout.setHtmlSanitizerEnabled(true);
 
-        if (entity.getNgaychi() != null){
+        if (entity.getNgaychi() != null) {
             String body = "<a style=\"background-color: #00FFFF; width: 100%;\">ĐÃ THANH TOÁN</a>\n";
             htmlBoxLayout.setTemplateContents(body);
-        }else {
+        } else {
             HtmlBoxLayout htmlBoxLayout1 = uiComponents.create(HtmlBoxLayout.class);
             htmlBoxLayout.setHtmlSanitizerEnabled(true);
             Date now = new Date();
             Date han = entity.getHanchi();
-            if (now.compareTo(han) >= 0){
+            if (now.compareTo(han) >= 0) {
                 String body = "<a style=\"background-color: black; color: red ; width: 100%;\">QUÁ HẠN</a>\n";
                 htmlBoxLayout1.setTemplateContents(body);
-            }else{
+            } else {
                 String body = "<a style=\"color: red; width: 100%;\">ĐẾN HẠN</a>\n";
                 htmlBoxLayout1.setTemplateContents(body);
             }
@@ -206,32 +208,32 @@ public class ThuchiBrowse extends StandardLookup<Thuchi> {
         String where = " where 1=1 ";
 
         //Đơn vị
-        if (donvi != null){
+        if (donvi != null) {
             where += "and e.donvitao_thuchi.tendonvi = :donvi ";
             params.put("donvi", donvi);
         }
         //người thanh toán
-        if (ngthanhtoan != null){
+        if (ngthanhtoan != null) {
             where += "and e.usertao_thuchi.tengiaovien = :ngthanhtoan ";
             params.put("ngthanhtoan", nguoichiField.getValue().getTengiaovien());
         }
         //khoản chi
-        if (!StringUtils.isEmpty(khoanchi)){
+        if (!StringUtils.isEmpty(khoanchi)) {
             where += "and e.khoanchi = :khoanchi ";
             params.put("khoanchi", khoanchi);
         }
         //trạng thái
-        if (trangthai != null){
+        if (trangthai != null) {
             where += "and e.tinhtrangchi = :trangthai ";
             params.put("trangthai", trangthai);
         }
         //từ ngày
-        if (tungay != null){
+        if (tungay != null) {
             where += "and e.ngaychi >= :tungay ";
             params.put("tungay", tungay);
         }
         //đến ngày
-        if (denngay != null){
+        if (denngay != null) {
             where += "and :denngay >= e.ngaychi ";
             params.put("denngay", denngay);
         }
@@ -244,5 +246,5 @@ public class ThuchiBrowse extends StandardLookup<Thuchi> {
         nguoichiField.setOptionsList(searchedService.loadgiaovien(donvitao_thuchiField.getValue()));
     }
 
-    
+
 }

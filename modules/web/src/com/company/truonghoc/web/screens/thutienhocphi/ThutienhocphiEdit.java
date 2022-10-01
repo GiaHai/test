@@ -30,8 +30,6 @@ public class ThutienhocphiEdit extends StandardEditor<Thutienhocphi> {
     @Inject
     protected DateField<Date> tungayField;
     @Inject
-    protected LookupField<Giaovien> usertaoField;
-    @Inject
     protected LookupField<Donvi> dovitao_thutienhocphiField;
     @Inject
     protected TextField<Long> thanhtienField;
@@ -109,7 +107,6 @@ public class ThutienhocphiEdit extends StandardEditor<Thutienhocphi> {
 
     @Subscribe("dovitao_thutienhocphiField")
     protected void onDovitao_thutienhocphiFieldValueChange(HasValue.ValueChangeEvent<Donvi> event) {
-        usertaoField.setOptionsList(searchedService.loadgiaovien(dovitao_thutienhocphiField.getValue().getTendonvi()));
         tenhocsinhField.setOptionsList(searchedService.loadHs(dovitao_thutienhocphiField.getValue().getTendonvi()));
     }
     @Subscribe("hinhthucthanhtoanField")

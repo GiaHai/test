@@ -33,9 +33,6 @@ public class ThuchiEdit extends StandardEditor<Thuchi> {
     protected Notifications notifications;
     @Inject
     protected Button commitAndCloseBtn;
-    @Inject
-    protected LookupField<Giaovien> usertao_thuchiField;
-    @Inject
     protected LookupField<Donvi> donvitao_thuchiField;
     @Inject
     protected DulieuUserService dulieuUserService;
@@ -122,11 +119,4 @@ public class ThuchiEdit extends StandardEditor<Thuchi> {
     protected void onHanchiFieldValueChange(HasValue.ValueChangeEvent<Date> event) {
         tinhtrangchiField.setValue("Chưa thanh toán");
     }
-
-    @Subscribe("donvitao_thuchiField")
-    protected void onDonvitao_thuchiFieldValueChange(HasValue.ValueChangeEvent<Donvi> event) {
-        usertao_thuchiField.setOptionsList(searchedService.loadgiaovien(donvitao_thuchiField.getValue().getTendonvi()));
-    }
-
-    
 }

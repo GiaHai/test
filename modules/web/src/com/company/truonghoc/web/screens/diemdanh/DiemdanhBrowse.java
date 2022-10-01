@@ -89,35 +89,37 @@ public class DiemdanhBrowse extends StandardLookup<Diemdanh> {
     //Điều kiện login
     private void dkphanquyen() {
         //điều kiện đơn vị trung tâm nếu
-        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() == null) {
-            tendonviField.setEditable(false);
-            tendonviField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi()); //Chèn đơn vị từ user vào text
-            //Xoá
-            tengiaovienField.clear();
-            ngaylamField.clear();
-            lopField.clear();
+        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi() != null) {
 
-            if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null) {
+            if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() == null) {
                 tendonviField.setEditable(false);
-                tengiaovienField.setEditable(false);
-                ngaylamField.clear();
                 tendonviField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi()); //Chèn đơn vị từ user vào text
-                tengiaovienField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien());  //chèn tên giáo viên từ user vào text
+                //Xoá
+                tengiaovienField.clear();
+                ngaylamField.clear();
+                lopField.clear();
+
+                if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null) {
+                    tendonviField.setEditable(false);
+                    tengiaovienField.setEditable(false);
+                    ngaylamField.clear();
+                    tendonviField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi()); //Chèn đơn vị từ user vào text
+                    tengiaovienField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien());  //chèn tên giáo viên từ user vào text
+                }
+            } else {
+                donvisDl.load();
+                List<String> sessionTypeNames = donvisDc.getMutableItems().stream()
+                        .map(Donvi::getTendonvi)
+                        .collect(Collectors.toList());
+                tendonviField.setOptionsList(sessionTypeNames);
+
+                //Xoá
+                tendonviField.clear();
+                tengiaovienField.clear();
+                ngaylamField.clear();
+                lopField.clear();
             }
-        } else {
-            donvisDl.load();
-            List<String> sessionTypeNames = donvisDc.getMutableItems().stream()
-                    .map(Donvi::getTendonvi)
-                    .collect(Collectors.toList());
-            tendonviField.setOptionsList(sessionTypeNames);
-
-            //Xoá
-            tendonviField.clear();
-            tengiaovienField.clear();
-            ngaylamField.clear();
-            lopField.clear();
         }
-
     }
 
     public void timkiemExcute() {
@@ -159,16 +161,16 @@ public class DiemdanhBrowse extends StandardLookup<Diemdanh> {
             params.put("ngaylam", ngaylam);
         }
         //Lớp
-        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null){
+        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null) {
             if (lop == null) {
                 where += "and e.lopdd.tenlop.tinhtranglop = true ";
-            }else {
+            } else {
                 if (lop != null) {
                     where += "and e.lopdd.tenlop.tenlop = :lop ";
                     params.put("lop", lopField.getValue().getTenlop());
                 }
             }
-        }else {
+        } else {
             if (lop != null) {
                 where += "and e.lopdd.tenlop.tenlop = :lop ";
                 params.put("lop", lopField.getValue().getTenlop());

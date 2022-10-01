@@ -98,8 +98,6 @@
                         caption="msg://Thuchi.stt"/>
                 <column id="donvitao_thuchi"
                         caption="mainMsg://donvitao"/>
-                <column id="usertao_thuchi"
-                        caption="mainMsg://nguoitaochi"/>
                 <column id="ngaychi"
                         caption="Ngày chi"/>
                 <column id="khoanchi"

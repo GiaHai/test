@@ -11,10 +11,6 @@ import java.util.Date;
 public class Thuchi extends StandardEntity {
     private static final long serialVersionUID = 90251412791812808L;
 
-    @JoinColumn(name = "USERTAO_THUCHI_ID")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Giaovien usertao_thuchi;
-
     @JoinColumn(name = "DONVITAO_THUCHI_ID")
     @ManyToOne(fetch = FetchType.LAZY)
     private Donvi donvitao_thuchi;
@@ -55,14 +51,6 @@ public class Thuchi extends StandardEntity {
 
     public Donvi getDonvitao_thuchi() {
         return donvitao_thuchi;
-    }
-
-    public void setUsertao_thuchi(Giaovien usertao_thuchi) {
-        this.usertao_thuchi = usertao_thuchi;
-    }
-
-    public Giaovien getUsertao_thuchi() {
-        return usertao_thuchi;
     }
 
     public String getHinhthucthanhtoan() {

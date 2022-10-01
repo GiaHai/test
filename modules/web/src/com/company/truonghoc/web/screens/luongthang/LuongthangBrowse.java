@@ -90,35 +90,39 @@ public class LuongthangBrowse extends StandardLookup<Luongthang> {
     //Điều kiện login
     private void dkphanquyen() {
         //điều kiện đơn vị trung tâm nếu
-        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() == null) {
-            donvitao_luongthangField.setEditable(false);
-            donvitao_luongthangField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi());
+        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi() != null) {
 
-            //Xoá
-            giaovienField.clear();
-            trangthaiField.clear();
-            tungayField.clear();
-            denngayField.clear();
-            if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null){
-                giaovienField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien());
-                giaovienField.setEditable(false);
+            if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() == null) {
+                donvitao_luongthangField.setEditable(false);
+                donvitao_luongthangField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi());
+
+                //Xoá
+                giaovienField.clear();
+                trangthaiField.clear();
+                tungayField.clear();
+                denngayField.clear();
+                if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null) {
+                    giaovienField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien());
+                    giaovienField.setEditable(false);
+                }
+            } else {
+                donvitao_luongthangField.setEditable(true);
+                //lấy dữ liệu string cho lookup
+                donvisDl.load();
+                List<String> sessionTypeNames = donvisDc.getMutableItems().stream()
+                        .map(Donvi::getTendonvi)
+                        .collect(Collectors.toList());
+                donvitao_luongthangField.setOptionsList(sessionTypeNames);
+                //xoá
+                donvitao_luongthangField.clear();
+                giaovienField.clear();
+                trangthaiField.clear();
+                tungayField.clear();
+                denngayField.clear();
             }
-        } else {
-            donvitao_luongthangField.setEditable(true);
-            //lấy dữ liệu string cho lookup
-            donvisDl.load();
-            List<String> sessionTypeNames = donvisDc.getMutableItems().stream()
-                    .map(Donvi::getTendonvi)
-                    .collect(Collectors.toList());
-            donvitao_luongthangField.setOptionsList(sessionTypeNames);
-            //xoá
-            donvitao_luongthangField.clear();
-            giaovienField.clear();
-            trangthaiField.clear();
-            tungayField.clear();
-            denngayField.clear();
         }
     }
+
     public Component checkhannhanluong(Luongthang entity) {
         HtmlBoxLayout htmlBoxLayout = uiComponents.create(HtmlBoxLayout.class);
         htmlBoxLayout.setHtmlSanitizerEnabled(true);
@@ -155,7 +159,7 @@ public class LuongthangBrowse extends StandardLookup<Luongthang> {
         Date denngay = denngayField.getValue();
         Map<String, Object> params = new HashMap<>();
 
-        String query = returnQuery(donvi , giaovien, trangthai, tungay, denngay, params);
+        String query = returnQuery(donvi, giaovien, trangthai, tungay, denngay, params);
         luongthangsDl.setQuery(query);
         luongthangsDl.setParameters(params);
         luongthangsDl.load();
@@ -198,5 +202,5 @@ public class LuongthangBrowse extends StandardLookup<Luongthang> {
     protected void onDonvitao_luongthangFieldValueChange(HasValue.ValueChangeEvent event) {
         giaovienField.setOptionsList(searchedService.loadgiaovien(donvitao_luongthangField.getValue()));
     }
-    
+
 }

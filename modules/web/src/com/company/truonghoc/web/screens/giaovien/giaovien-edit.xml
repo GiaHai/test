@@ -43,7 +43,8 @@
                                              caption="mainMsg://donvitao"
                                              width="100%"
                                              dataContainer="giaovienDc"
-                                />
+                                             optionsContainer="donvisDc"
+                                             captionProperty="tendonvi"/>
                             </column>
                         </form>
                         <form colspan="1" width="100%">

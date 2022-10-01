@@ -14,10 +14,6 @@ import java.util.List;
 public class Thutienhocphi extends StandardEntity {
     private static final long serialVersionUID = 3866939199245638055L;
 
-    @JoinColumn(name = "USERTAO_THUTIENHOCPHI_ID")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Giaovien usertao_thutienhocphi;
-
     @JoinColumn(name = "DONVITAO_THUTIENHOCPHI_ID")
     @ManyToOne(fetch = FetchType.LAZY)
     private Donvi donvitao_thutienhocphi;
@@ -60,14 +56,6 @@ public class Thutienhocphi extends StandardEntity {
 
     public Donvi getDonvitao_thutienhocphi() {
         return donvitao_thutienhocphi;
-    }
-
-    public void setUsertao_thutienhocphi(Giaovien usertao_thutienhocphi) {
-        this.usertao_thutienhocphi = usertao_thutienhocphi;
-    }
-
-    public Giaovien getUsertao_thutienhocphi() {
-        return usertao_thutienhocphi;
     }
 
     public List<Chitietthu> getLkchitieuthu() {

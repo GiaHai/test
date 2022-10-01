@@ -60,36 +60,39 @@ public class ChamconggvBrowse extends StandardLookup<Chamconggv> {
 
     //Điều kiện login
     private void dkphanquyen() {
-        //điều kiện đơn vị trung tâm nếu
-        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() == null) {
-            tendonviField.setEditable(false);
-            tendonviField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi()); //Chèn đơn vị từ user vào text
+        //điều kiện đơn vị trung tâm
+        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi() != null) {
+
+            if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() == null) {
+                tendonviField.setEditable(false);
+                tendonviField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi()); //Chèn đơn vị từ user vào text
 //            tengiaovienField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien().getTengiaovien());
-            //Xoá
-            tengiaovienField.clear();
-            ngaylamField.clear();
-            buoilamField.clear();
-            if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null){
-                tendonviField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi());
-                tengiaovienField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien());
-                tengiaovienField.setEditable(false);
+                //Xoá
+                tengiaovienField.clear();
+                ngaylamField.clear();
+                buoilamField.clear();
+                if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null) {
+                    tendonviField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi());
+                    tengiaovienField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien());
+                    tengiaovienField.setEditable(false);
+                }
+            } else {
+                tendonviField.setEditable(true);
+                //lấy dữ liệu string cho lookup
+                donvisDl.load();
+                List<String> sessionTypeNames = donvisDc.getMutableItems().stream()
+                        .map(Donvi::getTendonvi)
+                        .collect(Collectors.toList());
+                tendonviField.setOptionsList(sessionTypeNames);
+                // lấy dữ liệu buổi làm
+                List<String> list = Arrays.asList("Làm cả ngày", "Ca sáng", "Ca chiều");
+                buoilamField.setOptionsList(list);
+                //Xoá
+                tengiaovienField.clear();
+                ngaylamField.clear();
+                buoilamField.clear();
+                tendonviField.clear();
             }
-        } else {
-            tendonviField.setEditable(true);
-            //lấy dữ liệu string cho lookup
-            donvisDl.load();
-            List<String> sessionTypeNames = donvisDc.getMutableItems().stream()
-                    .map(Donvi::getTendonvi)
-                    .collect(Collectors.toList());
-            tendonviField.setOptionsList(sessionTypeNames);
-            // lấy dữ liệu buổi làm
-            List<String> list = Arrays.asList("Làm cả ngày", "Ca sáng", "Ca chiều");
-            buoilamField.setOptionsList(list);
-            //Xoá
-            tengiaovienField.clear();
-            ngaylamField.clear();
-            buoilamField.clear();
-            tendonviField.clear();
         }
     }
 

@@ -40,7 +40,6 @@
         <property name="donvitao_luongthang" view="_minimal"/>
     </view>
     <view entity="truonghoc_Thuchi" name="thuchi-view" extends="_local" systemProperties="true">
-        <property name="usertao_thuchi" view="_minimal"/>
         <property name="donvitao_thuchi" view="_minimal"/>
     </view>
     <view entity="truonghoc_UserExt" name="userExt-view" extends="_local" systemProperties="true">
@@ -66,7 +65,6 @@
             <property name="tonggia"/>
         </property>
         <property name="donvitao_thutienhocphi" view="_minimal"/>
-        <property name="usertao_thutienhocphi" view="_minimal"/>
     </view>
     <view entity="truonghoc_Chamconggv" name="chamconggv-view" extends="_local">
         <property name="hotengv" view="_minimal">
@@ -92,7 +90,6 @@
     </view>
     <view entity="truonghoc_Chitietthu" name="chitietthu-view" extends="_local">
         <property name="thutienhocphi" view="_minimal">
-            <property name="usertao_thutienhocphi"/>
             <property name="donvitao_thutienhocphi"/>
             <property name="tenkhachhang"/>
             <property name="diachi"/>
