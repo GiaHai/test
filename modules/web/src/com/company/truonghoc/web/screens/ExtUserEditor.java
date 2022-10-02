@@ -23,30 +23,27 @@ public class ExtUserEditor extends UserEditor {
     @Inject
     protected LookupField<Giaovien> tengiaovienField;
 
+    @Subscribe
+    protected void onInit(InitEvent event) {
+        loockuptendonvi.setRequired(true);
+    }
     @Subscribe("loockuptendonvi")
     protected void onLoockuptendonviValueChange(HasValue.ValueChangeEvent<Donvi> event) {
-//        tendonviField.setValue(donvisDc.getItem().getTendonvi());
-//        donvitrungtam.setValue(donvisDc.getItem().getDonvitrungtam());
+
         if (loockuptendonvi.getValue() != null){
             tengiaovienField.setOptionsList(tengiaovien(loockuptendonvi.getValue()));
         }
-
+        if (loockuptendonvi.getValue().getDonvitrungtam() != null){
+            tengiaovienField.setVisible(false);
+            tengiaovienField.clear();
+        }else {
+            tengiaovienField.setVisible(true);
+        }
     }
-////    @Subscribe("tengiaovienField")
-////    protected void onTengiaovienFieldValueChange(HasValue.ValueChangeEvent<Donvi> event) {
-////        TextGiaovienField.setValue(tengiaovienField.getValue().getTengiaovien());
-////    }
     private List<Giaovien> tengiaovien(Object dvgiaovien) {
         return dataManager.load(Giaovien.class)
                 .query("select e from truonghoc_Giaovien e where e.donvitao_giaovien = :dvgiaovien")
                 .parameter("dvgiaovien", dvgiaovien)
                 .list();
     }
-//
-//    @Subscribe
-//    protected void onInit(InitEvent event) {
-////        tendonviField.setVisible(false);
-//        donvitrungtam.setEditable(false);
-//    }
-
 }

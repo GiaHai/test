@@ -12,13 +12,15 @@ import com.haulmont.cuba.gui.UiComponents;
 import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.model.CollectionContainer;
 import com.haulmont.cuba.gui.model.CollectionLoader;
+import com.haulmont.cuba.gui.model.DataContext;
 import com.haulmont.cuba.gui.screen.*;
 import com.company.truonghoc.entity.Lophoc;
 import com.haulmont.cuba.security.global.UserSession;
 
 import javax.inject.Inject;
-import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @UiController("truonghoc_Lophoc.edit")
 @UiDescriptor("lophoc-edit.xml")
@@ -57,43 +59,58 @@ public class LophocEdit extends StandardEditor<Lophoc> {
     protected SearchedService searchedService;
     @Inject
     protected TextField<String> thanghocField;
+    @Inject
+    protected DataContext dataContext;
+    @Inject
+    protected PickerField<Hocsinh> tokenListField;
 
     @Subscribe
     protected void onInit(InitEvent event) {
-//        DvField.setEditable(false);
-//        giaovien.setEditable(false);
         DvField.setOptionsList(loaddonvi());
         tenlopField.setRequired(true);
+        tokenListField.setRequired(true);
     }
 
     @Subscribe
-    protected void onAfterShow(AfterShowEvent event) {
-        if (getEditedEntity().getCreatedBy() == null) {
+    protected void onBeforeShow(BeforeShowEvent event) {
+        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi() != null) {
             if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() == null) {
+                DvField.setEditable(false);
                 DvField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
                 if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null) {
                     DvField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
                     giaovien.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien());
-                    tenlopField.setOptionsList(loadlop(DvField.getValue(), giaovien.getValue()));
+//                            tenlopField.setOptionsList(loadlop(DvField.getValue(), giaovien.getValue()));
+                    giaovien.setEditable(false);
                 }
             } else {
 //                phân quyền
 //                DvField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
 //                giaovien.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien());
             }
-        } else {
-            tenlopField.setOptionsList(loadlop(DvField.getValue(), giaovien.getValue()));
         }
     }
 
     @Subscribe("DvField")
     protected void onDvFieldValueChange(HasValue.ValueChangeEvent<Donvi> event) {
-        giaovien.setOptionsList(loadgiaovien(DvField.getValue()));
+        if (DvField.getValue() != null) {
+            giaovien.setOptionsList(loadgiaovien(DvField.getValue()));
+        } else {
+            giaovien.clear();
+        }
     }
 
     @Subscribe("giaovien")
     protected void onGiaovienValueChange(HasValue.ValueChangeEvent<Giaovien> event) {
-        tenlopField.setOptionsList(searchedService.loadlopDK(DvField.getValue().getTendonvi(), giaovien.getValue().getTengiaovien()));
+        if (giaovien.getValue() != null) {
+            if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() == null){
+                tenlopField.setOptionsList(searchedService.loadlop(DvField.getValue().getTendonvi(), giaovien.getValue().getTengiaovien()));
+            }else {
+                tenlopField.setOptionsList(searchedService.loadlopDK(DvField.getValue().getTendonvi(), giaovien.getValue().getTengiaovien()));
+            }
+        } else {
+            tenlopField.clear();
+        }
     }
 
     private List<Giaovien> loadgiaovien(Object donvi) {
@@ -103,13 +120,13 @@ public class LophocEdit extends StandardEditor<Lophoc> {
                 .list();
     }
 
-    private List<Tenlop> loadlop(Object donvi, Object giaoviencn) {
-        return dataManager.load(Tenlop.class)
-                .query("select e from truonghoc_Tenlop e where e.dovi = :donvi and e.giaoviencn = :giaoviencn and e.tinhtranglop = true")
-                .parameter("donvi", donvi)
-                .parameter("giaoviencn", giaoviencn)
-                .list();
-    }
+//    private List<Tenlop> loadlop(Object donvi, Object giaoviencn) {
+//        return dataManager.load(Tenlop.class)
+//                .query("select e from truonghoc_Tenlop e where e.dovi = :donvi and e.giaoviencn = :giaoviencn and e.tinhtranglop = true")
+//                .parameter("donvi", donvi)
+//                .parameter("giaoviencn", giaoviencn)
+//                .list();
+//    }
 
     private List<Donvi> loaddonvi() {
         return dataManager.load(Donvi.class)
@@ -136,5 +153,18 @@ public class LophocEdit extends StandardEditor<Lophoc> {
         Label field = uiComponents.create(Label.NAME);
         field.setValue(lineNumber);
         return field;
+    }
+
+    @Subscribe("commitAndCloseBtn")
+    protected void onCommitAndCloseBtnClick(Button.ClickEvent event) {
+        commitChanges().then(() -> {
+            dataContext.clear();
+            Lophoc lophoc = dataContext.create(Lophoc.class);
+            lophoc.setDonvi(getEditedEntity().getDonvi());
+            lophoc.setGiaoviencn(getEditedEntity().getGiaoviencn());
+            lophoc.setTenlop(getEditedEntity().getTenlop());
+            getEditedEntityContainer().setItem(lophoc);
+
+        });
     }
 }

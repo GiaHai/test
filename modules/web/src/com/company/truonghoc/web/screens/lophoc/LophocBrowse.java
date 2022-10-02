@@ -87,18 +87,23 @@ public class LophocBrowse extends StandardLookup<Lophoc> {
         }
     }
 
-    @Subscribe("lophocsTable.create")
-    protected void onLophocsTableCreate(Action.ActionPerformedEvent event) {
-        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null){
-            this.lophocsTableCreate.execute();
-        }else {
-            dialogs.createMessageDialog()
-                    .withCaption("THÔNG BÁO")
-                    .withMessage("Bạn không có quyền")
-                    .withType(Dialogs.MessageType.WARNING)
-                    .show();
-        }
-    }
+//    @Subscribe("lophocsTable.create")
+//    protected void onLophocsTableCreate(Action.ActionPerformedEvent event) {
+//        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi() != null) {
+//            if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() != null) {
+//                this.lophocsTableCreate.execute();
+//            } else {
+//                dialogs.createMessageDialog()
+//                        .withCaption("THÔNG BÁO")
+//                        .withMessage("Bạn không có quyền")
+//                        .withType(Dialogs.MessageType.WARNING)
+//                        .show();
+//                if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null) {
+//                    this.lophocsTableCreate.execute();
+//                }
+//            }
+//        }
+//    }
 
     public void timkiemExcute() {
         excuteSearch(true);

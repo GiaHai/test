@@ -24,8 +24,8 @@
     <layout expand="editActions" spacing="true">
         <form id="form" dataContainer="chitietthuDc">
             <column width="350px">
-                <textField id="ten_thutienhocphiField" editable="false" property="thutienhocphi.usertao_thutienhocphi"
-                           caption="Tên người tạo"/>
+                <textField id="ten_thutienhocphiField" editable="false" property="thutienhocphi"
+                           caption="Tên Khách hàng"/>
                 <textField id="tenphiField" property="tenphi"
                            caption="Tên phí"/>
                 <textField id="soluongField" property="soluong"

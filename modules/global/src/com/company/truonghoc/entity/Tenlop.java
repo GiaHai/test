@@ -7,7 +7,7 @@ import javax.persistence.*;
 
 @Table(name = "TRUONGHOC_TENLOP")
 @Entity(name = "truonghoc_Tenlop")
-@NamePattern("%s|tenlop")
+@NamePattern("%s - %s - %s|tenlop,thanghoc,namhoc")
 public class Tenlop extends StandardEntity {
     private static final long serialVersionUID = 4124330793891358741L;
 
@@ -26,10 +26,18 @@ public class Tenlop extends StandardEntity {
     private String thanghoc;
 
     @Column(name = "NAMHOC")
-    private Integer namhoc;
+    private String namhoc;
 
     @Column(name = "TINHTRANGLOP")
     private Boolean tinhtranglop;
+
+    public void setNamhoc(String namhoc) {
+        this.namhoc = namhoc;
+    }
+
+    public String getNamhoc() {
+        return namhoc;
+    }
 
     public void setThanghoc(String thanghoc) {
         this.thanghoc = thanghoc;
@@ -37,14 +45,6 @@ public class Tenlop extends StandardEntity {
 
     public String getThanghoc() {
         return thanghoc;
-    }
-
-    public Integer getNamhoc() {
-        return namhoc;
-    }
-
-    public void setNamhoc(Integer namhoc) {
-        this.namhoc = namhoc;
     }
 
     public Boolean getTinhtranglop() {

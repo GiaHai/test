@@ -1,6 +1,7 @@
 package com.company.truonghoc.entity;
 
 import com.haulmont.chile.core.annotations.Composition;
+import com.haulmont.chile.core.annotations.NamePattern;
 import com.haulmont.cuba.core.entity.StandardEntity;
 import com.haulmont.cuba.core.entity.annotation.OnDelete;
 import com.haulmont.cuba.core.global.DeletePolicy;
@@ -11,6 +12,7 @@ import java.util.List;
 
 @Table(name = "TRUONGHOC_THUTIENHOCPHI")
 @Entity(name = "truonghoc_Thutienhocphi")
+@NamePattern("%s|tenkhachhang")
 public class Thutienhocphi extends StandardEntity {
     private static final long serialVersionUID = 3866939199245638055L;
 
@@ -32,6 +34,10 @@ public class Thutienhocphi extends StandardEntity {
     @Temporal(TemporalType.TIMESTAMP)
     private Date denngay;
 
+    @Column(name = "NGAYTHANHTOAN")
+    @Temporal(TemporalType.DATE)
+    private Date ngaythanhtoan;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "TENHOCSINH_ID")
     private Hocsinh tenhocsinh;
@@ -49,6 +55,14 @@ public class Thutienhocphi extends StandardEntity {
     @OnDelete(DeletePolicy.CASCADE)
     @OneToMany(mappedBy = "thutienhocphi")
     private List<Chitietthu> lkchitieuthu;
+
+    public void setNgaythanhtoan(Date ngaythanhtoan) {
+        this.ngaythanhtoan = ngaythanhtoan;
+    }
+
+    public Date getNgaythanhtoan() {
+        return ngaythanhtoan;
+    }
 
     public void setDonvitao_thutienhocphi(Donvi donvitao_thutienhocphi) {
         this.donvitao_thutienhocphi = donvitao_thutienhocphi;

@@ -14,6 +14,7 @@ create table TRUONGHOC_THUTIENHOCPHI (
     DIACHI nvarchar(255),
     TUNGAY datetime2,
     DENNGAY datetime2,
+    NGAYTHANHTOAN datetime2,
     TENHOCSINH_ID uniqueidentifier,
     THANHTIEN bigint,
     HINHTHUCTHANHTOAN nvarchar(255),
@@ -115,7 +116,7 @@ create table TRUONGHOC_TENLOP (
     TENLOP nvarchar(255),
     GIAOVIENCN_ID uniqueidentifier,
     THANGHOC nvarchar(255),
-    NAMHOC integer,
+    NAMHOC nvarchar(255),
     TINHTRANGLOP tinyint,
     --
     primary key nonclustered (ID)
@@ -135,6 +136,7 @@ create table TRUONGHOC_DIEMDANH (
     NGUOITAODD_ID uniqueidentifier,
     LOPDD_ID uniqueidentifier,
     DONVIDD_ID uniqueidentifier,
+    HOTENHS_ID uniqueidentifier,
     NGAYNGHI datetime2,
     --
     primary key nonclustered (ID)
@@ -217,9 +219,10 @@ create table TRUONGHOC_LOPHOC (
     DELETE_TS datetime2,
     DELETED_BY nvarchar(50),
     --
-    TENLOP_ID uniqueidentifier,
     DONVI_ID uniqueidentifier,
     GIAOVIENCN_ID uniqueidentifier,
+    TENLOP_ID uniqueidentifier,
+    DSHOCSINH_ID uniqueidentifier,
     --
     primary key nonclustered (ID)
 )^
@@ -262,23 +265,10 @@ create table TRUONGHOC_CHITIETTHU (
     primary key nonclustered (ID)
 )^
 -- end TRUONGHOC_CHITIETTHU
--- begin TRUONGHOC_DIEMDANH_HOCSINH_LINK
-create table TRUONGHOC_DIEMDANH_HOCSINH_LINK (
-    DIEMDANH_ID uniqueidentifier,
-    HOCSINH_ID uniqueidentifier,
-    primary key (DIEMDANH_ID, HOCSINH_ID)
-)^
--- end TRUONGHOC_DIEMDANH_HOCSINH_LINK
+
 -- begin SEC_USER
 alter table SEC_USER add LOOCKUP_DONVI_ID uniqueidentifier ^
 alter table SEC_USER add GIAOVIEN_ID uniqueidentifier ^
 alter table SEC_USER add DTYPE nvarchar(31) ^
 update SEC_USER set DTYPE = 'truonghoc_UserExt' where DTYPE is null ^
 -- end SEC_USER
--- begin TRUONGHOC_LOPHOC_HOCSINH_LINK
-create table TRUONGHOC_LOPHOC_HOCSINH_LINK (
-    LOPHOC_ID uniqueidentifier,
-    HOCSINH_ID uniqueidentifier,
-    primary key (LOPHOC_ID, HOCSINH_ID)
-)^
--- end TRUONGHOC_LOPHOC_HOCSINH_LINK

@@ -18,6 +18,15 @@
                 </query>
             </loader>
         </collection>
+        <collection id="donvisDc"
+                    class="com.company.truonghoc.entity.Donvi"
+                    view="donvi-view">
+            <loader id="donvisDl">
+                <query>
+                    <![CDATA[select e from truonghoc_Donvi e]]>
+                </query>
+            </loader>
+        </collection>
     </data>
     <dialogMode height="600"
                 width="800"/>
@@ -36,24 +45,21 @@
                 <rows>
                     <!--                    dòng 1-->
                     <row>
+                        <form colspan="3" width="100%" childrenCaptionWidth="80px" dataContainer="thuchiDc">
+                            <column>
+                                <lookupField id="donvitao_thuchiField"
+                                             property="donvitao_thuchi"
+                                             width="100%"
+                                             nullName="---Lọc tất cả---"
+                                             caption="mainMsg://donvitao"/>
+                            </column>
+                        </form>
                         <form colspan="1" width="100%">
                             <column>
                                 <label value=""/>
                             </column>
                         </form>
                         <form colspan="3" width="100%" childrenCaptionWidth="80px" dataContainer="thuchiDc">
-                            <column>
-                                <lookupField id="donvitao_thuchiField"
-                                             property="donvitao_thuchi"
-                                             width="100%"
-                                             inputPrompt="---Lọc tất cả---"
-                                             caption="mainMsg://donvitao"/>
-                            </column>
-                        </form>
-                    </row>
-                    <!--                    dòng 2-->
-                    <row>
-                        <form colspan="7" width="100%" childrenCaptionWidth="80px" dataContainer="thuchiDc">
                             <column>
                                 <textField id="khoanchiField"
                                            property="khoanchi"
@@ -62,6 +68,7 @@
                             </column>
                         </form>
                     </row>
+
                     <!--                    dòng 3-->
                     <row>
                         <form colspan="3" width="100%" childrenCaptionWidth="80px" dataContainer="thuchiDc">

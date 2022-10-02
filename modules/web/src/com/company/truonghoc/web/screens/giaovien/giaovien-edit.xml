@@ -44,6 +44,7 @@
                                              width="100%"
                                              dataContainer="giaovienDc"
                                              optionsContainer="donvisDc"
+                                             nullName="--Lọc tất cả---"
                                              captionProperty="tendonvi"/>
                             </column>
                         </form>
@@ -90,6 +91,7 @@
                                              property="gioitinhgiaovien"
                                              dataContainer="giaovienDc"
                                              width="100%"
+                                             nullName="---Tuỳ chỉnh---"
                                              caption="mainMsg://giaovien.gioitinh"/>
                             </column>
                         </form>

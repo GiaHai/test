@@ -45,6 +45,7 @@
                                          caption="Đơn vị"
                                          datasource="userDs"
                                          optionsDatasource="donvisDc"
+                                         nullName="---Đơn vị---"
                                          captionProperty="tendonvi"/>
 <!--                            <textField id="tendonviField" property="tendonvi" datasource="userDs"/>-->
 <!--                            <checkBox id="donvitrungtam" datasource="userDs" property="donvitrungtam"  caption="ĐƠn vị trung tâm" />-->

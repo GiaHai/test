@@ -23,15 +23,6 @@
                 </query>
             </loader>
         </collection>
-        <collection id="lophocsDc"
-                    class="com.company.truonghoc.entity.Lophoc">
-            <view extends="lophoc-view"/>
-            <loader id="lophocsDl">
-                <query>
-                    <![CDATA[select e from truonghoc_Lophoc e]]>
-                </query>
-            </loader>
-        </collection>
     </data>
     <facets>
         <dataLoadCoordinator auto="true">
@@ -52,48 +43,27 @@
                                  caption="Đơn vị"
                                  width="100%"
                                  nullName="---Tất cả đơn vị---"/>
-                    <lookupField id="searchLopField"
-                                 caption="Lớp"
-                                 width="100%"
-                                 nullName="--Tất cả lớp---"/>
-                </vbox>
-                <vbox spacing="true" width="100%">
-                    <lookupField id="sreachgvFiled"
-                                 caption="Giáo viên"
-                                 width="100%"
-                                 nullName="---Tất cả giáo viên---"/>
                     <lookupField id="sreachGtinhField"
                                  caption="Giới tính"
                                  width="100%"
                                  nullName="---Tất cả giới tính---"/>
                 </vbox>
+
                 <vbox spacing="true" width="100%">
                     <textField id="sreachHsField"
                                caption="Học sinh"
                                width="100%"
                                inputPrompt="Tên học sinh"/>
-                    <lookupField id="selectionModeField"
-                                 caption="Chọn trường để điểm danh"
-                                 nullOptionVisible="false"
-                                 width="100%"
-                                 textInputAllowed="false"/>
                 </vbox>
-<!--                <vbox>-->
-<!--                    <lookupField id="thanghocField" />-->
-<!--                </vbox>-->
                 <vbox align="MIDDLE_LEFT" spacing="true">
-                    <button id="diemdanhBtn"
-                            stylename="Btntimkiem"
-                            caption="Điểm danh" align="TOP_LEFT" visible="false"/>
                     <button id="timkiemBtn"
                             invoke="timkiemExcute"
                             stylename="Btntimkiem"
                             caption="Tìm kiếm" align="BOTTOM_LEFT"/>
-<!--                    <button id="test"/>-->
                 </vbox>
             </hbox>
         </groupBox>
-        <dataGrid id="hocsinhsTable"
+        <groupTable id="hocsinhsTable"
                   width="100%"
                   dataContainer="hocsinhsDc">
             <actions>
@@ -103,29 +73,18 @@
             </actions>
             <columns>
                 <column id="donvitao_hocsinh"
-                        property="donvitao_hocsinh"
                         caption="mainMsg://donvitao"/>
-
                 <column id="tenhocsinh"
-                        property="tenhocsinh"
                         caption="mainMsg://hocsinh.tenhocsinh"/>
 
                 <column id="ngaysinhhocsinh"
-                        property="ngaysinhhocsinh"
                         caption="mainMsg://hocsinh.ngaysinhhocsinh"/>
                 <column id="gioitinhhocsinh"
-                        property="gioitinhhocsinh"
                         caption="mainMsg://hocsinh.gioitinhhocsinh"/>
                 <column id="quequanhocsinh"
-                        property="quequanhocsinh"
                         caption="mainMsg://hocsinh.quequanhocsinh"/>
                 <column id="ghichu"
-                        property="ghichu"
                         caption="mainMsg://hocsinh.ghichu"/>
-<!--                <column id="diemdanh.ngaynghi"-->
-<!--                        property="diemdanh.ngaynghi"/>-->
-<!--                <column id="lophocs.tenlop.dovi"-->
-<!--                        property="lophocs.tenlop.dovi"/>-->
             </columns>
             <rowsCount/>
             <buttonsPanel id="buttonsPanel"
@@ -134,7 +93,7 @@
                 <button id="editBtn" caption="Chỉnh sửa"/>
                 <button id="removeBtn" action="hocsinhsTable.remove"/>
             </buttonsPanel>
-        </dataGrid>
+        </groupTable>
         <hbox id="lookupActions" spacing="true" visible="false">
             <button action="lookupSelectAction"/>
             <button action="lookupCancelAction"/>

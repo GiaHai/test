@@ -46,12 +46,12 @@
                 <rows>
                     <!--                    dòng 1-->
                     <row>
-                        <form colspan="3" width="100%" childrenCaptionWidth="80px" dataContainer="thutienhocphiDc">
+                        <form colspan="7" width="100%" childrenCaptionWidth="80px" dataContainer="thutienhocphiDc">
                             <column>
                                 <lookupField id="dovitao_thutienhocphiField"
                                              property="donvitao_thutienhocphi"
                                              width="100%"
-                                             inputPrompt="---Lọc tất cả---"
+                                             nullName="---Lọc tất cả---"
                                              caption="mainMsg://donvitao"/>
                             </column>
                         </form>
@@ -104,6 +104,18 @@
                                            caption="mainMsg://thuvienhocphi.denngay"/>
                             </column>
                         </form>
+
+                    </row>
+                    <row>
+                        <form colspan="7" width="100%" childrenCaptionWidth="80px" dataContainer="thutienhocphiDc">
+                            <column>
+                                <dateField id="ngaythanhtoanField"
+                                           property="ngaythanhtoan"
+                                           width="100%"
+                                           visible="false"
+                                           caption="Ngày thanh toán"/>
+                            </column>
+                        </form>
                     </row>
                     <!--                    dòng 4-->
                     <row>
@@ -112,6 +124,7 @@
                                 <lookupField id="tenhocsinhField"
                                              property="tenhocsinh"
                                              width="100%"
+                                             nullName="---Lọc tất cả---"
                                              caption="mainMsg://thuvienhocphi.tenhocsinh"/>
                             </column>
                         </form>

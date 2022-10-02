@@ -36,13 +36,7 @@
                 </columns>
                 <rows>
                     <row>
-
-                        <form colspan="1" width="100%">
-                            <column>
-                                <label value=""/>
-                            </column>
-                        </form>
-                        <form colspan="3" width="100%" childrenCaptionWidth="80px">
+                        <form colspan="7" width="100%" childrenCaptionWidth="80px">
                             <column>
                                 <lookupField id="donvitao_hocsinhField"
                                            property="donvitao_hocsinh"
@@ -50,6 +44,7 @@
                                            width="100%"
                                              optionsContainer="donvisDc"
                                              captionProperty="tendonvi"
+                                             nullName="---Lọc tất cả---"
                                            caption="mainMsg://donvitao"/>
                             </column>
                         </form>

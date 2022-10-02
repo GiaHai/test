@@ -45,7 +45,7 @@ public class GiaovienEdit extends StandardEditor<Giaovien> {
 
     @Subscribe
     protected void onInit(InitEvent event) {
-        List<String> list = Arrays.asList("Nam", "Nữ", "Tùy chỉnh");
+        List<String> list = Arrays.asList("Nam", "Nữ");
         gioitinhgiaovienField.setOptionsList(list);
     }
 
@@ -60,8 +60,6 @@ public class GiaovienEdit extends StandardEditor<Giaovien> {
                     donvitao_giaovienField.setOptionsList(test());
                 }
             }
-        }else {
-            donvitao_giaovienField.setEditable(false);
         }
     }
 

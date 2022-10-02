@@ -57,19 +57,23 @@ public class TenlopEdit extends StandardEditor<Tenlop> {
     }
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
-        if (getEditedEntity().getCreatedBy() == null){
-            if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() == null) {
-                donviFiled.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
-                donviFiled.setEditable(false);
+        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi() != null){
+            if (getEditedEntity().getCreatedBy() == null) {
+                if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() == null) {
+                    donviFiled.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
+                    donviFiled.setEditable(false);
+                }
             }
-        }else {
-            donviFiled.setEditable(false);
         }
     }
 
     @Subscribe("donviFiled")
     protected void onDonviFiledValueChange(HasValue.ValueChangeEvent event) {
-        giaoviencnField.setOptionsList(loadgiaovien());
+        if (donviFiled.getValue() != null){
+            giaoviencnField.setOptionsList(loadgiaovien());
+        }else {
+            giaoviencnField.clear();
+        }
     }
 
     private List<Giaovien> loadgiaovien() {

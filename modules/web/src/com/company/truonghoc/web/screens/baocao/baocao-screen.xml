@@ -77,34 +77,6 @@
                         </vbox>
                     </hbox>
                 </groupBox>
-<!--                <vbox spacing="true"-->
-<!--                      stylename="css-vbox-timkiem">-->
-<!--                    <label value="Điều kiện lọc" stylename="dieukienloc"/>-->
-<!--                    <hbox spacing="true"-->
-<!--                          stylename="hbox-text">-->
-<!--                        <dateField id="tungayField"-->
-<!--                                   datatype="date"-->
-<!--                                   resolution="DAY"-->
-<!--                                   width="100%"-->
-<!--                                   caption="mainMsg://tungay"-->
-<!--                                   stylename="nhap"/>-->
-<!--                        <dateField id="denngayField"-->
-<!--                                   datatype="date"-->
-<!--                                   resolution="DAY"-->
-<!--                                   caption="mainMsg://denngay"-->
-<!--                                   stylename="nhap"/>-->
-
-<!--                    </hbox>-->
-<!--                    <hbox stylename="css-hbox-timkiem" spacing="true">-->
-<!--                        <button id="timkiem"-->
-<!--                                caption="Tìm kiếm"-->
-<!--                                stylename="button-clearbtn"/>-->
-<!--                        <button id="clearBtn"-->
-<!--                                caption="Xóa"-->
-<!--                                stylename="button-clearbtn"/>-->
-<!--                    </hbox>-->
-<!--                </vbox>-->
-
                 <vbox width="100%" height="AUTO">
                     <hbox width="100%">
                         <chart:serialChart additionalFields="additional"
@@ -262,6 +234,8 @@
                     </hbox>
                 </vbox>
             </tab>
+
+
             <tab id="tab2"
                  caption="Tỷ lệ % của các đơn vị về thu và chi"
                  margin="true"

@@ -28,6 +28,16 @@
                 </query>
             </loader>
         </collection>
+
+        <collection id="lophocsDc"
+                    class="com.company.truonghoc.entity.Lophoc">
+            <view extends="lophoc-view"/>
+            <loader id="lophocsDl">
+                <query>
+                    <![CDATA[select e from truonghoc_Lophoc e]]>
+                </query>
+            </loader>
+        </collection>
     </data>
     <layout expand="editActions" spacing="true">
         <vbox spacing="true">
@@ -84,12 +94,9 @@
                     <row>
                         <form colspan="3" width="100%" childrenCaptionWidth="180px" dataContainer="diemdanhDc">
                             <column>
-                                <tokenList id="tokenListField" simple="true" width="100%"
-                                           property="hotenhs" caption="Danh sách học sinh nghỉ">
-                                    <lookup multiselect="true" optionsContainer="hocsinhsDc"
-                                            captionProperty="tenhocsinh"/>
-                                    <addButton caption="Thêm"/>
-                                </tokenList>
+                                <lookupField id="hocsinhField" width="100%"
+                                             property="hotenhs" caption="Danh sách học sinh nghỉ"
+                                             nullName="---Danh sách học sinh---"/>
                             </column>
                         </form>
                         <form colspan="1" width="100%">

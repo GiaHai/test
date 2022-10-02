@@ -85,19 +85,6 @@ public class ThuchiBrowse extends StandardLookup<Thuchi> {
         excuteSearch(true);
     }
 
-    @Subscribe("thuchisTable.create")
-    protected void onThuchisTableCreate(Action.ActionPerformedEvent event) {
-        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null) {
-            this.thuchisTableCreate.execute();
-        } else {
-            dialogs.createMessageDialog()
-                    .withCaption("THÔNG BÁO")
-                    .withMessage("Bạn không có quyền")
-                    .withType(Dialogs.MessageType.WARNING)
-                    .show();
-        }
-    }
-
     public Component stt(Entity entity) {
         int lineNumber = 1;
         try {

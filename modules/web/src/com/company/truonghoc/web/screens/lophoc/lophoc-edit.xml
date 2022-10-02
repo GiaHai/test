@@ -8,7 +8,6 @@
                   class="com.company.truonghoc.entity.Lophoc">
             <view extends="lophoc-view"/>
             <loader/>
-            <collection id="dshocsinhDc" property="dshocsinh"/>
         </instance>
         <collection id="tenlopsDc"
                     class="com.company.truonghoc.entity.Tenlop">
@@ -56,14 +55,13 @@
                 <columns>
                     <column flex="1"/>
                     <column flex="1"/>
-                    <column flex="1"/>
                     <column flex="0.1"/>
                     <column flex="1"/>
                     <column flex="1"/>
                     <column flex="0.1"/>
                     <column flex="1"/>
                     <column flex="1"/>
-                    <column flex="1"/>
+                    <column flex="0.1"/>
                     <column flex="1"/>
                     <column flex="1"/>
                 </columns>
@@ -123,14 +121,20 @@
                         </form>
                     </row>
                     <row>
-                        <form colspan="7" width="100%">
+                        <form colspan="1" width="100%">
                             <column>
-                                <tokenList id="tokenListField" simple="true" width="100%"
-                                           property="dshocsinh" dataContainer="lophocDc" caption="Danh sách học sinh">
-                                    <lookup multiselect="true" optionsContainer="hocsinhsDc"
-                                            captionProperty="tenhocsinh"/>
-                                    <addButton caption="Thêm"/>
-                                </tokenList>
+                                <label value=""/>
+                            </column>
+                        </form>
+                        <form colspan="6" width="100%"  childrenCaptionWidth="80px">
+                            <column>
+                                <pickerField id="tokenListField" width="100%"
+                                             property="dshocsinh" dataContainer="lophocDc" caption="Danh sách học sinh">
+                                    <actions>
+                                        <action id="lookup" type="picker_lookup"/>
+                                        <action id="clear" type="picker_clear"/>
+                                    </actions>
+                                </pickerField>
                             </column>
                         </form>
                     </row>
@@ -140,7 +144,8 @@
 
 
         <hbox id="editActions" spacing="true">
-            <button id="commitAndCloseBtn" action="windowCommitAndClose"/>
+            <!--            <button id="commitAndCloseBtn" action="windowCommitAndClose"/>-->
+            <button id="commitAndCloseBtn" caption="Lưu" css="background-color: #6f5cc3; color: white" icon="OK"/>
             <button id="closeBtn" action="windowClose"/>
         </hbox>
     </layout>

@@ -5,7 +5,6 @@ import com.haulmont.cuba.core.entity.StandardEntity;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
 @Table(name = "TRUONGHOC_HOCSINH")
 @Entity(name = "truonghoc_Hocsinh")
@@ -32,34 +31,6 @@ public class Hocsinh extends StandardEntity {
 
     @Column(name = "GHICHU")
     private String ghichu;
-
-    @JoinTable(name = "TRUONGHOC_DIEMDANH_HOCSINH_LINK",
-            joinColumns = @JoinColumn(name = "HOCSINH_ID"),
-            inverseJoinColumns = @JoinColumn(name = "DIEMDANH_ID"))
-    @ManyToMany
-    private List<Diemdanh> diemdanhs;
-
-    @JoinTable(name = "TRUONGHOC_LOPHOC_HOCSINH_LINK",
-            joinColumns = @JoinColumn(name = "HOCSINH_ID"),
-            inverseJoinColumns = @JoinColumn(name = "LOPHOC_ID"))
-    @ManyToMany
-    private List<Lophoc> lophocs;
-
-    public List<Lophoc> getLophocs() {
-        return lophocs;
-    }
-
-    public void setLophocs(List<Lophoc> lophocs) {
-        this.lophocs = lophocs;
-    }
-
-    public List<Diemdanh> getDiemdanhs() {
-        return diemdanhs;
-    }
-
-    public void setDiemdanhs(List<Diemdanh> diemdanhs) {
-        this.diemdanhs = diemdanhs;
-    }
 
     public void setDonvitao_hocsinh(Donvi donvitao_hocsinh) {
         this.donvitao_hocsinh = donvitao_hocsinh;

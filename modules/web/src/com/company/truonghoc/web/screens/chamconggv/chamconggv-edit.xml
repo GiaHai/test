@@ -51,8 +51,7 @@
                                              property="hotengv"
                                              width="100%"
                                              caption="mainMsg://chamcong.hovaten"
-                                             nullName="--Lọc tất cả---"
-                                             optionsContainer="giaoviensDc"/>
+                                             nullName="--Lọc tất cả---"/>
                             </column>
                         </form>
                         <form colspan="1" width="100%">

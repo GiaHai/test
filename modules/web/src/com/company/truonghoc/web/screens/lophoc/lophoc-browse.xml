@@ -58,6 +58,7 @@
                 <column id="donvi" caption="Đơn vị"/>
                 <column id="tenlop" caption="mainMsg://lophoc.tenlop"/>
                 <column id="giaoviencn" caption="mainMsg://lophoc.giaoviencn"/>
+                <column id="dshocsinh" caption="Học sinh"/>
             </columns>
             <rowsCount/>
             <buttonsPanel id="buttonsPanel"

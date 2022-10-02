@@ -74,20 +74,6 @@ public class ThutienhocphiBrowse extends StandardLookup<Thutienhocphi> {
         excuteSearch(true);
     }
 
-    @Subscribe("thutienhocphisTable.create")
-    protected void onThutienhocphisTableCreate(Action.ActionPerformedEvent event) {
-        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null) {
-            this.thutienhocphisTableCreate.execute();
-        } else {
-            dialogs.createMessageDialog()
-                    .withCaption("THÔNG BÁO")
-                    .withMessage("Bạn không có quyền")
-                    .withType(Dialogs.MessageType.WARNING)
-                    .show();
-            System.out.println("hahah");
-        }
-    }
-
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
         dkphanquyen();

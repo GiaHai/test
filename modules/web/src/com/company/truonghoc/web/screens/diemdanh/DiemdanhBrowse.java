@@ -72,19 +72,6 @@ public class DiemdanhBrowse extends StandardLookup<Diemdanh> {
         dkphanquyen();
     }
 
-    @Subscribe("diemdanhsTable.create")
-    protected void onDiemdanhsTableCreate(Action.ActionPerformedEvent event) {
-        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null) {
-            this.diemdanhsTableCreate.execute();
-        } else {
-            dialogs.createMessageDialog()
-                    .withCaption("THÔNG BÁO")
-                    .withMessage("Bạn không có quyền")
-                    .withType(Dialogs.MessageType.WARNING)
-                    .show();
-            System.out.println("hahah");
-        }
-    }
 
     //Điều kiện login
     private void dkphanquyen() {
@@ -163,7 +150,7 @@ public class DiemdanhBrowse extends StandardLookup<Diemdanh> {
         //Lớp
         if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null) {
             if (lop == null) {
-                where += "and e.lopdd.tenlop.tinhtranglop = true ";
+                where += "and e.lopdd.tinhtranglop = true ";
             } else {
                 if (lop != null) {
                     where += "and e.lopdd.tenlop.tenlop = :lop ";

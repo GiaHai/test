@@ -25,13 +25,13 @@
         <form id="form" dataContainer="tenlopDc">
             <hbox width="100%" spacing="true">
                 <vbox>
-                    <lookupField id="donviFiled" dataContainer="tenlopDc" property="dovi" caption="Đơn vị"/>
+                    <lookupField id="donviFiled" dataContainer="tenlopDc" property="dovi" caption="Đơn vị" nullName="---Lọc tất cả---"/>
                     <textField id="tenlopField" dataContainer="tenlopDc" property="tenlop" caption="Tên lớp"/>
                 </vbox>
                 <vbox>
                     <lookupField id="giaoviencnField" dataContainer="tenlopDc" property="giaoviencn"
-                                 caption="Giáo viên chủ nhiệm"/>
-                    <lookupField id="thanghocField" dataContainer="tenlopDc" property="thanghoc" caption="Tháng học"/>
+                                 caption="Giáo viên chủ nhiệm" nullName="---Lọc tất cả---"/>
+                    <lookupField id="thanghocField" dataContainer="tenlopDc" property="thanghoc" caption="Tháng học" nullName="---Lọc tất cả---"/>
                 </vbox>
                 <vbox align="BOTTOM_CENTER">
                     <checkBox id="ttLopcheck" caption="Tình trạng lớp" dataContainer="tenlopDc"

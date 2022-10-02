@@ -80,22 +80,6 @@ public class HocphiBrowse extends StandardLookup<Hocphi> {
         dkphanquyen();
     }
 
-    @Subscribe("hocphisTable.create")
-    protected void onHocphisTableCreate(Action.ActionPerformedEvent event) {
-        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null) {
-            this.hocphisTableCreate.execute();
-
-        } else {
-            dialogs.createMessageDialog()
-                    .withCaption("THÔNG BÁO")
-                    .withMessage("Bạn không có quyền")
-                    .withType(Dialogs.MessageType.WARNING)
-                    .show();
-        }
-
-
-    }
-
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
         excuteSearch(true);

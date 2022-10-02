@@ -66,8 +66,11 @@ public class HocphiEdit extends StandardEditor<Hocphi> {
     protected void onBeforeShow(BeforeShowEvent event) {
 //        quyền
 //        usertaoField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien());
-//        dovitao_hocphiField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
-
+//
+        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() == null){
+            dovitao_hocphiField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
+            dovitao_hocphiField.setEditable(false);
+        }
         Calendar calendar = Calendar.getInstance();
 
         calendar.add(Calendar.MONTH, 1);
@@ -78,14 +81,6 @@ public class HocphiEdit extends StandardEditor<Hocphi> {
 
         tinhtrangthanhtoanFiedl.setValue("Chưa thanh toán");
         dovitao_hocphiField.setOptionsList(searchedService.loaddonvi());
-    }
-
-    @Subscribe
-    protected void onAfterShow(AfterShowEvent event) {
-//        hovatenField.setOptionsList(hocsinhList(getEditedEntity().getDovitao_hocphi()));
-        if (hovatenField.getValue() != null) {
-            hovatenField.setEditable(false);
-        }
     }
 
     private Hocsinh hocsinhList(Object dovitao_hocphi, Object tenhs) {

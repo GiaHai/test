@@ -51,14 +51,6 @@ public class SearchedServiceBean implements SearchedService {
                 .list();
     }
 
-//    @Override
-//    public List<Hocsinh> loadHsDk(String tendonvi, String tengiaovien) {
-//        return dataManager.load(Hocsinh.class)
-//                .query("select e from truonghoc_Hocsinh e where e.donvitao_hocsinh.tendonvi = :tendonvi and ")
-//                .parameter("tendonvi", tendonvi)
-//                .list();
-//    }
-
     @Override
     public List<Donvi> loaddonvi() {
         return dataManager.load(Donvi.class)

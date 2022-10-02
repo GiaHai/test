@@ -45,7 +45,6 @@ public class ThutienhocphiEdit extends StandardEditor<Thutienhocphi> {
     protected LookupField<Hocsinh> tenhocsinhField;
     @Inject
     protected DataManager dataManager;
-
     @Inject
     protected GroupBoxLayout lkchitietthuBox;
     @Inject
@@ -54,6 +53,8 @@ public class ThutienhocphiEdit extends StandardEditor<Thutienhocphi> {
     protected Button InphieuBtn;
     @Inject
     protected SearchedService searchedService;
+    @Inject
+    protected DateField<Date> ngaythanhtoanField;
 
     @Subscribe
     protected void onInit(InitEvent event) {
@@ -74,6 +75,10 @@ public class ThutienhocphiEdit extends StandardEditor<Thutienhocphi> {
 
     @Subscribe
     protected void onBeforeShow(BeforeShowEvent event) {
+        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() == null){
+            dovitao_thutienhocphiField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
+            dovitao_thutienhocphiField.setEditable(false);
+        }
 //        quyền
 //        usertaoField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien());
 //        dovitao_thutienhocphiField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
@@ -91,10 +96,14 @@ public class ThutienhocphiEdit extends StandardEditor<Thutienhocphi> {
         dovitao_thutienhocphiField.setOptionsList(searchedService.loaddonvi());
     }
 
-    @Subscribe
-    protected void onAfterShow(AfterShowEvent event) {
-//        tenhocsinhField.setOptionsList(hocsinhList(getEditedEntity().getDonvitao_thutienhocphi().getTendonvi()));
+    @Subscribe("hinhthucthanhtoanField")
+    protected void onHinhthucthanhtoanFieldValueChange2(HasValue.ValueChangeEvent<String> event) {
+        ngaythanhtoanField.setVisible(true);
+        tungayField.setVisible(false);
+        denngayField.setVisible(false);
+        ngaythanhtoanField.setRequired(true);
     }
+    
 
 
     @Subscribe(id = "lkchitietthu", target = Target.DATA_CONTAINER)

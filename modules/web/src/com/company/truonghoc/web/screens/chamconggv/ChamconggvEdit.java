@@ -3,6 +3,7 @@ package com.company.truonghoc.web.screens.chamconggv;
 import com.company.truonghoc.entity.Donvi;
 import com.company.truonghoc.entity.Giaovien;
 import com.company.truonghoc.service.DulieuUserService;
+import com.company.truonghoc.service.SearchedService;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.gui.components.DateField;
 import com.haulmont.cuba.gui.components.HasValue;
@@ -35,6 +36,8 @@ public class ChamconggvEdit extends StandardEditor<Chamconggv> {
     protected LookupField<String> buoilamField;
     @Inject
     protected DateField<Date> ngaylamField;
+    @Inject
+    protected SearchedService searchedService;
 
     @Subscribe
     protected void onInit(InitEvent event) {
@@ -57,7 +60,7 @@ public class ChamconggvEdit extends StandardEditor<Chamconggv> {
                     hotenGvField.setEditable(false);
                 }
             }else {
-                donvigvField.setOptionsList(load());
+                donvigvField.setOptionsList(searchedService.loaddonvi());
             }
         }
     }
@@ -65,7 +68,11 @@ public class ChamconggvEdit extends StandardEditor<Chamconggv> {
 
     @Subscribe("donvigvField")
     protected void onDonvigvFieldValueChange(HasValue.ValueChangeEvent<Donvi> event) {
-        hotenGvField.setOptionsList(timtengiaovien(donvigvField.getValue()));
+        if (donvigvField.getValue() != null){
+            hotenGvField.setOptionsList(timtengiaovien(donvigvField.getValue()));
+        }else {
+            hotenGvField.clear();
+        }
     }
 
     public List<Giaovien> timtengiaovien(Donvi donvitao){
@@ -75,9 +82,4 @@ public class ChamconggvEdit extends StandardEditor<Chamconggv> {
                 .list();
     }
 
-    private List<Donvi> load(){
-        return dataManager.load(Donvi.class)
-                .query("select e from truonghoc_Donvi e")
-                .list();
-    }
 }

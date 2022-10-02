@@ -4,7 +4,6 @@ import com.haulmont.cuba.core.entity.StandardEntity;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
 @Table(name = "TRUONGHOC_DIEMDANH")
 @Entity(name = "truonghoc_Diemdanh")
@@ -17,27 +16,33 @@ public class Diemdanh extends StandardEntity {
 
     @JoinColumn(name = "LOPDD_ID")
     @ManyToOne(fetch = FetchType.LAZY)
-    private Lophoc lopdd;
+    private Tenlop lopdd;
 
     @JoinColumn(name = "DONVIDD_ID")
     @ManyToOne(fetch = FetchType.LAZY)
     private Donvi donvidd;
 
-    @ManyToMany
-    @JoinTable(name = "TRUONGHOC_DIEMDANH_HOCSINH_LINK",
-            joinColumns = @JoinColumn(name = "DIEMDANH_ID"),
-            inverseJoinColumns = @JoinColumn(name = "HOCSINH_ID"))
-    private List<Hocsinh> hotenhs;
+    @JoinColumn(name = "HOTENHS_ID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Lophoc hotenhs;
 
     @Column(name = "NGAYNGHI")
     @Temporal(TemporalType.DATE)
     private Date ngaynghi;
 
-    public void setHotenhs(List<Hocsinh> hotenhs) {
+    public void setLopdd(Tenlop lopdd) {
+        this.lopdd = lopdd;
+    }
+
+    public Tenlop getLopdd() {
+        return lopdd;
+    }
+
+    public void setHotenhs(Lophoc hotenhs) {
         this.hotenhs = hotenhs;
     }
 
-    public List<Hocsinh> getHotenhs() {
+    public Lophoc getHotenhs() {
         return hotenhs;
     }
 
@@ -47,14 +52,6 @@ public class Diemdanh extends StandardEntity {
 
     public Donvi getDonvidd() {
         return donvidd;
-    }
-
-    public void setLopdd(Lophoc lopdd) {
-        this.lopdd = lopdd;
-    }
-
-    public Lophoc getLopdd() {
-        return lopdd;
     }
 
     public void setNguoitaodd(Giaovien nguoitaodd) {
