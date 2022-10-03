@@ -32,11 +32,22 @@ public class Luongthang extends StandardEntity {
     @Column(name = "LUONGCOBAN")
     private Long luongcoban;
 
+    @Column(name = "TUNGAY")
+    @Temporal(TemporalType.DATE)
+    private Date tungay;
+
+    @Column(name = "DENNGAY")
+    @Temporal(TemporalType.DATE)
+    private Date denngay;
+
     @Column(name = "BUOILAM")
     private BigDecimal buoilam;
 
     @Column(name = "CANGOAI")
     private Integer cangoai;
+
+    @Column(name = "CACHUNHAT")
+    private Integer cachunhat;
 
     @Column(name = "CASANG")
     private Integer casang;
@@ -59,6 +70,9 @@ public class Luongthang extends StandardEntity {
     @Column(name = "THUONG")
     private Long thuong;
 
+    @Column(name = "TIEN_BH")
+    private Integer tienBh;
+
     @Column(name = "TONGLINH")
     private Long tonglinh;
 
@@ -67,6 +81,38 @@ public class Luongthang extends StandardEntity {
 
     @Column(name = "TINHTRANGNHANLUONG")
     private String tinhtrangnhanluong;
+
+    public void setTienBh(Integer tienBh) {
+        this.tienBh = tienBh;
+    }
+
+    public Integer getTienBh() {
+        return tienBh;
+    }
+
+    public void setTungay(Date tungay) {
+        this.tungay = tungay;
+    }
+
+    public Date getTungay() {
+        return tungay;
+    }
+
+    public void setDenngay(Date denngay) {
+        this.denngay = denngay;
+    }
+
+    public Date getDenngay() {
+        return denngay;
+    }
+
+    public void setCachunhat(Integer cachunhat) {
+        this.cachunhat = cachunhat;
+    }
+
+    public Integer getCachunhat() {
+        return cachunhat;
+    }
 
     public void setDonvitao_luongthang(Donvi donvitao_luongthang) {
         this.donvitao_luongthang = donvitao_luongthang;

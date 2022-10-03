@@ -71,7 +71,7 @@
                     </row>
                     <!--                    dòng 2-->
                     <row>
-                        <form colspan="3" width="100%" childrenCaptionWidth="80px" dataContainer="chamconggvDc">
+                        <form colspan="2" width="100%" childrenCaptionWidth="80px" dataContainer="chamconggvDc">
                             <column>
                                 <dateField id="ngaylamField"
                                            width="100%"
@@ -84,13 +84,22 @@
                                 <label value=""/>
                             </column>
                         </form>
-                        <form colspan="3" width="100%" childrenCaptionWidth="80px" dataContainer="chamconggvDc">
+                        <form colspan="2" width="100%" childrenCaptionWidth="80px" dataContainer="chamconggvDc">
                             <column>
                                 <lookupField id="buoilamField"
                                              width="100%"
                                              caption="mainMsg://chamcong.buoilam"
                                              nullName="--Lọc tất cả---"
                                              property="buoilam"/>
+                            </column>
+                        </form>
+                        <form colspan="2" width="100%" childrenCaptionWidth="80px" dataContainer="chamconggvDc">
+                            <column>
+                                <textField id="tienbuoiField"
+                                           width="100%"
+                                           caption="mainMsg://chamcong.buoilam"
+                                           inputPrompt="Nhập số tiền"
+                                           property="tienBuoi"/>
                             </column>
                         </form>
                     </row>

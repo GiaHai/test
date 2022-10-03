@@ -8,14 +8,13 @@ import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.gui.components.DateField;
 import com.haulmont.cuba.gui.components.HasValue;
 import com.haulmont.cuba.gui.components.LookupField;
+import com.haulmont.cuba.gui.components.TextField;
 import com.haulmont.cuba.gui.screen.*;
 import com.company.truonghoc.entity.Chamconggv;
 import com.haulmont.cuba.security.global.UserSession;
 
 import javax.inject.Inject;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @UiController("truonghoc_Chamconggv.edit")
 @UiDescriptor("chamconggv-edit.xml")
@@ -28,6 +27,8 @@ public class ChamconggvEdit extends StandardEditor<Chamconggv> {
     protected UserSession userSession;
     @Inject
     protected DataManager dataManager;
+    @Inject
+    protected TextField<Integer> tienbuoiField;
     @Inject
     protected LookupField<Giaovien> hotenGvField;
     @Inject
@@ -44,8 +45,8 @@ public class ChamconggvEdit extends StandardEditor<Chamconggv> {
 //        donvigvField.setEditable(false);
         hotenGvField.setRequired(true);
         ngaylamField.setRequired(true);
-        buoilamField.setRequired(true);
-        List<String> list = Arrays.asList("Làm cả ngày", "Ca sáng", "Ca chiều");
+//        buoilamField.setRequired(true);
+        List<String> list = Arrays.asList("Làm cả ngày", "Ca sáng", "Ca chiều", "Ca chủ nhật", "Ca chiều 5h-6h", "Ca chiều 6h-7h");
         buoilamField.setOptionsList(list);
     }
 

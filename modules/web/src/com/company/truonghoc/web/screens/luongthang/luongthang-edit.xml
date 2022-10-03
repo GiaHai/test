@@ -42,12 +42,13 @@
                     <column flex="1.0"/>
                     <column flex="1.0"/>
                     <column flex="1.0"/>
+                    <column flex="1.0"/>
 
                 </columns>
                 <rows>
                     <!--                    dòng 1-->
                     <row>
-                        <form colspan="7" width="100%" childrenCaptionWidth="80px" dataContainer="luongthangDc">
+                        <form colspan="8" width="100%" childrenCaptionWidth="80px" dataContainer="luongthangDc">
                             <column>
                                 <lookupField id="donvitao_luongthangField"
                                            property="donvitao_luongthang"
@@ -68,7 +69,7 @@
                                              caption="mainMsg://luongthang.hovaten"/>
                             </column>
                         </form>
-                        <form colspan="1" width="100%">
+                        <form colspan="2" width="100%">
                             <column>
                                 <label value=""/>
                             </column>
@@ -84,10 +85,11 @@
                     </row>
                     <!--                    dòng tìm kiếm-->
                     <row>
-                        <form colspan="3" width="100%" childrenCaptionWidth="80px">
+                        <form colspan="3" width="100%" childrenCaptionWidth="80px" dataContainer="luongthangDc">
                             <column>
                                 <dateField id="tungayField"
                                            width="100%"
+                                           property="tungay"
                                            caption="Từ ngày"
                                            resolution="DAY"/>
                             </column>
@@ -97,10 +99,11 @@
                                 <dateField id="denngayField"
                                            width="100%"
                                            resolution="DAY"
+                                           property="denngay"
                                            caption="Đến ngày"/>
                             </column>
                         </form>
-                        <form colspan="1" width="100%">
+                        <form colspan="2" width="100%">
                             <column>
                                 <button id="searchBLamBtn" width="50%" caption="Ngày làm" invoke="timkiem"/>
                             </column>
@@ -132,6 +135,14 @@
                                            caption="mainMsg://luongthang.casang"/>
                             </column>
                         </form>
+                        <form colspan="2" width="100%" childrenCaptionWidth="80px" dataContainer="luongthangDc">
+                            <column>
+                                <textField id="cachunhatField"
+                                           width="100%"
+                                           property="cachunhat"
+                                           caption="Ca chủ nhật"/>
+                            </column>
+                        </form>
                     </row>
                     <!--                    dòng 4-->
                     <row>
@@ -143,7 +154,7 @@
                                            caption="mainMsg://luongthang.thuclinh"/>
                             </column>
                         </form>
-                        <form colspan="1" width="100%">
+                        <form colspan="2" width="100%">
                             <column>
                                 <label value=""/>
                             </column>
@@ -167,7 +178,7 @@
                                            caption="mainMsg://luongthang.trocap"/>
                             </column>
                         </form>
-                        <form colspan="1" width="100%">
+                        <form colspan="2" width="100%">
                             <column>
                                 <label value=""/>
                             </column>
@@ -191,7 +202,7 @@
                                            caption="mainMsg://luongthang.chuyencan"/>
                             </column>
                         </form>
-                        <form colspan="1" width="100%">
+                        <form colspan="2" width="100%">
                             <column>
                                 <label value=""/>
                             </column>
@@ -207,7 +218,15 @@
                     </row>
                     <!--                    dòng 7-->
                     <row>
-                        <form colspan="7" width="100%" childrenCaptionWidth="80px" dataContainer="luongthangDc">
+                        <form colspan="4" width="100%" childrenCaptionWidth="80px" dataContainer="luongthangDc">
+                            <column>
+                                <textField id="tienBhField"
+                                           property="tienBh"
+                                           width="100%"
+                                           caption="Tiền bảo hiểm"/>
+                            </column>
+                        </form>
+                        <form colspan="4" width="100%" childrenCaptionWidth="80px" dataContainer="luongthangDc">
                             <column>
                                 <textField id="tonglinhField"
                                            property="tonglinh"
@@ -226,7 +245,7 @@
                                            caption="mainMsg://luongthang.ngaynhan"/>
                             </column>
                         </form>
-                        <form colspan="1" width="100%">
+                        <form colspan="2" width="100%">
                             <column>
                                 <label value=""/>
                             </column>

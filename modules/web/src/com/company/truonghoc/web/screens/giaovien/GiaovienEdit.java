@@ -9,9 +9,7 @@ import com.company.truonghoc.entity.Giaovien;
 import com.haulmont.cuba.security.global.UserSession;
 
 import javax.inject.Inject;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @UiController("truonghoc_Giaovien.edit")
 @UiDescriptor("giaovien-edit.xml")
@@ -42,11 +40,14 @@ public class GiaovienEdit extends StandardEditor<Giaovien> {
     protected Button closeBtn;
     @Inject
     protected Actions actions;
+    @Inject
+    protected LookupField<Integer> tienBhField;
 
     @Subscribe
     protected void onInit(InitEvent event) {
         List<String> list = Arrays.asList("Nam", "Nữ");
         gioitinhgiaovienField.setOptionsList(list);
+        tienBhField.setEditable(false);
     }
 
     @Subscribe
@@ -67,5 +68,20 @@ public class GiaovienEdit extends StandardEditor<Giaovien> {
         return dataManager.load(Donvi.class)
                 .query("select e from truonghoc_Donvi e")
                 .list();
+    }
+
+    @Subscribe("luongcobanField")
+    protected void onLuongcobanFieldValueChange(HasValue.ValueChangeEvent<Long> event) {
+        if (luongcobanField.getValue() == null){
+            tienBhField.clear();
+            tienBhField.setEditable(false);
+        }else {
+            tienBhField.setEditable(true);
+            Map<String, Integer> map = new LinkedHashMap<>();
+            map.put("450000Đ", 450000);
+            map.put("100% lương", luongcobanField.getValue().hashCode());
+
+            tienBhField.setOptionsMap(map);
+        }
     }
 }

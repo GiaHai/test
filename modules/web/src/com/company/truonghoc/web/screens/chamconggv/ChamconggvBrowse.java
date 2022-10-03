@@ -3,6 +3,7 @@ package com.company.truonghoc.web.screens.chamconggv;
 import com.company.truonghoc.entity.Donvi;
 import com.company.truonghoc.entity.Giaovien;
 import com.company.truonghoc.service.DulieuUserService;
+import com.haulmont.cuba.core.entity.Entity;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.gui.UiComponents;
 import com.haulmont.cuba.gui.components.*;
@@ -61,6 +62,9 @@ public class ChamconggvBrowse extends StandardLookup<Chamconggv> {
     //Điều kiện login
     private void dkphanquyen() {
         //điều kiện đơn vị trung tâm
+        // lấy dữ liệu buổi làm
+        List<String> list = Arrays.asList("Làm cả ngày", "Ca sáng", "Ca chiều");
+        buoilamField.setOptionsList(list);
         if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi() != null) {
 
             if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() == null) {
@@ -84,9 +88,7 @@ public class ChamconggvBrowse extends StandardLookup<Chamconggv> {
                         .map(Donvi::getTendonvi)
                         .collect(Collectors.toList());
                 tendonviField.setOptionsList(sessionTypeNames);
-                // lấy dữ liệu buổi làm
-                List<String> list = Arrays.asList("Làm cả ngày", "Ca sáng", "Ca chiều");
-                buoilamField.setOptionsList(list);
+
                 //Xoá
                 tengiaovienField.clear();
                 ngaylamField.clear();

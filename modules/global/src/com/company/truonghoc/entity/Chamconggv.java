@@ -25,6 +25,25 @@ public class Chamconggv extends StandardEntity {
     @Column(name = "BUOILAM")
     private String buoilam;
 
+    @Column(name = "TIEN_BUOI")
+    private Integer tienBuoi;
+
+    public void setBuoilam(String buoilam) {
+        this.buoilam = buoilam;
+    }
+
+    public String getBuoilam() {
+        return buoilam;
+    }
+
+    public void setTienBuoi(Integer tienBuoi) {
+        this.tienBuoi = tienBuoi;
+    }
+
+    public Integer getTienBuoi() {
+        return tienBuoi;
+    }
+
     public void setDonvigv(Donvi donvigv) {
         this.donvigv = donvigv;
     }
@@ -47,14 +66,6 @@ public class Chamconggv extends StandardEntity {
 
     public Giaovien getHotengv() {
         return hotengv;
-    }
-
-    public String getBuoilam() {
-        return buoilam;
-    }
-
-    public void setBuoilam(String buoilam) {
-        this.buoilam = buoilam;
     }
 
 }

@@ -39,8 +39,11 @@ create table TRUONGHOC_LUONGTHANG (
     NGAYNHAN datetime2,
     HANNHANLUONG datetime2,
     LUONGCOBAN bigint,
+    TUNGAY datetime2,
+    DENNGAY datetime2,
     BUOILAM decimal(19, 2),
     CANGOAI integer,
+    CACHUNHAT integer,
     CASANG integer,
     THUCLINH bigint,
     DAYTHEM bigint,
@@ -48,6 +51,7 @@ create table TRUONGHOC_LUONGTHANG (
     TRACHNHIEM bigint,
     CHUYENCAN bigint,
     THUONG bigint,
+    TIEN_BH integer,
     TONGLINH bigint,
     HINHTHUCTHANHTOAN nvarchar(255),
     TINHTRANGNHANLUONG nvarchar(255),
@@ -157,6 +161,7 @@ create table TRUONGHOC_CHAMCONGGV (
     DONVIGV_ID uniqueidentifier,
     NGAYLAM datetime2,
     BUOILAM nvarchar(255),
+    TIEN_BUOI integer,
     --
     primary key nonclustered (ID)
 )^
@@ -178,6 +183,7 @@ create table TRUONGHOC_GIAOVIEN (
     QUEQUANGIAOVIEN nvarchar(255),
     GIOITINHGIAOVIEN nvarchar(255),
     LUONGCOBAN bigint not null,
+    TIEN_BH integer,
     GHICHU nvarchar(255),
     --
     primary key nonclustered (ID)

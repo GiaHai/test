@@ -22,6 +22,7 @@
     <view entity="truonghoc_Luongthang" name="luongthang-view" extends="_local" systemProperties="true">
         <property name="hovaten" view="_minimal">
             <property name="luongcoban"/>
+            <property name="tienBh"/>
         </property>
         <property name="donvitao_luongthang" view="_minimal"/>
     </view>
