@@ -1,0 +1,2 @@
+exec sp_rename 'TRUONGHOC_CHAMCONGGV.BUOILAM', 'BUOILAM__U83058', 'COLUMN' ^
+alter table TRUONGHOC_CHAMCONGGV add BUOILAM nvarchar(255) ;
