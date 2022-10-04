@@ -1,0 +1,1 @@
+exec sp_rename 'TRUONGHOC_GIAOVIEN.TIEN_BH', 'TIEN_BH__U13466', 'COLUMN' ^
