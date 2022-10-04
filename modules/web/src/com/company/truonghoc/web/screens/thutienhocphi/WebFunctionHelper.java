@@ -57,8 +57,9 @@ public class WebFunctionHelper {
                 boolean bl = GlobalFunctionHelper.writeFile(document, outputFile);
 
                 if (bl) {
-                    boolean isBreakTableSinginFooter = GlobalFunctionHelper.checkIsPageBreakTableSigninFooter(outputFile, parameter);
-                    GlobalFunctionHelper.findAndBreakPage(document, isBreakTableSinginFooter);
+//                    xoá ngày 04-10-2022
+//                    boolean isBreakTableSinginFooter = GlobalFunctionHelper.checkIsPageBreakTableSigninFooter(outputFile, parameter);
+//                    GlobalFunctionHelper.findAndBreakPage(document, isBreakTableSinginFooter);
 
                     bl = GlobalFunctionHelper.writeFile(document, outputFile);
                 }
@@ -76,7 +77,7 @@ public class WebFunctionHelper {
         return "";
     }
 
-    public static String convertDocToPdf(String pathDoc, String pathSavePdf, boolean allowDelete) {
+    public static String convertDocToPdf(String pathDoc,String pathSavePdf , boolean allowDelete) {
         if (StringUtils.isBlank(pathDoc)) {
             logger.warn("Đường dẫn file doc rỗng");
             return "";

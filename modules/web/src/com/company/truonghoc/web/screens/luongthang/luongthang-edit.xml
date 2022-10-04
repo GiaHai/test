@@ -51,8 +51,8 @@
                         <form colspan="8" width="100%" childrenCaptionWidth="80px" dataContainer="luongthangDc">
                             <column>
                                 <lookupField id="donvitao_luongthangField"
-                                           property="donvitao_luongthang"
-                                           width="100%"
+                                             property="donvitao_luongthang"
+                                             width="100%"
                                              nullName="---Lọc tất cả---"
                                              caption="mainMsg://donvitao"/>
                             </column>
@@ -220,10 +220,11 @@
                     <row>
                         <form colspan="4" width="100%" childrenCaptionWidth="80px" dataContainer="luongthangDc">
                             <column>
-                                <textField id="tienBhField"
-                                           property="tienBh"
-                                           width="100%"
-                                           caption="Tiền bảo hiểm"/>
+                                <lookupField id="tienBhField"
+                                             property="tienBh"
+                                             width="100%"
+                                             nullName="---Chọn số tiền bảo hiểm---"
+                                             caption="Tiền bảo hiểm"/>
                             </column>
                         </form>
                         <form colspan="4" width="100%" childrenCaptionWidth="80px" dataContainer="luongthangDc">

@@ -87,7 +87,7 @@ public class LuongthangEdit extends StandardEditor<Luongthang> {
     @Inject
     protected LookupField<String> hinhthucthanhtoanField;
     @Inject
-    protected TextField<Integer> tienBhField;
+    protected LookupField<Integer> tienBhField;
 
     @Subscribe
     protected void onInit(InitEvent event) {
@@ -106,7 +106,6 @@ public class LuongthangEdit extends StandardEditor<Luongthang> {
         casangField.setEditable(false);
         cangoaiField.setEnabled(false);
         cachunhatField.setEnabled(false);
-        tienBhField.setEditable(false);
     }
 
 
@@ -133,10 +132,14 @@ public class LuongthangEdit extends StandardEditor<Luongthang> {
     protected void onHovatenFieldValueChange(HasValue.ValueChangeEvent<Giaovien> event) {
         if (hovatenField.getValue() != null){
             luongcobanField.setValue(hovatenField.getValue().getLuongcoban());
-            tienBhField.setValue(hovatenField.getValue().getTienBh());
+
+            Map<String, Integer> map = new LinkedHashMap<>();
+            map.put("450000Đ", 450000);
+            map.put("100% lương", luongcobanField.getValue().hashCode());
+
+            tienBhField.setOptionsMap(map);
         }else {
             luongcobanField.clear();
-            tienBhField.clear();
         }
     }
 
@@ -164,16 +167,7 @@ public class LuongthangEdit extends StandardEditor<Luongthang> {
     }
 
     private void tinhtonglinh() {
-        if (thuclinhField.getValue() != null &&
-                trachnhiemField.getValue() != null &&
-                daythemField.getValue() != null &&
-                trocapField.getValue() != null &&
-                chuyencanField.getValue() != null &&
-                thuongField.getValue() != null
-        ) {
-            tonglinhField.setValue(thuclinhField.getValue() + daythemField.getValue() + trocapField.getValue() +
-                    trachnhiemField.getValue() + chuyencanField.getValue() + thuongField.getValue() - tienBhField.getValue().longValue());
-        }
+
         if (daythemField.getValue() == null) {
             daythemField.setValue(a);
         }
@@ -192,6 +186,17 @@ public class LuongthangEdit extends StandardEditor<Luongthang> {
         if (tienBhField.getValue() == null) {
             tienBhField.setValue(a.hashCode());
         }
+        if (thuclinhField.getValue() != null &&
+                trachnhiemField.getValue() != null &&
+                daythemField.getValue() != null &&
+                trocapField.getValue() != null &&
+                chuyencanField.getValue() != null &&
+                thuongField.getValue() != null
+        ) {
+            tonglinhField.setValue(thuclinhField.getValue() + daythemField.getValue() + trocapField.getValue() +
+                    trachnhiemField.getValue() + chuyencanField.getValue() + thuongField.getValue() - tienBhField.getValue().longValue());
+        }
+
     }
 
     @Subscribe("daythemField")
@@ -216,7 +221,6 @@ public class LuongthangEdit extends StandardEditor<Luongthang> {
 
     @Subscribe("luongcobanField")
     protected void onLuongcobanFieldValueChange(HasValue.ValueChangeEvent<Long> event) {
-//        tonglinhField.setValue(luongcobanField.getValue());
         thuclinhField.setValue(luongcobanField.getValue());
     }
 

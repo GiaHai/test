@@ -55,6 +55,10 @@ public class ThutienhocphiEdit extends StandardEditor<Thutienhocphi> {
     protected DateField<Date> ngaythanhtoanField;
     @Inject
     protected ServerConfigService serverConfigService;
+    @Inject
+    protected TextField<String> tenkhachhangField;
+    @Inject
+    protected TextField<String> diachiField;
 
     @Subscribe
     protected void onInit(InitEvent event) {
@@ -65,17 +69,16 @@ public class ThutienhocphiEdit extends StandardEditor<Thutienhocphi> {
 //        usertaoField.setEditable(false);
         thanhtienField.setEditable(false);
         tinhtrangthanhtoanField.setVisible(false);
-        if (hinhthucthanhtoanField.getValue() == null)
-        {
+        if (hinhthucthanhtoanField.getValue() == null) {
             InphieuBtn.setEnabled(false);
-        }else {
+        } else {
             InphieuBtn.setEnabled(true);
         }
     }
 
     @Subscribe
     protected void onBeforeShow(BeforeShowEvent event) {
-        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() == null){
+        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() == null) {
             dovitao_thutienhocphiField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
             dovitao_thutienhocphiField.setEditable(false);
         }
@@ -96,16 +99,6 @@ public class ThutienhocphiEdit extends StandardEditor<Thutienhocphi> {
         dovitao_thutienhocphiField.setOptionsList(searchedService.loaddonvi());
     }
 
-    @Subscribe("hinhthucthanhtoanField")
-    protected void onHinhthucthanhtoanFieldValueChange2(HasValue.ValueChangeEvent<String> event) {
-        ngaythanhtoanField.setVisible(true);
-        tungayField.setVisible(false);
-        denngayField.setVisible(false);
-        ngaythanhtoanField.setRequired(true);
-    }
-    
-
-
     @Subscribe(id = "lkchitietthu", target = Target.DATA_CONTAINER)
     protected void onLkchitietthuItemChange(InstanceContainer.ItemChangeEvent<Chitietthu> event) {
         Map<Object, Object> resluts = chitietthusTable.getAggregationResults();
@@ -118,20 +111,35 @@ public class ThutienhocphiEdit extends StandardEditor<Thutienhocphi> {
     protected void onDovitao_thutienhocphiFieldValueChange(HasValue.ValueChangeEvent<Donvi> event) {
         tenhocsinhField.setOptionsList(searchedService.loadHs(dovitao_thutienhocphiField.getValue().getTendonvi()));
     }
+
     @Subscribe("hinhthucthanhtoanField")
     protected void onHinhthucthanhtoanFieldValueChange(HasValue.ValueChangeEvent<String> event) {
-        if (hinhthucthanhtoanField.getValue() ==null){
+        if (hinhthucthanhtoanField.getValue() == null) {
             tinhtrangthanhtoanField.setValue("Chưa thanh toán");
-        }else {
+        } else {
             tinhtrangthanhtoanField.setValue("Đã thanh toán");
+            ngaythanhtoanField.setVisible(true);
+            tungayField.setVisible(false);
+            denngayField.setVisible(false);
+            ngaythanhtoanField.setRequired(true);
+            tungayField.clear();
+            denngayField.clear();
+
+            dkIn();
         }
     }
 
-    @Subscribe("hinhthucthanhtoanField")
-    protected void onHinhthucthanhtoanFieldValueChange1(HasValue.ValueChangeEvent<String> event) {
-        InphieuBtn.setEnabled(true);
+    private void dkIn() {
+        if (dovitao_thutienhocphiField.getValue() != null &&
+                tenkhachhangField.getValue() != null &&
+                diachiField.getValue() != null &&
+                ngaythanhtoanField.getValue() != null &&
+                tenhocsinhField.getValue() != null &&
+                thanhtienField.getValue() != null &&
+                hinhthucthanhtoanField.getValue() != null) {
+            InphieuBtn.setEnabled(true);
+        }
     }
-
 
     //    -----------------In phiếu-----------------
     private String pathPdf;
@@ -140,21 +148,21 @@ public class ThutienhocphiEdit extends StandardEditor<Thutienhocphi> {
     protected void onInphieuBtnClick(Button.ClickEvent event) {
         Thutienhocphi thutienhocphi = getEditedEntity();
         Map<String, Object> parameters = new HashMap<>();
-        parameters.put("donvithanhtoan", thutienhocphi.getDonvitao_thutienhocphi());
+        parameters.put("donvithanhtoan", thutienhocphi.getDonvitao_thutienhocphi().getTendonvi());
         parameters.put("tenkhachhang", thutienhocphi.getTenkhachhang());
         parameters.put("diachi", thutienhocphi.getDiachi());
         parameters.put("tenhocsinh", thutienhocphi.getTenhocsinh().getTenhocsinh());
         parameters.put("thanhtien", thutienhocphi.getThanhtien());
         parameters.put("hinhthucthanhtoan", thutienhocphi.getHinhthucthanhtoan());
+        parameters.put("nguoitao", userSession.getUser().getName());
+        String path = AppContext.getProperty("truonghoc.template");
 
-        String path = AppContext.getProperty("knkx.template");
-
-        String fileTemplate = WebFunctionHelper.modifiedTemplate(path + "/test.docx", serverConfigService, parameters);
-        String fileName = WebFunctionHelper.convertDocToPdf(fileTemplate, pathPdf, true);
+        String fileTemplate = WebFunctionHelper.modifiedTemplate(path + "/phieuinthanhtoanhocphi.docx", serverConfigService, parameters);
+        String fileName = WebFunctionHelper.convertDocToPdf(fileTemplate,pathPdf ,true);
         if (!StringUtils.isEmpty(fileName)) {
             List<String> filesPrint = new ArrayList<>();
             filesPrint.add(fileName);
-            WebFunctionHelper.printFiles(printerPdf, filesPrint,  callbackEvent -> {
+            WebFunctionHelper.printFiles(printerPdf, filesPrint, callbackEvent -> {
                 if (callbackEvent.getArguments() != null) {
                     String urlFile = callbackEvent.getArguments().getString(0);
                     if (!org.apache.commons.lang3.StringUtils.isBlank(urlFile) && !StringUtils.isEmpty(webBaseFolder)) {
@@ -165,6 +173,7 @@ public class ThutienhocphiEdit extends StandardEditor<Thutienhocphi> {
         }
 
     }
+
     private String webBaseFolder;
     @Inject
     private JavaScriptComponent printerPdf;

@@ -1,9 +1,11 @@
 package com.company.truonghoc.utils;
 
-import com.aspose.words.NodeType;
-import com.aspose.words.Paragraph;
-import com.aspose.words.Section;
-import com.company.truonghoc.utils.aspose.DocumentPageSplitter;
+//                    xoá ngày 04-10-2022
+//import com.aspose.words.NodeType;
+//import com.aspose.words.Paragraph;
+//import com.aspose.words.Section;
+//import com.company.truonghoc.utils.aspose.DocumentPageSplitter;
+
 import com.company.truonghoc.utils.poi.CellTable;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.xwpf.usermodel.*;
@@ -32,8 +34,8 @@ public class GlobalFunctionHelper {
     private static final Logger logger = LoggerFactory.getLogger(GlobalFunctionHelper.class);
 
     /*************************************************************************************
-     * Create: 27-08-2019
-     * Modify: 27-08-2019
+     * Create: 04-10-2022
+     * Modify: 04-10-2022
      * Description: tạo thư mục theo cấu trúc upload của CUBA
      **************************************************************************************/
     public static boolean createStorageFolder(String rootFolder, String pathSubFolder) {
@@ -115,14 +117,15 @@ public class GlobalFunctionHelper {
                             break; // done working on current key pattern
 
                         prevRun = r;
-                        for (int k = 0;; k++) { // iterate over texts of run r
+                        for (int k = 0; ; k++) { // iterate over texts of run r
                             if (found3)
                                 break;
 
                             String txt = null;
                             try {
                                 txt = r.getText(k); // note: should return null, but throws exception if the text does not exist
-                            } catch (Exception ignored) {}
+                            } catch (Exception ignored) {
+                            }
 
                             if (txt == null)
                                 break; // no more texts in the run, exit loop
@@ -143,12 +146,12 @@ public class GlobalFunctionHelper {
 
                                 if (txt.contains("}")) {
                                     if (r == found2Run) { // complete pattern was within a single run
-                                        txt = txt.substring(0, found2Pos)+txt.substring(txt.indexOf('}'));
+                                        txt = txt.substring(0, found2Pos) + txt.substring(txt.indexOf('}'));
                                     } else {  // pattern spread across multiple runs
                                         txt = txt.substring(txt.indexOf('}'));
                                     }
                                 } else if (r == found2Run) // same run as { but no }, remove all text starting at {
-                                    txt = txt.substring(0,  found2Pos);
+                                    txt = txt.substring(0, found2Pos);
                                 else
                                     txt = ""; // run between { and }, set text to blank
                             }
@@ -167,7 +170,7 @@ public class GlobalFunctionHelper {
     }
 
     private static String isNull_String(Object value) {
-        if(value == null || StringUtils.isBlank(String.valueOf(value)))
+        if (value == null || StringUtils.isBlank(String.valueOf(value)))
             return "";
 
         return String.valueOf(value).trim();
@@ -253,21 +256,22 @@ public class GlobalFunctionHelper {
 
     private static boolean deleteOneTable(XWPFDocument document, Integer tableIndex) {
         try {
-            int bodyElement = getBodyElementOfTable( document, tableIndex );
-            document.removeBodyElement( bodyElement );
+            int bodyElement = getBodyElementOfTable(document, tableIndex);
+            document.removeBodyElement(bodyElement);
 
             return true;
-        } catch( Exception e ) {
+        } catch (Exception e) {
             logger.error(e.getMessage(), e);
         }
 
         return false;
     }
+
     private static int getBodyElementOfTable(XWPFDocument document, int tableNumberInDocument) {
         List<XWPFTable> tables = document.getTables();
         XWPFTable theTable = tables.get(tableNumberInDocument);
 
-        return document.getPosOfTable( theTable );
+        return document.getPosOfTable(theTable);
     }
 
     private static void fillAndCreateTableRow(int idx, AtomicInteger rowPrev,
@@ -370,7 +374,7 @@ public class GlobalFunctionHelper {
 
                                     // ++ Neu van k clone duoc thi tao moi run
                                     if (p.getRuns().isEmpty()) {
-                                        setRun(p.createRun() , cellTable.getFont(), cellTable.getFontSize(),cellTable.isBold());
+                                        setRun(p.createRun(), cellTable.getFont(), cellTable.getFontSize(), cellTable.isBold());
                                     }
 
                                     if (!p.getRuns().isEmpty()) {
@@ -422,9 +426,15 @@ public class GlobalFunctionHelper {
         if (alignment == null) return;
 
         switch (alignment) {
-            case LEFT: paragraph.setAlignment(ParagraphAlignment.LEFT); break;
-            case RIGHT: paragraph.setAlignment(ParagraphAlignment.RIGHT); break;
-            case CENTER: paragraph.setAlignment(ParagraphAlignment.CENTER); break;
+            case LEFT:
+                paragraph.setAlignment(ParagraphAlignment.LEFT);
+                break;
+            case RIGHT:
+                paragraph.setAlignment(ParagraphAlignment.RIGHT);
+                break;
+            case CENTER:
+                paragraph.setAlignment(ParagraphAlignment.CENTER);
+                break;
         }
     }
 
@@ -505,6 +515,7 @@ public class GlobalFunctionHelper {
             isDeleteTable.set(true);
         }
     }
+
     public static boolean writeFile(XWPFDocument document, String output) throws IOException {
         if (StringUtils.isBlank(output) || document == null) return false;
 
@@ -525,58 +536,58 @@ public class GlobalFunctionHelper {
         }
         return false;
     }
-
-    public static boolean checkIsPageBreakTableSigninFooter(String pathFile, Map<String, Object> parameter) {
-        if (StringUtils.isBlank(pathFile)) return false;
-
-        boolean result = false;
-        try {
-            com.aspose.words.Document srcDoc = new com.aspose.words.Document(pathFile);
-            DocumentPageSplitter splitter = new DocumentPageSplitter(srcDoc);
-
-            if (srcDoc.getPageCount() > 1) {
-//                srcDoc.save(new File(pathFile).getParent() + "/" + UUID.randomUUID().toString() + ".docx");
-
-                int count = 0;
-                for (int page = srcDoc.getPageCount() - 1; page <= srcDoc.getPageCount(); page++) {
-                    com.aspose.words.Document pageDoc = splitter.getDocumentOfPage(page);
-
-                    boolean isBreak = false;
-                    AtomicBoolean findRoomsSuccess = new AtomicBoolean(false);
-
-                    for (Section section : pageDoc.getSections()) {
-                        if (isBreak) {
-                            break;
-                        }
-
-                        Paragraph paragraph;
-                        int index = 0;
-                        do {
-                            paragraph = (Paragraph) section.getChild(NodeType.PARAGRAPH, index, true);
-                            if (paragraph != null) {
-                                String valuePara = isNull_String(paragraph.getText()).trim();
-                                boolean bl = checkContainValueTable(valuePara, parameter, findRoomsSuccess);
-                                if (bl) {
-                                    isBreak = true;
-                                    ++count;
-                                }
-                            }
-                            ++index;
-                        } while (paragraph != null && !isBreak);
-                    }
-                }
-
-                if (count == 2) {
-                    result = true;
-                }
-            }
-
-        } catch (Exception ex) {
-            logger.error(ex.getMessage(), ex);
-        }
-
-        return result;
-    }
+//                    xoá ngày 04-10-2022
+//    public static boolean checkIsPageBreakTableSigninFooter(String pathFile, Map<String, Object> parameter) {
+//        if (StringUtils.isBlank(pathFile)) return false;
+//
+//        boolean result = false;
+//        try {
+//            com.aspose.words.Document srcDoc = new com.aspose.words.Document(pathFile);
+//            DocumentPageSplitter splitter = new DocumentPageSplitter(srcDoc);
+//
+//            if (srcDoc.getPageCount() > 1) {
+////                srcDoc.save(new File(pathFile).getParent() + "/" + UUID.randomUUID().toString() + ".docx");
+//
+//                int count = 0;
+//                for (int page = srcDoc.getPageCount() - 1; page <= srcDoc.getPageCount(); page++) {
+//                    com.aspose.words.Document pageDoc = splitter.getDocumentOfPage(page);
+//
+//                    boolean isBreak = false;
+//                    AtomicBoolean findRoomsSuccess = new AtomicBoolean(false);
+//
+//                    for (Section section : pageDoc.getSections()) {
+//                        if (isBreak) {
+//                            break;
+//                        }
+//
+//                        Paragraph paragraph;
+//                        int index = 0;
+//                        do {
+//                            paragraph = (Paragraph) section.getChild(NodeType.PARAGRAPH, index, true);
+//                            if (paragraph != null) {
+//                                String valuePara = isNull_String(paragraph.getText()).trim();
+//                                boolean bl = checkContainValueTable(valuePara, parameter, findRoomsSuccess);
+//                                if (bl) {
+//                                    isBreak = true;
+//                                    ++count;
+//                                }
+//                            }
+//                            ++index;
+//                        } while (paragraph != null && !isBreak);
+//                    }
+//                }
+//
+//                if (count == 2) {
+//                    result = true;
+//                }
+//            }
+//
+//        } catch (Exception ex) {
+//            logger.error(ex.getMessage(), ex);
+//        }
+//
+//        return result;
+//    }
 
     private static boolean checkContainValueTable(String value, Map<String, Object> parameter, AtomicBoolean findRoomsSuccess) {
         if (StringUtils.isBlank(value) || parameter == null || parameter.isEmpty()) return false;
@@ -611,22 +622,23 @@ public class GlobalFunctionHelper {
         return false;
     }
 
-    public static void findAndBreakPage(XWPFDocument document, boolean isBreak) {
-        List<XWPFParagraph> paragraphList = document.getParagraphs();
-        for (XWPFParagraph paragraph : paragraphList) {
-            String flatBreak = isNull_String(paragraph.getText()).trim();
-            if (!StringUtils.isBlank(flatBreak) && flatBreak.equalsIgnoreCase(GlobalConstants.MAU_IN_FLAT_BREAK)) {
-                Map<String, Object> parameter = new HashMap<>();
-                parameter.put(GlobalConstants.MAU_IN_FLAT_KEY_BREAK, "");
-                findAndReplaceText(paragraph, parameter);
-                if (isBreak) {
-                    paragraph.setPageBreak(true);
-                }
-
-                break;
-            }
-        }
-    }
+    //                    xoá ngày 04-10-2022
+//    public static void findAndBreakPage(XWPFDocument document, boolean isBreak) {
+//        List<XWPFParagraph> paragraphList = document.getParagraphs();
+//        for (XWPFParagraph paragraph : paragraphList) {
+//            String flatBreak = isNull_String(paragraph.getText()).trim();
+//            if (!StringUtils.isBlank(flatBreak) && flatBreak.equalsIgnoreCase(GlobalConstants.MAU_IN_FLAT_BREAK)) {
+//                Map<String, Object> parameter = new HashMap<>();
+//                parameter.put(GlobalConstants.MAU_IN_FLAT_KEY_BREAK, "");
+//                findAndReplaceText(paragraph, parameter);
+//                if (isBreak) {
+//                    paragraph.setPageBreak(true);
+//                }
+//
+//                break;
+//            }
+//        }
+//    }
 
     public static void deleteFile(String path) {
         if (StringUtils.isBlank(path)) return;

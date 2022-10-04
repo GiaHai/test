@@ -183,7 +183,6 @@ create table TRUONGHOC_GIAOVIEN (
     QUEQUANGIAOVIEN nvarchar(255),
     GIOITINHGIAOVIEN nvarchar(255),
     LUONGCOBAN bigint not null,
-    TIEN_BH integer,
     GHICHU nvarchar(255),
     --
     primary key nonclustered (ID)

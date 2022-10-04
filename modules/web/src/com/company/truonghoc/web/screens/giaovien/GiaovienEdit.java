@@ -2,6 +2,7 @@ package com.company.truonghoc.web.screens.giaovien;
 
 import com.company.truonghoc.entity.Donvi;
 import com.company.truonghoc.service.DulieuUserService;
+import com.company.truonghoc.service.SearchedService;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.screen.*;
@@ -41,13 +42,12 @@ public class GiaovienEdit extends StandardEditor<Giaovien> {
     @Inject
     protected Actions actions;
     @Inject
-    protected LookupField<Integer> tienBhField;
+    protected SearchedService searchedService;
 
     @Subscribe
     protected void onInit(InitEvent event) {
         List<String> list = Arrays.asList("Nam", "Nữ");
         gioitinhgiaovienField.setOptionsList(list);
-        tienBhField.setEditable(false);
     }
 
     @Subscribe
@@ -58,30 +58,10 @@ public class GiaovienEdit extends StandardEditor<Giaovien> {
                     donvitao_giaovienField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
                     donvitao_giaovienField.setEditable(false);
                 } else {
-                    donvitao_giaovienField.setOptionsList(test());
+                    donvitao_giaovienField.setOptionsList(searchedService.loaddonvi());
                 }
             }
         }
     }
 
-    private List<Donvi> test(){
-        return dataManager.load(Donvi.class)
-                .query("select e from truonghoc_Donvi e")
-                .list();
-    }
-
-    @Subscribe("luongcobanField")
-    protected void onLuongcobanFieldValueChange(HasValue.ValueChangeEvent<Long> event) {
-        if (luongcobanField.getValue() == null){
-            tienBhField.clear();
-            tienBhField.setEditable(false);
-        }else {
-            tienBhField.setEditable(true);
-            Map<String, Integer> map = new LinkedHashMap<>();
-            map.put("450000Đ", 450000);
-            map.put("100% lương", luongcobanField.getValue().hashCode());
-
-            tienBhField.setOptionsMap(map);
-        }
-    }
 }

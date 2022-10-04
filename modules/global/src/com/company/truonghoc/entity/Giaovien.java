@@ -35,19 +35,8 @@ public class Giaovien extends StandardEntity {
     @NotNull(message = "{msg://truonghoc_Giaovien.luongcoban.validation.NotNull}")
     private Long luongcoban;
 
-    @Column(name = "TIEN_BH")
-    private Integer tienBh;
-
     @Column(name = "GHICHU")
     private String ghichu;
-
-    public Integer getTienBh() {
-        return tienBh;
-    }
-
-    public void setTienBh(Integer tienBh) {
-        this.tienBh = tienBh;
-    }
 
     public void setDonvitao_giaovien(Donvi donvitao_giaovien) {
         this.donvitao_giaovien = donvitao_giaovien;
