@@ -44,9 +44,9 @@
                                  width="100%"
                                  nullName="--Lọc tất cả--"/>
                     <lookupField id="nguoithuField"
-                               caption="Tài khoản người thu"
-                               width="100%"
-                               nullName="---Lọc tất cả---"/>
+                                 caption="Tài khoản người thu"
+                                 width="100%"
+                                 nullName="---Lọc tất cả---"/>
                 </vbox>
                 <vbox spacing="true">
                     <textField id="tenKhField"
@@ -95,6 +95,7 @@
                 <action id="create" type="create"/>
                 <action id="edit" type="edit"/>
                 <action id="remove" type="remove"/>
+                <action id="excel" type="excel"/>
             </actions>
             <columns>
                 <column id="stt" generator="stt" caption="STT"/>
@@ -124,6 +125,7 @@
                 <button id="createBtn" action="thutienhocphisTable.create"/>
                 <button id="editBtn" action="thutienhocphisTable.edit"/>
                 <button id="removeBtn" action="thutienhocphisTable.remove"/>
+                <button id="excelBtn" action="thutienhocphisTable.excel"/>
             </buttonsPanel>
         </groupTable>
         <hbox id="lookupActions" spacing="true" visible="false">

@@ -35,7 +35,6 @@
                   collapsed="true"
                   stylename="css-hbox-search"
                   spacing="true"
-
                   width="100%" outerMargin="true">
             <hbox width="100%" spacing="true">
                 <vbox spacing="true" width="100%">
@@ -70,6 +69,7 @@
                 <action id="create" type="create"/>
                 <action id="edit" type="edit"/>
                 <action id="remove" type="remove"/>
+                <action id="excel" type="excel"/>
             </actions>
             <columns>
                 <column id="donvitao_hocsinh"
@@ -92,6 +92,7 @@
                 <button id="createBtn" action="hocsinhsTable.create"/>
                 <button id="editBtn" caption="Chỉnh sửa"/>
                 <button id="removeBtn" action="hocsinhsTable.remove"/>
+                <button id="excelBtn" action="hocsinhsTable.excel"/>
             </buttonsPanel>
         </groupTable>
         <hbox id="lookupActions" spacing="true" visible="false">

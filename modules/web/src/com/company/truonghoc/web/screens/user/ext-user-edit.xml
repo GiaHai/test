@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        xmlns:ext="http://schemas.haulmont.com/cuba/window-ext.xsd"
+        class="com.company.truonghoc.web.screens.user.ExtUserEditor"
+        extends="com/haulmont/cuba/gui/app/security/user/edit/user-edit.xml"
+        messagesPack="com.company.truonghoc.web.screens">
+<!--    <companions>-->
+<!--        <web class="com.haulmont.cuba.web.app.ui.security.user.UserEditorCompanion"/>-->
+<!--    </companions>-->
+
+    <dsContext>
+        <datasource id="userDs" class="com.company.truonghoc.entity.UserExt" view="userExt-view">
+            <collectionDatasource id="substitutionsDs" property="substitutions"/>
+
+        </datasource>
+        <collectionDatasource id="donvisDc"
+                              class="com.company.truonghoc.entity.Donvi"
+                              view="donvi-view">
+            <query>
+                <![CDATA[select e from truonghoc_Donvi e]]>
+            </query>
+        </collectionDatasource>
+        <collectionDatasource id="giaoviensDc"
+                              class="com.company.truonghoc.entity.Giaovien"
+                              view="giaovien-view">
+            <query>
+                <![CDATA[select e from truonghoc_Giaovien e]]>
+            </query>
+        </collectionDatasource>
+    </dsContext>
+    <layout spacing="true">
+        <groupBox id="propertiesBox">
+            <grid id="propertiesGrid">
+                <columns>
+                    <column/>
+                </columns>
+                <rows>
+                    <row id="propertiesRow">
+                        <fieldGroup id="fieldGroupLeft" datasource="userDs" width="AUTO">
+                        </fieldGroup>
+                        <vbox spacing="true"
+                              width="AUTO">
+                            <lookupField id="loockuptendonvi"
+                                             property="loockup_donvi"
+                                         caption="Đơn vị"
+                                         datasource="userDs"
+                                         optionsDatasource="donvisDc"
+                                         nullName="---Đơn vị---"
+                                         captionProperty="tendonvi"/>
+<!--                            <textField id="tendonviField" property="tendonvi" datasource="userDs"/>-->
+<!--                            <checkBox id="donvitrungtam" datasource="userDs" property="donvitrungtam"  caption="ĐƠn vị trung tâm" />-->
+                            <lookupField id="tengiaovienField"
+                                         caption="Giáo viên"
+                                         datasource="userDs"
+                                         property="giaovien"
+                                         optionsDatasource="giaoviensDc"
+                                         nullName="---Giáo viên---"/>
+<!--                            <textField id="TextGiaovienField" datasource="userDs" property="textgv" editable="false" visible="false"/>-->
+                        </vbox>
+                    </row>
+                </rows>
+            </grid>
+        </groupBox>
+    </layout>
+</window>

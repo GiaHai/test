@@ -59,6 +59,7 @@
                 <action id="create" type="create"/>
                 <action id="edit" type="edit"/>
                 <action id="remove" type="remove"/>
+                <action id="excel" type="excel"/>
             </actions>
             <columns>
                 <column id="stt" generator="stt" caption="STT"/>
@@ -76,6 +77,7 @@
                 <button id="createBtn" action="tenlopsTable.create"/>
                 <button id="editBtn" action="tenlopsTable.edit"/>
                 <button id="removeBtn" action="tenlopsTable.remove"/>
+                <button id="excelBtn" action="tenlopsTable.excel"/>
             </buttonsPanel>
         </groupTable>
         <hbox id="lookupActions" spacing="true" visible="false">

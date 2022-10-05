@@ -9,6 +9,7 @@
     </menu>
     <menu id="application-nhap" caption="mainMsg://menu_config.application-truonghoc5" expanded="true">
         <item screen="truonghoc_Lophoc.edit" caption="Nhập Lớp"/>
+        <item screen="truonghoc_Diemdanh.edit" caption="Điểm danh"/>
     </menu>
     <menu id="application-bang" caption="mainMsg://menu_config.application-truonghoc2" expanded="true">
         <item screen="truonghoc_Hocphi.browse" caption="mainMsg://menu_config.truonghoc_Hocphi.browse"/>
@@ -25,7 +26,8 @@
     </menu>
 
     <menu id="administration">
-        <item id="sec$User.browse"/>
+        <item screen="truonghoc_UserExt.browse" caption="Quản trị người dùng"/>
+<!--        <item id="sec$User.browse"/>-->
         <item id="sec$Group.browse"/>
         <item id="sec$Role.browse"/>
         <separator/>

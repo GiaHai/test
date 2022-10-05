@@ -5,7 +5,9 @@ import com.company.truonghoc.service.DulieuUserService;
 import com.haulmont.cuba.core.entity.Entity;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.gui.UiComponents;
+import com.haulmont.cuba.gui.actions.list.ExcelAction;
 import com.haulmont.cuba.gui.components.*;
+import com.haulmont.cuba.gui.export.ExportDisplay;
 import com.haulmont.cuba.gui.model.CollectionContainer;
 import com.haulmont.cuba.gui.model.CollectionLoader;
 import com.haulmont.cuba.gui.screen.*;
@@ -15,6 +17,7 @@ import com.haulmont.cuba.security.global.UserSession;
 import org.springframework.util.StringUtils;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,6 +48,12 @@ public class GiaovienBrowse extends StandardLookup<Giaovien> {
     protected TextField<String> searchTenGvField;
     @Inject
     protected DataManager dataManager;
+    @Named("giaoviensTable.excel")
+    protected ExcelAction giaoviensTableExcel;
+    @Inject
+    protected Button excelBtn;
+    @Inject
+    private ExportDisplay exportDisplay;
 
     @Subscribe
     protected void onBeforeShow(BeforeShowEvent event) {
@@ -118,4 +127,12 @@ public class GiaovienBrowse extends StandardLookup<Giaovien> {
 
         return query;
     }
+
+    /********* XUẤT FILE EXCEL ********/
+
+    @Subscribe("excelBtn")
+    protected void onExcelBtnClick(Button.ClickEvent event) {
+        giaoviensTableExcel.setFileName("Bảng danh sách giáo viên");
+    }
+
 }

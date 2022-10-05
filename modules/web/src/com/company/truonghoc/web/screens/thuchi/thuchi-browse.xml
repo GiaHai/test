@@ -91,6 +91,7 @@
                 <action id="create" type="create"/>
                 <action id="edit" type="edit"/>
                 <action id="remove" type="remove"/>
+                <action id="excel" type="excel"/>
             </actions>
             <columns>
                 <column id="stt"
@@ -120,6 +121,7 @@
                 <button id="createBtn" action="thuchisTable.create"/>
                 <button id="editBtn" action="thuchisTable.edit"/>
                 <button id="removeBtn" action="thuchisTable.remove"/>
+                <button id="excelBtn" action="thuchisTable.excel"/>
             </buttonsPanel>
         </groupTable>
         <hbox id="lookupActions" spacing="true" visible="false">

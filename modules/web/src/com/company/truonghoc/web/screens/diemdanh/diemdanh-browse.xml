@@ -76,6 +76,7 @@
                 <action id="create" type="create"/>
                 <action id="edit" type="edit"/>
                 <action id="remove" type="remove"/>
+                <action id="excel"  type="excel"/>
             </actions>
             <columns>
                 <column id="donvidd" caption="Đơn vị"/>
@@ -93,6 +94,7 @@
                 <button id="createBtn" action="diemdanhsTable.create"/>
                 <button id="editBtn" action="diemdanhsTable.edit"/>
                 <button id="removeBtn" action="diemdanhsTable.remove"/>
+                <button id="excelBtn" action="diemdanhsTable.excel"/>
             </buttonsPanel>
         </groupTable>
         <hbox id="lookupActions" spacing="true" visible="false">

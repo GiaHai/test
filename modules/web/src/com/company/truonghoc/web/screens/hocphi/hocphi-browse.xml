@@ -88,6 +88,7 @@
                 <action id="create" type="create"/>
                 <action id="edit" type="edit"/>
                 <action id="remove" type="remove"/>
+                <action id="excel" type="excel"/>
             </actions>
             <columns>
                 <column id="stt"
@@ -124,6 +125,7 @@
                 <button id="createBtn" action="hocphisTable.create"/>
                 <button id="editBtn" action="hocphisTable.edit"/>
                 <button id="removeBtn" action="hocphisTable.remove"/>
+                <button id="excelBtn" action="hocphisTable.excel"/>
             </buttonsPanel>
         </groupTable>
         <hbox id="lookupActions" spacing="true" visible="false">
