@@ -54,11 +54,11 @@
                                width="100%"
                                inputPrompt="Tên học sinh"/>
                 </vbox>
-                <vbox align="MIDDLE_LEFT" spacing="true">
+                <vbox spacing="true" css="margin-top: 20px;">
                     <button id="timkiemBtn"
                             invoke="timkiemExcute"
                             stylename="Btntimkiem"
-                            caption="Tìm kiếm" align="BOTTOM_LEFT"/>
+                            caption="Tìm kiếm" align="MIDDLE_LEFT"/>
                 </vbox>
             </hbox>
         </groupBox>

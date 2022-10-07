@@ -23,19 +23,23 @@ public class HocsinhEdit extends StandardEditor<Hocsinh> {
     protected LookupField<String> gioitinhhocsinhField;
     @Inject
     protected UserSession userSession;
-
     @Inject
     protected DulieuUserService dulieuUserService;
     @Inject
     protected InstanceContainer<Hocsinh> hocsinhDc;
     @Inject
     protected LookupField<Donvi> donvitao_hocsinhField;
+    @Inject
+    protected TextField<String> tenhocsinhField;
 
     @Subscribe
     protected void onInit(InitEvent event) {
         List<String> list = Arrays.asList("Nam", "Nữ", "Tùy chỉnh");
         gioitinhhocsinhField.setOptionsList(list);
-//        donvitao_hocsinhField.setEditable(false);
+        donvitao_hocsinhField.setRequired(true);
+        donvitao_hocsinhField.setRequiredMessage("Nhập đơn vị");
+        tenhocsinhField.setRequired(true);
+        tenhocsinhField.setRequiredMessage("Nhập tên học sinh");
     }
 
     @Subscribe

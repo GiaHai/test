@@ -78,8 +78,11 @@ public class HocsinhBrowse extends StandardLookup<Hocsinh> {
                 excuteSearch(true);
             }
             donvitao_hocsinhField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
-            donvitao_hocsinhField.setEditable(false);
             excuteSearch(true);
+            donvitao_hocsinhField.setEditable(false);
+            if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null){
+
+            }
         }
         if (lookupActions.isVisible() == true) {
             if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() == null) {
@@ -129,34 +132,6 @@ public class HocsinhBrowse extends StandardLookup<Hocsinh> {
             where += "and e.donvitao_hocsinh.tendonvi = :donvi ";
             params.put("donvi", donvitao_hocsinhField.getValue().getTendonvi());
         }
-//        //Họ và tên Giáo viên
-
-//        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() != null) {
-//            // là đơn vị trung tâm
-//            if (giaovien != null) {
-//                where += "and e.lophoc.giaoviencn.tengiaovien = :giaoVien ";
-//                params.put("giaoVien", sreachgvFiled.getValue().getTengiaovien());
-//            }
-//        } else {
-//            // không phải dơn vị trung tâm
-//            if (giaovien != null) {
-//                where += "and e.lophoc.giaoviencn.tengiaovien = :giaoVien ";
-//                params.put("giaoVien", sreachgvFiled.getValue().getTengiaovien());
-//                //đăng nhập bằng tài khoản giáo viên và thêm học sinh và lớp theo trường hợp học sinh chưa có lớp học
-//                if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null) {
-//                    if (lookupActions.isVisible() == false) {
-//                        where += "and e.lophoc.giaoviencn.tengiaovien = :giaoVien ";
-//                        params.put("giaoVien", sreachgvFiled.getValue().getTengiaovien());
-//                    }
-//                }
-//            } else {
-//                if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null) {
-//                    if (lookupActions.isVisible() == true) {
-//                        where += "and e.lophoc is null ";
-//                    }
-//                }
-//            }
-//        }
 
         //Học sinh
         if (!StringUtils.isEmpty(hocsinh)) {
@@ -170,18 +145,5 @@ public class HocsinhBrowse extends StandardLookup<Hocsinh> {
         query = query + where;
         return query;
     }
-
-//    private List<Hocsinh> test(){
-//        return dataManager.load(Hocsinh.class)
-//                .query("select e from truonghoc_Hocsinh e where e.lophocs.tenlop.tenlop is null")
-//                .parameter("thanghoc", thanghocField.getValue())
-//                .view("hocsinh-view")
-//                .list();
-//    }
-
-//    @Subscribe("test")
-//    protected void onTestClick(Button.ClickEvent event) {
-//        System.out.println(test());
-//    }
 
 }

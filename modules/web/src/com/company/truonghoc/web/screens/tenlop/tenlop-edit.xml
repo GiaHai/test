@@ -25,18 +25,46 @@
         <form id="form" dataContainer="tenlopDc">
             <hbox width="100%" spacing="true">
                 <vbox>
-                    <lookupField id="donviFiled" dataContainer="tenlopDc" property="dovi" caption="Đơn vị" nullName="---Lọc tất cả---"/>
-                    <textField id="tenlopField" dataContainer="tenlopDc" property="tenlop" caption="Tên lớp"/>
+                    <lookupField id="donviFiled"
+                                 dataContainer="tenlopDc"
+                                 property="dovi" caption="Đơn vị"
+                                 nullName="---Lọc tất cả---"
+                                 required="true"
+                                 requiredMessage="mainMsg://donvi.requiredMessage"/>
+                    <textField id="tenlopField"
+                               dataContainer="tenlopDc"
+                               property="tenlop"
+                               caption="Tên lớp"
+                               required="true"
+                               requiredMessage="mainMsg://tenlop.requiredMessage"/>
                 </vbox>
                 <vbox>
-                    <lookupField id="giaoviencnField" dataContainer="tenlopDc" property="giaoviencn"
-                                 caption="Giáo viên chủ nhiệm" nullName="---Lọc tất cả---"/>
-                    <lookupField id="thanghocField" dataContainer="tenlopDc" property="thanghoc" caption="Tháng học" nullName="---Lọc tất cả---"/>
+                    <lookupField id="giaoviencnField"
+                                 dataContainer="tenlopDc"
+                                 property="giaoviencn"
+                                 caption="Giáo viên chủ nhiệm"
+                                 nullName="---Lọc tất cả---"
+                                 required="true"
+                                 requiredMessage="mainMsg://giaovien.requiredMessage"/>
+                    <lookupField id="thanghocField"
+                                 dataContainer="tenlopDc"
+                                 property="thanghoc" caption="Tháng học"
+                                 nullName="---Lọc tất cả---"
+                                 required="true"
+                                 requiredMessage="mainMsg://thanghoc.requiredMessage"/>
                 </vbox>
                 <vbox align="BOTTOM_CENTER">
-                    <checkBox id="ttLopcheck" caption="Tình trạng lớp" dataContainer="tenlopDc"
-                              property="tinhtranglop" align="BOTTOM_CENTER"/>
-                    <textField id="namhocField" dataContainer="tenlopDc" property="namhoc" caption="Năm học"/>
+                    <checkBox id="ttLopcheck"
+                              caption="Tình trạng lớp"
+                              dataContainer="tenlopDc"
+                              property="tinhtranglop"
+                              align="BOTTOM_CENTER"/>
+                    <textField id="namhocField"
+                               dataContainer="tenlopDc"
+                               property="namhoc"
+                               caption="Năm học"
+                               required="true"
+                               requiredMessage="mainMsg://namhoc.requiredMessage"/>
                 </vbox>
             </hbox>
         </form>

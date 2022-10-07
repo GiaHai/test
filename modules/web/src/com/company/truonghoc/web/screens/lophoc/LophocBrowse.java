@@ -51,8 +51,6 @@ public class LophocBrowse extends StandardLookup<Lophoc> {
     protected UiComponents uiComponents;
     @Inject
     protected Button createBtn;
-    @Named("lophocsTable.create")
-    protected CreateAction<Lophoc> lophocsTableCreate;
     @Inject
     protected Dialogs dialogs;
     @Inject
