@@ -45,8 +45,6 @@ public class HocphiBrowse extends StandardLookup<Hocphi> {
     @Inject
     protected CollectionContainer<Donvi> donvisDc;
     @Inject
-    protected ScreenBuilders screenBuilders;
-    @Inject
     protected DateField<Date> denngayField;
     @Inject
     protected DateField<Date> tungayField;
@@ -55,15 +53,7 @@ public class HocphiBrowse extends StandardLookup<Hocphi> {
     @Inject
     protected TextField<String> hovstenField;
     @Inject
-    protected LookupField<Giaovien> giaovienField;
-    @Inject
-    protected Notifications notifications;
-    @Named("hocphisTable.create")
-    protected CreateAction<Hocphi> hocphisTableCreate;
-    @Inject
     protected Button createBtn;
-    @Inject
-    protected Dialogs dialogs;
     @Inject
     protected DataManager dataManager;
     @Inject
@@ -113,18 +103,14 @@ public class HocphiBrowse extends StandardLookup<Hocphi> {
                 denngayField.clear();
                 tungayField.clear();
                 trangthaiField.clear();
-                giaovienField.clear();
                 hovstenField.clear();
-
                 if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null) {
                     dovitao_hocphiField.setEditable(false);
-                    giaovienField.setEditable(false);
                     denngayField.clear();
                     tungayField.clear();
                     trangthaiField.clear();
                     hovstenField.clear();
                     dovitao_hocphiField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi()); //Chèn đơn vị từ user vào text
-                    giaovienField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien());  //chèn tên giáo viên từ user vào text
                 }
 
             } else {
@@ -136,7 +122,6 @@ public class HocphiBrowse extends StandardLookup<Hocphi> {
                         .collect(Collectors.toList());
                 dovitao_hocphiField.setOptionsList(sessionTypeNames);
                 //xoá
-                giaovienField.clear();
                 hovstenField.clear();
                 dovitao_hocphiField.clear();
                 denngayField.clear();
@@ -177,29 +162,23 @@ public class HocphiBrowse extends StandardLookup<Hocphi> {
 
     private void excuteSearch(boolean isFromSearchBtn) {
         Object donvi = dovitao_hocphiField.getValue();
-        Object giaovien = giaovienField.getValue();
         String hocsinh = hovstenField.getValue();
         Object trangthai = trangthaiField.getValue();
         Date tungay = tungayField.getValue();
         Date denngay = denngayField.getValue();
         Map<String, Object> params = new HashMap<>();
 
-        String query = returnQuery(donvi, giaovien, hocsinh, trangthai, tungay, denngay, params);
+        String query = returnQuery(donvi, hocsinh, trangthai, tungay, denngay, params);
         hocphisDl.setQuery(query);
         hocphisDl.setParameters(params);
         hocphisDl.load();
     }
 
-    private String returnQuery(Object donvi, Object giaovien, String hocsinh, Object trangthai, Date tungay, Date denngay, Map<String, Object> params) {
+    private String returnQuery(Object donvi, String hocsinh, Object trangthai, Date tungay, Date denngay, Map<String, Object> params) {
         String query = "select e from truonghoc_Hocphi e ";
         String where = " where 1=1 ";
 
 
-        //Giáo viên
-        if (giaovien != null) {
-            where += "and e.usertao_hocphi.tengiaovien = :giaovien ";
-            params.put("giaovien", giaovienField.getValue().getTengiaovien());
-        }
         //Học sinh
         if (!StringUtils.isEmpty(hocsinh)) {
             where += "and e.hovaten.tenhocsinh like :hocsinh ";
@@ -231,17 +210,4 @@ public class HocphiBrowse extends StandardLookup<Hocphi> {
         query = query + where;
         return query;
     }
-
-    @Subscribe("dovitao_hocphiField")
-    protected void onDovitao_hocphiFieldValueChange(HasValue.ValueChangeEvent event) {
-        giaovienField.setOptionsList(searchedService.loadgiaovien(dovitao_hocphiField.getValue()));
-    }
-
-//    private List<Giaovien> loadGv(Object donvi){
-//        return dataManager.load(Giaovien.class)
-//                .query("select e from truonghoc_Giaovien e where e.donvitao_giaovien.tendonvi = :donvi")
-//                .parameter("donvi", donvi)
-//                .list();
-//    }
-
 }

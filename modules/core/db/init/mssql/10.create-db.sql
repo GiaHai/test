@@ -43,6 +43,7 @@ create table TRUONGHOC_LUONGTHANG (
     DENNGAY datetime2,
     BUOILAM decimal(19, 2),
     CANGOAI integer,
+    SO_CA_CN integer,
     CACHUNHAT integer,
     CASANG integer,
     THUCLINH bigint,
@@ -97,7 +98,7 @@ create table TRUONGHOC_HOCSINH (
     --
     DONVITAO_HOCSINH_ID uniqueidentifier,
     TENHOCSINH nvarchar(255),
-    NGAYSINHHOCSINH datetime2,
+    NGAYSINHHOCSINH_ID uniqueidentifier,
     GIOITINHHOCSINH nvarchar(255),
     QUEQUANHOCSINH nvarchar(255),
     GHICHU nvarchar(255),
@@ -142,6 +143,7 @@ create table TRUONGHOC_DIEMDANH (
     DONVIDD_ID uniqueidentifier,
     HOTENHS_ID uniqueidentifier,
     NGAYNGHI datetime2,
+    NGAY_HOCBU datetime2,
     --
     primary key nonclustered (ID)
 )^
@@ -199,7 +201,6 @@ create table TRUONGHOC_HOCPHI (
     DELETE_TS datetime2,
     DELETED_BY nvarchar(50),
     --
-    USERTAO_HOCPHI_ID uniqueidentifier,
     DOVITAO_HOCPHI_ID uniqueidentifier,
     HOVATEN_ID uniqueidentifier,
     GHICHU nvarchar(255),
@@ -277,3 +278,19 @@ alter table SEC_USER add GIAOVIEN_ID uniqueidentifier ^
 alter table SEC_USER add DTYPE nvarchar(31) ^
 update SEC_USER set DTYPE = 'truonghoc_UserExt' where DTYPE is null ^
 -- end SEC_USER
+-- begin TRUONGHOC_NAMSINH
+create table TRUONGHOC_NAMSINH (
+    ID uniqueidentifier,
+    VERSION integer not null,
+    CREATE_TS datetime2,
+    CREATED_BY nvarchar(50),
+    UPDATE_TS datetime2,
+    UPDATED_BY nvarchar(50),
+    DELETE_TS datetime2,
+    DELETED_BY nvarchar(50),
+    --
+    NAM_SINH nvarchar(255),
+    --
+    primary key nonclustered (ID)
+)^
+-- end TRUONGHOC_NAMSINH

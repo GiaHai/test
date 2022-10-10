@@ -31,10 +31,12 @@ public class HocsinhEdit extends StandardEditor<Hocsinh> {
     protected LookupField<Donvi> donvitao_hocsinhField;
     @Inject
     protected TextField<String> tenhocsinhField;
+    @Inject
+    protected TextField<String> quequanhocsinhField;
 
     @Subscribe
     protected void onInit(InitEvent event) {
-        List<String> list = Arrays.asList("Nam", "Nữ", "Tùy chỉnh");
+        List<String> list = Arrays.asList("Nam", "Nữ");
         gioitinhhocsinhField.setOptionsList(list);
         donvitao_hocsinhField.setRequired(true);
         donvitao_hocsinhField.setRequiredMessage("Nhập đơn vị");

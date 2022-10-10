@@ -44,7 +44,7 @@
                                              width="100%"
                                              dataContainer="giaovienDc"
                                              optionsContainer="donvisDc"
-                                             nullName="--Lọc tất cả---"
+                                             nullName="---Lọc tất cả---"
                                              captionProperty="tendonvi"/>
                             </column>
                         </form>
@@ -58,6 +58,7 @@
                                        property="tengiaovien"
                                        width="100%"
                                        caption="mainMsg://giaovien.tengiaovien"
+                                       inputPrompt="Nhập tên giáo viên"
                                        dataContainer="giaovienDc"/>
                         </form>
                     </row>
@@ -81,6 +82,7 @@
                                        property="quequangiaovien"
                                        dataContainer="giaovienDc"
                                        width="99%"
+                                       inputPrompt="Nhập quê quán"
                                        caption="mainMsg://giaovien.quequan"/>
                         </form>
                     </row>
@@ -105,6 +107,7 @@
                                        property="luongcoban"
                                        dataContainer="giaovienDc"
                                        width="100%"
+                                       inputPrompt="Nhập lương cơ bản"
                                        caption="mainMsg://giaovien.luongcoban"/>
                         </form>
                     </row>
@@ -115,6 +118,7 @@
                                           property="ghichu"
                                           dataContainer="giaovienDc"
                                           width="100%"
+                                          inputPrompt="Nhập ghi chú"
                                           caption="mainMsg://giaovien.ghichu"/>
                             </column>
                         </form>

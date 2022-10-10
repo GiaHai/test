@@ -60,6 +60,8 @@
                                              property="donvidd"
                                              width="100%"
                                              nullName="--Lọc tất cả---"
+                                             required="true"
+                                             requiredMessage="mainMsg://donvi.requiredMessage"
                                              caption="Đơn vị"/>
                             </column>
                         </form>
@@ -74,6 +76,8 @@
                                              property="nguoitaodd"
                                              width="100%"
                                              nullName="--Lọc tất cả---"
+                                             requiredMessage="mainMsg://giaovien.requiredMessage"
+                                             required="true"
                                              caption="Giáo viên"/>
                             </column>
                         </form>
@@ -86,30 +90,35 @@
                                              property="lopdd"
                                              width="100%"
                                              nullName="--Lọc tất cả---"
+                                             required="true"
+                                             requiredMessage="mainMsg://tenlop.requiredMessage"
                                              caption="Lớp chủ nhiệm"/>
                             </column>
                         </form>
                     </row>
                     <!--                    dòng 3 -->
                     <row>
-                        <form colspan="3" width="100%" childrenCaptionWidth="180px" dataContainer="diemdanhDc">
+                        <form colspan="2" width="100%" childrenCaptionWidth="180px" dataContainer="diemdanhDc">
                             <column>
                                 <lookupField id="hocsinhField" width="100%"
                                              property="hotenhs" caption="Danh sách học sinh nghỉ"
                                              nullName="---Danh sách học sinh---"/>
                             </column>
                         </form>
-                        <form colspan="1" width="100%">
-                            <column>
-                                <label value=""/>
-                            </column>
-                        </form>
-                        <form colspan="3" width="100%" childrenCaptionWidth="80px" dataContainer="diemdanhDc">
+                        <form colspan="2" width="100%" childrenCaptionWidth="80px" dataContainer="diemdanhDc">
                             <column>
                                 <dateField id="ngaynghiField"
                                            property="ngaynghi"
                                            width="100%"
                                            caption="mainMsg://diemdanh.ngaynghi"/>
+                            </column>
+                        </form>
+                        <form colspan="2" width="100%" childrenCaptionWidth="100px" dataContainer="diemdanhDc">
+                            <column>
+                                <dateField id="ngayHocbuField"
+                                           property="ngayHocbu"
+                                           width="100%"
+                                           caption="mainMsg://diemdanh.ngayhocbu"/>
                             </column>
                         </form>
                     </row>

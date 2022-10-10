@@ -52,6 +52,8 @@
                                              property="donvitao_thutienhocphi"
                                              width="100%"
                                              nullName="---Lọc tất cả---"
+                                             required="true"
+                                             requiredMessage="mainMsg://donvi.requiredMessage"
                                              caption="mainMsg://donvitao"/>
                             </column>
                         </form>
@@ -63,6 +65,9 @@
                                 <textField id="tenkhachhangField"
                                            property="tenkhachhang"
                                            width="100%"
+                                           requiredMessage="Nhập tên khách hàng"
+                                           inputPrompt="Nhập tên khách hàng"
+                                           required="true"
                                            caption="mainMsg://thuvienhocphi.tenkhachhang"/>
                             </column>
                         </form>
@@ -76,6 +81,7 @@
                                 <textField id="diachiField"
                                            property="diachi"
                                            width="100%"
+                                           inputPrompt="Nhập địa chỉ"
                                            caption="mainMsg://thuvienhocphi.diachi"/>
                             </column>
                         </form>
@@ -125,6 +131,8 @@
                                              property="tenhocsinh"
                                              width="100%"
                                              nullName="---Lọc tất cả---"
+                                             required="true"
+                                             captionProperty="Nhập tên học sinh"
                                              caption="mainMsg://thuvienhocphi.tenhocsinh"/>
                             </column>
                         </form>

@@ -27,8 +27,6 @@ public class HocphiEdit extends StandardEditor<Hocphi> {
     @Inject
     protected CollectionLoader<Hocsinh> hocsinhsDl;
     @Inject
-    protected LookupField<Giaovien> usertaoField;
-    @Inject
     protected LookupField<Donvi> dovitao_hocphiField;
     @Inject
     protected CollectionContainer<Hocsinh> hocsinhsDc;
@@ -57,8 +55,6 @@ public class HocphiEdit extends StandardEditor<Hocphi> {
     protected void onInit(InitEvent event) {
         List<String> list = Arrays.asList("Tiền mặt", "Chuyển khoản");
         hinhthucthanhtoanField.setOptionsList(list);
-//        dovitao_hocphiField.setEditable(false);
-//        usertaoField.setEditable(false);
         tinhtrangthanhtoanFiedl.setVisible(false);
     }
 
@@ -82,23 +78,6 @@ public class HocphiEdit extends StandardEditor<Hocphi> {
         tinhtrangthanhtoanFiedl.setValue("Chưa thanh toán");
         dovitao_hocphiField.setOptionsList(searchedService.loaddonvi());
     }
-
-    private Hocsinh hocsinhList(Object dovitao_hocphi, Object tenhs) {
-        return
-                dataManager.load(Hocsinh.class)
-                        .query("select e from truonghoc_Hocsinh e where e.donvitao_hocsinh = :donvitao_hocphiField and e.tenhocsinh = :tenhs")
-                        .parameter("donvitao_hocphiField", dovitao_hocphi)
-                        .parameter("tenhs", tenhs)
-                        .one();
-    }
-
-    @Subscribe("sotienthutheohdField")
-    protected void onSotienthutheohdFieldValueChange(HasValue.ValueChangeEvent<Long> event) {
-//        hinhthucthanhtoanField.setRequired(true);
-//        ngaydongField.setRequired(true);
-//        làm lại
-    }
-
     @Subscribe("hinhthucthanhtoanField")
     protected void onHinhthucthanhtoanFieldValueChange(HasValue.ValueChangeEvent<String> event) {
         if (hinhthucthanhtoanField.getValue() == null) {
@@ -131,7 +110,6 @@ public class HocphiEdit extends StandardEditor<Hocphi> {
 
     @Subscribe("dovitao_hocphiField")
     protected void onDovitao_hocphiFieldValueChange(HasValue.ValueChangeEvent<Donvi> event) {
-        usertaoField.setOptionsList(searchedService.loadgiaovien(dovitao_hocphiField.getValue().getTendonvi()));
         hovatenField.setOptionsList(searchedService.loadHs(dovitao_hocphiField.getValue().getTendonvi()));
     }
 

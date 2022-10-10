@@ -45,9 +45,6 @@ public class DiemdanhEdit extends StandardEditor<Diemdanh> {
 
     @Subscribe
     protected void onInit(InitEvent event) {
-//        quyền
-//        nguoitaoField.setEditable(false);
-//        donviField.setEditable(false);
         ngaynghiField.setRequired(true);
 
     }
@@ -62,10 +59,23 @@ public class DiemdanhEdit extends StandardEditor<Diemdanh> {
                 nguoitaoField.setEditable(false);
             }
         }
+        ngaynghiField.setValue(new Date());
+        donviField.setOptionsList(searchedService.loaddonvi());
+    }
+
+    @Subscribe
+    protected void onAfterShow(AfterShowEvent event) {
+        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() == null){
+            donviField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
+            donviField.setEditable(false);
+            if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null){
+                nguoitaoField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien());
+                nguoitaoField.setEditable(false);
+            }
+        }
 
         ngaynghiField.setValue(new Date());
         donviField.setOptionsList(searchedService.loaddonvi());
-//        nguoitaoField.setOptionsList(searchedService.loadgiaovien(donviField.getValue().getTendonvi()));
     }
 
     public List<Tenlop> loadlopdd(Object donvi, Object giaovien) {

@@ -51,6 +51,8 @@
                                              property="donvitao_thuchi"
                                              width="100%"
                                              nullName="---Lọc tất cả---"
+                                             required="true"
+                                             requiredMessage="mainMsg://donvi.requiredMessage"
                                              caption="mainMsg://donvitao"/>
                             </column>
                         </form>
@@ -120,6 +122,8 @@
                                 <textField id="dongiaField"
                                            property="dongia"
                                            width="100%"
+                                           required="true"
+                                           requiredMessage="Nhập đơn giá"
                                            caption="msg://Thuchi.dongia"/>
                             </column>
                         </form>

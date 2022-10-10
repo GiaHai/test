@@ -81,6 +81,8 @@ public class LuongthangEdit extends StandardEditor<Luongthang> {
     protected SearchedService searchedService;
     @Inject
     protected TextField<Integer> cachunhatField;
+    @Inject
+    protected TextField<Integer> soCaCnFiled;
     Long a = Long.valueOf(0);
     @Inject
     protected UserSession userSession;
@@ -300,6 +302,7 @@ public class LuongthangEdit extends StandardEditor<Luongthang> {
         cangoaiField.setValue(cachieu1.hashCode() + cachieu2.hashCode());
         tinhthuclinh();
 
+        soCaCnFiled.setValue(cachunhat().size());
     }
 
 

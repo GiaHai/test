@@ -19,6 +19,16 @@
                 </query>
             </loader>
         </collection>
+
+        <collection id="namsinhsDc"
+                    class="com.company.truonghoc.entity.tienich.Namsinh">
+            <view extends="_local"/>
+            <loader id="namsinhsDl">
+                <query>
+                    <![CDATA[select e from truonghoc_Namsinh e]]>
+                </query>
+            </loader>
+        </collection>
     </data>
     <dialogMode height="600"
                 width="800"/>
@@ -39,13 +49,13 @@
                         <form colspan="7" width="100%" childrenCaptionWidth="80px">
                             <column>
                                 <lookupField id="donvitao_hocsinhField"
-                                           property="donvitao_hocsinh"
-                                           dataContainer="hocsinhDc"
-                                           width="100%"
+                                             property="donvitao_hocsinh"
+                                             dataContainer="hocsinhDc"
+                                             width="100%"
                                              optionsContainer="donvisDc"
                                              captionProperty="tendonvi"
                                              nullName="---Lọc tất cả---"
-                                           caption="mainMsg://donvitao"/>
+                                             caption="mainMsg://donvitao"/>
                             </column>
                         </form>
                     </row>
@@ -56,6 +66,7 @@
                                            property="tenhocsinh"
                                            dataContainer="hocsinhDc"
                                            width="100%"
+                                           inputPrompt="Nhập tên học sinh"
                                            caption="mainMsg://hocsinh.tenhocsinh"/>
                             </column>
                         </form>
@@ -70,6 +81,7 @@
                                              property="gioitinhhocsinh"
                                              dataContainer="hocsinhDc"
                                              width="100%"
+                                             nullName="---Tuỳ chỉnh---"
                                              caption="mainMsg://hocsinh.gioitinhhocsinh"/>
                             </column>
                         </form>
@@ -77,11 +89,14 @@
                     <row>
                         <form colspan="3" width="100%" childrenCaptionWidth="80px">
                             <column>
-                                <dateField id="ngaysinhhocsinhField"
-                                           property="ngaysinhhocsinh"
-                                           dataContainer="hocsinhDc"
-                                           width="100%"
-                                           caption="mainMsg://hocsinh.ngaysinhhocsinh"/>
+                                <lookupField id="ngaysinhhocsinhField"
+                                             property="ngaysinhhocsinh"
+                                             dataContainer="hocsinhDc"
+                                             width="100%"
+                                             optionsContainer="namsinhsDc"
+                                             captionProperty="namSinh"
+                                             nullName="---Ngày sinh---"
+                                             caption="mainMsg://hocsinh.ngaysinhhocsinh"/>
                             </column>
                         </form>
                         <form colspan="1" width="100%">
@@ -103,10 +118,11 @@
                         <form colspan="7" width="100%" childrenCaptionWidth="80px">
                             <column>
                                 <textArea id="ghichuField"
-                                           property="ghichu"
-                                           dataContainer="hocsinhDc"
-                                           width="100%"
-                                           caption="mainMsg://hocsinh.ghichu"/>
+                                          property="ghichu"
+                                          dataContainer="hocsinhDc"
+                                          width="100%"
+                                          inputPrompt="Nhập ghi chú"
+                                          caption="mainMsg://hocsinh.ghichu"/>
                             </column>
                         </form>
                     </row>

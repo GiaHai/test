@@ -11,10 +11,6 @@ import java.util.Date;
 public class Hocphi extends StandardEntity {
     private static final long serialVersionUID = 6350442847448829593L;
 
-    @JoinColumn(name = "USERTAO_HOCPHI_ID")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Giaovien usertao_hocphi;
-
     @JoinColumn(name = "DOVITAO_HOCPHI_ID")
     @ManyToOne(fetch = FetchType.LAZY)
     private Donvi dovitao_hocphi;
@@ -53,14 +49,6 @@ public class Hocphi extends StandardEntity {
 
     public Donvi getDovitao_hocphi() {
         return dovitao_hocphi;
-    }
-
-    public void setUsertao_hocphi(Giaovien usertao_hocphi) {
-        this.usertao_hocphi = usertao_hocphi;
-    }
-
-    public Giaovien getUsertao_hocphi() {
-        return usertao_hocphi;
     }
 
     public String getTinhtrangthanhtoan() {

@@ -51,6 +51,8 @@
                                              property="hotengv"
                                              width="100%"
                                              caption="mainMsg://chamcong.hovaten"
+                                             required="true"
+                                             requiredMessage="mainMsg://giaovien.requiredMessage"
                                              nullName="--Lọc tất cả---"/>
                             </column>
                         </form>
@@ -65,6 +67,7 @@
                                              width="100%"
                                              caption="mainMsg://chamcong.donvi"
                                              nullName="--Lọc tất cả---"
+                                             requiredMessage="mainMsg://donvi.requiredMessage"
                                              property="donvigv"/>
                             </column>
                         </form>
@@ -95,11 +98,12 @@
                         </form>
                         <form colspan="2" width="100%" childrenCaptionWidth="80px" dataContainer="chamconggvDc">
                             <column>
-                                <textField id="tienbuoiField"
-                                           width="100%"
-                                           caption="mainMsg://chamcong.buoilam"
-                                           inputPrompt="Nhập số tiền"
-                                           property="tienBuoi"/>
+                                <lookupField id="tienbuoiField"
+                                             width="100%"
+                                             caption="mainMsg://chamcong.buoilam"
+                                             inputPrompt="Nhập số tiền"
+                                             nullName="---SỐ tiền theo ca---"
+                                             property="tienBuoi"/>
                             </column>
                         </form>
                     </row>

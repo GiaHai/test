@@ -109,8 +109,12 @@
                         caption="mainMsg://luongthang.cangoai"/>
                 <column id="casang"
                         caption="mainMsg://luongthang.casang"/>
+                <column id="cachunhat"
+                        caption="ca chủ nhật"/>
                 <column id="thuclinh"
                         caption="mainMsg://luongthang.thuclinh"/>
+                <column id="tienBh"
+                        caption="Bảo hiểm"/>
                 <column id="daythem"
                         caption="mainMsg://luongthang.daythem"/>
                 <column id="trocap"

@@ -36,6 +36,7 @@
                                property="tenlop"
                                caption="Tên lớp"
                                required="true"
+                               inputPrompt="Nhập tên lớp"
                                requiredMessage="mainMsg://tenlop.requiredMessage"/>
                 </vbox>
                 <vbox>
@@ -64,6 +65,7 @@
                                property="namhoc"
                                caption="Năm học"
                                required="true"
+                               inputPrompt="Nhập năm học"
                                requiredMessage="mainMsg://namhoc.requiredMessage"/>
                 </vbox>
             </hbox>

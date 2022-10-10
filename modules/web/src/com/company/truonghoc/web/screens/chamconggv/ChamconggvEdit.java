@@ -28,7 +28,7 @@ public class ChamconggvEdit extends StandardEditor<Chamconggv> {
     @Inject
     protected DataManager dataManager;
     @Inject
-    protected TextField<Integer> tienbuoiField;
+    protected LookupField<Integer> tienbuoiField;
     @Inject
     protected LookupField<Giaovien> hotenGvField;
     @Inject
@@ -46,8 +46,10 @@ public class ChamconggvEdit extends StandardEditor<Chamconggv> {
         hotenGvField.setRequired(true);
         ngaylamField.setRequired(true);
 //        buoilamField.setRequired(true);
-        List<String> list = Arrays.asList("Làm cả ngày", "Ca sáng", "Ca chiều", "Ca chủ nhật", "Ca chiều 5h-6h", "Ca chiều 6h-7h");
-        buoilamField.setOptionsList(list);
+        List<String> buoilam = Arrays.asList("Làm cả ngày", "Ca sáng", "Ca chiều", "Ca chủ nhật", "Ca chiều 5h-6h", "Ca chiều 6h-7h");
+        buoilamField.setOptionsList(buoilam);
+
+
     }
 
     @Subscribe
@@ -63,6 +65,24 @@ public class ChamconggvEdit extends StandardEditor<Chamconggv> {
             }else {
                 donvigvField.setOptionsList(searchedService.loaddonvi());
             }
+        }
+    }
+
+    @Subscribe("buoilamField")
+    protected void onBuoilamFieldValueChange(HasValue.ValueChangeEvent<String> event) {
+        if (buoilamField.getValue() == "Ca chủ nhật"){
+            tienbuoiField.setValue(Integer.valueOf("100000"));
+        }
+        if (buoilamField.getValue() == "Ca chiều 5h-6h" || buoilamField.getValue() == "Ca chiều 6h-7h"){
+            List<Integer> tienbuoi = new ArrayList<>();
+            tienbuoi.add(50000);
+            tienbuoi.add(60000);
+            tienbuoi.add(80000);
+
+            tienbuoiField.setOptionsList(tienbuoi);
+        }
+        if (buoilamField.getValue() == "Làm cả ngày" || buoilamField.getValue() == "Ca sáng"|| buoilamField.getValue() == "Ca chiều"){
+            tienbuoiField.clear();
         }
     }
 

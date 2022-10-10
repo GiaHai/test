@@ -50,7 +50,7 @@
                 </vbox>
                 <vbox spacing="true">
                     <dateField id="ngaylamField"
-                               caption="Ngày làm"
+                               caption="Ngày nghỉ"
                                width="100%"
                                resolution="DAY"/>
                     <lookupField id="lopField"
@@ -87,6 +87,8 @@
                         caption="Lớp"/>
                 <column id="ngaynghi"
                         caption="mainMsg://diemdanh.ngaynghi"/>
+                <column id="ngayHocbu"
+                        caption="Ngày học bù"/>
             </columns>
             <rowsCount/>
             <buttonsPanel id="buttonsPanel"

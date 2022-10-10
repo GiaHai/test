@@ -54,6 +54,8 @@
                                              property="donvitao_luongthang"
                                              width="100%"
                                              nullName="---Lọc tất cả---"
+                                             required="true"
+                                             requiredMessage="mainMsg://donvi.requiredMessage"
                                              caption="mainMsg://donvitao"/>
                             </column>
                         </form>
@@ -269,6 +271,7 @@
                     </row>
                 </rows>
             </grid>
+            <textField id="soCaCnFiled" dataContainer="luongthangDc" property="soCaCn" visible="false"/>
         </vbox>
         <hbox id="editActions" spacing="true">
             <button id="commitAndCloseBtn" action="windowCommitAndClose"/>

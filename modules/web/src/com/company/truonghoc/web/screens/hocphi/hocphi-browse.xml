@@ -43,10 +43,6 @@
                                  caption="Đơn vị"
                                  width="100%"
                                  nullName="---Lọc tất cả---"/>
-                    <lookupField id="giaovienField"
-                               width="100%"
-                               nullName="---Lọc tất cả---"
-                               caption="Giáo viên"/>
                 </vbox>
                 <vbox spacing="true">
                     <textField id="hovstenField"
@@ -94,8 +90,6 @@
                 <column id="stt"
                         generator="stt"
                         caption="STT"/>
-                <column id="usertao_hocphi"
-                        caption="mainMsg://nguoitaothu"/>
                 <column id="dovitao_hocphi"
                         caption="mainMsg://donvitao"/>
                 <column id="hovaten"

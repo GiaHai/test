@@ -13,11 +13,13 @@
             <property name="ghichu"/>
             <property name="donvitao_hocsinh"/>
         </property>
-        <property name="usertao_hocphi" view="_minimal"/>
         <property name="dovitao_hocphi" view="_minimal"/>
     </view>
     <view entity="truonghoc_Hocsinh" name="hocsinh-view" extends="_local" systemProperties="true">
         <property name="donvitao_hocsinh" view="_minimal"/>
+        <property name="ngaysinhhocsinh" view="_minimal">
+            <property name="namSinh"/>
+        </property>
     </view>
     <view entity="truonghoc_Luongthang" name="luongthang-view" extends="_local" systemProperties="true">
         <property name="hovaten" view="_minimal">

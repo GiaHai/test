@@ -46,6 +46,9 @@ public class Luongthang extends StandardEntity {
     @Column(name = "CANGOAI")
     private Integer cangoai;
 
+    @Column(name = "SO_CA_CN")
+    private Integer soCaCn;
+
     @Column(name = "CACHUNHAT")
     private Integer cachunhat;
 
@@ -81,6 +84,14 @@ public class Luongthang extends StandardEntity {
 
     @Column(name = "TINHTRANGNHANLUONG")
     private String tinhtrangnhanluong;
+
+    public void setSoCaCn(Integer soCaCn) {
+        this.soCaCn = soCaCn;
+    }
+
+    public Integer getSoCaCn() {
+        return soCaCn;
+    }
 
     public void setTienBh(Integer tienBh) {
         this.tienBh = tienBh;

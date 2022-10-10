@@ -30,6 +30,18 @@ public class Diemdanh extends StandardEntity {
     @Temporal(TemporalType.DATE)
     private Date ngaynghi;
 
+    @Temporal(TemporalType.DATE)
+    @Column(name = "NGAY_HOCBU")
+    private Date ngayHocbu;
+
+    public Date getNgayHocbu() {
+        return ngayHocbu;
+    }
+
+    public void setNgayHocbu(Date ngayHocbu) {
+        this.ngayHocbu = ngayHocbu;
+    }
+
     public void setLopdd(Tenlop lopdd) {
         this.lopdd = lopdd;
     }

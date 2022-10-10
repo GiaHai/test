@@ -55,7 +55,6 @@
                 <column id="email" caption="Email"/>
                 <column id="active" caption="Kích hoạt"/>
                 <column id="loockup_donvi" caption="Đơn vị"/>
-<!--                <column id="loockup_donvi.donvitrungtam" />-->
                 <column id="donvichinh" generator="donvichinh" caption="Đơn vị chính"/>
                 <column id="giaovien" caption="Giáo viên"/>
             </columns>

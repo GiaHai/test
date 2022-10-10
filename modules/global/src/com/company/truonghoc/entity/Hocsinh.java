@@ -1,10 +1,10 @@
 package com.company.truonghoc.entity;
 
+import com.company.truonghoc.entity.tienich.Namsinh;
 import com.haulmont.chile.core.annotations.NamePattern;
 import com.haulmont.cuba.core.entity.StandardEntity;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Table(name = "TRUONGHOC_HOCSINH")
 @Entity(name = "truonghoc_Hocsinh")
@@ -19,9 +19,9 @@ public class Hocsinh extends StandardEntity {
     @Column(name = "TENHOCSINH")
     private String tenhocsinh;
 
-    @Column(name = "NGAYSINHHOCSINH")
-    @Temporal(TemporalType.DATE)
-    private Date ngaysinhhocsinh;
+    @JoinColumn(name = "NGAYSINHHOCSINH_ID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Namsinh ngaysinhhocsinh;
 
     @Column(name = "GIOITINHHOCSINH")
     private String gioitinhhocsinh;
@@ -32,20 +32,20 @@ public class Hocsinh extends StandardEntity {
     @Column(name = "GHICHU")
     private String ghichu;
 
+    public void setNgaysinhhocsinh(Namsinh ngaysinhhocsinh) {
+        this.ngaysinhhocsinh = ngaysinhhocsinh;
+    }
+
+    public Namsinh getNgaysinhhocsinh() {
+        return ngaysinhhocsinh;
+    }
+
     public void setDonvitao_hocsinh(Donvi donvitao_hocsinh) {
         this.donvitao_hocsinh = donvitao_hocsinh;
     }
 
     public Donvi getDonvitao_hocsinh() {
         return donvitao_hocsinh;
-    }
-
-    public void setNgaysinhhocsinh(Date ngaysinhhocsinh) {
-        this.ngaysinhhocsinh = ngaysinhhocsinh;
-    }
-
-    public Date getNgaysinhhocsinh() {
-        return ngaysinhhocsinh;
     }
 
     public String getGhichu() {

@@ -24,7 +24,9 @@
     <menu id="application-baocao" caption="mainMsg://menu_config.application-truonghoc3" expanded="true">
         <item screen="truonghoc_BaocaoScreen" caption="Báo cáo"/>
     </menu>
-
+    <menu id="application-tienich" caption="Tiện ích">
+        <item screen="truonghoc_Namsinh.browse" caption="mainMsg://menu_config.truonghoc_Namsinh.browse"/>
+    </menu>
     <menu id="administration">
         <item screen="truonghoc_UserExt.browse" caption="Quản trị người dùng"/>
 <!--        <item id="sec$User.browse"/>-->

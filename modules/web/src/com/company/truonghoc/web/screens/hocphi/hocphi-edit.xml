@@ -38,11 +38,13 @@
                     <row>
                         <form colspan="3" width="100%" childrenCaptionWidth="80px" dataContainer="hocphiDc">
                             <column>
-                                <lookupField id="usertaoField"
-                                             property="usertao_hocphi"
+                                <lookupField id="dovitao_hocphiField"
+                                             property="dovitao_hocphi"
                                              width="100%"
                                              nullName="---Lọc tất cả---"
-                                             caption="mainMsg://nguoitaothu"/>
+                                             required="true"
+                                             requiredMessage="mainMsg://donvi.requiredMessage"
+                                             caption="mainMsg://donvitao"/>
                             </column>
                         </form>
                         <form colspan="1" width="100%">
@@ -50,18 +52,6 @@
                                 <label value=""/>
                             </column>
                         </form>
-                        <form colspan="3" width="100%" childrenCaptionWidth="80px" dataContainer="hocphiDc">
-                            <column>
-                                <lookupField id="dovitao_hocphiField"
-                                             property="dovitao_hocphi"
-                                             width="100%"
-                                             nullName="---Lọc tất cả---"
-                                             caption="mainMsg://donvitao"/>
-                            </column>
-                        </form>
-                    </row>
-                    <!--                    dòng 2-->
-                    <row>
                         <form colspan="3" width="100%" childrenCaptionWidth="80px" dataContainer="hocphiDc">
                             <column>
                                 <lookupField id="hovatenField"
@@ -71,23 +61,8 @@
                                              caption="mainMsg://hocphi.hovaten"/>
                             </column>
                         </form>
-                        <form colspan="1" width="100%">
-                            <column>
-                                <label value=""/>
-                            </column>
-                        </form>
-                        <!--                        <form colspan="3" width="100%" childrenCaptionWidth="80px" dataContainer="hocphiDc">-->
-                        <!--                            <column>-->
-                        <!--                                <textField id="namsinhField"-->
-                        <!--                                           property="namsinh"-->
-                        <!--                                           width="100%"-->
-                        <!--                                           caption="mainMsg://hocphi.namsinh"/>-->
-                        <!--                            </column>-->
-                        <!--                        </form>-->
                     </row>
-
-
-                    <!--                    dòng 3-->
+                    <!--                    dòng 2-->
                     <row>
                         <form colspan="7" width="100%" childrenCaptionWidth="80px" dataContainer="hocphiDc">
                             <column>
@@ -98,7 +73,7 @@
                             </column>
                         </form>
                     </row>
-                    <!--                    dòng 4-->
+                    <!--                    dòng 3-->
                     <row>
                         <form colspan="3" width="100%" childrenCaptionWidth="80px" dataContainer="hocphiDc">
                             <column>
@@ -122,7 +97,7 @@
                             </column>
                         </form>
                     </row>
-                    <!--                    dòng 5-->
+                    <!--                    dòng 4-->
                     <row>
                         <form colspan="3" width="100%" childrenCaptionWidth="80px" dataContainer="hocphiDc">
                             <column>

@@ -89,6 +89,8 @@
                         caption="mainMsg://chamcong.ngaylam"/>
                 <column id="buoilam"
                         caption="mainMsg://chamcong.buoilam"/>
+                <column id="tienBuoi"
+                        caption="Tiền công"/>
             </columns>
             <rowsCount/>
             <buttonsPanel id="buttonsPanel"
