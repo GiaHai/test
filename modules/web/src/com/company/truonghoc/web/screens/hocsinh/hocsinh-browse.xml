@@ -76,7 +76,7 @@
                         caption="mainMsg://donvitao"/>
                 <column id="tenhocsinh"
                         caption="mainMsg://hocsinh.tenhocsinh"/>
-                <column id="ngaysinhhocsinh"
+                <column id="ngaysinhhocsinh.namSinh"
                         caption="mainMsg://hocsinh.ngaysinhhocsinh"/>
                 <column id="gioitinhhocsinh"
                         caption="mainMsg://hocsinh.gioitinhhocsinh"/>

@@ -132,7 +132,6 @@
                                              width="100%"
                                              nullName="---Lọc tất cả---"
                                              required="true"
-                                             captionProperty="Nhập tên học sinh"
                                              caption="mainMsg://thuvienhocphi.tenhocsinh"/>
                             </column>
                         </form>
