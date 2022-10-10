@@ -1,0 +1,1 @@
+alter table TRUONGHOC_HOCSINH drop column NGAYSINHHOCSINH__U42111 ;

@@ -1,0 +1,2 @@
+exec sp_rename 'TRUONGHOC_NAMSINH.NAM_SINH', 'NAM_SINH__U36162', 'COLUMN' ^
+alter table TRUONGHOC_NAMSINH add NAM_SINH nvarchar(255) ;

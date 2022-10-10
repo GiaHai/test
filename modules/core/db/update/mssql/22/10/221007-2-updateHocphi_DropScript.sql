@@ -1,0 +1,1 @@
+alter table TRUONGHOC_HOCPHI drop column USERTAO_HOCPHI_ID__U86148 ;

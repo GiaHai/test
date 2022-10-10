@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://namsinhBrowse.caption"
+        focusComponent="namsinhsTable"
+        messagesPack="com.company.truonghoc.web.screens.tienich.namsinh">
+    <data readOnly="true">
+        <collection id="namsinhsDc"
+                    class="com.company.truonghoc.entity.tienich.Namsinh">
+            <view extends="_local"/>
+            <loader id="namsinhsDl">
+                <query>
+                    <![CDATA[select e from truonghoc_Namsinh e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="namsinhsTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="namsinhsTable"
+                dataLoader="namsinhsDl">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="namsinhsTable"
+                    width="100%"
+                    dataContainer="namsinhsDc">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+            </actions>
+            <columns>
+                <column id="namSinh" caption="Năm sinh"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="namsinhsTable.create"/>
+                <button id="editBtn" action="namsinhsTable.edit"/>
+                <button id="removeBtn" action="namsinhsTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>
