@@ -43,10 +43,6 @@
                                  caption="Đơn vị"
                                  width="100%"
                                  nullName="--Lọc tất cả--"/>
-                    <lookupField id="nguoithuField"
-                                 caption="Tài khoản người thu"
-                                 width="100%"
-                                 nullName="---Lọc tất cả---"/>
                 </vbox>
                 <vbox spacing="true">
                     <textField id="tenKhField"
@@ -83,7 +79,7 @@
                             stylename="Btntimkiem"
                             caption="Tìm kiếm" align="TOP_CENTER"/>
                     <button id="clearBtn"
-                            caption="Clear"
+                            caption="Xoá"
                             css="margin-top: 22%;display: grid;"/>
                 </vbox>
             </hbox>
@@ -111,8 +107,6 @@
                         caption="mainMsg://thuvienhocphi.denngay"/>
                 <column id="tenhocsinh"
                         caption="mainMsg://thuvienhocphi.tenhocsinh"/>
-                <!--                <column id="dongia"-->
-                <!--                        caption="mainMsg://thuvienhocphi.dongia"/>-->
                 <column id="thanhtien"
                         caption="mainMsg://thuvienhocphi.thanhtien"/>
                 <column id="checkhan"
@@ -125,7 +119,8 @@
                 <button id="createBtn" action="thutienhocphisTable.create"/>
                 <button id="editBtn" action="thutienhocphisTable.edit"/>
                 <button id="removeBtn" action="thutienhocphisTable.remove"/>
-                <button id="excelBtn" action="thutienhocphisTable.excel"/>
+                <button id="excelBtn" caption="Xuất Excel"
+                        icon="font-icon:FILE_EXCEL_O" stylename="style-button-all"/>
             </buttonsPanel>
         </groupTable>
         <hbox id="lookupActions" spacing="true" visible="false">

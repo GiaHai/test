@@ -5,12 +5,17 @@ import com.company.truonghoc.entity.Giaovien;
 import com.company.truonghoc.entity.Tenlop;
 import com.company.truonghoc.service.DulieuUserService;
 import com.company.truonghoc.service.SearchedService;
+import com.company.truonghoc.service.XuatFileExcelService;
+import com.company.truonghoc.web.screens.utils.ExtendExcelExporter;
 import com.haulmont.cuba.core.entity.Entity;
+import com.haulmont.cuba.core.entity.KeyValueEntity;
 import com.haulmont.cuba.core.global.DataManager;
+import com.haulmont.cuba.core.global.Metadata;
 import com.haulmont.cuba.gui.Dialogs;
 import com.haulmont.cuba.gui.UiComponents;
 import com.haulmont.cuba.gui.actions.list.CreateAction;
 import com.haulmont.cuba.gui.components.*;
+import com.haulmont.cuba.gui.export.ExportDisplay;
 import com.haulmont.cuba.gui.model.CollectionContainer;
 import com.haulmont.cuba.gui.model.CollectionLoader;
 import com.haulmont.cuba.gui.screen.*;
@@ -21,6 +26,7 @@ import org.springframework.util.StringUtils;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,9 +63,20 @@ public class LophocBrowse extends StandardLookup<Lophoc> {
     protected DataManager dataManager;
     @Inject
     protected SearchedService searchedService;
+    @Inject
+    protected CollectionContainer<Lophoc> lophocsDc;
+    @Inject
+    protected XuatFileExcelService xuatFileExcelService;
+    @Inject
+    protected GroupTable<Lophoc> lophocsTable;
+    @Inject
+    protected Metadata metadata;
+    @Inject
+    protected ExportDisplay exportDisplay;
 
     @Subscribe
     protected void onInit(InitEvent event) {
+        //load đơn vị
         donvisDl.load();
         List<String> sessionTypeNames = donvisDc.getMutableItems().stream()
                 .map(Donvi::getTendonvi)
@@ -69,40 +86,24 @@ public class LophocBrowse extends StandardLookup<Lophoc> {
 
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
+        //Điều kiện
         try {
-            if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() == null){
+            if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() == null) {
                 searchDvField.setEditable(false);
                 searchDvField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi());
                 excuteSearch(true);
-                if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null){
+                if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null) {
                     searchGvcnField.setValue((dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien()));
                     searchGvcnField.setEditable(false);
                     excuteSearch(true);
                 }
             }
-        }catch (NullPointerException ex){
+        } catch (NullPointerException ex) {
 
         }
     }
 
-//    @Subscribe("lophocsTable.create")
-//    protected void onLophocsTableCreate(Action.ActionPerformedEvent event) {
-//        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi() != null) {
-//            if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() != null) {
-//                this.lophocsTableCreate.execute();
-//            } else {
-//                dialogs.createMessageDialog()
-//                        .withCaption("THÔNG BÁO")
-//                        .withMessage("Bạn không có quyền")
-//                        .withType(Dialogs.MessageType.WARNING)
-//                        .show();
-//                if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null) {
-//                    this.lophocsTableCreate.execute();
-//                }
-//            }
-//        }
-//    }
-
+    /*** Tìm kiếm **/
     public void timkiemExcute() {
         excuteSearch(true);
     }
@@ -123,24 +124,24 @@ public class LophocBrowse extends StandardLookup<Lophoc> {
         String query = "select e from truonghoc_Lophoc e ";
         String where = " where 1=1 ";
         //Đơn vị
-        if (donvi != null){
+        if (donvi != null) {
             where += "and e.donvi.tendonvi = :donvi ";
             params.put("donvi", donvi);
         }
         // Tên lớp
-        if (tenlop != null){
+        if (tenlop != null) {
             where += "and e.tenlop.tenlop = :tenlop ";
             params.put("tenlop", searchLopField.getValue().getTenlop());
         }
         // Tên giáo viên
         //load nếu lớp học bằng true thì giáo viên mới xem được
-        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null){
-            if (tengv != null){
+        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null) {
+            if (tengv != null) {
                 where += "and e.giaoviencn.tengiaovien like :tengv and e.tenlop.tinhtranglop = true ";
                 params.put("tengv", searchGvcnField.getValue().getTengiaovien());
             }
-        }else {
-            if (tengv != null){
+        } else {
+            if (tengv != null) {
                 where += "and e.giaoviencn.tengiaovien like :tengv ";
                 params.put("tengv", searchGvcnField.getValue().getTengiaovien());
             }
@@ -149,13 +150,12 @@ public class LophocBrowse extends StandardLookup<Lophoc> {
         return query;
     }
 
+    /*** Số thứ tự ***/
     public Component stt(Entity entity) {
         int lineNumber = 1;
         try {
             lineNumber = lophocsDl.getContainer().getItemIndex(entity.getId()) + 1;
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             lineNumber = 1;
         }
         Label field = uiComponents.create(Label.NAME);
@@ -163,14 +163,71 @@ public class LophocBrowse extends StandardLookup<Lophoc> {
         return field;
     }
 
+    /***Điều kiện***/
     @Subscribe("searchDvField")
     protected void onSearchDvFieldValueChange(HasValue.ValueChangeEvent event) {
-        searchGvcnField.setOptionsList(searchedService.loadgiaovien(searchDvField.getValue()));
+        if (searchDvField.getValue() != null) {
+            searchGvcnField.setOptionsList(searchedService.loadgiaovien(searchDvField.getValue()));
+        } else {
+            searchGvcnField.clear();
+        }
     }
 
     @Subscribe("searchGvcnField")
     protected void onSearchGvcnFieldValueChange(HasValue.ValueChangeEvent event) {
-        searchLopField.setOptionsList(searchedService.loadlop(searchDvField.getValue(), searchGvcnField.getValue().getTengiaovien()));
+        if (searchGvcnField.getValue() != null){
+            searchLopField.setOptionsList(searchedService.loadlop(searchDvField.getValue(), searchGvcnField.getValue().getTengiaovien()));
+        }else {
+            searchLopField.clear();
+        }
     }
 
+    /*** Xuất file excel ***/
+    @Subscribe("excelBtn")
+    protected void onExcelBtnClick(Button.ClickEvent event) {
+        dialogs.createOptionDialog()
+                .withCaption("Xác nhận")
+                .withMessage("Bạn có muốn chỉ xuất các hàng đã chọn không?")
+                .withActions(
+                        new DialogAction(DialogAction.Type.YES, Action.Status.PRIMARY).withCaption("Hàng đã chọn").withHandler(e -> {
+                            xuatExcel(lophocsDc.getItems());
+                        }),
+                        new DialogAction(DialogAction.Type.YES, Action.Status.PRIMARY).withCaption("Tất cả các hàng").withHandler(e -> {
+                            xuatExcel(xuatFileExcelService.layDanhSachLophoc());
+                        }),
+                        new DialogAction(DialogAction.Type.NO).withCaption("Hủy")
+                )
+                .show();
+    }
+
+    private void xuatExcel(List<Lophoc> layDanhSachLophoc) {
+        Table table = lophocsTable;
+        Map<String, String> columns = new HashMap<>();
+        Map<Integer, String> properties = new HashMap<>();
+        List<KeyValueEntity> collection = new ArrayList<>();
+        int count = 1;
+
+        for (Lophoc e : layDanhSachLophoc) {
+            KeyValueEntity row = metadata.create(KeyValueEntity.class);
+            row.setValue("stt", count);
+            row.setValue("donvi", e.getValue("donvi"));
+            row.setValue("tenlop", e.getValue("tenlop"));
+            row.setValue("giaoviencn", e.getValue("giaoviencn"));
+            row.setValue("dshocsinh", e.getValue("dshocsinh"));
+
+            collection.add(row);
+            count++;
+        }
+        List<Table.Column> tableColumns = table.getColumns();
+        int i = 0;
+        for (Table.Column column : tableColumns) {
+            columns.put(column.getIdString(), column.getCaption());
+            properties.put(i, column.getIdString());
+            i++;
+        }
+
+        ExtendExcelExporter exporter = new ExtendExcelExporter("Danh sách lớp học");
+
+        exporter.exportDataCollectionTitleInFile(collection, columns, properties, exportDisplay, "Danh sách lớp học");
+    }
 }

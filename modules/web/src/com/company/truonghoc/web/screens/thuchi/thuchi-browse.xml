@@ -43,10 +43,6 @@
                                  caption="Đơn vị"
                                  width="100%"
                                  nullName="---Lọc tất cả---"/>
-                    <lookupField id="nguoichiField"
-                               caption="Người thanh toán"
-                               width="100%"
-                               nullName="---Lọc tất cả---"/>
                 </vbox>
                 <vbox spacing="true">
                     <textField id="khoanchiField"
@@ -78,7 +74,7 @@
                             stylename="Btntimkiem"
                             caption="Tìm kiếm" align="TOP_CENTER"/>
                     <button id="clearBtn"
-                            caption="Clear"
+                            caption="Xoá"
                             css="margin-top: 22%;display: grid;"/>
                 </vbox>
             </hbox>
@@ -121,7 +117,8 @@
                 <button id="createBtn" action="thuchisTable.create"/>
                 <button id="editBtn" action="thuchisTable.edit"/>
                 <button id="removeBtn" action="thuchisTable.remove"/>
-                <button id="excelBtn" action="thuchisTable.excel"/>
+                <button id="excelBtn" caption="Xuất Excel"
+                        icon="font-icon:FILE_EXCEL_O" stylename="style-button-all"/>
             </buttonsPanel>
         </groupTable>
         <hbox id="lookupActions" spacing="true" visible="false">

@@ -9,7 +9,19 @@
 
   @include com_company_truonghoc-helium-ext;
 
-   .c-login-main-login-layout {
-    background-image: url("images/123.jpg");
-   }
+  .c-login-main-login-layout {
+    width: 100%;
+        background-color: antiquewhite;
+    .c-login-panel {
+      width: 30%;
+    }
+  }
+  .style-button-all {
+    border-radius: 4px !important;
+    border: 1px solid #0168a5 !important;
+    background: #fff !important;
+    color: #0168a5 !important;
+    height: 30px !important;
+    box-shadow: none !important;
+  }
 }

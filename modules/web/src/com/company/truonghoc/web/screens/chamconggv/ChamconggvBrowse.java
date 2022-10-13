@@ -3,10 +3,16 @@ package com.company.truonghoc.web.screens.chamconggv;
 import com.company.truonghoc.entity.Donvi;
 import com.company.truonghoc.entity.Giaovien;
 import com.company.truonghoc.service.DulieuUserService;
+import com.company.truonghoc.service.XuatFileExcelService;
+import com.company.truonghoc.web.screens.utils.ExtendExcelExporter;
 import com.haulmont.cuba.core.entity.Entity;
+import com.haulmont.cuba.core.entity.KeyValueEntity;
 import com.haulmont.cuba.core.global.DataManager;
+import com.haulmont.cuba.core.global.Metadata;
+import com.haulmont.cuba.gui.Dialogs;
 import com.haulmont.cuba.gui.UiComponents;
 import com.haulmont.cuba.gui.components.*;
+import com.haulmont.cuba.gui.export.ExportDisplay;
 import com.haulmont.cuba.gui.model.CollectionContainer;
 import com.haulmont.cuba.gui.model.CollectionLoader;
 import com.haulmont.cuba.gui.screen.*;
@@ -47,6 +53,16 @@ public class ChamconggvBrowse extends StandardLookup<Chamconggv> {
     protected DataManager dataManager;
     @Inject
     protected LookupField buoilamField;
+    @Inject
+    protected Dialogs dialogs;
+    @Inject
+    protected XuatFileExcelService xuatFileExcelService;
+    @Inject
+    protected GroupTable<Chamconggv> chamconggvsTable;
+    @Inject
+    protected Metadata metadata;
+    @Inject
+    protected ExportDisplay exportDisplay;
 
     @Subscribe
     protected void onBeforeShow(BeforeShowEvent event) {
@@ -107,7 +123,7 @@ public class ChamconggvBrowse extends StandardLookup<Chamconggv> {
 
     @Subscribe("tendonviField")
     protected void onTendonviFieldValueChange(HasValue.ValueChangeEvent event) {
-        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() == null){
+        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() == null) {
             try {
                 tengiaovienField.setOptionsList(tengiaovien(tendonviField.getValue()));
             } catch (NullPointerException ex) {
@@ -175,4 +191,59 @@ public class ChamconggvBrowse extends StandardLookup<Chamconggv> {
         query = query + where;
         return query;
     }
+
+    /********* XUẤT FILE EXCEL ********/
+
+    @Subscribe("excelBtn")
+    protected void onExcelBtnClick(Button.ClickEvent event) {
+        dialogs.createOptionDialog()
+                .withCaption("Xác nhận")
+                .withMessage("Bạn có muốn chỉ xuất các hàng đã chọn không?")
+                .withActions(
+                        new DialogAction(DialogAction.Type.YES, Action.Status.PRIMARY).withCaption("Hàng đã chọn").withHandler(e -> {
+                            xuatExcel(chamconggvsDc.getItems());
+                        }),
+                        new DialogAction(DialogAction.Type.YES, Action.Status.PRIMARY).withCaption("Tất cả các hàng").withHandler(e -> {
+                            xuatExcel(xuatFileExcelService.layDanhSachChamconggv());
+                        }),
+                        new DialogAction(DialogAction.Type.NO).withCaption("Hủy")
+                )
+                .show();
+    }
+
+    private void xuatExcel(List<Chamconggv> layDanhSachChamconggv) {
+
+        Table table = chamconggvsTable;
+        Map<String, String> columns = new HashMap<>();
+        Map<Integer, String> properties = new HashMap<>();
+        List<KeyValueEntity> collection = new ArrayList<>();
+        int count = 1;
+
+        for (Chamconggv e: layDanhSachChamconggv){
+            KeyValueEntity row = metadata.create(KeyValueEntity.class);
+            row.setValue("stt", count);
+            row.setValue("donvigv", e.getValue("donvigv"));
+            row.setValue("hotengv", e.getValue("hotengv"));
+            row.setValue("ngaylam", e.getValue("ngaylam"));
+            row.setValue("buoilam", e.getValue("buoilam"));
+            row.setValue("tienBuoi", e.getValue("tienBuoi"));
+
+            collection.add(row);
+            count ++;
+        }
+
+        List<Table.Column> tableColumns = table.getColumns();
+        int i = 0;
+        for (Table.Column column : tableColumns) {
+            columns.put(column.getIdString(), column.getCaption());
+            properties.put(i, column.getIdString());
+            i++;
+        }
+
+        ExtendExcelExporter exporter = new ExtendExcelExporter("Danh sách chấm công giáo viên");
+
+        exporter.exportDataCollectionTitleInFile(collection, columns, properties,exportDisplay,"Danh sách chấm công giáo viên");
+    }
+
+
 }

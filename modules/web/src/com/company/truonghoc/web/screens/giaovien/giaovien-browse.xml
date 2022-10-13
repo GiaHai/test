@@ -42,7 +42,8 @@
                              caption="Đơn vị"
                              nullName="---Lọc tất cả---"/>
                 <textField id="searchTenGvField"
-                           caption="Giáo viên"/>
+                           caption="Giáo viên"
+                inputPrompt="Nhập tên giáo viên"/>
                 <button id="timkiemBtn"
                         caption="Tìm kiếm"
                         stylename="Btntimkiem"
@@ -79,7 +80,8 @@
                 <button id="createBtn" action="giaoviensTable.create"/>
                 <button id="editBtn" action="giaoviensTable.edit"/>
                 <button id="removeBtn" action="giaoviensTable.remove"/>
-                <button id="excelBtn" action="giaoviensTable.excel"/>
+                <button id="excelBtn" caption="Xuất Excel"
+                        icon="font-icon:FILE_EXCEL_O" stylename="style-button-all"/>
             </buttonsPanel>
         </groupTable>
         <hbox id="lookupActions" spacing="true" visible="false">

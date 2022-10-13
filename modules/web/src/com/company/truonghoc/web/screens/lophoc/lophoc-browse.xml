@@ -30,7 +30,6 @@
             spacing="true"
             stylename="css-layout-lophoc">
         <groupBox caption="Tìm kiếm"
-                  collapsable="true"
                   collapsed="true"
                   stylename="css-hbox-search"
                   spacing="true"
@@ -67,7 +66,8 @@
                 <button id="createBtn" action="lophocsTable.create"/>
                 <button id="editBtn" action="lophocsTable.edit"/>
                 <button id="removeBtn" action="lophocsTable.remove"/>
-                <button id="excelBtn" action="lophocsTable.excel"/>
+                <button id="excelBtn" caption="Xuất Excel"
+                        icon="font-icon:FILE_EXCEL_O" stylename="style-button-all"/>
             </buttonsPanel>
         </groupTable>
         <hbox id="lookupActions" spacing="true" visible="false">

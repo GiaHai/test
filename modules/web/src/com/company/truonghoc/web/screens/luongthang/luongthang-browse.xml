@@ -46,9 +46,9 @@
                 </vbox>
                 <vbox spacing="true">
                     <lookupField id="giaovienField"
-                               caption="Họ tên giáo viên"
-                               width="100%"
-                               nullName="---Lọc tất cả---"/>
+                                 caption="Họ tên giáo viên"
+                                 width="100%"
+                                 nullName="---Lọc tất cả---"/>
                     <lookupField id="trangthaiField"
                                  caption="Trạng thái"
                                  width="100%"
@@ -74,7 +74,7 @@
                             stylename="Btntimkiem"
                             caption="Tìm kiếm" align="TOP_CENTER"/>
                     <button id="clearBtn"
-                            caption="Clear"
+                            caption="Xoá"
                             css="margin-top: 22%;display: grid;"/>
                 </vbox>
             </hbox>
@@ -140,7 +140,8 @@
                 <button id="createBtn" action="luongthangsTable.create"/>
                 <button id="editBtn" action="luongthangsTable.edit"/>
                 <button id="removeBtn" action="luongthangsTable.remove"/>
-                <button id="excelBtn" action="luongthangsTable.excel"/>
+                <button id="excelBtn" caption="Xuất Excel"
+                        icon="font-icon:FILE_EXCEL_O" stylename="style-button-all"/>
             </buttonsPanel>
         </groupTable>
         <hbox id="lookupActions" spacing="true" visible="false">

@@ -8,6 +8,7 @@ import com.company.truonghoc.service.DulieuUserService;
 import com.company.truonghoc.service.SearchedService;
 import com.haulmont.cuba.core.entity.Entity;
 import com.haulmont.cuba.core.global.DataManager;
+import com.haulmont.cuba.gui.Notifications;
 import com.haulmont.cuba.gui.UiComponents;
 import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.model.CollectionContainer;
@@ -18,9 +19,7 @@ import com.company.truonghoc.entity.Lophoc;
 import com.haulmont.cuba.security.global.UserSession;
 
 import javax.inject.Inject;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @UiController("truonghoc_Lophoc.edit")
 @UiDescriptor("lophoc-edit.xml")
@@ -63,6 +62,8 @@ public class LophocEdit extends StandardEditor<Lophoc> {
     protected DataContext dataContext;
     @Inject
     protected PickerField<Hocsinh> dsHocsinhField;
+    @Inject
+    protected Notifications notifications;
 
     @Subscribe
     protected void onInit(InitEvent event) {
@@ -104,9 +105,9 @@ public class LophocEdit extends StandardEditor<Lophoc> {
     @Subscribe("giaovienField")
     protected void onGiaovienFieldValueChange(HasValue.ValueChangeEvent<Giaovien> event) {
         if (giaovienField.getValue() != null) {
-            if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() == null){
+            if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() == null) {
                 tenlopField.setOptionsList(searchedService.loadlop(DvField.getValue().getTendonvi(), giaovienField.getValue().getTengiaovien()));
-            }else {
+            } else {
                 tenlopField.setOptionsList(searchedService.loadlopDK(DvField.getValue().getTendonvi(), giaovienField.getValue().getTengiaovien()));
             }
         } else {
@@ -115,13 +116,13 @@ public class LophocEdit extends StandardEditor<Lophoc> {
     }
 
 
-
     private List<Giaovien> loadgiaovien(Object donvi) {
         return dataManager.load(Giaovien.class)
                 .query("select e from truonghoc_Giaovien e where e.donvitao_giaovien = :donvi")
                 .parameter("donvi", donvi)
                 .list();
     }
+
     private List<Donvi> loaddonvi() {
         return dataManager.load(Donvi.class)
                 .query("select e from truonghoc_Donvi e")
@@ -151,14 +152,33 @@ public class LophocEdit extends StandardEditor<Lophoc> {
 
     @Subscribe("commitAndCloseBtn")
     protected void onCommitAndCloseBtnClick(Button.ClickEvent event) {
-        commitChanges().then(() -> {
-            dataContext.clear();
-            Lophoc lophoc = dataContext.create(Lophoc.class);
-            lophoc.setDonvi(getEditedEntity().getDonvi());
-            lophoc.setGiaoviencn(getEditedEntity().getGiaoviencn());
-            lophoc.setTenlop(getEditedEntity().getTenlop());
-            getEditedEntityContainer().setItem(lophoc);
+        if (dkTrungten().size() == 0) {
+            commitChanges().then(() -> {
+                dataContext.clear();
+                Lophoc lophoc = dataContext.create(Lophoc.class);
+                lophoc.setDonvi(getEditedEntity().getDonvi());
+                lophoc.setGiaoviencn(getEditedEntity().getGiaoviencn());
+                lophoc.setTenlop(getEditedEntity().getTenlop());
+                getEditedEntityContainer().setItem(lophoc);
 
-        });
+            });
+        } else {
+            dsHocsinhField.clear();
+            notifications.create()
+                    .withCaption("Không thể thêm 2 học sinh giống nhau vào 1 lớp")
+                    .withType(Notifications.NotificationType.ERROR)
+                    .withPosition(Notifications.Position.BOTTOM_RIGHT)
+                    .show();
+        }
     }
+
+    /*** sự kiện không thể thêm 2 học sinh giống nhau vào 1 lớp***/
+    private List<Lophoc> dkTrungten() {
+        return dataManager.load(Lophoc.class)
+                .query("select e from truonghoc_Lophoc e where e.tenlop = :tenlop and e.dshocsinh = :hocsinh")
+                .parameter("tenlop", tenlopField.getValue())
+                .parameter("hocsinh", dsHocsinhField.getValue())
+                .list();
+    }
+
 }

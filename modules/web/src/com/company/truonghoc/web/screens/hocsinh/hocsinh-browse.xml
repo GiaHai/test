@@ -72,6 +72,7 @@
                 <action id="excel" type="excel"/>
             </actions>
             <columns>
+                <column id="stt" generator="stt" caption="STT"/>
                 <column id="donvitao_hocsinh"
                         caption="mainMsg://donvitao"/>
                 <column id="tenhocsinh"
@@ -91,7 +92,8 @@
                 <button id="createBtn" action="hocsinhsTable.create"/>
                 <button id="editBtn" caption="Chỉnh sửa"/>
                 <button id="removeBtn" action="hocsinhsTable.remove"/>
-                <button id="excelBtn" action="hocsinhsTable.excel"/>
+                <button id="excelBtn" caption="Xuất Excel"
+                        icon="font-icon:FILE_EXCEL_O" stylename="style-button-all"/>
             </buttonsPanel>
         </groupTable>
         <hbox id="lookupActions" spacing="true" visible="false">

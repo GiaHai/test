@@ -72,7 +72,7 @@
                             stylename="Btntimkiem"
                             caption="Tìm kiếm" align="TOP_CENTER"/>
                     <button id="clearBtn"
-                            caption="Clear"
+                            caption="Xoá"
                             css="margin-top: 22%;display: grid;"/>
                 </vbox>
             </hbox>
@@ -94,8 +94,6 @@
                         caption="mainMsg://donvitao"/>
                 <column id="hovaten"
                         caption="mainMsg://hocphi.hovaten"/>
-<!--                <column id="namsinh"-->
-<!--                        caption="mainMsg://hocphi.namsinh"/>-->
                 <column id="ghichu"
                         caption="mainMsg://hocphi.ghichu"/>
                 <column id="sotientamtinh"
@@ -119,7 +117,8 @@
                 <button id="createBtn" action="hocphisTable.create"/>
                 <button id="editBtn" action="hocphisTable.edit"/>
                 <button id="removeBtn" action="hocphisTable.remove"/>
-                <button id="excelBtn" action="hocphisTable.excel"/>
+                <button id="excelBtn" caption="Xuất Excel"
+                        icon="font-icon:FILE_EXCEL_O" stylename="style-button-all"/>
             </buttonsPanel>
         </groupTable>
         <hbox id="lookupActions" spacing="true" visible="false">

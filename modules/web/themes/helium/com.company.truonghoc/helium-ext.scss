@@ -5,17 +5,27 @@
         height: 100%;
         .c-login-panel {
             text-align: center;
-            border: 5px red solid;
+            border: 5px antiquewhite solid;
             border-radius: 45px;
-            background: rgba(255, 255, 255, 0.4);
+            background: antiquewhite;
+            //height: AUTO !important;
         }
         .c-login-caption.v-label {
-            font-size: 27px;
+            // font-size: 27px;
             font-weight: 700;
-            font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, "AppleGothic", sans-serif;
+            //font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, "AppleGothic", sans-serif;
         }
         color: black;
         background: rgba(255, 255, 255, 0.4);
+        .v-slot-css-background {
+            min-width: -webkit-fill-available;
+        }
+    }
+    img.c-image.v-widget.image.c-image-image.object-fit-none {
+        height: 100%;
+        overflow: hidden;
+        position: absolute;
+        object-fit: contain;
     }
     .css-layout-danhsachluongthang {
         width: 100%;
@@ -228,4 +238,6 @@
             }
         }
     }
+
+
 }

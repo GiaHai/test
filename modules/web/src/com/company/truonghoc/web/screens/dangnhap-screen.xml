@@ -9,17 +9,14 @@
                 invoke="login" shortcut="ENTER"/>
     </actions>
     <layout stylename="c-login-main-login-layout" expand="loginWrapper">
-        <vbox id="loginWrapper"
-              css="background-image: url('VAADIN/themes/helium/branding/background.png');background-repeat: no-repeat;  background-size: 100% 100%">
+        <cssLayout id="loginWrapper" width="100%" height="100%">
             <vbox id="loginMainBox"
-                  align="MIDDLE_CENTER"
-                  margin="true"
-                  stylename="c-login-panel"
-                  width="AUTO">
+                  align="BOTTOM_CENTER"
+                  stylename="c-login-panel" width="25%" margin="true" css="margin-top: 15%;" spacing="true">
                 <vbox id="loginTitleBox"
-                      align="MIDDLE_CENTER"
+                      height="AUTO"
                       spacing="true"
-                      stylename="c-login-title">
+                      stylename="c-login-title" css="color: #DF7401;">
                     <image id="logoImage"
                            align="MIDDLE_CENTER"
                            height="AUTO"
@@ -32,11 +29,10 @@
                            value="mainMsg://loginWindow.welcomeLabel"/>
                 </vbox>
                 <capsLockIndicator id="capsLockIndicator"
-                                   align="MIDDLE_CENTER"
+                                   height="AUTO"
                                    stylename="c-login-capslockindicator"/>
                 <vbox id="loginForm"
-                      spacing="true"
-                      stylename="c-login-form">
+                      stylename="c-login-form" height="AUTO" spacing="true">
                     <cssLayout id="loginCredentials"
                                stylename="c-login-credentials">
                         <textField id="loginField"
@@ -64,13 +60,18 @@
                             stylename="c-login-submit-button"/>
                 </vbox>
             </vbox>
+            <vbox id="background" stylename="css-background" align="MIDDLE_RIGHT" width="75%">
+                <image stylename="image">
+                    <theme path="images/123.jpg"/>
+                </image>
+            </vbox>
             <lookupField id="localesSelect"
                          nullOptionVisible="false"
                          stylename="c-login-locale"
                          visible="false"
                          css="text-align: right;"
                          textInputAllowed="false"/>
-        </vbox>
+        </cssLayout>
 
     </layout>
 </window>

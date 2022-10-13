@@ -4,7 +4,12 @@ import com.company.truonghoc.entity.Donvi;
 import com.company.truonghoc.entity.Giaovien;
 import com.company.truonghoc.service.DulieuUserService;
 import com.company.truonghoc.service.SearchedService;
+import com.company.truonghoc.service.XuatFileExcelService;
+import com.company.truonghoc.web.screens.utils.ExtendExcelExporter;
 import com.haulmont.cuba.core.entity.Entity;
+import com.haulmont.cuba.core.entity.KeyValueEntity;
+import com.haulmont.cuba.core.global.Metadata;
+import com.haulmont.cuba.gui.Dialogs;
 import com.haulmont.cuba.gui.UiComponents;
 import com.haulmont.cuba.gui.actions.list.ExcelAction;
 import com.haulmont.cuba.gui.components.*;
@@ -52,6 +57,18 @@ public class LuongthangBrowse extends StandardLookup<Luongthang> {
     protected LookupField<Giaovien> giaovienField;
     @Inject
     protected SearchedService searchedService;
+    @Inject
+    protected Dialogs dialogs;
+    @Inject
+    protected CollectionContainer<Luongthang> luongthangsDc;
+    @Inject
+    protected XuatFileExcelService xuatFileExcelService;
+    @Inject
+    protected GroupTable<Luongthang> luongthangsTable;
+    @Inject
+    protected Metadata metadata;
+    @Inject
+    protected ExportDisplay exportDisplay;
 
     @Subscribe
     protected void onInit(InitEvent event) {
@@ -136,7 +153,7 @@ public class LuongthangBrowse extends StandardLookup<Luongthang> {
             Date now = new Date();
             Date han = entity.getHannhanluong();
             if (now.compareTo(han) >= 0) {
-                String body = "<a style=\"background-color: black; color: red ; width: 100%;\">QUÁ HẠN)</a>\n";
+                String body = "<a style=\"background-color: black; color: red ; width: 100%;\">QUÁ HẠN</a>\n";
                 htmlBoxLayout1.setTemplateContents(body);
             } else {
                 String body = "<a style=\"color: red; width: 100%;\">ĐẾN HẠN</a>\n";
@@ -202,5 +219,76 @@ public class LuongthangBrowse extends StandardLookup<Luongthang> {
     protected void onDonvitao_luongthangFieldValueChange(HasValue.ValueChangeEvent event) {
         giaovienField.setOptionsList(searchedService.loadgiaovien(donvitao_luongthangField.getValue()));
     }
+    /********* XUẤT FILE EXCEL ********/
 
+    @Subscribe("excelBtn")
+    protected void onExcelBtnClick(Button.ClickEvent event) {
+        dialogs.createOptionDialog()
+                .withCaption("Xác nhận")
+                .withMessage("Bạn có muốn chỉ xuất các hàng đã chọn không?")
+                .withActions(
+                        new DialogAction(DialogAction.Type.YES, Action.Status.PRIMARY).withCaption("Hàng đã chọn").withHandler(e -> {
+                            xuatExcel(luongthangsDc.getItems());
+                        }),
+                        new DialogAction(DialogAction.Type.YES, Action.Status.PRIMARY).withCaption("Tất cả các hàng").withHandler(e -> {
+                            xuatExcel(xuatFileExcelService.layDanhSachLuongthang());
+                        }),
+                        new DialogAction(DialogAction.Type.NO).withCaption("Hủy")
+                )
+                .show();
+    }
+
+    private void xuatExcel(List<Luongthang> layDanhSachLuongthang) {
+        Table table = luongthangsTable;
+        Map<String, String> columns = new HashMap<>();
+        Map<Integer, String> properties = new HashMap<>();
+        List<KeyValueEntity> collection = new ArrayList<>();
+        int count = 1;
+
+        for (Luongthang e : layDanhSachLuongthang) {
+            KeyValueEntity row = metadata.create(KeyValueEntity.class);
+            row.setValue("stt", count);
+            row.setValue("donvitao_luongthang", e.getValue("donvitao_luongthang"));
+            row.setValue("hovaten", e.getValue("hovaten"));
+            row.setValue("ngaynhan", e.getValue("ngaynhan"));
+            row.setValue("hannhanluong", e.getValue("hannhanluong"));
+            row.setValue("luongcoban", e.getValue("luongcoban"));
+            row.setValue("buoilam", e.getValue("buoilam"));
+            row.setValue("cangoai", e.getValue("cangoai"));
+            row.setValue("casang", e.getValue("casang"));
+            row.setValue("cachunhat", e.getValue("cachunhat"));
+            row.setValue("thuclinh", e.getValue("thuclinh"));
+            row.setValue("tienBh", e.getValue("tienBh"));
+            row.setValue("daythem", e.getValue("daythem"));
+            row.setValue("trocap", e.getValue("trocap"));
+            row.setValue("trachnhiem", e.getValue("trachnhiem"));
+            row.setValue("chuyencan", e.getValue("chuyencan"));
+            row.setValue("thuong", e.getValue("thuong"));
+            row.setValue("tonglinh", e.getValue("tonglinh"));
+
+            if (e.getNgaynhan() != null) {
+                row.setValue("checkhannhanluong", "Đã nhận");
+            } else {
+                Date now = new Date();
+                Date han = e.getHannhanluong();
+                if (now.compareTo(han) >= 0) {
+                    row.setValue("checkhannhanluong", "Quá hạn");
+                } else {
+                    row.setValue("checkhannhanluong", "Đến hạn");
+                }
+            }
+            collection.add(row);
+            count++;
+        }
+        List<Table.Column> tableColumns = table.getColumns();
+        int i = 0;
+        for (Table.Column column : tableColumns) {
+            columns.put(column.getIdString(), column.getCaption());
+            properties.put(i, column.getIdString());
+            i++;
+        }
+        ExtendExcelExporter exporter = new ExtendExcelExporter("Danh sách lương");
+
+        exporter.exportDataCollectionTitleInFile(collection, columns, properties,exportDisplay,"Danh sách lương");
+    }
 }

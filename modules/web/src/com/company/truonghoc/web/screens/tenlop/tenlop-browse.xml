@@ -31,7 +31,6 @@
             spacing="true"
             stylename="css-layout-tenlop">
         <groupBox caption="Tìm kiếm"
-                  collapsable="true"
                   collapsed="true"
                   stylename="css-hbox-search"
                   spacing="true"
@@ -68,7 +67,7 @@
                 <column id="giaoviencn" caption="Giáo viên chủ nhiệm"/>
                 <column id="thanghoc" caption="Tháng học"/>
                 <column id="namhoc" caption="Năm học"/>
-                <column id="tinhtranglop"/>
+                <column id="tinhtranglop" visible="false"/>
                 <column id="tinhtranglopss" generator="tinhtranglop" caption="Tình trạng lớp"/>
             </columns>
             <rowsCount/>
@@ -77,7 +76,8 @@
                 <button id="createBtn" action="tenlopsTable.create"/>
                 <button id="editBtn" action="tenlopsTable.edit"/>
                 <button id="removeBtn" action="tenlopsTable.remove"/>
-                <button id="excelBtn" action="tenlopsTable.excel"/>
+                <button id="excelBtn" caption="Xuất Excel"
+                        icon="font-icon:FILE_EXCEL_O" stylename="style-button-all"/>
             </buttonsPanel>
         </groupTable>
         <hbox id="lookupActions" spacing="true" visible="false">
