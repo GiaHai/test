@@ -7,6 +7,7 @@ import com.company.truonghoc.service.ServerConfigService;
 import com.company.truonghoc.utils.*;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.core.sys.AppContext;
+import com.haulmont.cuba.gui.Notifications;
 import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.model.InstanceContainer;
 import com.haulmont.cuba.gui.screen.*;
@@ -59,6 +60,8 @@ public class ThutienhocphiEdit extends StandardEditor<Thutienhocphi> {
     protected TextField<String> tenkhachhangField;
     @Inject
     protected TextField<String> diachiField;
+    @Inject
+    protected Notifications notifications;
 
     @Subscribe
     protected void onInit(InitEvent event) {
@@ -69,11 +72,6 @@ public class ThutienhocphiEdit extends StandardEditor<Thutienhocphi> {
 //        usertaoField.setEditable(false);
         thanhtienField.setEditable(false);
         tinhtrangthanhtoanField.setVisible(false);
-        if (hinhthucthanhtoanField.getValue() == null) {
-            InphieuBtn.setEnabled(false);
-        } else {
-            InphieuBtn.setEnabled(true);
-        }
     }
 
     @Subscribe
@@ -124,8 +122,6 @@ public class ThutienhocphiEdit extends StandardEditor<Thutienhocphi> {
             ngaythanhtoanField.setRequired(true);
             tungayField.clear();
             denngayField.clear();
-
-            dkIn();
         }
     }
 
@@ -146,32 +142,44 @@ public class ThutienhocphiEdit extends StandardEditor<Thutienhocphi> {
 
     @Subscribe("InphieuBtn")
     protected void onInphieuBtnClick(Button.ClickEvent event) {
-        Thutienhocphi thutienhocphi = getEditedEntity();
-        Map<String, Object> parameters = new HashMap<>();
-        parameters.put("donvithanhtoan", thutienhocphi.getDonvitao_thutienhocphi().getTendonvi());
-        parameters.put("tenkhachhang", thutienhocphi.getTenkhachhang());
-        parameters.put("diachi", thutienhocphi.getDiachi());
-        parameters.put("tenhocsinh", thutienhocphi.getTenhocsinh().getTenhocsinh());
-        parameters.put("thanhtien", thutienhocphi.getThanhtien());
-        parameters.put("hinhthucthanhtoan", thutienhocphi.getHinhthucthanhtoan());
-        parameters.put("nguoitao", userSession.getUser().getName());
-        String path = AppContext.getProperty("truonghoc.template");
+        if (dovitao_thutienhocphiField.getValue() != null &&
+                tenkhachhangField.getValue() != null &&
+                diachiField.getValue() != null &&
+                ngaythanhtoanField.getValue() != null &&
+                tenhocsinhField.getValue() != null &&
+                thanhtienField.getValue() != null &&
+                hinhthucthanhtoanField.getValue() != null) {
+            Thutienhocphi thutienhocphi = getEditedEntity();
+            Map<String, Object> parameters = new HashMap<>();
+            parameters.put("donvithanhtoan", thutienhocphi.getDonvitao_thutienhocphi().getTendonvi());
+            parameters.put("tenkhachhang", thutienhocphi.getTenkhachhang());
+            parameters.put("diachi", thutienhocphi.getDiachi());
+            parameters.put("tenhocsinh", thutienhocphi.getTenhocsinh().getTenhocsinh());
+            parameters.put("thanhtien", thutienhocphi.getThanhtien());
+            parameters.put("hinhthucthanhtoan", thutienhocphi.getHinhthucthanhtoan());
+            parameters.put("nguoitao", userSession.getUser().getName());
+            String path = AppContext.getProperty("truonghoc.template");
 
-        String fileTemplate = WebFunctionHelper.modifiedTemplate(path + "/phieuinthanhtoanhocphi.docx", serverConfigService, parameters);
-        String fileName = WebFunctionHelper.convertDocToPdf(fileTemplate,pathPdf ,true);
-        if (!StringUtils.isEmpty(fileName)) {
-            List<String> filesPrint = new ArrayList<>();
-            filesPrint.add(fileName);
-            WebFunctionHelper.printFiles(printerPdf, filesPrint, callbackEvent -> {
-                if (callbackEvent.getArguments() != null) {
-                    String urlFile = callbackEvent.getArguments().getString(0);
-                    if (!org.apache.commons.lang3.StringUtils.isBlank(urlFile) && !StringUtils.isEmpty(webBaseFolder)) {
-                        GlobalFunctionHelper.deleteFile(webBaseFolder + "/" + urlFile);
+            String fileTemplate = WebFunctionHelper.modifiedTemplate(path + "/phieuinthanhtoanhocphi.docx", serverConfigService, parameters);
+            String fileName = WebFunctionHelper.convertDocToPdf(fileTemplate, pathPdf, true);
+            if (!StringUtils.isEmpty(fileName)) {
+                List<String> filesPrint = new ArrayList<>();
+                filesPrint.add(fileName);
+                WebFunctionHelper.printFiles(printerPdf, filesPrint, callbackEvent -> {
+                    if (callbackEvent.getArguments() != null) {
+                        String urlFile = callbackEvent.getArguments().getString(0);
+                        if (!org.apache.commons.lang3.StringUtils.isBlank(urlFile) && !StringUtils.isEmpty(webBaseFolder)) {
+                            GlobalFunctionHelper.deleteFile(webBaseFolder + "/" + urlFile);
+                        }
                     }
-                }
-            });
+                });
+            }
+        }else {
+            notifications.create()
+                    .withPosition(Notifications.Position.BOTTOM_RIGHT)
+                    .withCaption("Bạn nhập thiếu trường thông tin để IN")
+                    .show();
         }
-
     }
 
     private String webBaseFolder;

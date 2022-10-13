@@ -64,7 +64,7 @@
                             stylename="Btntimkiem"
                             caption="Tìm kiếm" align="TOP_CENTER"/>
                     <button id="clearBtn"
-                            caption="Clear"
+                            caption="Xoá"
                             css="margin-top: 22%;display: grid;"/>
                 </vbox>
             </hbox>

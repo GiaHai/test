@@ -96,6 +96,13 @@
                                            resolution="DAY"/>
                             </column>
                         </form>
+
+                        <form colspan="1" width="100%">
+                            <column>
+                                <label value=""/>
+                            </column>
+                        </form>
+
                         <form colspan="3" width="100%" childrenCaptionWidth="80px" dataContainer="luongthangDc">
                             <column>
                                 <dateField id="denngayField"
@@ -105,9 +112,10 @@
                                            caption="Đến ngày"/>
                             </column>
                         </form>
-                        <form colspan="2" width="100%">
+                        <form colspan="1" width="100%" align="TOP_RIGHT">
                             <column>
-                                <button id="searchBLamBtn" width="50%" caption="Ngày làm" invoke="timkiem"/>
+                                <button id="searchBLamBtn" width="50%" caption="Ngày làm" invoke="timkiem"
+                                        align="TOP_RIGHT"/>
                             </column>
                         </form>
                     </row>
