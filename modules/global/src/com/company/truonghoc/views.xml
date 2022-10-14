@@ -109,4 +109,5 @@
         <property name="dovi" view="_minimal"/>
         <property name="createdBy"/>
     </view>
+    <view entity="truonghoc_Namsinh" name="namsinh-view" extends="_local"/>
 </views>

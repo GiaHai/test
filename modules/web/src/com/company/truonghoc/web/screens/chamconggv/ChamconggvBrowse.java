@@ -81,36 +81,33 @@ public class ChamconggvBrowse extends StandardLookup<Chamconggv> {
         // lấy dữ liệu buổi làm
         List<String> list = Arrays.asList("Làm cả ngày", "Ca sáng", "Ca chiều");
         buoilamField.setOptionsList(list);
-        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi() != null) {
-
-            if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() == null) {
-                tendonviField.setEditable(false);
-                tendonviField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi()); //Chèn đơn vị từ user vào text
+        if (!dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam()) {
+            tendonviField.setEditable(false);
+            tendonviField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi()); //Chèn đơn vị từ user vào text
 //            tengiaovienField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien().getTengiaovien());
-                //Xoá
-                tengiaovienField.clear();
-                ngaylamField.clear();
-                buoilamField.clear();
-                if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null) {
-                    tendonviField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi());
-                    tengiaovienField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien());
-                    tengiaovienField.setEditable(false);
-                }
-            } else {
-                tendonviField.setEditable(true);
-                //lấy dữ liệu string cho lookup
-                donvisDl.load();
-                List<String> sessionTypeNames = donvisDc.getMutableItems().stream()
-                        .map(Donvi::getTendonvi)
-                        .collect(Collectors.toList());
-                tendonviField.setOptionsList(sessionTypeNames);
-
-                //Xoá
-                tengiaovienField.clear();
-                ngaylamField.clear();
-                buoilamField.clear();
-                tendonviField.clear();
+            //Xoá
+            tengiaovienField.clear();
+            ngaylamField.clear();
+            buoilamField.clear();
+            if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null) {
+                tendonviField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi());
+                tengiaovienField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien());
+                tengiaovienField.setEditable(false);
             }
+        } else {
+            tendonviField.setEditable(true);
+            //lấy dữ liệu string cho lookup
+            donvisDl.load();
+            List<String> sessionTypeNames = donvisDc.getMutableItems().stream()
+                    .map(Donvi::getTendonvi)
+                    .collect(Collectors.toList());
+            tendonviField.setOptionsList(sessionTypeNames);
+
+            //Xoá
+            tengiaovienField.clear();
+            ngaylamField.clear();
+            buoilamField.clear();
+            tendonviField.clear();
         }
     }
 
@@ -219,7 +216,7 @@ public class ChamconggvBrowse extends StandardLookup<Chamconggv> {
         List<KeyValueEntity> collection = new ArrayList<>();
         int count = 1;
 
-        for (Chamconggv e: layDanhSachChamconggv){
+        for (Chamconggv e : layDanhSachChamconggv) {
             KeyValueEntity row = metadata.create(KeyValueEntity.class);
             row.setValue("stt", count);
             row.setValue("donvigv", e.getValue("donvigv"));
@@ -229,7 +226,7 @@ public class ChamconggvBrowse extends StandardLookup<Chamconggv> {
             row.setValue("tienBuoi", e.getValue("tienBuoi"));
 
             collection.add(row);
-            count ++;
+            count++;
         }
 
         List<Table.Column> tableColumns = table.getColumns();
@@ -242,7 +239,7 @@ public class ChamconggvBrowse extends StandardLookup<Chamconggv> {
 
         ExtendExcelExporter exporter = new ExtendExcelExporter("Danh sách chấm công giáo viên");
 
-        exporter.exportDataCollectionTitleInFile(collection, columns, properties,exportDisplay,"Danh sách chấm công giáo viên");
+        exporter.exportDataCollectionTitleInFile(collection, columns, properties, exportDisplay, "Danh sách chấm công giáo viên");
     }
 
 

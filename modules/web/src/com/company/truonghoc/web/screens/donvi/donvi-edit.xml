@@ -21,6 +21,7 @@
                            caption="mainMsg://donvi.tendonvi"/>
                 <checkBox id="donvitrungtamField"
                           property="donvitrungtam"
+
                           caption="mainMsg://donvi.donvitrungtam"/>
             </column>
         </form>

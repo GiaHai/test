@@ -91,7 +91,7 @@ public class HocsinhBrowse extends StandardLookup<Hocsinh> {
 
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
-        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() == null) {
+        if (!dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam()) {
             if (lookupActions.isVisible() == true) {
                 donvitao_hocsinhField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
                 donvitao_hocsinhField.setEditable(false);
@@ -101,11 +101,6 @@ public class HocsinhBrowse extends StandardLookup<Hocsinh> {
             excuteSearch(true);
             donvitao_hocsinhField.setEditable(false);
             if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null){
-
-            }
-        }
-        if (lookupActions.isVisible() == true) {
-            if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() == null) {
 
             }
         }

@@ -56,10 +56,7 @@ public class ThuchiEdit extends StandardEditor<Thuchi> {
     protected void onInit(InitEvent event) {
         List<String> list = Arrays.asList("Tiền mặt", "Chuyển khoản");
         hinhthucthanhtoanField.setOptionsList(list);
-//        thanhtienField.setVisible(false);
 //        quyền
-//        usertao_thuchiField.setEditable(false);
-//        donvitao_thuchiField.setEditable(false);
         hanchiField.setRequired(true);
         tinhtrangchiField.setEditable(false);
         thanhtienField.setEditable(false);
@@ -71,15 +68,12 @@ public class ThuchiEdit extends StandardEditor<Thuchi> {
     protected void onBeforeShow(BeforeShowEvent event) {
 //        quyền
         donvitao_thuchiField.setOptionsList(searchedService.loaddonvi());
-        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() == null){
+        if (!dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam()) {
             donvitao_thuchiField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
             donvitao_thuchiField.setEditable(false);
         }
-//        usertao_thuchiField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien());
-//        donvitao_thuchiField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
         tinhtrangchiField.setValue("Chưa thanh toán");
 
-//        donvitao_thuchiField.setOptionsList(searchedService.loaddonvi());
     }
 
     @Subscribe("dongiaField")

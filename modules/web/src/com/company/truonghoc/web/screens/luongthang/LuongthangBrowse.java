@@ -109,7 +109,7 @@ public class LuongthangBrowse extends StandardLookup<Luongthang> {
         //điều kiện đơn vị trung tâm nếu
         if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi() != null) {
 
-            if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() == null) {
+            if (!dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam()) {
                 donvitao_luongthangField.setEditable(false);
                 donvitao_luongthangField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi());
 

@@ -101,8 +101,7 @@
                                 <lookupField id="tienbuoiField"
                                              width="100%"
                                              caption="mainMsg://chamcong.buoilam"
-                                             inputPrompt="Nhập số tiền"
-                                             nullName="---SỐ tiền theo ca---"
+                                             nullName="---Số tiền theo ca---"
                                              property="tienBuoi"/>
                             </column>
                         </form>

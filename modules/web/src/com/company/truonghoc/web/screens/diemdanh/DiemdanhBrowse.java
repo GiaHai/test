@@ -90,36 +90,33 @@ public class DiemdanhBrowse extends StandardLookup<Diemdanh> {
     //Điều kiện login
     private void dkphanquyen() {
         //điều kiện đơn vị trung tâm nếu
-        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi() != null) {
+        if (!dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam()) {
+            tendonviField.setEditable(false);
+            tendonviField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi()); //Chèn đơn vị từ user vào text
+            //Xoá
+            tengiaovienField.clear();
+            ngaylamField.clear();
+            lopField.clear();
 
-            if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() == null) {
+            if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null) {
                 tendonviField.setEditable(false);
+                tengiaovienField.setEditable(false);
+                ngaylamField.clear();
                 tendonviField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi()); //Chèn đơn vị từ user vào text
-                //Xoá
-                tengiaovienField.clear();
-                ngaylamField.clear();
-                lopField.clear();
-
-                if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null) {
-                    tendonviField.setEditable(false);
-                    tengiaovienField.setEditable(false);
-                    ngaylamField.clear();
-                    tendonviField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi()); //Chèn đơn vị từ user vào text
-                    tengiaovienField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien());  //chèn tên giáo viên từ user vào text
-                }
-            } else {
-                donvisDl.load();
-                List<String> sessionTypeNames = donvisDc.getMutableItems().stream()
-                        .map(Donvi::getTendonvi)
-                        .collect(Collectors.toList());
-                tendonviField.setOptionsList(sessionTypeNames);
-
-                //Xoá
-                tendonviField.clear();
-                tengiaovienField.clear();
-                ngaylamField.clear();
-                lopField.clear();
+                tengiaovienField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien());  //chèn tên giáo viên từ user vào text
             }
+        } else {
+            donvisDl.load();
+            List<String> sessionTypeNames = donvisDc.getMutableItems().stream()
+                    .map(Donvi::getTendonvi)
+                    .collect(Collectors.toList());
+            tendonviField.setOptionsList(sessionTypeNames);
+
+            //Xoá
+            tendonviField.clear();
+            tengiaovienField.clear();
+            ngaylamField.clear();
+            lopField.clear();
         }
     }
 
@@ -199,9 +196,7 @@ public class DiemdanhBrowse extends StandardLookup<Diemdanh> {
         int lineNumber = 1;
         try {
             lineNumber = diemdanhsDl.getContainer().getItemIndex(entity.getId()) + 1;
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             lineNumber = 1;
         }
         Label field = uiComponents.create(Label.NAME);
@@ -236,7 +231,7 @@ public class DiemdanhBrowse extends StandardLookup<Diemdanh> {
         List<KeyValueEntity> collection = new ArrayList<>();
         int count = 1;
 
-        for (Diemdanh e: layDanhSachDiemdanh) {
+        for (Diemdanh e : layDanhSachDiemdanh) {
             KeyValueEntity row = metadata.create(KeyValueEntity.class);
             row.setValue("stt", count);
             row.setValue("donvidd", e.getValue("donvidd"));
@@ -259,6 +254,6 @@ public class DiemdanhBrowse extends StandardLookup<Diemdanh> {
 
         ExtendExcelExporter exporter = new ExtendExcelExporter("Danh sách điểm danh");
 
-        exporter.exportDataCollectionTitleInFile(collection, columns, properties,exportDisplay,"Danh sách điểm danh");
+        exporter.exportDataCollectionTitleInFile(collection, columns, properties, exportDisplay, "Danh sách điểm danh");
     }
 }

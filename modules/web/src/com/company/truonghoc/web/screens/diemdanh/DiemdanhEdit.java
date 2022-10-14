@@ -51,7 +51,7 @@ public class DiemdanhEdit extends StandardEditor<Diemdanh> {
 
     @Subscribe
     protected void onBeforeShow(BeforeShowEvent event) {
-        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() == null){
+        if (!dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam()) {
             donviField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
             donviField.setEditable(false);
             if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null){
@@ -65,7 +65,7 @@ public class DiemdanhEdit extends StandardEditor<Diemdanh> {
 
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
-        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() == null){
+        if (!dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam()) {
             donviField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
             donviField.setEditable(false);
             if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null){

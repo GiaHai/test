@@ -103,6 +103,10 @@
                         caption="Hạn nhận lương"/>
                 <column id="luongcoban"
                         caption="mainMsg://luongthang.luongcoban"/>
+                <column id="tungay"
+                        caption="Từ ngày"/>
+                <column id="denngay"
+                        caption="Đến ngày"/>
                 <column id="buoilam"
                         caption="mainMsg://luongthang.buoilam"/>
                 <column id="cangoai"
@@ -110,11 +114,9 @@
                 <column id="casang"
                         caption="mainMsg://luongthang.casang"/>
                 <column id="cachunhat"
-                        caption="ca chủ nhật"/>
+                        caption="Ca chủ nhật"/>
                 <column id="thuclinh"
                         caption="mainMsg://luongthang.thuclinh"/>
-                <column id="tienBh"
-                        caption="Bảo hiểm"/>
                 <column id="daythem"
                         caption="mainMsg://luongthang.daythem"/>
                 <column id="trocap"
@@ -125,11 +127,14 @@
                         caption="mainMsg://luongthang.chuyencan"/>
                 <column id="thuong"
                         caption="mainMsg://luongthang.thuong"/>
+                <column id="tienBh"
+                        caption="Bảo hiểm"/>
                 <column id="tonglinh"
                         caption="mainMsg://luongthang.tonglinh">
                     <aggregation type="SUM"/>
                 </column>
-
+                <column id="hinhthucthanhtoan"
+                        caption="Hình thức nhận"/>
                 <column id="checkhannhanluong"
                         generator="checkhannhanluong"
                         caption="Tình trạng"/>

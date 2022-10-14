@@ -71,28 +71,23 @@ public class GiaovienBrowse extends StandardLookup<Giaovien> {
 
     @Subscribe
     protected void onBeforeShow(BeforeShowEvent event) {
-        try {
-            if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() == null) {
-                donvitao_giaovienField.setEditable(false);
-                donvitao_giaovienField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi());
-                excuteSearch(true);
-            } else {
-                donvitao_giaovienField.setEditable(true);
-                donvisDl.load();
-                List<String> sessionTypeNames = donvisDc.getMutableItems().stream()
-                        .map(Donvi::getTendonvi)
-                        .collect(Collectors.toList());
-                donvitao_giaovienField.setOptionsList(sessionTypeNames);
-            }
-        } catch (NullPointerException ex) {
-
+        if (!dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam()) {
+            donvitao_giaovienField.setEditable(false);
+            donvitao_giaovienField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi());
+            excuteSearch(true);
+        } else {
+            donvitao_giaovienField.setEditable(true);
+            donvisDl.load();
+            List<String> sessionTypeNames = donvisDc.getMutableItems().stream()
+                    .map(Donvi::getTendonvi)
+                    .collect(Collectors.toList());
+            donvitao_giaovienField.setOptionsList(sessionTypeNames);
         }
     }
 
     @Subscribe("donvitao_giaovienField")
     protected void onDonvitao_giaovienFieldValueChange(HasValue.ValueChangeEvent event) {
-        System.out.println(donvitao_giaovienField.getValue());
-        if (donvitao_giaovienField.getValue() == null){
+        if (donvitao_giaovienField.getValue() == null) {
             searchTenGvField.clear();
         }
     }
@@ -171,7 +166,7 @@ public class GiaovienBrowse extends StandardLookup<Giaovien> {
         List<KeyValueEntity> collection = new ArrayList<>();
         int count = 1;
 
-        for (Giaovien e: layDanhSachGiaovien){
+        for (Giaovien e : layDanhSachGiaovien) {
             KeyValueEntity row = metadata.create(KeyValueEntity.class);
             row.setValue("stt", count);
             row.setValue("donvitao_giaovien", e.getValue("donvitao_giaovien"));
@@ -182,7 +177,7 @@ public class GiaovienBrowse extends StandardLookup<Giaovien> {
             row.setValue("ghichu", e.getValue("ghichu"));
 
             collection.add(row);
-            count ++;
+            count++;
         }
 
         List<Table.Column> tableColumns = table.getColumns();
@@ -195,6 +190,6 @@ public class GiaovienBrowse extends StandardLookup<Giaovien> {
 
         ExtendExcelExporter exporter = new ExtendExcelExporter("Danh sách giáo viên");
 
-        exporter.exportDataCollectionTitleInFile(collection, columns, properties,exportDisplay,"Danh sách giáo viên");
+        exporter.exportDataCollectionTitleInFile(collection, columns, properties, exportDisplay, "Danh sách giáo viên");
     }
 }

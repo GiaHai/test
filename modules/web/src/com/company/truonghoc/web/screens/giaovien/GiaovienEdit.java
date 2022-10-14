@@ -52,16 +52,11 @@ public class GiaovienEdit extends StandardEditor<Giaovien> {
 
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
-        if (getEditedEntity().getCreatedBy() == null){
-            if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi() != null) {
-                if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() == null) {
-                    donvitao_giaovienField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
-                    donvitao_giaovienField.setEditable(false);
-                } else {
-                    donvitao_giaovienField.setOptionsList(searchedService.loaddonvi());
-                }
-            }
+        if (!dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam()) {
+            donvitao_giaovienField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
+            donvitao_giaovienField.setEditable(false);
+        } else {
+            donvitao_giaovienField.setOptionsList(searchedService.loaddonvi());
         }
     }
-
 }

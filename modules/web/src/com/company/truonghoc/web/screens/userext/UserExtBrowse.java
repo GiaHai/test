@@ -22,6 +22,7 @@ import com.haulmont.cuba.gui.data.CollectionDatasource;
 import com.haulmont.cuba.gui.data.DataSupplier;
 import com.haulmont.cuba.gui.data.Datasource;
 import com.haulmont.cuba.gui.data.GroupDatasource;
+import com.haulmont.cuba.gui.screen.Subscribe;
 import com.haulmont.cuba.security.app.SecurityScopesService;
 import com.haulmont.cuba.security.app.UserManagementService;
 import com.haulmont.cuba.security.entity.*;
@@ -146,7 +147,7 @@ public class UserExtBrowse extends AbstractLookup {
         }
 
         donviField.setOptionsList(searchedService.loaddonvi());
-        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() == null){
+        if (!dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam()) {
             donviField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
             donviField.setEditable(false);
             excuteSearch();
@@ -175,8 +176,6 @@ public class UserExtBrowse extends AbstractLookup {
             action.addEnabledRule(() -> hasPermissionToOpenRoleEditor);
         }
     }
-
-
 
 
 //    private void initGroupColumn() {
@@ -436,7 +435,7 @@ public class UserExtBrowse extends AbstractLookup {
         String where = " where 1=1 ";
 
         if (donvi != null) {
-            where += " and e.loockup_donvi.tendonvi like '%" + donviField.getValue().getTendonvi() +"%' ";
+            where += " and e.loockup_donvi.tendonvi like '%" + donviField.getValue().getTendonvi() + "%' ";
         }
         query = query + where;
         return query;
@@ -444,9 +443,13 @@ public class UserExtBrowse extends AbstractLookup {
 
     public Component donvichinh(UserExt entity) {
         Label label = uiComponents.create(Label.class);
-        if (entity.getLoockup_donvi() != null){
-            if (entity.getLoockup_donvi().getDonvitrungtam() != null) {
-                label.setValue("Đơn vị chính");
+        if (entity.getLoockup_donvi() != null) {
+            try {
+                if (entity.getLoockup_donvi().getDonvitrungtam() == true) {
+                    label.setValue("Đơn vị chính");
+                }
+            } catch (NullPointerException ex) {
+
             }
         }
         return label;

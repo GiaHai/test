@@ -50,28 +50,26 @@ public class TenlopEdit extends StandardEditor<Tenlop> {
         );
         thanghocField.setOptionsList(thang);
     }
-    private List<Donvi> loaddonvi(){
+
+    private List<Donvi> loaddonvi() {
         return dataManager.load(Donvi.class)
                 .query("select e from truonghoc_Donvi e")
                 .list();
     }
+
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
-        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi() != null){
-            if (getEditedEntity().getCreatedBy() == null) {
-                if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() == null) {
-                    donviFiled.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
-                    donviFiled.setEditable(false);
-                }
-            }
+        if (!dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam()) {
+            donviFiled.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
+            donviFiled.setEditable(false);
         }
     }
 
     @Subscribe("donviFiled")
     protected void onDonviFiledValueChange(HasValue.ValueChangeEvent event) {
-        if (donviFiled.getValue() != null){
+        if (donviFiled.getValue() != null) {
             giaoviencnField.setOptionsList(loadgiaovien());
-        }else {
+        } else {
             giaoviencnField.clear();
         }
     }

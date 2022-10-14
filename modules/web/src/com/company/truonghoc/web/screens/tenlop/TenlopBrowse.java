@@ -82,16 +82,13 @@ public class TenlopBrowse extends StandardLookup<Tenlop> {
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
         // điều kiện
-        try {
-            if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() == null) {
-                searchDvField.setEditable(false);
-                searchDvField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi());
-                excuteSearch(true);
-            }
-        } catch (NullPointerException ex) {
-
+        if (!dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam()) {
+            searchDvField.setEditable(false);
+            searchDvField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi());
+            excuteSearch(true);
         }
     }
+
 
     /***Tìm kiếm***/
     public void timkiemExcute() {
@@ -157,6 +154,7 @@ public class TenlopBrowse extends StandardLookup<Tenlop> {
         field.setValue(lineNumber);
         return field;
     }
+
     /*** Tình trạng lớp học ***/
     public Component tinhtranglop(Tenlop entity) {
         Label label = uiComponents.create(Label.class);
@@ -174,18 +172,18 @@ public class TenlopBrowse extends StandardLookup<Tenlop> {
 
     @Subscribe("searchDvField")
     protected void onSearchDvFieldValueChange(HasValue.ValueChangeEvent event) {
-        if (searchDvField.getValue() != null){
+        if (searchDvField.getValue() != null) {
             searchGvcnField.setOptionsList(searchedService.loadgiaovien(searchDvField.getValue()));
-        }else {
+        } else {
             searchGvcnField.clear();
         }
     }
 
     @Subscribe("searchGvcnField")
     protected void onSearchGvcnFieldValueChange(HasValue.ValueChangeEvent event) {
-        if (searchGvcnField.getValue() != null){
+        if (searchGvcnField.getValue() != null) {
             searchLopField.setOptionsList(loadlop(searchDvField.getValue(), searchGvcnField.getValue().getTengiaovien()));
-        }else {
+        } else {
             searchLopField.clear();
         }
     }

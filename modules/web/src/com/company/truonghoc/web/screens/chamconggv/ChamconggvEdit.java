@@ -8,7 +8,6 @@ import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.gui.components.DateField;
 import com.haulmont.cuba.gui.components.HasValue;
 import com.haulmont.cuba.gui.components.LookupField;
-import com.haulmont.cuba.gui.components.TextField;
 import com.haulmont.cuba.gui.screen.*;
 import com.company.truonghoc.entity.Chamconggv;
 import com.haulmont.cuba.security.global.UserSession;
@@ -54,26 +53,27 @@ public class ChamconggvEdit extends StandardEditor<Chamconggv> {
 
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
-        if (getEditedEntity().getCreatedBy() == null){
-            if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() == null){
-                donvigvField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
-                donvigvField.setEditable(false);
-                if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null){
-                    hotenGvField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien());
-                    hotenGvField.setEditable(false);
-                }
-            }else {
-                donvigvField.setOptionsList(searchedService.loaddonvi());
+        if (!dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam()) {
+            donvigvField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
+            donvigvField.setEditable(false);
+            if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null) {
+                hotenGvField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien());
+                hotenGvField.setEditable(false);
             }
+        } else {
+            donvigvField.setOptionsList(searchedService.loaddonvi());
         }
     }
 
     @Subscribe("buoilamField")
     protected void onBuoilamFieldValueChange(HasValue.ValueChangeEvent<String> event) {
-        if (buoilamField.getValue() == "Ca chủ nhật"){
+//        tienbuoiField.setOptionsList(loadtienluongtheoca());
+
+
+        if (buoilamField.getValue() == "Ca chủ nhật") {
             tienbuoiField.setValue(Integer.valueOf("100000"));
         }
-        if (buoilamField.getValue() == "Ca chiều 5h-6h" || buoilamField.getValue() == "Ca chiều 6h-7h"){
+        if (buoilamField.getValue() == "Ca chiều 5h-6h" || buoilamField.getValue() == "Ca chiều 6h-7h") {
             List<Integer> tienbuoi = new ArrayList<>();
             tienbuoi.add(50000);
             tienbuoi.add(60000);
@@ -81,22 +81,29 @@ public class ChamconggvEdit extends StandardEditor<Chamconggv> {
 
             tienbuoiField.setOptionsList(tienbuoi);
         }
-        if (buoilamField.getValue() == "Làm cả ngày" || buoilamField.getValue() == "Ca sáng"|| buoilamField.getValue() == "Ca chiều"){
+        if (buoilamField.getValue() == "Làm cả ngày" || buoilamField.getValue() == "Ca sáng" || buoilamField.getValue() == "Ca chiều") {
             tienbuoiField.clear();
         }
+
     }
 
+//    private List<TienluongtheoCa> loadtienluongtheoca(){
+//        return dataManager.load(TienluongtheoCa.class)
+//                .query("select e from truonghoc_TienluongtheoCa e where e.caLam = :calam")
+//                .parameter("calam", buoilamField.getValue())
+//                .list();
+//    }
 
     @Subscribe("donvigvField")
     protected void onDonvigvFieldValueChange(HasValue.ValueChangeEvent<Donvi> event) {
-        if (donvigvField.getValue() != null){
+        if (donvigvField.getValue() != null) {
             hotenGvField.setOptionsList(timtengiaovien(donvigvField.getValue()));
-        }else {
+        } else {
             hotenGvField.clear();
         }
     }
 
-    public List<Giaovien> timtengiaovien(Donvi donvitao){
+    public List<Giaovien> timtengiaovien(Donvi donvitao) {
         return dataManager.load(Giaovien.class)
                 .query("select e from truonghoc_Giaovien e where e.donvitao_giaovien = :donvitao")
                 .parameter("donvitao", donvitao)

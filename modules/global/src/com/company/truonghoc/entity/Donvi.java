@@ -22,7 +22,15 @@ public class Donvi extends StandardEntity {
     private String tendonvi;
 
     @Column(name = "DONVITRUNGTAM")
-    private Boolean donvitrungtam;
+    private Boolean donvitrungtam = false;
+
+    public void setDonvitrungtam(Boolean donvitrungtam) {
+        this.donvitrungtam = donvitrungtam;
+    }
+
+    public Boolean getDonvitrungtam() {
+        return donvitrungtam;
+    }
 
     public void setUpdate(Date update) {
         this.update = update;
@@ -30,14 +38,6 @@ public class Donvi extends StandardEntity {
 
     public Date getUpdate() {
         return update;
-    }
-
-    public Boolean getDonvitrungtam() {
-        return donvitrungtam;
-    }
-
-    public void setDonvitrungtam(Boolean donvitrungtam) {
-        this.donvitrungtam = donvitrungtam;
     }
 
     public String getTendonvi() {

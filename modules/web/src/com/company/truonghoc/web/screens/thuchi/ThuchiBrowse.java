@@ -114,41 +114,37 @@ public class ThuchiBrowse extends StandardLookup<Thuchi> {
     //Điều kiện login
     private void dkphanquyen() {
         //điều kiện đơn vị trung tâm nếu
-        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi() != null) {
+        if (!dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam()) {
+            donvitao_thuchiField.setEditable(false);
+            donvitao_thuchiField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi()); //Chèn đơn vị từ user vào text
+            //Xoá
+            khoanchiField.clear();
+            trangthaiField.clear();
+            tungayField.clear();
+            denngayField.clear();
 
-            if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() == null) {
+            if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null) {
                 donvitao_thuchiField.setEditable(false);
+                khoanchiField.clear();
+                trangthaiField.clear();
+                tungayField.clear();
+                denngayField.clear();
                 donvitao_thuchiField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi()); //Chèn đơn vị từ user vào text
-                //Xoá
-                khoanchiField.clear();
-                trangthaiField.clear();
-                tungayField.clear();
-                denngayField.clear();
-
-                if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null) {
-                    donvitao_thuchiField.setEditable(false);
-                    khoanchiField.clear();
-                    trangthaiField.clear();
-                    tungayField.clear();
-                    denngayField.clear();
-                    donvitao_thuchiField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi()); //Chèn đơn vị từ user vào text
-                }
-            } else {
-                donvitao_thuchiField.setEditable(true);
-                //lấy dữ liệu string cho lookup
-                donvisDl.load();
-                List<String> sessionTypeNames = donvisDc.getMutableItems().stream()
-                        .map(Donvi::getTendonvi)
-                        .collect(Collectors.toList());
-                donvitao_thuchiField.setOptionsList(sessionTypeNames);
-                //xoá
-                donvitao_thuchiField.clear();
-                khoanchiField.clear();
-                trangthaiField.clear();
-                tungayField.clear();
-                denngayField.clear();
             }
-
+        } else {
+            donvitao_thuchiField.setEditable(true);
+            //lấy dữ liệu string cho lookup
+            donvisDl.load();
+            List<String> sessionTypeNames = donvisDc.getMutableItems().stream()
+                    .map(Donvi::getTendonvi)
+                    .collect(Collectors.toList());
+            donvitao_thuchiField.setOptionsList(sessionTypeNames);
+            //xoá
+            donvitao_thuchiField.clear();
+            khoanchiField.clear();
+            trangthaiField.clear();
+            tungayField.clear();
+            denngayField.clear();
         }
     }
 
@@ -255,7 +251,7 @@ public class ThuchiBrowse extends StandardLookup<Thuchi> {
         List<KeyValueEntity> collection = new ArrayList<>();
         int count = 1;
 
-        for (Thuchi e: layDanhSachThuchi) {
+        for (Thuchi e : layDanhSachThuchi) {
             KeyValueEntity row = metadata.create(KeyValueEntity.class);
             row.setValue("stt", count);
             row.setValue("donvitao_thuchi", e.getValue("donvitao_thuchi"));
@@ -278,16 +274,16 @@ public class ThuchiBrowse extends StandardLookup<Thuchi> {
             collection.add(row);
             count++;
         }
-            List<Table.Column> tableColumns = table.getColumns();
-            int i = 0;
-            for (Table.Column column : tableColumns) {
-                columns.put(column.getIdString(), column.getCaption());
-                properties.put(i, column.getIdString());
-                i++;
-            }
+        List<Table.Column> tableColumns = table.getColumns();
+        int i = 0;
+        for (Table.Column column : tableColumns) {
+            columns.put(column.getIdString(), column.getCaption());
+            properties.put(i, column.getIdString());
+            i++;
+        }
 
-            ExtendExcelExporter exporter = new ExtendExcelExporter("Danh sách chi");
+        ExtendExcelExporter exporter = new ExtendExcelExporter("Danh sách chi");
 
-            exporter.exportDataCollectionTitleInFile(collection, columns, properties,exportDisplay,"Danh sách chi");
+        exporter.exportDataCollectionTitleInFile(collection, columns, properties, exportDisplay, "Danh sách chi");
     }
 }

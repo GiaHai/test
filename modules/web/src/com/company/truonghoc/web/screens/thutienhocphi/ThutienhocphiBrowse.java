@@ -93,44 +93,41 @@ public class ThutienhocphiBrowse extends StandardLookup<Thutienhocphi> {
     //Điều kiện login
     private void dkphanquyen() {
         //điều kiện đơn vị trung tâm nếu
-        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi() != null) {
-            if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() == null) {
+        if (!dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam()) {
+            donvitao_thutienhocphiField.setEditable(false);
+            donvitao_thutienhocphiField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi()); //Chèn đơn vị từ user vào text
+            //Xoá
+            tenHsField.clear();
+            tenKhField.clear();
+            tungayField.clear();
+            denngayField.clear();
+            trangthaiField.clear();
+
+            if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null) {
                 donvitao_thutienhocphiField.setEditable(false);
+                tenHsField.clear();
+                tenKhField.clear();
+                tungayField.clear();
+                denngayField.clear();
+                trangthaiField.clear();
                 donvitao_thutienhocphiField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi()); //Chèn đơn vị từ user vào text
-                //Xoá
-                tenHsField.clear();
-                tenKhField.clear();
-                tungayField.clear();
-                denngayField.clear();
-                trangthaiField.clear();
-
-                if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null) {
-                    donvitao_thutienhocphiField.setEditable(false);
-                    tenHsField.clear();
-                    tenKhField.clear();
-                    tungayField.clear();
-                    denngayField.clear();
-                    trangthaiField.clear();
-                    donvitao_thutienhocphiField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi()); //Chèn đơn vị từ user vào text
-                }
-            } else {
-                donvitao_thutienhocphiField.setEditable(true);
-
-                donvisDl.load();
-                List<String> sessionTypeNames = donvisDc.getMutableItems().stream()
-                        .map(Donvi::getTendonvi)
-                        .collect(Collectors.toList());
-                donvitao_thutienhocphiField.setOptionsList(sessionTypeNames);
-
-                //Xoá
-                donvitao_thutienhocphiField.clear();
-                tenHsField.clear();
-                tenKhField.clear();
-                tungayField.clear();
-                denngayField.clear();
-                trangthaiField.clear();
             }
+        } else {
+            donvitao_thutienhocphiField.setEditable(true);
 
+            donvisDl.load();
+            List<String> sessionTypeNames = donvisDc.getMutableItems().stream()
+                    .map(Donvi::getTendonvi)
+                    .collect(Collectors.toList());
+            donvitao_thutienhocphiField.setOptionsList(sessionTypeNames);
+
+            //Xoá
+            donvitao_thutienhocphiField.clear();
+            tenHsField.clear();
+            tenKhField.clear();
+            tungayField.clear();
+            denngayField.clear();
+            trangthaiField.clear();
         }
     }
 
@@ -256,7 +253,7 @@ public class ThutienhocphiBrowse extends StandardLookup<Thutienhocphi> {
         List<KeyValueEntity> collection = new ArrayList<>();
         int count = 1;
 
-        for (Thutienhocphi e: layDanhSachThutienHocphi){
+        for (Thutienhocphi e : layDanhSachThutienHocphi) {
             KeyValueEntity row = metadata.create(KeyValueEntity.class);
             row.setValue("stt", count);
             row.setValue("donvitao_thutienhocphi", e.getValue("donvitao_thutienhocphi"));
@@ -266,14 +263,14 @@ public class ThutienhocphiBrowse extends StandardLookup<Thutienhocphi> {
             row.setValue("denngay", e.getValue("denngay"));
             row.setValue("tenhocsinh", e.getValue("tenhocsinh"));
             row.setValue("thanhtien", e.getValue("thanhtien"));
-            if (e.getHinhthucthanhtoan() != null){
+            if (e.getHinhthucthanhtoan() != null) {
                 row.setValue("checkhandong", "Đã đóng");
-            }else {
+            } else {
                 Date now = new Date();
                 Date han = e.getDenngay();
-                if (now.compareTo(han) >= 0){
+                if (now.compareTo(han) >= 0) {
                     row.setValue("checkhandong", "Quá hạn");
-                }else {
+                } else {
                     row.setValue("checkhandong", "Đến hạn");
                 }
             }
@@ -291,7 +288,7 @@ public class ThutienhocphiBrowse extends StandardLookup<Thutienhocphi> {
 
         ExtendExcelExporter exporter = new ExtendExcelExporter("Danh sách thu tiền học phí");
 
-        exporter.exportDataCollectionTitleInFile(collection, columns, properties,exportDisplay,"Danh sách thu tiền học phí");
+        exporter.exportDataCollectionTitleInFile(collection, columns, properties, exportDisplay, "Danh sách thu tiền học phí");
     }
 
 

@@ -147,7 +147,6 @@
             <!--            <button id="commitAndCloseBtn" action="windowCommitAndClose"/>-->
             <button id="commitAndCloseBtn" caption="Lưu" css="background-color: #6f5cc3; color: white" icon="OK"/>
             <button id="closeBtn" action="windowClose"/>
-            <button id="test"/>
         </hbox>
     </layout>
 </window>

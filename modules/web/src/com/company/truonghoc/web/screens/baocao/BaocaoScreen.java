@@ -78,7 +78,7 @@ public class BaocaoScreen extends Screen {
 
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
-        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() == null){
+        if (!dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam()) {
             timkiemBtn.setVisible(false);
             clearBtn.setVisible(false);
             timkiemdonviField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi());

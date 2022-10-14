@@ -95,7 +95,7 @@
                                              width="100%"
                                              optionsContainer="namsinhsDc"
                                              captionProperty="namSinh"
-                                             nullName="---Ngày sinh---"
+                                             nullName="---Năm sinh---"
                                              caption="mainMsg://hocsinh.ngaysinhhocsinh"/>
                             </column>
                         </form>

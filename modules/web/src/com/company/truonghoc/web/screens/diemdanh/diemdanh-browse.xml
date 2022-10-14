@@ -37,7 +37,7 @@
                   stylename="css-hbox-search"
                   spacing="true"
                   width="100%">
-            <hbox spacing="true" width="50%">
+            <hbox spacing="true" >
                 <vbox spacing="true">
                     <lookupField id="tendonviField"
                                  caption="Đơn vị"

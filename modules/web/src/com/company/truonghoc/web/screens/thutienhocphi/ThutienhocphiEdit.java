@@ -68,22 +68,17 @@ public class ThutienhocphiEdit extends StandardEditor<Thutienhocphi> {
         List<String> list = Arrays.asList("Tiền mặt", "Chuyển khoản");
         hinhthucthanhtoanField.setOptionsList(list);
 //        quyền
-//        dovitao_thutienhocphiField.setEditable(false);
-//        usertaoField.setEditable(false);
         thanhtienField.setEditable(false);
         tinhtrangthanhtoanField.setVisible(false);
     }
 
     @Subscribe
     protected void onBeforeShow(BeforeShowEvent event) {
-        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() == null) {
+        if (!dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam()) {
             dovitao_thutienhocphiField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
             dovitao_thutienhocphiField.setEditable(false);
         }
 //        quyền
-//        usertaoField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien());
-//        dovitao_thutienhocphiField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
-
         Calendar calendar = Calendar.getInstance();
         tungayField.setValue(calendar.getTime());
         calendar.add(Calendar.MONTH, 1);
@@ -174,7 +169,7 @@ public class ThutienhocphiEdit extends StandardEditor<Thutienhocphi> {
                     }
                 });
             }
-        }else {
+        } else {
             notifications.create()
                     .withPosition(Notifications.Position.BOTTOM_RIGHT)
                     .withCaption("Bạn nhập thiếu trường thông tin để IN")

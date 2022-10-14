@@ -40,19 +40,18 @@ public class ExtUserEditor extends UserEditor {
 
     @Subscribe
     protected void onInit(InitEvent event) {
-        loockuptendonvi.setRequired(true);
+//        loockuptendonvi.setRequired(true);
         nameField.setRequired(true);
         lastNameField.setVisible(false);
         firstNameField.setVisible(false);
         middleNameField.setVisible(false);
         loginField.setCaption("Tài khoản người dùng");
         nameField.setCaption("Họ và tên người dùng");
-
     }
 
     @Subscribe
     protected void onBeforeShow(BeforeShowEvent event) {
-        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() == null) {
+        if (!dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam()) {
             loockuptendonvi.setEditable(false);
             loockuptendonvi.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
         }
@@ -60,15 +59,16 @@ public class ExtUserEditor extends UserEditor {
 
     @Subscribe("loockuptendonvi")
     protected void onLoockuptendonviValueChange(HasValue.ValueChangeEvent<Donvi> event) {
-
         if (loockuptendonvi.getValue() != null) {
             tengiaovienField.setOptionsList(tengiaovien(loockuptendonvi.getValue()));
-        }
-        if (loockuptendonvi.getValue().getDonvitrungtam() != null) {
-            tengiaovienField.setVisible(false);
-            tengiaovienField.clear();
+            if (!loockuptendonvi.getValue().getDonvitrungtam()) {
+                tengiaovienField.setVisible(true);
+            } else {
+                tengiaovienField.setVisible(false);
+                tengiaovienField.clear();
+            }
         } else {
-            tengiaovienField.setVisible(true);
+            tengiaovienField.clear();
         }
     }
 

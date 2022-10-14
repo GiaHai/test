@@ -80,17 +80,16 @@ public class LophocEdit extends StandardEditor<Lophoc> {
 
     @Subscribe
     protected void onBeforeShow(BeforeShowEvent event) {
-        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi() != null) {
-            if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() == null) {
-                DvField.setEditable(false);
+        if (!dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam()) {
+            DvField.setEditable(false);
+            DvField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
+            if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null) {
                 DvField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
-                if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null) {
-                    DvField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
-                    giaovienField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien());
-                    giaovienField.setEditable(false);
-                }
+                giaovienField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien());
+                giaovienField.setEditable(false);
             }
         }
+
     }
 
     @Subscribe("DvField")

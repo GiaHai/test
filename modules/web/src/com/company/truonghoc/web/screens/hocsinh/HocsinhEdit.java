@@ -46,17 +46,9 @@ public class HocsinhEdit extends StandardEditor<Hocsinh> {
 
     @Subscribe
     protected void onBeforeShow(BeforeShowEvent event) {
-        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi() != null) {
-            if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() == null) {
-                donvitao_hocsinhField.setEditable(false);
-                donvitao_hocsinhField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
-            }
+        if (!dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam()) {
+            donvitao_hocsinhField.setEditable(false);
+            donvitao_hocsinhField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
         }
-    }
-
-    @Subscribe
-    protected void onAfterShow(AfterShowEvent event) {
-
-//        usertaoField.setValue(hocsinhDc.getItem().getLophoc().getGiaoviencn());
     }
 }

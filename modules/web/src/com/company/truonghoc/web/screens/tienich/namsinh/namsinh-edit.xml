@@ -5,8 +5,8 @@
         messagesPack="com.company.truonghoc.web.screens.tienich.namsinh">
     <data>
         <instance id="namsinhDc"
-                  class="com.company.truonghoc.entity.tienich.Namsinh">
-            <view extends="_local"/>
+                  class="com.company.truonghoc.entity.tienich.Namsinh"
+                  view="namsinh-view">
             <loader/>
         </instance>
     </data>
@@ -19,7 +19,7 @@
             </column>
         </form>
         <hbox id="editActions" spacing="true">
-<!--            <button id="commitAndCloseBtn" action="windowCommitAndClose"/>-->
+            <!--            <button id="commitAndCloseBtn" action="windowCommitAndClose"/>-->
             <button id="commitAndCloseBtn" caption="Lưu" css="background-color: #6f5cc3; color: white" icon="OK"/>
             <button id="closeBtn" action="windowClose"/>
         </hbox>

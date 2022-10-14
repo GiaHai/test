@@ -6,8 +6,8 @@
         messagesPack="com.company.truonghoc.web.screens.tienich.namsinh">
     <data readOnly="true">
         <collection id="namsinhsDc"
-                    class="com.company.truonghoc.entity.tienich.Namsinh">
-            <view extends="_local"/>
+                    class="com.company.truonghoc.entity.tienich.Namsinh"
+                    view="namsinh-view">
             <loader id="namsinhsDl">
                 <query>
                     <![CDATA[select e from truonghoc_Namsinh e]]>

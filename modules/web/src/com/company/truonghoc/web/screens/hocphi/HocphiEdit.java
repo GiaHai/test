@@ -61,9 +61,8 @@ public class HocphiEdit extends StandardEditor<Hocphi> {
     @Subscribe
     protected void onBeforeShow(BeforeShowEvent event) {
 //        quyền
-//        usertaoField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien());
 //
-        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() == null){
+        if (!dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam()) {
             dovitao_hocphiField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
             dovitao_hocphiField.setEditable(false);
         }

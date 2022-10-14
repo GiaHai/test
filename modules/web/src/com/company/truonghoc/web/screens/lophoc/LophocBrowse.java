@@ -44,7 +44,7 @@ public class LophocBrowse extends StandardLookup<Lophoc> {
     @Inject
     protected CollectionLoader<Lophoc> lophocsDl;
     @Inject
-    protected LookupField searchDvField;
+    protected LookupField<Donvi> searchDvField;
     @Inject
     protected DulieuUserService dulieuUserService;
     @Inject
@@ -75,33 +75,27 @@ public class LophocBrowse extends StandardLookup<Lophoc> {
     protected ExportDisplay exportDisplay;
 
     @Subscribe
-    protected void onInit(InitEvent event) {
+    protected void onBeforeShow(BeforeShowEvent event) {
         //load đơn vị
-        donvisDl.load();
-        List<String> sessionTypeNames = donvisDc.getMutableItems().stream()
-                .map(Donvi::getTendonvi)
-                .collect(Collectors.toList());
-        searchDvField.setOptionsList(sessionTypeNames);
+        searchDvField.setOptionsList(searchedService.loaddonvi());
     }
+
 
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
         //Điều kiện
-        try {
-            if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam() == null) {
-                searchDvField.setEditable(false);
-                searchDvField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi());
+        if (!dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam()) {
+            searchDvField.setEditable(false);
+            searchDvField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
+            excuteSearch(true);
+            if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null) {
+                searchGvcnField.setValue((dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien()));
+                searchGvcnField.setEditable(false);
                 excuteSearch(true);
-                if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null) {
-                    searchGvcnField.setValue((dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien()));
-                    searchGvcnField.setEditable(false);
-                    excuteSearch(true);
-                }
             }
-        } catch (NullPointerException ex) {
-
         }
     }
+
 
     /*** Tìm kiếm **/
     public void timkiemExcute() {
@@ -109,7 +103,7 @@ public class LophocBrowse extends StandardLookup<Lophoc> {
     }
 
     private void excuteSearch(boolean isFromSearchBtn) {
-        String donvi = searchDvField.getValue().toString();
+        Object donvi = searchDvField.getValue();
         Object tengv = searchGvcnField.getValue();
         Object tenlop = searchLopField.getValue();
 
@@ -120,12 +114,12 @@ public class LophocBrowse extends StandardLookup<Lophoc> {
         lophocsDl.load();
     }
 
-    private String returnQuery(String donvi, Object tenlop, Object tengv, Map<String, Object> params) {
+    private String returnQuery(Object donvi, Object tenlop, Object tengv, Map<String, Object> params) {
         String query = "select e from truonghoc_Lophoc e ";
         String where = " where 1=1 ";
         //Đơn vị
         if (donvi != null) {
-            where += "and e.donvi.tendonvi = :donvi ";
+            where += "and e.donvi = :donvi ";
             params.put("donvi", donvi);
         }
         // Tên lớp
@@ -167,7 +161,7 @@ public class LophocBrowse extends StandardLookup<Lophoc> {
     @Subscribe("searchDvField")
     protected void onSearchDvFieldValueChange(HasValue.ValueChangeEvent event) {
         if (searchDvField.getValue() != null) {
-            searchGvcnField.setOptionsList(searchedService.loadgiaovien(searchDvField.getValue()));
+            searchGvcnField.setOptionsList(searchedService.loadgiaovien(searchDvField.getValue().getTendonvi()));
         } else {
             searchGvcnField.clear();
         }
@@ -175,9 +169,9 @@ public class LophocBrowse extends StandardLookup<Lophoc> {
 
     @Subscribe("searchGvcnField")
     protected void onSearchGvcnFieldValueChange(HasValue.ValueChangeEvent event) {
-        if (searchGvcnField.getValue() != null){
-            searchLopField.setOptionsList(searchedService.loadlop(searchDvField.getValue(), searchGvcnField.getValue().getTengiaovien()));
-        }else {
+        if (searchGvcnField.getValue() != null) {
+            searchLopField.setOptionsList(searchedService.loadlop(searchDvField.getValue().getTendonvi(), searchGvcnField.getValue().getTengiaovien()));
+        } else {
             searchLopField.clear();
         }
     }

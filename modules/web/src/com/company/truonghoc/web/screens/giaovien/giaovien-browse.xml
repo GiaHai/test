@@ -47,7 +47,7 @@
                 <button id="timkiemBtn"
                         caption="Tìm kiếm"
                         stylename="Btntimkiem"
-                        invoke="timkiem" align="BOTTOM_CENTER"/>
+                        invoke="timkiem" align="BOTTOM_CENTER" shortcut="Enter"/>
             </hbox>
         </groupBox>
         <groupTable id="giaoviensTable"
@@ -71,6 +71,8 @@
                         caption="mainMsg://giaovien.quequan"/>
                 <column id="gioitinhgiaovien"
                         caption="mainMsg://giaovien.gioitinh"/>
+                <column id="luongcoban"
+                        caption="Lương cơ bản"/>
                 <column id="ghichu"
                         caption="mainMsg://giaovien.ghichu"/>
             </columns>
