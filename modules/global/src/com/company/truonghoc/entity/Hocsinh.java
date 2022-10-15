@@ -1,6 +1,9 @@
 package com.company.truonghoc.entity;
 
 import com.company.truonghoc.entity.tienich.Namsinh;
+import com.company.truonghoc.entity.tienich.QuanHuyen;
+import com.company.truonghoc.entity.tienich.TinhThanh;
+import com.company.truonghoc.entity.tienich.XaPhuong;
 import com.haulmont.chile.core.annotations.NamePattern;
 import com.haulmont.cuba.core.entity.StandardEntity;
 
@@ -29,8 +32,44 @@ public class Hocsinh extends StandardEntity {
     @Column(name = "QUEQUANHOCSINH")
     private String quequanhocsinh;
 
+    @JoinColumn(name = "NOI_SINH_XA_PHUONG_ID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private XaPhuong noiSinh_XaPhuong;
+
+    @JoinColumn(name = "NOI_SINH_QUAN_HUYEN_ID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private QuanHuyen noiSinh_QuanHuyen;
+
+    @JoinColumn(name = "NOI_SINH_TINH_THANH_ID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private TinhThanh noiSinh_TinhThanh;
+
     @Column(name = "GHICHU")
     private String ghichu;
+
+    public void setNoiSinh_TinhThanh(TinhThanh noiSinh_TinhThanh) {
+        this.noiSinh_TinhThanh = noiSinh_TinhThanh;
+    }
+
+    public TinhThanh getNoiSinh_TinhThanh() {
+        return noiSinh_TinhThanh;
+    }
+
+    public void setNoiSinh_QuanHuyen(QuanHuyen noiSinh_QuanHuyen) {
+        this.noiSinh_QuanHuyen = noiSinh_QuanHuyen;
+    }
+
+    public QuanHuyen getNoiSinh_QuanHuyen() {
+        return noiSinh_QuanHuyen;
+    }
+
+    public void setNoiSinh_XaPhuong(XaPhuong noiSinh_XaPhuong) {
+        this.noiSinh_XaPhuong = noiSinh_XaPhuong;
+    }
+
+    public XaPhuong getNoiSinh_XaPhuong() {
+        return noiSinh_XaPhuong;
+    }
 
     public void setNgaysinhhocsinh(Namsinh ngaysinhhocsinh) {
         this.ngaysinhhocsinh = ngaysinhhocsinh;

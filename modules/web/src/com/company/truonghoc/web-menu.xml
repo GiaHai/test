@@ -7,6 +7,7 @@
         <item screen="truonghoc_Lophoc.browse" caption="mainMsg://menu_config.truonghoc_Lophoc.browse"/>
         <item screen="truonghoc_Tenlop.browse" caption="mainMsg://menu_config.truonghoc_Tenlop.browse"/>
 
+
     </menu>
     <menu id="application-nhap" caption="mainMsg://menu_config.application-truonghoc5" expanded="true">
         <item screen="truonghoc_Lophoc.edit" caption="Nhập Lớp"/>
@@ -27,6 +28,9 @@
     </menu>
     <menu id="application-tienich" caption="Tiện ích">
         <item screen="truonghoc_Namsinh.browse" caption="mainMsg://menu_config.truonghoc_Namsinh.browse"/>
+        <item screen="truonghoc_XaPhuong.browse" caption="mainMsg://menu_config.truonghoc_XaPhuong.browse"/>
+        <item screen="truonghoc_QuanHuyen.browse" caption="mainMsg://menu_config.truonghoc_QuanHuyen.browse"/>
+        <item screen="truonghoc_TinhThanh.browse" caption="mainMsg://menu_config.truonghoc_TinhThanh.browse"/>
     </menu>
     <menu id="administration">
         <item screen="truonghoc_UserExt.browse" caption="Quản trị người dùng"/>

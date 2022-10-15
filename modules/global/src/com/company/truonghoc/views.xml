@@ -20,6 +20,19 @@
         <property name="ngaysinhhocsinh" view="_minimal">
             <property name="namSinh"/>
         </property>
+        <property name="noiSinh_QuanHuyen" view="_minimal">
+            <property name="ghiChu"/>
+        </property>
+        <property name="noiSinh_XaPhuong" view="_minimal">
+            <property name="ghiChu"/>
+            <property name="quanHuyen" view="_minimal">
+                <property name="ghiChu"/>
+            </property>
+        </property>
+        <property name="noiSinh_TinhThanh" view="_minimal">
+            <property name="ghiChu"/>
+            <property name="tinh_thanhpho"/>
+        </property>
     </view>
     <view entity="truonghoc_Luongthang" name="luongthang-view" extends="_local" systemProperties="true">
         <property name="hovaten" view="_minimal">
@@ -110,4 +123,20 @@
         <property name="createdBy"/>
     </view>
     <view entity="truonghoc_Namsinh" name="namsinh-view" extends="_local"/>
+    <view entity="truonghoc_TinhThanh" name="tinhThanh-view" extends="_local"/>
+    <view entity="truonghoc_QuanHuyen" name="quanHuyen-view" extends="_local">
+        <property name="tinhThanh" view="_minimal">
+            <property name="ghiChu"/>
+        </property>
+    </view>
+    <view entity="truonghoc_XaPhuong" name="xaPhuong-view" extends="_local">
+        <property name="quanHuyen" view="_minimal">
+            <property name="ghiChu"/>
+            <property name="quan_Huyen"/>
+        </property>
+        <property name="tinhThanh" view="_minimal">
+            <property name="ghiChu"/>
+            <property name="tinh_thanhpho"/>
+        </property>
+    </view>
 </views>

@@ -101,6 +101,9 @@ create table TRUONGHOC_HOCSINH (
     NGAYSINHHOCSINH_ID uniqueidentifier,
     GIOITINHHOCSINH nvarchar(255),
     QUEQUANHOCSINH nvarchar(255),
+    NOI_SINH_XA_PHUONG_ID uniqueidentifier,
+    NOI_SINH_QUAN_HUYEN_ID uniqueidentifier,
+    NOI_SINH_TINH_THANH_ID uniqueidentifier,
     GHICHU nvarchar(255),
     --
     primary key nonclustered (ID)
@@ -294,3 +297,60 @@ create table TRUONGHOC_NAMSINH (
     primary key nonclustered (ID)
 )^
 -- end TRUONGHOC_NAMSINH
+-- begin TRUONGHOC_XA_PHUONG
+create table TRUONGHOC_XA_PHUONG (
+    ID uniqueidentifier,
+    VERSION integer not null,
+    CREATE_TS datetime2,
+    CREATED_BY nvarchar(50),
+    UPDATE_TS datetime2,
+    UPDATED_BY nvarchar(50),
+    DELETE_TS datetime2,
+    DELETED_BY nvarchar(50),
+    --
+    TEN_XA_PHUONG nvarchar(255),
+    QUAN_HUYEN_ID uniqueidentifier,
+    TINH_THANH_ID uniqueidentifier,
+    XA_PHUONG nvarchar(255),
+    GHI_CHU nvarchar(255),
+    --
+    primary key nonclustered (ID)
+)^
+-- end TRUONGHOC_XA_PHUONG
+-- begin TRUONGHOC_TINH_THANH
+create table TRUONGHOC_TINH_THANH (
+    ID uniqueidentifier,
+    VERSION integer not null,
+    CREATE_TS datetime2,
+    CREATED_BY nvarchar(50),
+    UPDATE_TS datetime2,
+    UPDATED_BY nvarchar(50),
+    DELETE_TS datetime2,
+    DELETED_BY nvarchar(50),
+    --
+    TINH_THANHPHO nvarchar(255),
+    TEN_TINH_THANH nvarchar(255),
+    GHI_CHU nvarchar(255),
+    --
+    primary key nonclustered (ID)
+)^
+-- end TRUONGHOC_TINH_THANH
+-- begin TRUONGHOC_QUAN_HUYEN
+create table TRUONGHOC_QUAN_HUYEN (
+    ID uniqueidentifier,
+    VERSION integer not null,
+    CREATE_TS datetime2,
+    CREATED_BY nvarchar(50),
+    UPDATE_TS datetime2,
+    UPDATED_BY nvarchar(50),
+    DELETE_TS datetime2,
+    DELETED_BY nvarchar(50),
+    --
+    TEN_QUAN_HUYEN nvarchar(255),
+    QUAN_HUYEN nvarchar(255),
+    TINH_THANH_ID uniqueidentifier,
+    GHI_CHU nvarchar(255),
+    --
+    primary key nonclustered (ID)
+)^
+-- end TRUONGHOC_QUAN_HUYEN

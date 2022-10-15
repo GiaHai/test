@@ -16,5 +16,8 @@
         <class>com.company.truonghoc.entity.Lophoc</class>
         <class>com.company.truonghoc.entity.Tenlop</class>
         <class>com.company.truonghoc.entity.tienich.Namsinh</class>
+        <class>com.company.truonghoc.entity.tienich.TinhThanh</class>
+        <class>com.company.truonghoc.entity.tienich.QuanHuyen</class>
+        <class>com.company.truonghoc.entity.tienich.XaPhuong</class>
     </persistence-unit>
 </persistence>

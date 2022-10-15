@@ -16,6 +16,7 @@
                 <entry key="truonghoc_SearchedService" value="com.company.truonghoc.service.SearchedService"/>
                 <entry key="truonghoc_ServerConfigService" value="com.company.truonghoc.service.ServerConfigService"/>
                 <entry key="truonghoc_XuatFileExcelService" value="com.company.truonghoc.service.XuatFileExcelService"/>
+                <entry key="truonghoc_TienIchService" value="com.company.truonghoc.service.TienIchService"/>
             </map>
         </property>
     </bean>

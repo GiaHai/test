@@ -87,7 +87,7 @@
                         </form>
                     </row>
                     <row>
-                        <form colspan="3" width="100%" childrenCaptionWidth="80px">
+                        <form colspan="2" width="100%" childrenCaptionWidth="80px">
                             <column>
                                 <lookupField id="ngaysinhhocsinhField"
                                              property="ngaysinhhocsinh"
@@ -99,18 +99,37 @@
                                              caption="mainMsg://hocsinh.ngaysinhhocsinh"/>
                             </column>
                         </form>
-                        <form colspan="1" width="100%">
-                            <column>
-                                <label value=""/>
-                            </column>
-                        </form>
-                        <form colspan="3" width="100%" childrenCaptionWidth="80px">
+                        <form colspan="5" width="100%" childrenCaptionWidth="80px">
                             <column>
                                 <textField id="quequanhocsinhField"
                                            property="quequanhocsinh"
                                            dataContainer="hocsinhDc"
                                            width="100%"
                                            caption="mainMsg://hocsinh.quequanhocsinh"/>
+                            </column>
+                            <column>
+                                <lookupField id="noiSinh_XaPhuongField"
+                                             property="noiSinh_XaPhuong"
+                                             dataContainer="hocsinhDc"
+                                             width="100%"
+                                             caption="Nơi cư trú"
+                                             inputPrompt="Tỉnh/ Thành phố, Quận/Huyện, Phường/Xã"/>
+                            </column>
+                            <column>
+                                <lookupField id="noiSinh_QuanHuyenField"
+                                             property="noiSinh_QuanHuyen"
+                                             dataContainer="hocsinhDc"
+                                             width="100%"
+                                             caption="mainMsg://hocsinh.quequanhocsinh"
+                                             visible="false"/>
+                            </column>
+                            <column>
+                                <lookupField id="noiSinh_TinhThanhField"
+                                             property="noiSinh_TinhThanh"
+                                             dataContainer="hocsinhDc"
+                                             width="100%"
+                                             caption="mainMsg://hocsinh.quequanhocsinh"
+                                             visible="false"/>
                             </column>
                         </form>
                     </row>
