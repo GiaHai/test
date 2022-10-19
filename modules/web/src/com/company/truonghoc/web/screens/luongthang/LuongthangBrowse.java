@@ -145,7 +145,7 @@ public class LuongthangBrowse extends StandardLookup<Luongthang> {
         htmlBoxLayout.setHtmlSanitizerEnabled(true);
 
         if (entity.getNgaynhan() != null) {
-            String body = "<a style=\"background-color: #00FFFF; width: 100%;\">ĐÃ ĐÓNG</a>\n";
+            String body = "<a style=\"background-color: #00FFFF; width: 100%;\">ĐÃ NHẬN</a>\n";
             htmlBoxLayout.setTemplateContents(body);
         } else {
             HtmlBoxLayout htmlBoxLayout1 = uiComponents.create(HtmlBoxLayout.class);

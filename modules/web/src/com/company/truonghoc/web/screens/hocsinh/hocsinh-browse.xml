@@ -63,8 +63,8 @@
             </hbox>
         </groupBox>
         <groupTable id="hocsinhsTable"
-                  width="100%"
-                  dataContainer="hocsinhsDc">
+                    width="100%"
+                    dataContainer="hocsinhsDc">
             <actions>
                 <action id="create" type="create"/>
                 <action id="edit" type="edit"/>
@@ -83,6 +83,12 @@
                         caption="mainMsg://hocsinh.gioitinhhocsinh"/>
                 <column id="quequanhocsinh"
                         caption="mainMsg://hocsinh.quequanhocsinh"/>
+                <column id="noiSinh_XaPhuong"
+                        caption="Xã/Phường"/>
+                <column id="noiSinh_QuanHuyen"
+                        caption="Quận/Huyện"/>
+                <column id="noiSinh_TinhThanh"
+                        caption="Tỉnh/Thành"/>
                 <column id="ghichu"
                         caption="mainMsg://hocsinh.ghichu"/>
             </columns>

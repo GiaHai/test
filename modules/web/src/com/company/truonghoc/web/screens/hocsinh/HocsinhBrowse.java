@@ -217,6 +217,9 @@ public class HocsinhBrowse extends StandardLookup<Hocsinh> {
             row.setValue("ngaysinhhocsinh.namSinh", e.getValue("ngaysinhhocsinh.namSinh"));
             row.setValue("gioitinhhocsinh", e.getValue("gioitinhhocsinh"));
             row.setValue("quequanhocsinh", e.getValue("quequanhocsinh"));
+            row.setValue("noiSinh_XaPhuong", e.getValue("noiSinh_XaPhuong"));
+            row.setValue("noiSinh_QuanHuyen", e.getValue("noiSinh_QuanHuyen"));
+            row.setValue("noiSinh_TinhThanh", e.getValue("noiSinh_TinhThanh"));
             row.setValue("ghichu", e.getValue("ghichu"));
             collection.add(row);
             count++;

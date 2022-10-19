@@ -125,12 +125,23 @@ public class LuongthangEdit extends StandardEditor<Luongthang> {
             chuyencanField.setValue(a);
             thuongField.setValue(a);
             thuclinhField.setValue(a);
-            tinhtonglinh();
+//            buoilamField.setValue(BigDecimal.valueOf(a));
+//            cangoaiField.setValue(Math.toIntExact(a));
+//            casangField.setValue(Math.toIntExact(a));
+//            cachunhatField.setValue(Math.toIntExact(a));
+//            tinhtonglinh();
             if (!dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam()) {
                 donvitao_luongthangField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
                 donvitao_luongthangField.setEditable(false);
             }
         }
+//        tinhtonglinh();
+
+    }
+
+    @Subscribe
+    protected void onAfterShow(AfterShowEvent event) {
+        tinhthuclinh();
     }
 
     @Subscribe("hovatenField")
@@ -139,8 +150,8 @@ public class LuongthangEdit extends StandardEditor<Luongthang> {
             luongcobanField.setValue(hovatenField.getValue().getLuongcoban());
 
             Map<String, Integer> map = new LinkedHashMap<>();
-            map.put("450000Đ", 450000);
-            map.put("100% lương", luongcobanField.getValue().hashCode());
+            map.put("450.000 đ", 450000);
+            map.put("1.350.000 đ", 1350000);
 
             tienBhField.setOptionsMap(map);
         } else {
@@ -154,7 +165,6 @@ public class LuongthangEdit extends StandardEditor<Luongthang> {
     }
 
     private void tinhthuclinh() {
-        System.out.println(cangoaiField.getValue());
         if (cangoaiField.getValue() == null) {
             cangoaiField.setValue(0);
         }
@@ -169,6 +179,7 @@ public class LuongthangEdit extends StandardEditor<Luongthang> {
                 thuclinhField.setValue(luongcobanField.getValue());
             }
         }
+
     }
 
     private void tinhtonglinh() {
