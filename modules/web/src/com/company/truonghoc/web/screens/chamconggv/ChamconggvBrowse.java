@@ -3,6 +3,7 @@ package com.company.truonghoc.web.screens.chamconggv;
 import com.company.truonghoc.entity.Donvi;
 import com.company.truonghoc.entity.Giaovien;
 import com.company.truonghoc.service.DulieuUserService;
+import com.company.truonghoc.service.SearchedService;
 import com.company.truonghoc.service.XuatFileExcelService;
 import com.company.truonghoc.web.screens.utils.ExtendExcelExporter;
 import com.haulmont.cuba.core.entity.Entity;
@@ -38,9 +39,9 @@ public class ChamconggvBrowse extends StandardLookup<Chamconggv> {
     @Inject
     protected DateField<Date> ngaylamField;
     @Inject
-    protected LookupField tendonviField;
+    protected LookupField<Donvi> tendonviField;
     @Inject
-    protected LookupField tengiaovienField;
+    protected LookupField<Giaovien> tengiaovienField;
     @Inject
     protected CollectionContainer<Donvi> donvisDc;
     @Inject
@@ -52,27 +53,39 @@ public class ChamconggvBrowse extends StandardLookup<Chamconggv> {
     @Inject
     protected DataManager dataManager;
     @Inject
-    protected LookupField buoilamField;
+    protected LookupField<String> buoilamField;
     @Inject
     protected Dialogs dialogs;
     @Inject
     protected XuatFileExcelService xuatFileExcelService;
     @Inject
-    protected GroupTable<Chamconggv> chamconggvsTable;
+    protected Table<Chamconggv> chamconggvsTable;
     @Inject
     protected Metadata metadata;
     @Inject
     protected ExportDisplay exportDisplay;
+    @Inject
+    protected SearchedService searchedService;
+    private Donvi donViSession = null;
+    private Giaovien giaoVienSession = null;
+
+    @Subscribe
+    protected void onInit(InitEvent event) {
+        donViSession = dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi();
+        giaoVienSession = dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien();
+    }
 
     @Subscribe
     protected void onBeforeShow(BeforeShowEvent event) {
         dkphanquyen();
         excuteSearch(true);
+
     }
 
     @Subscribe("clearBtn")
     protected void onClearBtnClick(Button.ClickEvent event) {
         dkphanquyen();
+        excuteSearch(true);
     }
 
     //Điều kiện login
@@ -81,27 +94,22 @@ public class ChamconggvBrowse extends StandardLookup<Chamconggv> {
         // lấy dữ liệu buổi làm
         List<String> list = Arrays.asList("Làm cả ngày", "Ca sáng", "Ca chiều");
         buoilamField.setOptionsList(list);
-        if (!dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam()) {
+        if (!donViSession.getDonvitrungtam()) {
             tendonviField.setEditable(false);
-            tendonviField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi()); //Chèn đơn vị từ user vào text
-//            tengiaovienField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien().getTengiaovien());
+            tendonviField.setValue(donViSession); //Chèn đơn vị từ user vào text
             //Xoá
             tengiaovienField.clear();
             ngaylamField.clear();
             buoilamField.clear();
             if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null) {
-                tendonviField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi());
+                tendonviField.setValue(donViSession);
                 tengiaovienField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien());
                 tengiaovienField.setEditable(false);
             }
         } else {
             tendonviField.setEditable(true);
             //lấy dữ liệu string cho lookup
-            donvisDl.load();
-            List<String> sessionTypeNames = donvisDc.getMutableItems().stream()
-                    .map(Donvi::getTendonvi)
-                    .collect(Collectors.toList());
-            tendonviField.setOptionsList(sessionTypeNames);
+            tendonviField.setOptionsList(searchedService.loaddonvi());
 
             //Xoá
             tengiaovienField.clear();
@@ -111,20 +119,10 @@ public class ChamconggvBrowse extends StandardLookup<Chamconggv> {
         }
     }
 
-    private List<Giaovien> tengiaovien(Object dvgiaovien) {
-        return dataManager.load(Giaovien.class)
-                .query("select e from truonghoc_Giaovien e where e.donvitao_giaovien.tendonvi = :dvgiaovien")
-                .parameter("dvgiaovien", dvgiaovien)
-                .list();
-    }
-
     @Subscribe("tendonviField")
     protected void onTendonviFieldValueChange(HasValue.ValueChangeEvent event) {
         if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() == null) {
-            try {
-                tengiaovienField.setOptionsList(tengiaovien(tendonviField.getValue()));
-            } catch (NullPointerException ex) {
-            }
+            tengiaovienField.setOptionsList(searchedService.loadgiaovien(tendonviField.getValue()));
         }
     }
 
@@ -161,13 +159,14 @@ public class ChamconggvBrowse extends StandardLookup<Chamconggv> {
         chamconggvsDl.load();
     }
 
-    private String returnQuery(Object donvi, Object giaovien, Date ngaylam, Object buoilam, Map<String, Object> params) {
+    private String returnQuery(Object donvi, Object giaovien, Date ngaylam, Object
+            buoilam, Map<String, Object> params) {
         String query = "select e from truonghoc_Chamconggv e ";
         String where = " where 1=1 ";
 
         //đơn vị
         if (donvi != null) {
-            where += "and e.donvigv.tendonvi = :donvi ";
+            where += "and e.donvigv = :donvi ";
             params.put("donvi", donvi);
         }
         //giáo viên
@@ -195,13 +194,10 @@ public class ChamconggvBrowse extends StandardLookup<Chamconggv> {
     protected void onExcelBtnClick(Button.ClickEvent event) {
         dialogs.createOptionDialog()
                 .withCaption("Xác nhận")
-                .withMessage("Bạn có muốn chỉ xuất các hàng đã chọn không?")
+                .withMessage("Bạn có muốn xuất các hàng không?")
                 .withActions(
-                        new DialogAction(DialogAction.Type.YES, Action.Status.PRIMARY).withCaption("Hàng đã chọn").withHandler(e -> {
-                            xuatExcel(chamconggvsDc.getItems());
-                        }),
                         new DialogAction(DialogAction.Type.YES, Action.Status.PRIMARY).withCaption("Tất cả các hàng").withHandler(e -> {
-                            xuatExcel(xuatFileExcelService.layDanhSachChamconggv());
+                            xuatExcel(xuatFileExcelService.layDanhSachChamconggv(tendonviField.getValue(), tengiaovienField.getValue(), ngaylamField.getValue(), buoilamField.getValue()));
                         }),
                         new DialogAction(DialogAction.Type.NO).withCaption("Hủy")
                 )

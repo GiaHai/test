@@ -38,31 +38,34 @@
                   width="100%" outerMargin="true">
             <hbox width="100%" spacing="true">
                 <vbox spacing="true" width="100%">
-                    <lookupField id="donvitao_hocsinhField"
+                    <lookupField id="donViField"
                                  caption="Đơn vị"
                                  width="100%"
                                  nullName="---Tất cả đơn vị---"/>
-                    <lookupField id="sreachGtinhField"
+                    <lookupField id="gioiTinhField"
                                  caption="Giới tính"
                                  width="100%"
                                  nullName="---Tất cả giới tính---"/>
                 </vbox>
 
                 <vbox spacing="true" width="100%">
-                    <textField id="sreachHsField"
+                    <textField id="hocSinhField"
                                caption="Học sinh"
                                width="100%"
                                inputPrompt="Tên học sinh"/>
                 </vbox>
-                <vbox spacing="true" css="margin-top: 20px;">
+                <hbox spacing="true" css="margin-top: 20px;">
                     <button id="timkiemBtn"
                             invoke="timkiemExcute"
                             stylename="Btntimkiem"
                             caption="Tìm kiếm" align="MIDDLE_LEFT"/>
-                </vbox>
+                    <button id="xoaBtn"
+                            stylename="Btntimkiem"
+                            caption="Xoá" align="MIDDLE_LEFT"/>
+                </hbox>
             </hbox>
         </groupBox>
-        <groupTable id="hocsinhsTable"
+        <table id="hocsinhsTable"
                     width="100%"
                     dataContainer="hocsinhsDc">
             <actions>
@@ -77,7 +80,7 @@
                         caption="mainMsg://donvitao"/>
                 <column id="tenhocsinh"
                         caption="mainMsg://hocsinh.tenhocsinh"/>
-                <column id="ngaysinhhocsinh.namSinh"
+                <column id="ngaysinhhocsinh"
                         caption="mainMsg://hocsinh.ngaysinhhocsinh"/>
                 <column id="gioitinhhocsinh"
                         caption="mainMsg://hocsinh.gioitinhhocsinh"/>
@@ -101,7 +104,7 @@
                 <button id="excelBtn" caption="Xuất Excel"
                         icon="font-icon:FILE_EXCEL_O" stylename="style-button-all"/>
             </buttonsPanel>
-        </groupTable>
+        </table>
         <hbox id="lookupActions" spacing="true" visible="false">
             <button action="lookupSelectAction"/>
             <button action="lookupCancelAction"/>

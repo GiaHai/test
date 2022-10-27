@@ -27,6 +27,7 @@ import org.springframework.util.StringUtils;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -44,7 +45,7 @@ public class HocphiBrowse extends StandardLookup<Hocphi> {
     @Inject
     protected UserSession userSession;
     @Inject
-    protected LookupField dovitao_hocphiField;
+    protected LookupField<Donvi> dovitao_hocphiField;
     @Inject
     protected CollectionLoader<Donvi> donvisDl;
     @Inject
@@ -70,17 +71,19 @@ public class HocphiBrowse extends StandardLookup<Hocphi> {
     @Inject
     protected XuatFileExcelService xuatFileExcelService;
     @Inject
-    protected GroupTable<Hocphi> hocphisTable;
+    protected Table<Hocphi> hocphisTable;
     @Inject
     protected Metadata metadata;
     @Inject
     protected ExportDisplay exportDisplay;
+    private Donvi donViSession = null;
 
     @Subscribe
     protected void onInit(InitEvent event) {
         //tình trạng thanh toán
         List<String> list = Arrays.asList("Đã thanh toán", "Chưa thanh toán");
         trangthaiField.setOptionsList(list);
+        donViSession = dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi();
     }
 
     @Subscribe
@@ -108,45 +111,43 @@ public class HocphiBrowse extends StandardLookup<Hocphi> {
         return field;
     }
 
-    @Subscribe("clearBtn")
-    protected void onClearBtnClick(Button.ClickEvent event) {
-        dkphanquyen();
-    }
-
-    //Điều kiện login
-    private void dkphanquyen() {
-        //điều kiện đơn vị trung tâm nếu
-        if (!dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam()) {
-            dovitao_hocphiField.setEditable(false);
-            dovitao_hocphiField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi()); //Chèn đơn vị từ user vào text
-            //Xoá
+    @Subscribe("xoaBtn")
+    protected void onXoaBtnClick(Button.ClickEvent event) {
+        if (!donViSession.getDonvitrungtam()){
             denngayField.clear();
             tungayField.clear();
             trangthaiField.clear();
             hovstenField.clear();
+        }else {
+            denngayField.clear();
+            tungayField.clear();
+            trangthaiField.clear();
+            hovstenField.clear();
+            dovitao_hocphiField.clear();
+        }
+        excuteSearch(true);
+    }
+
+
+    //Điều kiện login
+    private void dkphanquyen() {
+        //điều kiện đơn vị trung tâm nếu
+        if (!donViSession.getDonvitrungtam()) {
+            dovitao_hocphiField.setEditable(false);
+            dovitao_hocphiField.setValue(donViSession); //Chèn đơn vị từ user vào text
             if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null) {
                 dovitao_hocphiField.setEditable(false);
                 denngayField.clear();
                 tungayField.clear();
                 trangthaiField.clear();
                 hovstenField.clear();
-                dovitao_hocphiField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi()); //Chèn đơn vị từ user vào text
+                dovitao_hocphiField.setValue(donViSession); //Chèn đơn vị từ user vào text
             }
 
         } else {
             dovitao_hocphiField.setEditable(true);
             //lấy dữ liệu string cho lookup
-            donvisDl.load();
-            List<String> sessionTypeNames = donvisDc.getMutableItems().stream()
-                    .map(Donvi::getTendonvi)
-                    .collect(Collectors.toList());
-            dovitao_hocphiField.setOptionsList(sessionTypeNames);
-            //xoá
-            hovstenField.clear();
-            dovitao_hocphiField.clear();
-            denngayField.clear();
-            tungayField.clear();
-            trangthaiField.clear();
+            dovitao_hocphiField.setOptionsList(searchedService.loaddonvi());
         }
     }
 
@@ -213,7 +214,7 @@ public class HocphiBrowse extends StandardLookup<Hocphi> {
 
         //Đơn vị
         if (donvi != null) {
-            where += "and e.dovitao_hocphi.tendonvi = :donvi ";
+            where += "and e.dovitao_hocphi = :donvi ";
             params.put("donvi", donvi);
         }
         //Từ ngày
@@ -236,13 +237,10 @@ public class HocphiBrowse extends StandardLookup<Hocphi> {
     protected void onExcelBtnClick(Button.ClickEvent event) {
         dialogs.createOptionDialog()
                 .withCaption("Xác nhận")
-                .withMessage("Bạn có muốn chỉ xuất các hàng đã chọn không?")
+                .withMessage("Bạn có muốn xuất các hàng không?")
                 .withActions(
-                        new DialogAction(DialogAction.Type.YES, Action.Status.PRIMARY).withCaption("Hàng đã chọn").withHandler(e -> {
-                            xuatExcel(hocphisDc.getItems());
-                        }),
                         new DialogAction(DialogAction.Type.YES, Action.Status.PRIMARY).withCaption("Tất cả các hàng").withHandler(e -> {
-                            xuatExcel(xuatFileExcelService.layDanhSachHocphi());
+                            xuatExcel(xuatFileExcelService.layDanhSachHocphi(dovitao_hocphiField.getValue(), hovstenField.getValue(), trangthaiField.getValue(), tungayField.getValue(), denngayField.getValue()));
                         }),
                         new DialogAction(DialogAction.Type.NO).withCaption("Hủy")
                 )
@@ -290,10 +288,21 @@ public class HocphiBrowse extends StandardLookup<Hocphi> {
             properties.put(i, column.getIdString());
             i++;
         }
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        String tuNgay;
+        String denNgay;
+        if (tungayField.getValue() == null) {
+            tuNgay = "";
+        } else {
+            tuNgay = simpleDateFormat.format(tungayField.getValue());
+        }
+        if (denngayField.getValue() == null) {
+            denNgay = "";
+        } else {
+            denNgay = simpleDateFormat.format(denngayField.getValue());
+        }
         ExtendExcelExporter exporter = new ExtendExcelExporter("Danh sách học phí");
-        exporter.exportDataCollectionTitleInFile(collection, columns, properties, exportDisplay, "Danh sách học phí");
+        exporter.exportDataCollectionTitleInFile(collection, columns, properties, exportDisplay, "Danh sách học phí" +
+                " Khoảng thời gian từ " + tuNgay + " đến " + denNgay + "");
     }
-
-    // Điều kiện
-
 }

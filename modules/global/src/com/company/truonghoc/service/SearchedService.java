@@ -12,7 +12,7 @@ public interface SearchedService {
 
     List<Donvi> loaddonvi();
 
-    List<Giaovien> loadgiaovien(Object giaovien);
+    List<Giaovien> loadgiaovien(Object donVi);
 
     List<Tenlop> loadlopDK(Object donvi, Object giaovien);
 

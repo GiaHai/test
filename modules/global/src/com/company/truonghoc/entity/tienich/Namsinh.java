@@ -1,5 +1,6 @@
 package com.company.truonghoc.entity.tienich;
 
+import com.haulmont.chile.core.annotations.NamePattern;
 import com.haulmont.cuba.core.entity.StandardEntity;
 
 import javax.persistence.Column;
@@ -8,6 +9,7 @@ import javax.persistence.Table;
 
 @Table(name = "TRUONGHOC_NAMSINH")
 @Entity(name = "truonghoc_Namsinh")
+@NamePattern("%s|namSinh")
 public class Namsinh extends StandardEntity {
     private static final long serialVersionUID = -186322768104544471L;
 

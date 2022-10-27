@@ -43,17 +43,20 @@ public class GiaovienEdit extends StandardEditor<Giaovien> {
     protected Actions actions;
     @Inject
     protected SearchedService searchedService;
+    private Donvi donViSession = null;
 
     @Subscribe
     protected void onInit(InitEvent event) {
         List<String> list = Arrays.asList("Nam", "Nữ");
         gioitinhgiaovienField.setOptionsList(list);
+
+        donViSession = dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi();
     }
 
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
-        if (!dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam()) {
-            donvitao_giaovienField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
+        if (!donViSession.getDonvitrungtam()) {
+            donvitao_giaovienField.setValue(donViSession);
             donvitao_giaovienField.setEditable(false);
         } else {
             donvitao_giaovienField.setOptionsList(searchedService.loaddonvi());

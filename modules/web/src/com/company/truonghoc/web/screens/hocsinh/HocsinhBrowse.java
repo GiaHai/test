@@ -34,7 +34,7 @@ public class HocsinhBrowse extends StandardLookup<Hocsinh> {
     @Inject
     protected UserSession userSession;
     @Inject
-    protected LookupField<Donvi> donvitao_hocsinhField;
+    protected LookupField<Donvi> donViField;
     @Inject
     protected DulieuUserService dulieuUserService;
     @Inject
@@ -46,9 +46,9 @@ public class HocsinhBrowse extends StandardLookup<Hocsinh> {
     @Inject
     protected CollectionContainer<Donvi> donvisDc;
     @Inject
-    protected TextField<String> sreachHsField;
+    protected TextField<String> hocSinhField;
     @Inject
-    protected LookupField sreachGtinhField;
+    protected LookupField<String> gioiTinhField;
     @Inject
     protected DataManager dataManager;
     @Inject
@@ -66,12 +66,12 @@ public class HocsinhBrowse extends StandardLookup<Hocsinh> {
     @Inject
     protected XuatFileExcelService xuatFileExcelService;
     @Inject
-    protected GroupTable<Hocsinh> hocsinhsTable;
+    protected Table<Hocsinh> hocsinhsTable;
     @Inject
     protected Metadata metadata;
     @Inject
     protected ExportDisplay exportDisplay;
-
+    private Donvi donViSession = null;
 
     @Subscribe
     protected void onInit(InitEvent event) {
@@ -79,41 +79,39 @@ public class HocsinhBrowse extends StandardLookup<Hocsinh> {
         List<String> gioitinh = new ArrayList<>();
         gioitinh.add("Nam");
         gioitinh.add("Nữ");
+        gioiTinhField.setOptionsList(gioitinh);
 
-        sreachGtinhField.setOptionsList(gioitinh);
+        //Đơn vị
+        donViSession = dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi();
     }
 
     @Subscribe
     protected void onBeforeShow(BeforeShowEvent event) {
         //Tìm đơn vị
-        donvitao_hocsinhField.setOptionsList(searchedService.loaddonvi());
+        donViField.setOptionsList(searchedService.loaddonvi());
     }
 
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
-        if (!dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam()) {
+        if (!donViSession.getDonvitrungtam()) {
             if (lookupActions.isVisible() == true) {
-                donvitao_hocsinhField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
-                donvitao_hocsinhField.setEditable(false);
+                donViField.setValue(donViSession);
+                donViField.setEditable(false);
                 excuteSearch(true);
             }
-            donvitao_hocsinhField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
+            donViField.setValue(donViSession);
             excuteSearch(true);
-            donvitao_hocsinhField.setEditable(false);
-            if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null){
-
-            }
+            donViField.setEditable(false);
         }
     }
 
-    @Subscribe("donvitao_hocsinhField")
-    protected void onDonvitao_hocsinhFieldValueChange(HasValue.ValueChangeEvent event) {
-        if (donvitao_hocsinhField.getValue() == null){
-            sreachHsField.clear();
-            sreachGtinhField.clear();
+    @Subscribe("donViField")
+    protected void onDonViFieldValueChange(HasValue.ValueChangeEvent event) {
+        if (donViField.getValue() == null) {
+            hocSinhField.clear();
+            gioiTinhField.clear();
         }
     }
-
 
     //    Điều kiện là giáo viên login vào
     @Subscribe("editBtn")
@@ -129,6 +127,18 @@ public class HocsinhBrowse extends StandardLookup<Hocsinh> {
         }
     }
 
+    /***
+     * Xoá
+     * ***/
+    @Subscribe("xoaBtn")
+    protected void onXoaBtnClick(Button.ClickEvent event) {
+        if (donViSession.getDonvitrungtam()) {
+            donViField.clear();
+        }
+        gioiTinhField.clear();
+        hocSinhField.clear();
+    }
+
 
     /*** tìm kiếm ***/
     public void timkiemExcute() {
@@ -136,9 +146,9 @@ public class HocsinhBrowse extends StandardLookup<Hocsinh> {
     }
 
     private void excuteSearch(boolean isFromSearchBtn) {
-        String hocsinh = sreachHsField.getValue();
-        String gioitinh = (String) sreachGtinhField.getValue();
-        Object donvi =  donvitao_hocsinhField.getValue();
+        String hocsinh = hocSinhField.getValue();
+        String gioitinh = gioiTinhField.getValue();
+        Object donvi = donViField.getValue();
         Map<String, Object> params = new HashMap<>();
         String query = returnQuery(donvi, params, hocsinh, gioitinh);
 
@@ -154,7 +164,7 @@ public class HocsinhBrowse extends StandardLookup<Hocsinh> {
         // Đơn vị
         if (donvi != null) {
             where += "and e.donvitao_hocsinh.tendonvi = :donvi ";
-            params.put("donvi", donvitao_hocsinhField.getValue().getTendonvi());
+            params.put("donvi", donViField.getValue().getTendonvi());
         }
 
         //Học sinh
@@ -174,9 +184,7 @@ public class HocsinhBrowse extends StandardLookup<Hocsinh> {
         int lineNumber = 1;
         try {
             lineNumber = hocsinhsDl.getContainer().getItemIndex(entity.getId()) + 1;
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             lineNumber = 1;
         }
         Label field = uiComponents.create(Label.NAME);
@@ -188,13 +196,10 @@ public class HocsinhBrowse extends StandardLookup<Hocsinh> {
     protected void onExcelBtnClick(Button.ClickEvent event) {
         dialogs.createOptionDialog()
                 .withCaption("Xác nhận")
-                .withMessage("Bạn có muốn chỉ xuất các hàng đã chọn không?")
+                .withMessage("Bạn có muốn chỉ xuất các hàng không?")
                 .withActions(
-                        new DialogAction(DialogAction.Type.YES, Action.Status.PRIMARY).withCaption("Hàng đã chọn").withHandler(e -> {
-                            xuatExcel(hocsinhsDc.getItems());
-                        }),
                         new DialogAction(DialogAction.Type.YES, Action.Status.PRIMARY).withCaption("Tất cả các hàng").withHandler(e -> {
-                            xuatExcel(xuatFileExcelService.layDanhSachHocsinh());
+                            xuatExcel(xuatFileExcelService.layDanhSachHocsinh(donViField.getValue()));
                         }),
                         new DialogAction(DialogAction.Type.NO).withCaption("Hủy")
                 )
@@ -214,7 +219,7 @@ public class HocsinhBrowse extends StandardLookup<Hocsinh> {
             row.setValue("stt", count);
             row.setValue("donvitao_hocsinh", e.getValue("donvitao_hocsinh"));
             row.setValue("tenhocsinh", e.getValue("tenhocsinh"));
-            row.setValue("ngaysinhhocsinh.namSinh", e.getValue("ngaysinhhocsinh.namSinh"));
+            row.setValue("ngaysinhhocsinh", e.getNgaysinhhocsinh());
             row.setValue("gioitinhhocsinh", e.getValue("gioitinhhocsinh"));
             row.setValue("quequanhocsinh", e.getValue("quequanhocsinh"));
             row.setValue("noiSinh_XaPhuong", e.getValue("noiSinh_XaPhuong"));

@@ -24,7 +24,7 @@
                 dataLoader="donvisDl">
             <properties include=".*"/>
         </filter>
-        <groupTable id="donvisTable"
+        <table id="donvisTable"
                     width="100%"
                     dataContainer="donvisDc">
             <actions>
@@ -46,7 +46,7 @@
                 <button id="editBtn" action="donvisTable.edit"/>
                 <button id="removeBtn" action="donvisTable.remove"/>
             </buttonsPanel>
-        </groupTable>
+        </table>
         <hbox id="lookupActions" spacing="true" visible="false">
             <button action="lookupSelectAction"/>
             <button action="lookupCancelAction"/>

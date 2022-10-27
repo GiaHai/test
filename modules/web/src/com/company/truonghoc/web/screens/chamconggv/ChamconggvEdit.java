@@ -52,7 +52,7 @@ public class ChamconggvEdit extends StandardEditor<Chamconggv> {
     }
 
     @Subscribe
-    protected void onAfterShow(AfterShowEvent event) {
+    protected void onBeforeShow(BeforeShowEvent event) {
         if (!dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam()) {
             donvigvField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
             donvigvField.setEditable(false);
@@ -64,6 +64,20 @@ public class ChamconggvEdit extends StandardEditor<Chamconggv> {
             donvigvField.setOptionsList(searchedService.loaddonvi());
         }
     }
+
+//    @Subscribe
+//    protected void onAfterShow(AfterShowEvent event) {
+//        if (!dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam()) {
+//            donvigvField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
+//            donvigvField.setEditable(false);
+//            if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null) {
+//                hotenGvField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien());
+//                hotenGvField.setEditable(false);
+//            }
+//        } else {
+//            donvigvField.setOptionsList(searchedService.loaddonvi());
+//        }
+//    }
 
     @Subscribe("buoilamField")
     protected void onBuoilamFieldValueChange(HasValue.ValueChangeEvent<String> event) {

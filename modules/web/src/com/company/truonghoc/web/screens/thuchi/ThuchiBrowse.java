@@ -43,7 +43,7 @@ public class ThuchiBrowse extends StandardLookup<Thuchi> {
     @Inject
     protected UiComponents uiComponents;
     @Inject
-    protected GroupTable<Thuchi> thuchisTable;
+    protected Table<Thuchi> thuchisTable;
     @Inject
     protected DateField<Date> tungayField;
     @Inject
@@ -70,18 +70,21 @@ public class ThuchiBrowse extends StandardLookup<Thuchi> {
     @Inject
     protected UserSession userSession;
     @Inject
-    protected LookupField donvitao_thuchiField;
+    protected LookupField<Donvi> donvitao_thuchiField;
     @Inject
     protected CollectionLoader<Donvi> donvisDl;
     @Inject
     protected CollectionContainer<Donvi> donvisDc;
     @Inject
     protected LookupField trangthaiField;
+    private Donvi donViSession = null;
 
     @Subscribe
     protected void onInit(InitEvent event) {
         List<String> list = Arrays.asList("Đã thanh toán", "Chưa thanh toán");
         trangthaiField.setOptionsList(list);
+        //Đơn vị
+        donViSession = dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi();
     }
 
     @Subscribe
@@ -108,43 +111,42 @@ public class ThuchiBrowse extends StandardLookup<Thuchi> {
 
     @Subscribe("clearBtn")
     protected void onClearBtnClick(Button.ClickEvent event) {
-        dkphanquyen();
-    }
-
-    //Điều kiện login
-    private void dkphanquyen() {
-        //điều kiện đơn vị trung tâm nếu
-        if (!dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam()) {
-            donvitao_thuchiField.setEditable(false);
-            donvitao_thuchiField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi()); //Chèn đơn vị từ user vào text
+        if (!donViSession.getDonvitrungtam()) {
             //Xoá
             khoanchiField.clear();
             trangthaiField.clear();
             tungayField.clear();
             denngayField.clear();
-
-            if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null) {
-                donvitao_thuchiField.setEditable(false);
-                khoanchiField.clear();
-                trangthaiField.clear();
-                tungayField.clear();
-                denngayField.clear();
-                donvitao_thuchiField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi()); //Chèn đơn vị từ user vào text
-            }
         } else {
-            donvitao_thuchiField.setEditable(true);
-            //lấy dữ liệu string cho lookup
-            donvisDl.load();
-            List<String> sessionTypeNames = donvisDc.getMutableItems().stream()
-                    .map(Donvi::getTendonvi)
-                    .collect(Collectors.toList());
-            donvitao_thuchiField.setOptionsList(sessionTypeNames);
             //xoá
             donvitao_thuchiField.clear();
             khoanchiField.clear();
             trangthaiField.clear();
             tungayField.clear();
             denngayField.clear();
+        }
+        excuteSearch(true);
+    }
+
+    //Điều kiện login
+    private void dkphanquyen() {
+        //điều kiện đơn vị trung tâm nếu
+        if (!donViSession.getDonvitrungtam()) {
+            donvitao_thuchiField.setEditable(false);
+            donvitao_thuchiField.setValue(donViSession); //Chèn đơn vị từ user vào text
+            if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null) {
+                donvitao_thuchiField.setEditable(false);
+                khoanchiField.clear();
+                trangthaiField.clear();
+                tungayField.clear();
+                denngayField.clear();
+                donvitao_thuchiField.setValue(donViSession); //Chèn đơn vị từ user vào text
+            }
+        } else {
+            donvitao_thuchiField.setEditable(true);
+            //lấy dữ liệu string cho lookup
+            donvitao_thuchiField.setOptionsList(searchedService.loaddonvi());
+            ;
         }
     }
 
@@ -196,7 +198,7 @@ public class ThuchiBrowse extends StandardLookup<Thuchi> {
 
         //Đơn vị
         if (donvi != null) {
-            where += "and e.donvitao_thuchi.tendonvi = :donvi ";
+            where += "and e.donvitao_thuchi = :donvi ";
             params.put("donvi", donvi);
         }
         //khoản chi
@@ -230,13 +232,10 @@ public class ThuchiBrowse extends StandardLookup<Thuchi> {
     protected void onExcelBtnClick(Button.ClickEvent event) {
         dialogs.createOptionDialog()
                 .withCaption("Xác nhận")
-                .withMessage("Bạn có muốn chỉ xuất các hàng đã chọn không?")
+                .withMessage("Bạn có muốn xuất các hàng không?")
                 .withActions(
-                        new DialogAction(DialogAction.Type.YES, Action.Status.PRIMARY).withCaption("Hàng đã chọn").withHandler(e -> {
-                            xuatExcel(thuchisDc.getItems());
-                        }),
                         new DialogAction(DialogAction.Type.YES, Action.Status.PRIMARY).withCaption("Tất cả các hàng").withHandler(e -> {
-                            xuatExcel(xuatFileExcelService.layDanhSachThuchi());
+                            xuatExcel(xuatFileExcelService.layDanhSachThuchi(donvitao_thuchiField.getValue(), khoanchiField.getValue(), trangthaiField.getValue(), tungayField.getValue(), denngayField.getValue()));
                         }),
                         new DialogAction(DialogAction.Type.NO).withCaption("Hủy")
                 )

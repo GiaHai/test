@@ -42,9 +42,12 @@
                         invoke="timkiemExcute"
                         stylename="Btntimkiem"
                         caption="Tìm kiếm" align="BOTTOM_LEFT"/>
+                <button id="xoaBtn"
+                        stylename="Btntimkiem"
+                        caption="Xoá" align="BOTTOM_LEFT"/>
             </hbox>
         </groupBox>
-        <groupTable id="lophocsTable"
+        <table id="lophocsTable"
                     width="100%"
                     dataContainer="lophocsDc">
             <actions>
@@ -69,7 +72,7 @@
                 <button id="excelBtn" caption="Xuất Excel"
                         icon="font-icon:FILE_EXCEL_O" stylename="style-button-all"/>
             </buttonsPanel>
-        </groupTable>
+        </table>
         <hbox id="lookupActions" spacing="true" visible="false">
             <button action="lookupSelectAction"/>
             <button action="lookupCancelAction"/>

@@ -38,21 +38,25 @@
                   spacing="true"
                   width="100%">
             <hbox spacing="true">
-                <lookupField id="donvitao_giaovienField"
+                <lookupField id="donViField"
                              caption="Đơn vị"
                              nullName="---Lọc tất cả---"/>
-                <textField id="searchTenGvField"
+                <textField id="tenGvField"
                            caption="Giáo viên"
-                inputPrompt="Nhập tên giáo viên"/>
-                <button id="timkiemBtn"
+                           inputPrompt="Nhập tên giáo viên"/>
+                <button id="timKiemBtn"
                         caption="Tìm kiếm"
                         stylename="Btntimkiem"
                         invoke="timkiem" align="BOTTOM_CENTER" shortcut="Enter"/>
+                <button id="xoaBtn"
+                        caption="Xoá"
+                        stylename="Btntimkiem"
+                        align="BOTTOM_CENTER"/>
             </hbox>
         </groupBox>
-        <groupTable id="giaoviensTable"
-                    width="100%"
-                    dataContainer="giaoviensDc">
+        <table id="giaoviensTable"
+               width="100%"
+               dataContainer="giaoviensDc">
             <actions>
                 <action id="create" type="create"/>
                 <action id="edit" type="edit"/>
@@ -85,7 +89,7 @@
                 <button id="excelBtn" caption="Xuất Excel"
                         icon="font-icon:FILE_EXCEL_O" stylename="style-button-all"/>
             </buttonsPanel>
-        </groupTable>
+        </table>
         <hbox id="lookupActions" spacing="true" visible="false">
             <button action="lookupSelectAction"/>
             <button action="lookupCancelAction"/>

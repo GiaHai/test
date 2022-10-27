@@ -42,20 +42,23 @@ public class DiemdanhEdit extends StandardEditor<Diemdanh> {
     protected SearchedService searchedService;
     @Inject
     protected LookupField<Lophoc> hocsinhField;
+    private Donvi donViSession = null;
+    private Giaovien giaoVienSession = null;
 
     @Subscribe
     protected void onInit(InitEvent event) {
         ngaynghiField.setRequired(true);
-
+        donViSession = dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi();
+        giaoVienSession = dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien();
     }
 
     @Subscribe
     protected void onBeforeShow(BeforeShowEvent event) {
-        if (!dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam()) {
-            donviField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
+        if (!donViSession.getDonvitrungtam()) {
+            donviField.setValue(donViSession);
             donviField.setEditable(false);
-            if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null){
-                nguoitaoField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien());
+            if (giaoVienSession != null) {
+                nguoitaoField.setValue(giaoVienSession);
                 nguoitaoField.setEditable(false);
             }
         }
@@ -65,40 +68,33 @@ public class DiemdanhEdit extends StandardEditor<Diemdanh> {
 
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
-        if (!dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam()) {
-            donviField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
-            donviField.setEditable(false);
-            if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null){
-                nguoitaoField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien());
-                nguoitaoField.setEditable(false);
-            }
-        }
-
-        ngaynghiField.setValue(new Date());
-        donviField.setOptionsList(searchedService.loaddonvi());
+//        if (!donViSession.getDonvitrungtam()) {
+//            donviField.setValue(donViSession);
+//            donviField.setEditable(false);
+//            if (giaoVienSession != null) {
+//                nguoitaoField.setValue(giaoVienSession);
+//                nguoitaoField.setEditable(false);
+//            }
+//        }
+//
+//        ngaynghiField.setValue(new Date());
+//        donviField.setOptionsList(searchedService.loaddonvi());
     }
 
-    public List<Tenlop> loadlopdd(Object donvi, Object giaovien) {
-        return dataManager.load(Tenlop.class)
-                .query("select e from truonghoc_Tenlop e where e.dovi.tendonvi = :donvi and e.giaoviencn.tengiaovien = :giaovien and e.tinhtranglop = true")
-                .parameter("donvi", donvi)
-                .parameter("giaovien", giaovien)
-                .list();
-    }
     @Subscribe("donviField")
     protected void onDonviFieldValueChange(HasValue.ValueChangeEvent<Donvi> event) {
-        if (donviField.getValue() != null){
-            nguoitaoField.setOptionsList(searchedService.loadgiaovien(donviField.getValue().getTendonvi()));
-        }else {
+        if (donviField.getValue() != null) {
+            nguoitaoField.setOptionsList(searchedService.loadgiaovien(donviField.getValue()));
+        } else {
             nguoitaoField.clear();
         }
     }
 
     @Subscribe("nguoitaoField")
     protected void onNguoitaoFieldValueChange(HasValue.ValueChangeEvent<Giaovien> event) {
-        if (nguoitaoField.getValue() != null){
-            lopField.setOptionsList(loadlopdd(donviField.getValue().getTendonvi(), nguoitaoField.getValue().getTengiaovien()));
-        }else {
+        if (nguoitaoField.getValue() != null) {
+            lopField.setOptionsList(searchedService.loadlopDK(donviField.getValue(), nguoitaoField.getValue()));
+        } else {
             lopField.clear();
         }
     }
@@ -107,8 +103,8 @@ public class DiemdanhEdit extends StandardEditor<Diemdanh> {
     protected void onLopFieldValueChange(HasValue.ValueChangeEvent<Tenlop> event) {
         hocsinhField.setOptionsList(loadHs());
     }
-    
-    private List<Lophoc> loadHs(){
+
+    private List<Lophoc> loadHs() {
         String query = "select e from truonghoc_Lophoc e ";
         String where = " where 1=1 ";
 

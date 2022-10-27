@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://tinhThanhBrowse.caption"
+        focusComponent="tinhThanhsTable"
+        messagesPack="com.company.truonghoc.web.screens.tienich.tinhthanh">
+    <data readOnly="true">
+        <collection id="tinhThanhsDc"
+                    class="com.company.truonghoc.entity.tienich.TinhThanh">
+            <view extends="tinhThanh-view"/>
+            <loader id="tinhThanhsDl">
+                <query>
+                    <![CDATA[select e from truonghoc_TinhThanh e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="tinhThanhsTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="tinhThanhsTable"
+                dataLoader="tinhThanhsDl">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="tinhThanhsTable"
+                    width="100%"
+                    dataContainer="tinhThanhsDc">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+            </actions>
+            <columns>
+                <column id="stt" generator="stt" caption="STT"/>
+                <column id="tenTinhThanh" caption="mainMsg://tentinhthanh"/>
+                <column id="tinh_thanhpho" caption="mainMsg://tinhtthanhpho"/>
+                <column id="ghiChu" caption="mainMsg://ghichu"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="tinhThanhsTable.create"/>
+                <button id="editBtn" action="tinhThanhsTable.edit"/>
+                <button id="removeBtn" action="tinhThanhsTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

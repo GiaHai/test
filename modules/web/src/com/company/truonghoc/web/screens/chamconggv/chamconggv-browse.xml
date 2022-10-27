@@ -62,14 +62,15 @@
                     <button id="timkiemBtn"
                             invoke="timkiemExcute"
                             stylename="Btntimkiem"
-                            caption="Tìm kiếm" align="TOP_CENTER"/>
+                            caption="Tìm kiếm" align="TOP_CENTER"  css="display: grid;"/>
                     <button id="clearBtn"
                             caption="Xoá"
+                            stylename="Btntimkiem"
                             css="margin-top: 22%;display: grid;"/>
                 </vbox>
             </hbox>
         </groupBox>
-        <groupTable id="chamconggvsTable"
+        <table id="chamconggvsTable"
                     width="100%"
                     dataContainer="chamconggvsDc">
             <actions>
@@ -101,7 +102,7 @@
                 <button id="excelBtn" caption="Xuất Excel"
                         icon="font-icon:FILE_EXCEL_O" stylename="style-button-all"/>
             </buttonsPanel>
-        </groupTable>
+        </table>
         <hbox id="lookupActions" spacing="true" visible="false">
             <button action="lookupSelectAction"/>
             <button action="lookupCancelAction"/>

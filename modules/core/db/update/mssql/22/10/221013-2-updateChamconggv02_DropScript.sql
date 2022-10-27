@@ -1,0 +1,1 @@
+alter table TRUONGHOC_CHAMCONGGV drop column TIEN_BUOI_ID__U48371 ;

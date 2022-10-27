@@ -125,18 +125,11 @@ public class LuongthangEdit extends StandardEditor<Luongthang> {
             chuyencanField.setValue(a);
             thuongField.setValue(a);
             thuclinhField.setValue(a);
-//            buoilamField.setValue(BigDecimal.valueOf(a));
-//            cangoaiField.setValue(Math.toIntExact(a));
-//            casangField.setValue(Math.toIntExact(a));
-//            cachunhatField.setValue(Math.toIntExact(a));
-//            tinhtonglinh();
             if (!dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam()) {
                 donvitao_luongthangField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
                 donvitao_luongthangField.setEditable(false);
             }
         }
-//        tinhtonglinh();
-
     }
 
     @Subscribe
@@ -258,7 +251,7 @@ public class LuongthangEdit extends StandardEditor<Luongthang> {
     @Subscribe("donvitao_luongthangField")
     protected void onDonvitao_luongthangFieldValueChange(HasValue.ValueChangeEvent<Donvi> event) {
         if (donvitao_luongthangField.getValue() != null) {
-            hovatenField.setOptionsList(searchedService.loadgiaovien(donvitao_luongthangField.getValue().getTendonvi()));
+            hovatenField.setOptionsList(searchedService.loadgiaovien(donvitao_luongthangField.getValue()));
         } else {
             hovatenField.clear();
             luongcobanField.clear();

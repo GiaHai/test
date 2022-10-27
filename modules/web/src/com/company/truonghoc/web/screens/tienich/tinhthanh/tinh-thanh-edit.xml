@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://tinhThanhEdit.caption"
+        focusComponent="form"
+        messagesPack="com.company.truonghoc.web.screens.tienich.tinhthanh">
+    <data>
+        <instance id="tinhThanhDc"
+                  class="com.company.truonghoc.entity.tienich.TinhThanh">
+            <view extends="tinhThanh-view"/>
+            <loader/>
+        </instance>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="editActions" spacing="true">
+        <form id="form" dataContainer="tinhThanhDc">
+            <column width="350px">
+                <textField id="tenTinhThanhField"
+                           property="tenTinhThanh"
+                           caption="mainMsg://tentinhthanh"
+                           inputPrompt="Tỉnh thành"
+                           required="true"/>
+                <lookupField id="tinh_ThanhPhoFiled"
+                             property="tinh_thanhpho"
+                             caption="mainMsg://tinhtthanhpho"
+                             nullName="---Cấp tỉnh---"
+                             required="true"/>
+                <textArea id="ghiChuField"
+                          property="ghiChu"
+                          caption="mainMsg://ghichu"/>
+            </column>
+        </form>
+        <hbox id="editActions" spacing="true">
+            <button id="commitAndCloseBtn" action="windowCommitAndClose"/>
+            <button id="closeBtn" action="windowClose"/>
+        </hbox>
+    </layout>
+</window>

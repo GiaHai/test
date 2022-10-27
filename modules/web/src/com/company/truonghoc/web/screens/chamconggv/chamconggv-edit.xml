@@ -36,16 +36,28 @@
                 <columns>
                     <column flex="1"/>
                     <column flex="1"/>
-                    <column flex="1"/>
                     <column flex="0.1"/>
                     <column flex="1"/>
+                    <column flex="1"/>
+                    <column flex="0.1"/>
                     <column flex="1"/>
                     <column flex="1"/>
                 </columns>
                 <rows>
                     <!--                    dòng 1-->
                     <row>
-                        <form colspan="3" width="100%" childrenCaptionWidth="80px" dataContainer="chamconggvDc">
+                        <form colspan="4" width="100%" childrenCaptionWidth="80px" dataContainer="chamconggvDc">
+                            <column>
+                                <lookupField id="donvigvField"
+                                             width="100%"
+                                             caption="mainMsg://chamcong.donvi"
+                                             nullName="--Lọc tất cả---"
+                                             requiredMessage="mainMsg://donvi.requiredMessage"
+                                             property="donvigv"/>
+                            </column>
+                        </form>
+
+                        <form colspan="4" width="100%" childrenCaptionWidth="80px" dataContainer="chamconggvDc">
                             <column>
                                 <lookupField id="hotenGvField"
                                              property="hotengv"
@@ -54,21 +66,6 @@
                                              required="true"
                                              requiredMessage="mainMsg://giaovien.requiredMessage"
                                              nullName="--Lọc tất cả---"/>
-                            </column>
-                        </form>
-                        <form colspan="1" width="100%">
-                            <column>
-                                <label value=""/>
-                            </column>
-                        </form>
-                        <form colspan="3" width="100%" childrenCaptionWidth="80px" dataContainer="chamconggvDc">
-                            <column>
-                                <lookupField id="donvigvField"
-                                             width="100%"
-                                             caption="mainMsg://chamcong.donvi"
-                                             nullName="--Lọc tất cả---"
-                                             requiredMessage="mainMsg://donvi.requiredMessage"
-                                             property="donvigv"/>
                             </column>
                         </form>
                     </row>
@@ -96,11 +93,16 @@
                                              property="buoilam"/>
                             </column>
                         </form>
-                        <form colspan="2" width="100%" childrenCaptionWidth="80px" dataContainer="chamconggvDc">
+                        <form colspan="1" width="100%">
+                            <column>
+                                <label value=""/>
+                            </column>
+                        </form>
+                        <form colspan="2" width="100%" childrenCaptionWidth="100px" dataContainer="chamconggvDc">
                             <column>
                                 <lookupField id="tienbuoiField"
                                              width="100%"
-                                             caption="mainMsg://chamcong.buoilam"
+                                             caption="Tiền theo buổi"
                                              nullName="---Số tiền theo ca---"
                                              property="tienBuoi"/>
                             </column>

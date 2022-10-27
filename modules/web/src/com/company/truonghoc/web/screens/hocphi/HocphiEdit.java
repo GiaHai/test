@@ -61,7 +61,6 @@ public class HocphiEdit extends StandardEditor<Hocphi> {
     @Subscribe
     protected void onBeforeShow(BeforeShowEvent event) {
 //        quyền
-//
         if (!dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam()) {
             dovitao_hocphiField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
             dovitao_hocphiField.setEditable(false);
@@ -77,6 +76,7 @@ public class HocphiEdit extends StandardEditor<Hocphi> {
         tinhtrangthanhtoanFiedl.setValue("Chưa thanh toán");
         dovitao_hocphiField.setOptionsList(searchedService.loaddonvi());
     }
+
     @Subscribe("hinhthucthanhtoanField")
     protected void onHinhthucthanhtoanFieldValueChange(HasValue.ValueChangeEvent<String> event) {
         if (hinhthucthanhtoanField.getValue() == null) {
@@ -111,7 +111,4 @@ public class HocphiEdit extends StandardEditor<Hocphi> {
     protected void onDovitao_hocphiFieldValueChange(HasValue.ValueChangeEvent<Donvi> event) {
         hovatenField.setOptionsList(searchedService.loadHs(dovitao_hocphiField.getValue().getTendonvi()));
     }
-
-    
-
 }

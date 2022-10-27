@@ -79,7 +79,7 @@
                 </vbox>
             </hbox>
         </groupBox>
-        <groupTable id="thuchisTable"
+        <table id="thuchisTable"
                     width="100%"
                     dataContainer="thuchisDc"
                     aggregatable="true">
@@ -120,7 +120,7 @@
                 <button id="excelBtn" caption="Xuất Excel"
                         icon="font-icon:FILE_EXCEL_O" stylename="style-button-all"/>
             </buttonsPanel>
-        </groupTable>
+        </table>
         <hbox id="lookupActions" spacing="true" visible="false">
             <button action="lookupSelectAction"/>
             <button action="lookupCancelAction"/>

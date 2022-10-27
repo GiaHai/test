@@ -37,46 +37,47 @@
                   stylename="css-hbox-search"
                   spacing="true"
                   width="100%">
-            <hbox spacing="true" >
+            <hbox spacing="true"  width="100%">
                 <vbox spacing="true">
                     <lookupField id="tendonviField"
                                  caption="Đơn vị"
                                  width="100%"
                                  nullName="---Lọc tất cả---"/>
                     <lookupField id="tengiaovienField"
-                               caption="Giáo viên"
-                               width="100%"
+                                 caption="Giáo viên"
+                                 width="100%"
                                  nullName="---Lọc tất cả---"/>
                 </vbox>
-                <vbox spacing="true">
+                <vbox spacing="true" width="100%">
                     <dateField id="ngaylamField"
-                               caption="Ngày nghỉ"
                                width="100%"
+                               caption="Ngày nghỉ"
                                resolution="DAY"/>
                     <lookupField id="lopField"
-                               width="100%"
-                               caption="Lớp"
+                                 width="100%"
+                                 caption="Lớp"
                                  nullName="---Lọc tất cả---"/>
                 </vbox>
                 <vbox align="BOTTOM_CENTER" spacing="true" width="30%">
                     <button id="timkiemBtn"
                             invoke="timkiemExcute"
                             stylename="Btntimkiem"
-                            caption="Tìm kiếm" align="TOP_CENTER"/>
+                            caption="Tìm kiếm" align="TOP_CENTER" css="display: grid;"/>
                     <button id="clearBtn"
                             caption="Xoá"
+                            stylename="Btntimkiem"
                             css="margin-top: 22%;display: grid;"/>
                 </vbox>
             </hbox>
         </groupBox>
-        <groupTable id="diemdanhsTable"
-                    width="100%"
-                    dataContainer="diemdanhsDc">
+        <table id="diemdanhsTable"
+               width="100%"
+               dataContainer="diemdanhsDc">
             <actions>
                 <action id="create" type="create"/>
                 <action id="edit" type="edit"/>
                 <action id="remove" type="remove"/>
-                <action id="excel"  type="excel"/>
+                <action id="excel" type="excel"/>
             </actions>
             <columns>
                 <column id="stt" generator="stt" caption="STT"/>
@@ -100,7 +101,7 @@
                 <button id="excelBtn" caption="Xuất Excel"
                         icon="font-icon:FILE_EXCEL_O" stylename="style-button-all"/>
             </buttonsPanel>
-        </groupTable>
+        </table>
         <hbox id="lookupActions" spacing="true" visible="false">
             <button action="lookupSelectAction"/>
             <button action="lookupCancelAction"/>

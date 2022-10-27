@@ -37,7 +37,7 @@ public class TenlopBrowse extends StandardLookup<Tenlop> {
     @Inject
     protected CollectionContainer<Donvi> donvisDc;
     @Inject
-    protected LookupField searchDvField;
+    protected LookupField<Donvi> searchDvField;
     @Inject
     protected LookupField<Giaovien> searchGvcnField;
     @Inject
@@ -63,32 +63,50 @@ public class TenlopBrowse extends StandardLookup<Tenlop> {
     @Inject
     protected XuatFileExcelService xuatFileExcelService;
     @Inject
-    protected GroupTable<Tenlop> tenlopsTable;
+    protected Table<Tenlop> tenlopsTable;
     @Inject
     protected Metadata metadata;
     @Inject
     protected ExportDisplay exportDisplay;
+    private Donvi donViSession = null;
+
+    @Subscribe
+    protected void onInit(InitEvent event) {
+        //Đơn vị
+        donViSession = dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi();
+    }
 
     @Subscribe
     protected void onBeforeShow(BeforeShowEvent event) {
-        // load dữ liệu đơn vị
-        donvisDl.load();
-        List<String> sessionTypeNames = donvisDc.getMutableItems().stream()
-                .map(Donvi::getTendonvi)
-                .collect(Collectors.toList());
-        searchDvField.setOptionsList(sessionTypeNames);
+        //load đơn vị
+        searchDvField.setOptionsList(searchedService.loaddonvi());
     }
 
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
         // điều kiện
-        if (!dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam()) {
+        if (!donViSession.getDonvitrungtam()) {
             searchDvField.setEditable(false);
-            searchDvField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi());
+            searchDvField.setValue(donViSession);
             excuteSearch(true);
         }
     }
 
+    @Subscribe("xoaBtn")
+    protected void onXoaBtnClick(Button.ClickEvent event) {
+        if (donViSession.getDonvitrungtam() == true) {
+            searchLopField.clear();
+            searchGvcnField.clear();
+            searchDvField.clear();
+        }else {
+            if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() == null){
+                searchLopField.clear();
+                searchGvcnField.clear();
+            }else {
+                searchLopField.clear();
+            }
+        }
+    }
 
     /***Tìm kiếm***/
     public void timkiemExcute() {
@@ -101,12 +119,11 @@ public class TenlopBrowse extends StandardLookup<Tenlop> {
                     .withType(Notifications.NotificationType.ERROR)
                     .show();
         }
-
     }
 
     private void excuteSearch(boolean isFromSearchBtn) {
 
-        String donvi = searchDvField.getValue().toString();
+        Object donvi = searchDvField.getValue();
         Object tenlop = searchLopField.getValue();
         Object tengv = searchGvcnField.getValue();
         Map<String, Object> params = new HashMap<>();
@@ -117,14 +134,14 @@ public class TenlopBrowse extends StandardLookup<Tenlop> {
         tenlopsDl.load();
     }
 
-    private String returnQuery(String donvi, Object tenlop, Object tengv, Map<String, Object> params) {
+    private String returnQuery(Object donvi, Object tenlop, Object tengv, Map<String, Object> params) {
 
         String query = "select e from truonghoc_Tenlop e ";
         String where = " where 1=1 ";
 
         //Đơn vị
         if (donvi != null) {
-            where += "and e.dovi.tendonvi = :donvi ";
+            where += "and e.dovi = :donvi ";
             params.put("donvi", donvi);
         }
         //Tên lớp
@@ -190,7 +207,7 @@ public class TenlopBrowse extends StandardLookup<Tenlop> {
 
     private List<Tenlop> loadlop(Object donvi, Object giaovien) {
         return dataManager.load(Tenlop.class)
-                .query("select e from truonghoc_Tenlop e where e.dovi.tendonvi = :donvi and e.giaoviencn.tengiaovien = :giaovien")
+                .query("select e from truonghoc_Tenlop e where e.dovi = :donvi and e.giaoviencn.tengiaovien = :giaovien")
                 .parameter("donvi", donvi)
                 .parameter("giaovien", giaovien)
                 .list();
@@ -203,11 +220,8 @@ public class TenlopBrowse extends StandardLookup<Tenlop> {
                 .withCaption("Xác nhận")
                 .withMessage("Bạn có muốn chỉ xuất các hàng đã chọn không?")
                 .withActions(
-                        new DialogAction(DialogAction.Type.YES, Action.Status.PRIMARY).withCaption("Hàng đã chọn").withHandler(e -> {
-                            xuatExcel(tenlopsDc.getItems());
-                        }),
                         new DialogAction(DialogAction.Type.YES, Action.Status.PRIMARY).withCaption("Tất cả các hàng").withHandler(e -> {
-                            xuatExcel(xuatFileExcelService.layDanhSachTenlop());
+                            xuatExcel(xuatFileExcelService.layDanhSachTenlop(searchDvField.getValue(), searchGvcnField.getValue(), searchLopField.getValue().getTenlop()));
                         }),
                         new DialogAction(DialogAction.Type.NO).withCaption("Hủy")
                 )
@@ -249,7 +263,6 @@ public class TenlopBrowse extends StandardLookup<Tenlop> {
         }
 
         ExtendExcelExporter exporter = new ExtendExcelExporter("Danh sách tên lớp");
-
         exporter.exportDataCollectionTitleInFile(collection, columns, properties, exportDisplay, "Danh sách tên lớp");
     }
 

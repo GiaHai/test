@@ -17,10 +17,10 @@ public class SearchedServiceBean implements SearchedService {
     protected DataManager dataManager;
 
     @Override
-    public List<Giaovien> loadgiaovien(Object giaovien) {
+    public List<Giaovien> loadgiaovien(Object donVi) {
         return dataManager.load(Giaovien.class)
-                .query("select e from truonghoc_Giaovien e where e.donvitao_giaovien.tendonvi = :donvi")
-                .parameter("donvi", giaovien)
+                .query("select e from truonghoc_Giaovien e where e.donvitao_giaovien = :donvi")
+                .parameter("donvi", donVi)
                 .view("giaovien-view")
                 .list();
     }
@@ -28,7 +28,7 @@ public class SearchedServiceBean implements SearchedService {
     @Override
     public List<Tenlop> loadlopDK(Object donvi, Object giaovien) {
         return dataManager.load(Tenlop.class)
-                .query("select e from truonghoc_Tenlop e where e.dovi.tendonvi = :donvi and e.giaoviencn.tengiaovien = :giaovien and e.tinhtranglop = true")
+                .query("select e from truonghoc_Tenlop e where e.dovi = :donvi and e.giaoviencn = :giaovien and e.tinhtranglop = true")
                 .parameter("donvi", donvi)
                 .parameter("giaovien", giaovien)
                 .list();
@@ -37,7 +37,7 @@ public class SearchedServiceBean implements SearchedService {
     @Override
     public List<Tenlop> loadlop(Object donvi, Object giaovien) {
         return dataManager.load(Tenlop.class)
-                .query("select e from truonghoc_Tenlop e where e.dovi.tendonvi = :donvi and e.giaoviencn.tengiaovien = :giaovien")
+                .query("select e from truonghoc_Tenlop e where e.dovi = :donvi and e.giaoviencn = :giaovien")
                 .parameter("donvi", donvi)
                 .parameter("giaovien", giaovien)
                 .list();
@@ -58,6 +58,4 @@ public class SearchedServiceBean implements SearchedService {
                 .view("donvi-view")
                 .list();
     }
-
-
 }

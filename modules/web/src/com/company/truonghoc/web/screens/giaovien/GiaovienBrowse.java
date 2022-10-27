@@ -1,7 +1,9 @@
 package com.company.truonghoc.web.screens.giaovien;
 
 import com.company.truonghoc.entity.Donvi;
+import com.company.truonghoc.entity.UserExt;
 import com.company.truonghoc.service.DulieuUserService;
+import com.company.truonghoc.service.SearchedService;
 import com.company.truonghoc.service.XuatFileExcelService;
 import com.company.truonghoc.web.screens.utils.ExtendExcelExporter;
 import com.haulmont.cuba.core.entity.Entity;
@@ -39,9 +41,9 @@ public class GiaovienBrowse extends StandardLookup<Giaovien> {
     @Inject
     protected CollectionLoader<Giaovien> giaoviensDl;
     @Inject
-    protected LookupField donvitao_giaovienField;
+    protected LookupField<Donvi> donViField;
     @Inject
-    protected GroupTable<Giaovien> giaoviensTable;
+    protected Table<Giaovien> giaoviensTable;
     @Inject
     protected UiComponents uiComponents;
     @Inject
@@ -51,11 +53,9 @@ public class GiaovienBrowse extends StandardLookup<Giaovien> {
     @Inject
     protected CollectionContainer<Donvi> donvisDc;
     @Inject
-    protected TextField<String> searchTenGvField;
+    protected TextField<String> tenGvField;
     @Inject
     protected DataManager dataManager;
-    @Named("giaoviensTable.excel")
-    protected ExcelAction giaoviensTableExcel;
     @Inject
     protected Button excelBtn;
     @Inject
@@ -67,28 +67,32 @@ public class GiaovienBrowse extends StandardLookup<Giaovien> {
     @Inject
     protected Metadata metadata;
     @Inject
+    protected SearchedService searchedService;
+    @Inject
     private ExportDisplay exportDisplay;
+    private Donvi donViSession = null;
 
     @Subscribe
+    protected void onInit(InitEvent event) {
+        donViSession = dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi();
+    }
+    @Subscribe
     protected void onBeforeShow(BeforeShowEvent event) {
-        if (!dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam()) {
-            donvitao_giaovienField.setEditable(false);
-            donvitao_giaovienField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi());
+        if (!donViSession.getDonvitrungtam()) {
+            donViField.setEditable(false);
+            donViField.setValue(donViSession);
             excuteSearch(true);
         } else {
-            donvitao_giaovienField.setEditable(true);
-            donvisDl.load();
-            List<String> sessionTypeNames = donvisDc.getMutableItems().stream()
-                    .map(Donvi::getTendonvi)
-                    .collect(Collectors.toList());
-            donvitao_giaovienField.setOptionsList(sessionTypeNames);
+            donViField.setEditable(true);
         }
+        //Tìm đơn vị
+        donViField.setOptionsList(searchedService.loaddonvi());
     }
 
-    @Subscribe("donvitao_giaovienField")
-    protected void onDonvitao_giaovienFieldValueChange(HasValue.ValueChangeEvent event) {
-        if (donvitao_giaovienField.getValue() == null) {
-            searchTenGvField.clear();
+    @Subscribe("donViField")
+    protected void ondonViFieldValueChange(HasValue.ValueChangeEvent event) {
+        if (donViField.getValue() == null) {
+            tenGvField.clear();
         }
     }
 
@@ -111,9 +115,19 @@ public class GiaovienBrowse extends StandardLookup<Giaovien> {
         }
     }
 
+    @Subscribe("xoaBtn")
+    protected void onXoaBtnClick(Button.ClickEvent event) {
+        if (!donViSession.getDonvitrungtam()){
+            tenGvField.clear();
+        }else {
+            donViField.clear();
+            tenGvField.clear();
+        }
+    }
+    
     private void excuteSearch(boolean isFromSearchBtn) {
-        Object donvi = donvitao_giaovienField.getValue();
-        String giaovien = searchTenGvField.getValue();
+        Object donvi = donViField.getValue();
+        String giaovien = tenGvField.getValue();
 
         Map<String, Object> params = new HashMap<>();
         String query = returnQuery(donvi, giaovien, params);
@@ -127,7 +141,7 @@ public class GiaovienBrowse extends StandardLookup<Giaovien> {
         String where = " where 1=1 ";
 
         if (donvi != null) {
-            where += "and e.donvitao_giaovien.tendonvi = :donvi ";
+            where += "and e.donvitao_giaovien = :donvi ";
             params.put("donvi", donvi);
         }
         if (!StringUtils.isEmpty(giaovien)) {
@@ -146,13 +160,10 @@ public class GiaovienBrowse extends StandardLookup<Giaovien> {
     protected void onExcelBtnClick(Button.ClickEvent event) {
         dialogs.createOptionDialog()
                 .withCaption("Xác nhận")
-                .withMessage("Bạn có muốn chỉ xuất các hàng đã chọn không?")
+                .withMessage("Bạn có muốn chỉ xuất các hàng không?")
                 .withActions(
-                        new DialogAction(DialogAction.Type.YES, Action.Status.PRIMARY).withCaption("Hàng đã chọn").withHandler(e -> {
-                            xuatExcel(giaoviensDc.getItems());
-                        }),
                         new DialogAction(DialogAction.Type.YES, Action.Status.PRIMARY).withCaption("Tất cả các hàng").withHandler(e -> {
-                            xuatExcel(xuatFileExcelService.layDanhSachGiaovien());
+                            xuatExcel(xuatFileExcelService.layDanhSachGiaovien(donViField.getValue()));
                         }),
                         new DialogAction(DialogAction.Type.NO).withCaption("Hủy")
                 )
@@ -189,7 +200,6 @@ public class GiaovienBrowse extends StandardLookup<Giaovien> {
         }
 
         ExtendExcelExporter exporter = new ExtendExcelExporter("Danh sách giáo viên");
-
         exporter.exportDataCollectionTitleInFile(collection, columns, properties, exportDisplay, "Danh sách giáo viên");
     }
 }

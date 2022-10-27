@@ -2,4 +2,7 @@
 
 @mixin com_company_truonghoc {
   @include com_company_truonghoc-helium-ext;
+
+  .helium .c-datefield-layout .c-datefield.v-datefield-day,.helium .c-datefield-layout .c-datefield.v-datefield-month,.helium .c-datefield-layout .c-datefield.v-datefield-year{width:100%}
+
 }

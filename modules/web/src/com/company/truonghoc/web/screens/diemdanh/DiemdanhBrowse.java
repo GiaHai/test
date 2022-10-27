@@ -37,7 +37,7 @@ public class DiemdanhBrowse extends StandardLookup<Diemdanh> {
     @Inject
     protected DataManager dataManager;
     @Inject
-    protected LookupField tendonviField;
+    protected LookupField<Donvi> tendonviField;
     @Inject
     protected CollectionContainer<Donvi> donvisDc;
     @Inject
@@ -67,56 +67,65 @@ public class DiemdanhBrowse extends StandardLookup<Diemdanh> {
     @Inject
     protected XuatFileExcelService xuatFileExcelService;
     @Inject
-    protected GroupTable<Diemdanh> diemdanhsTable;
+    protected Table<Diemdanh> diemdanhsTable;
     @Inject
     protected Metadata metadata;
     @Inject
     protected ExportDisplay exportDisplay;
+    private Donvi donViSession = null;
+    private Giaovien giaoVienSession = null;
 
+    @Subscribe
+    protected void onInit(InitEvent event) {
+        //Đơn vị
+        donViSession = dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi();
+        //Giáo viên
+        giaoVienSession = dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien();
+    }
 
     @Subscribe
     protected void onBeforeShow(BeforeShowEvent event) {
         dkphanquyen();
         excuteSearch(true);
-//        tengiaovienField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien().getTengiaovien());
     }
 
     @Subscribe("clearBtn")
     protected void onClearBtnClick(Button.ClickEvent event) {
-        dkphanquyen();
-    }
-
-
-    //Điều kiện login
-    private void dkphanquyen() {
-        //điều kiện đơn vị trung tâm nếu
-        if (!dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam()) {
-            tendonviField.setEditable(false);
-            tendonviField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi()); //Chèn đơn vị từ user vào text
+        if (!donViSession.getDonvitrungtam()) {
             //Xoá
             tengiaovienField.clear();
             ngaylamField.clear();
             lopField.clear();
-
-            if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null) {
-                tendonviField.setEditable(false);
-                tengiaovienField.setEditable(false);
-                ngaylamField.clear();
-                tendonviField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi()); //Chèn đơn vị từ user vào text
-                tengiaovienField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien());  //chèn tên giáo viên từ user vào text
-            }
         } else {
-            donvisDl.load();
-            List<String> sessionTypeNames = donvisDc.getMutableItems().stream()
-                    .map(Donvi::getTendonvi)
-                    .collect(Collectors.toList());
-            tendonviField.setOptionsList(sessionTypeNames);
-
             //Xoá
             tendonviField.clear();
             tengiaovienField.clear();
             ngaylamField.clear();
             lopField.clear();
+        }
+        excuteSearch(true);
+    }
+
+    //Điều kiện login
+    private void dkphanquyen() {
+        //điều kiện đơn vị trung tâm nếu
+        if (!donViSession.getDonvitrungtam()) {
+            tendonviField.setEditable(false);
+            tendonviField.setValue(donViSession); //Chèn đơn vị từ user vào text
+
+
+            if (giaoVienSession != null) {
+                tendonviField.setEditable(false);
+                tengiaovienField.setEditable(false);
+                ngaylamField.clear();
+                tendonviField.setValue(donViSession); //Chèn đơn vị từ user vào text
+                tengiaovienField.setValue(giaoVienSession);  //chèn tên giáo viên từ user vào text
+            }
+        } else {
+            donvisDl.load();
+            tendonviField.setOptionsList(searchedService.loaddonvi());
+
+
         }
     }
 
@@ -145,13 +154,13 @@ public class DiemdanhBrowse extends StandardLookup<Diemdanh> {
 
         //Tên đơn vị
         if (donvi != null) {
-            where += "and e.donvidd.tendonvi = :donvi ";
+            where += "and e.donvidd = :donvi ";
             params.put("donvi", donvi);
         }
         //giáo viên
         if (giaovien != null) {
-            where += "and e.nguoitaodd.tengiaovien = :giaovien ";
-            params.put("giaovien", tengiaovienField.getValue().getTengiaovien());
+            where += "and e.nguoitaodd = :giaovien ";
+            params.put("giaovien", giaovien);
         }
         //Ngày làm
         if (ngaylam != null) {
@@ -159,19 +168,19 @@ public class DiemdanhBrowse extends StandardLookup<Diemdanh> {
             params.put("ngaylam", ngaylam);
         }
         //Lớp
-        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null) {
+        if (giaoVienSession != null) {
             if (lop == null) {
                 where += "and e.lopdd.tinhtranglop = true ";
             } else {
                 if (lop != null) {
-                    where += "and e.lopdd.tenlop.tenlop = :lop ";
-                    params.put("lop", lopField.getValue().getTenlop());
+                    where += "and e.lopdd = :lop ";
+                    params.put("lop", lop);
                 }
             }
         } else {
             if (lop != null) {
-                where += "and e.lopdd.tenlop.tenlop = :lop ";
-                params.put("lop", lopField.getValue().getTenlop());
+                where += "and e.lopdd = :lop ";
+                params.put("lop", lop);
             }
         }
         query = query + where;
@@ -186,9 +195,9 @@ public class DiemdanhBrowse extends StandardLookup<Diemdanh> {
     @Subscribe("tengiaovienField")
     protected void onTengiaovienFieldValueChange(HasValue.ValueChangeEvent event) {
         if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null) {
-            lopField.setOptionsList(searchedService.loadlopDK(tendonviField.getValue(), tengiaovienField.getValue().getTengiaovien()));
+            lopField.setOptionsList(searchedService.loadlopDK(tendonviField.getValue(), tengiaovienField.getValue()));
         } else {
-            lopField.setOptionsList(searchedService.loadlop(tendonviField.getValue(), tengiaovienField.getValue().getTengiaovien()));
+            lopField.setOptionsList(searchedService.loadlop(tendonviField.getValue(), tengiaovienField.getValue()));
         }
     }
 
@@ -210,13 +219,10 @@ public class DiemdanhBrowse extends StandardLookup<Diemdanh> {
     protected void onExcelBtnClick(Button.ClickEvent event) {
         dialogs.createOptionDialog()
                 .withCaption("Xác nhận")
-                .withMessage("Bạn có muốn chỉ xuất các hàng đã chọn không?")
+                .withMessage("Bạn có muốn xuất các hàng không?")
                 .withActions(
-                        new DialogAction(DialogAction.Type.YES, Action.Status.PRIMARY).withCaption("Hàng đã chọn").withHandler(e -> {
-                            xuatExcel(diemdanhsDc.getItems());
-                        }),
                         new DialogAction(DialogAction.Type.YES, Action.Status.PRIMARY).withCaption("Tất cả các hàng").withHandler(e -> {
-                            xuatExcel(xuatFileExcelService.layDanhSachDiemdanh());
+                            xuatExcel(xuatFileExcelService.layDanhSachDiemdanh(tendonviField.getValue(), tengiaovienField.getValue(), ngaylamField.getValue(), lopField.getValue()));
                         }),
                         new DialogAction(DialogAction.Type.NO).withCaption("Hủy")
                 )
@@ -253,7 +259,6 @@ public class DiemdanhBrowse extends StandardLookup<Diemdanh> {
         }
 
         ExtendExcelExporter exporter = new ExtendExcelExporter("Danh sách điểm danh");
-
         exporter.exportDataCollectionTitleInFile(collection, columns, properties, exportDisplay, "Danh sách điểm danh");
     }
 }

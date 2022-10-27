@@ -42,7 +42,7 @@ public class LuongthangBrowse extends StandardLookup<Luongthang> {
     @Inject
     protected UserSession userSession;
     @Inject
-    protected LookupField donvitao_luongthangField;
+    protected LookupField<Donvi> donvitao_luongthangField;
     @Inject
     protected DateField<Date> denngayField;
     @Inject
@@ -64,16 +64,20 @@ public class LuongthangBrowse extends StandardLookup<Luongthang> {
     @Inject
     protected XuatFileExcelService xuatFileExcelService;
     @Inject
-    protected GroupTable<Luongthang> luongthangsTable;
+    protected Table<Luongthang> luongthangsTable;
     @Inject
     protected Metadata metadata;
     @Inject
     protected ExportDisplay exportDisplay;
+    private Donvi donViSession = null;
+    private Giaovien giaoVienSession = null;
 
     @Subscribe
     protected void onInit(InitEvent event) {
         List<String> list = Arrays.asList("Đã nhận lương", "Chưa nhận lương");
         trangthaiField.setOptionsList(list);
+        donViSession = dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi();
+        giaoVienSession = dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien();
     }
 
     @Subscribe
@@ -101,41 +105,44 @@ public class LuongthangBrowse extends StandardLookup<Luongthang> {
 
     @Subscribe("clearBtn")
     protected void onClearBtnClick(Button.ClickEvent event) {
-        dkphanquyen();
+        if (!donViSession.getDonvitrungtam()){
+            //Xoá
+            if (giaoVienSession == null){
+                giaovienField.clear();
+            }
+            trangthaiField.clear();
+            tungayField.clear();
+            denngayField.clear();
+        }else {
+            //xoá
+            donvitao_luongthangField.clear();
+            giaovienField.clear();
+            trangthaiField.clear();
+            tungayField.clear();
+            denngayField.clear();
+        }
+        excuteSearch(true);
     }
 
     //Điều kiện login
     private void dkphanquyen() {
         //điều kiện đơn vị trung tâm nếu
-        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi() != null) {
+        if (donViSession != null) {
 
-            if (!dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam()) {
+            if (!donViSession.getDonvitrungtam()) {
                 donvitao_luongthangField.setEditable(false);
-                donvitao_luongthangField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getTendonvi());
+                donvitao_luongthangField.setValue(donViSession);
 
-                //Xoá
-                giaovienField.clear();
-                trangthaiField.clear();
-                tungayField.clear();
-                denngayField.clear();
-                if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null) {
-                    giaovienField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien());
+
+                if (giaoVienSession != null) {
+                    giaovienField.setValue(giaoVienSession);
                     giaovienField.setEditable(false);
                 }
             } else {
                 donvitao_luongthangField.setEditable(true);
                 //lấy dữ liệu string cho lookup
-                donvisDl.load();
-                List<String> sessionTypeNames = donvisDc.getMutableItems().stream()
-                        .map(Donvi::getTendonvi)
-                        .collect(Collectors.toList());
-                donvitao_luongthangField.setOptionsList(sessionTypeNames);
-                //xoá
-                donvitao_luongthangField.clear();
-                giaovienField.clear();
-                trangthaiField.clear();
-                tungayField.clear();
-                denngayField.clear();
+                donvitao_luongthangField.setOptionsList(searchedService.loaddonvi());
+
             }
         }
     }
@@ -188,13 +195,13 @@ public class LuongthangBrowse extends StandardLookup<Luongthang> {
 
         //Đơn vị
         if (donvi != null) {
-            where += "and e.donvitao_luongthang.tendonvi = :donvi ";
+            where += "and e.donvitao_luongthang = :donvi ";
             params.put("donvi", donvi);
         }
         //Giáo viên
         if (giaovien != null) {
-            where += "and e.hovaten.tengiaovien = :giaovien ";
-            params.put("giaovien", giaovienField.getValue().getTengiaovien());
+            where += "and e.hovaten = :giaovien ";
+            params.put("giaovien", giaovien);
         }
         //Trạng thái
         if (trangthai != null) {
@@ -219,19 +226,17 @@ public class LuongthangBrowse extends StandardLookup<Luongthang> {
     protected void onDonvitao_luongthangFieldValueChange(HasValue.ValueChangeEvent event) {
         giaovienField.setOptionsList(searchedService.loadgiaovien(donvitao_luongthangField.getValue()));
     }
+
     /********* XUẤT FILE EXCEL ********/
 
     @Subscribe("excelBtn")
     protected void onExcelBtnClick(Button.ClickEvent event) {
         dialogs.createOptionDialog()
                 .withCaption("Xác nhận")
-                .withMessage("Bạn có muốn chỉ xuất các hàng đã chọn không?")
+                .withMessage("Bạn có muốn xuất các hàng không?")
                 .withActions(
-                        new DialogAction(DialogAction.Type.YES, Action.Status.PRIMARY).withCaption("Hàng đã chọn").withHandler(e -> {
-                            xuatExcel(luongthangsDc.getItems());
-                        }),
                         new DialogAction(DialogAction.Type.YES, Action.Status.PRIMARY).withCaption("Tất cả các hàng").withHandler(e -> {
-                            xuatExcel(xuatFileExcelService.layDanhSachLuongthang());
+                            xuatExcel(xuatFileExcelService.layDanhSachLuongthang(donvitao_luongthangField.getValue(), giaovienField.getValue(), trangthaiField.getValue(), tungayField.getValue(), denngayField.getValue()));
                         }),
                         new DialogAction(DialogAction.Type.NO).withCaption("Hủy")
                 )
@@ -289,6 +294,6 @@ public class LuongthangBrowse extends StandardLookup<Luongthang> {
         }
         ExtendExcelExporter exporter = new ExtendExcelExporter("Danh sách lương");
 
-        exporter.exportDataCollectionTitleInFile(collection, columns, properties,exportDisplay,"Danh sách lương");
+        exporter.exportDataCollectionTitleInFile(collection, columns, properties, exportDisplay, "Danh sách lương");
     }
 }

@@ -24,7 +24,7 @@
                 dataLoader="chitietthusDl">
             <properties include=".*"/>
         </filter>
-        <groupTable id="chitietthusTable"
+        <Table id="chitietthusTable"
                     width="100%"
                     dataContainer="chitietthusDc">
             <actions>
@@ -46,7 +46,7 @@
                 <button id="editBtn" action="chitietthusTable.edit"/>
                 <button id="removeBtn" action="chitietthusTable.remove"/>
             </buttonsPanel>
-        </groupTable>
+        </Table>
         <hbox id="lookupActions" spacing="true" visible="false">
             <button action="lookupSelectAction"/>
             <button action="lookupCancelAction"/>

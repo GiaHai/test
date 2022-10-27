@@ -68,11 +68,20 @@ public class LophocBrowse extends StandardLookup<Lophoc> {
     @Inject
     protected XuatFileExcelService xuatFileExcelService;
     @Inject
-    protected GroupTable<Lophoc> lophocsTable;
+    protected Table<Lophoc> lophocsTable;
     @Inject
     protected Metadata metadata;
     @Inject
     protected ExportDisplay exportDisplay;
+    private Donvi donViSession = null;
+    private Giaovien giaoVienSession = null;
+
+    @Subscribe
+    protected void onInit(InitEvent event) {
+        //Đơn vị
+        donViSession = dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi();
+        giaoVienSession = dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien();
+    }
 
     @Subscribe
     protected void onBeforeShow(BeforeShowEvent event) {
@@ -84,15 +93,29 @@ public class LophocBrowse extends StandardLookup<Lophoc> {
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
         //Điều kiện
-        if (!dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam()) {
+        if (!donViSession.getDonvitrungtam()) {
             searchDvField.setEditable(false);
-            searchDvField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
+            searchDvField.setValue(donViSession);
             excuteSearch(true);
-            if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null) {
-                searchGvcnField.setValue((dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien()));
+            if (giaoVienSession != null) {
+                searchGvcnField.setValue(giaoVienSession);
                 searchGvcnField.setEditable(false);
                 excuteSearch(true);
             }
+        }
+    }
+
+    @Subscribe("xoaBtn")
+    protected void onXoaBtnClick(Button.ClickEvent event) {
+        if (donViSession.getDonvitrungtam() == false){
+            if (giaoVienSession == null){
+                searchGvcnField.clear();
+            }
+            searchLopField.clear();
+        }else {
+            searchDvField.clear();
+            searchLopField.clear();
+            searchGvcnField.clear();
         }
     }
 
@@ -161,7 +184,7 @@ public class LophocBrowse extends StandardLookup<Lophoc> {
     @Subscribe("searchDvField")
     protected void onSearchDvFieldValueChange(HasValue.ValueChangeEvent event) {
         if (searchDvField.getValue() != null) {
-            searchGvcnField.setOptionsList(searchedService.loadgiaovien(searchDvField.getValue().getTendonvi()));
+            searchGvcnField.setOptionsList(searchedService.loadgiaovien(searchDvField.getValue()));
         } else {
             searchGvcnField.clear();
         }
@@ -170,7 +193,7 @@ public class LophocBrowse extends StandardLookup<Lophoc> {
     @Subscribe("searchGvcnField")
     protected void onSearchGvcnFieldValueChange(HasValue.ValueChangeEvent event) {
         if (searchGvcnField.getValue() != null) {
-            searchLopField.setOptionsList(searchedService.loadlop(searchDvField.getValue().getTendonvi(), searchGvcnField.getValue().getTengiaovien()));
+            searchLopField.setOptionsList(searchedService.loadlop(searchDvField.getValue(), searchGvcnField.getValue()));
         } else {
             searchLopField.clear();
         }
@@ -181,13 +204,10 @@ public class LophocBrowse extends StandardLookup<Lophoc> {
     protected void onExcelBtnClick(Button.ClickEvent event) {
         dialogs.createOptionDialog()
                 .withCaption("Xác nhận")
-                .withMessage("Bạn có muốn chỉ xuất các hàng đã chọn không?")
+                .withMessage("Bạn có muốn xuất các hàng không?")
                 .withActions(
-                        new DialogAction(DialogAction.Type.YES, Action.Status.PRIMARY).withCaption("Hàng đã chọn").withHandler(e -> {
-                            xuatExcel(lophocsDc.getItems());
-                        }),
                         new DialogAction(DialogAction.Type.YES, Action.Status.PRIMARY).withCaption("Tất cả các hàng").withHandler(e -> {
-                            xuatExcel(xuatFileExcelService.layDanhSachLophoc());
+                            xuatExcel(xuatFileExcelService.layDanhSachLophoc(searchDvField.getValue(), searchGvcnField.getValue(), searchLopField.getValue()));
                         }),
                         new DialogAction(DialogAction.Type.NO).withCaption("Hủy")
                 )
