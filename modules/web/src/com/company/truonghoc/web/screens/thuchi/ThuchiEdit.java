@@ -34,7 +34,7 @@ public class ThuchiEdit extends StandardEditor<Thuchi> {
     @Inject
     protected Button commitAndCloseBtn;
     @Inject
-    protected LookupField<Donvi> donvitao_thuchiField;
+    protected LookupField<Donvi> donViField;
     @Inject
     protected DulieuUserService dulieuUserService;
     @Inject
@@ -67,10 +67,10 @@ public class ThuchiEdit extends StandardEditor<Thuchi> {
     @Subscribe
     protected void onBeforeShow(BeforeShowEvent event) {
 //        quyền
-        donvitao_thuchiField.setOptionsList(searchedService.loaddonvi());
+        donViField.setOptionsList(searchedService.loaddonvi());
         if (!dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam()) {
-            donvitao_thuchiField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
-            donvitao_thuchiField.setEditable(false);
+            donViField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
+            donViField.setEditable(false);
         }
         tinhtrangchiField.setValue("Chưa thanh toán");
 

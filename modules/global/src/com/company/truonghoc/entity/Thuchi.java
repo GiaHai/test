@@ -11,9 +11,9 @@ import java.util.Date;
 public class Thuchi extends StandardEntity {
     private static final long serialVersionUID = 90251412791812808L;
 
-    @JoinColumn(name = "DONVITAO_THUCHI_ID")
+    @JoinColumn(name = "DONVI_ID")
     @ManyToOne(fetch = FetchType.LAZY)
-    private Donvi donvitao_thuchi;
+    private Donvi donvi;
 
     @Column(name = "KHOANCHI")
     @NotNull(message = "{msg://truonghoc_Thuchi.khoanchi.validation.NotNull}")
@@ -45,12 +45,12 @@ public class Thuchi extends StandardEntity {
     @Column(name = "TINHTRANGCHI")
     private String tinhtrangchi;
 
-    public void setDonvitao_thuchi(Donvi donvitao_thuchi) {
-        this.donvitao_thuchi = donvitao_thuchi;
+    public void setDonvi(Donvi donvi) {
+        this.donvi = donvi;
     }
 
-    public Donvi getDonvitao_thuchi() {
-        return donvitao_thuchi;
+    public Donvi getDonvi() {
+        return donvi;
     }
 
     public String getHinhthucthanhtoan() {

@@ -47,8 +47,8 @@
                     <row>
                         <form colspan="3" width="100%" childrenCaptionWidth="80px" dataContainer="thuchiDc">
                             <column>
-                                <lookupField id="donvitao_thuchiField"
-                                             property="donvitao_thuchi"
+                                <lookupField id="donViField"
+                                             property="donvi"
                                              width="100%"
                                              nullName="---Lọc tất cả---"
                                              required="true"

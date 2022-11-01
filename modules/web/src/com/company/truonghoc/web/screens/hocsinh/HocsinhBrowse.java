@@ -163,8 +163,8 @@ public class HocsinhBrowse extends StandardLookup<Hocsinh> {
 
         // Đơn vị
         if (donvi != null) {
-            where += "and e.donvitao_hocsinh.tendonvi = :donvi ";
-            params.put("donvi", donViField.getValue().getTendonvi());
+            where += "and e.donvi = :donvi ";
+            params.put("donvi", donvi);
         }
 
         //Học sinh
@@ -217,7 +217,7 @@ public class HocsinhBrowse extends StandardLookup<Hocsinh> {
         for (Hocsinh e : layDanhSachHocsinh) {
             KeyValueEntity row = metadata.create(KeyValueEntity.class);
             row.setValue("stt", count);
-            row.setValue("donvitao_hocsinh", e.getValue("donvitao_hocsinh"));
+            row.setValue("donvi", e.getValue("donvi"));
             row.setValue("tenhocsinh", e.getValue("tenhocsinh"));
             row.setValue("ngaysinhhocsinh", e.getNgaysinhhocsinh());
             row.setValue("gioitinhhocsinh", e.getValue("gioitinhhocsinh"));
@@ -237,9 +237,9 @@ public class HocsinhBrowse extends StandardLookup<Hocsinh> {
             properties.put(i, column.getIdString());
             i++;
         }
+        String title = "Danh sách học sinh";
+        ExtendExcelExporter exporter = new ExtendExcelExporter(title);
 
-        ExtendExcelExporter exporter = new ExtendExcelExporter("Danh sách học sinh");
-
-        exporter.exportDataCollectionTitleInFile(collection, columns, properties, exportDisplay, "Danh sách học sinh");
+        exporter.exportDataCollectionTitleInFile(collection, columns, properties, exportDisplay, title);
     }
 }

@@ -45,7 +45,7 @@ public class HocphiBrowse extends StandardLookup<Hocphi> {
     @Inject
     protected UserSession userSession;
     @Inject
-    protected LookupField<Donvi> dovitao_hocphiField;
+    protected LookupField<Donvi> donViField;
     @Inject
     protected CollectionLoader<Donvi> donvisDl;
     @Inject
@@ -123,7 +123,7 @@ public class HocphiBrowse extends StandardLookup<Hocphi> {
             tungayField.clear();
             trangthaiField.clear();
             hovstenField.clear();
-            dovitao_hocphiField.clear();
+            donViField.clear();
         }
         excuteSearch(true);
     }
@@ -133,21 +133,21 @@ public class HocphiBrowse extends StandardLookup<Hocphi> {
     private void dkphanquyen() {
         //điều kiện đơn vị trung tâm nếu
         if (!donViSession.getDonvitrungtam()) {
-            dovitao_hocphiField.setEditable(false);
-            dovitao_hocphiField.setValue(donViSession); //Chèn đơn vị từ user vào text
+            donViField.setEditable(false);
+            donViField.setValue(donViSession); //Chèn đơn vị từ user vào text
             if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null) {
-                dovitao_hocphiField.setEditable(false);
+                donViField.setEditable(false);
                 denngayField.clear();
                 tungayField.clear();
                 trangthaiField.clear();
                 hovstenField.clear();
-                dovitao_hocphiField.setValue(donViSession); //Chèn đơn vị từ user vào text
+                donViField.setValue(donViSession); //Chèn đơn vị từ user vào text
             }
 
         } else {
-            dovitao_hocphiField.setEditable(true);
+            donViField.setEditable(true);
             //lấy dữ liệu string cho lookup
-            dovitao_hocphiField.setOptionsList(searchedService.loaddonvi());
+            donViField.setOptionsList(searchedService.loaddonvi());
         }
     }
 
@@ -182,7 +182,7 @@ public class HocphiBrowse extends StandardLookup<Hocphi> {
     }
 
     private void excuteSearch(boolean isFromSearchBtn) {
-        Object donvi = dovitao_hocphiField.getValue();
+        Object donvi = donViField.getValue();
         String hocsinh = hovstenField.getValue();
         Object trangthai = trangthaiField.getValue();
         Date tungay = tungayField.getValue();
@@ -214,7 +214,7 @@ public class HocphiBrowse extends StandardLookup<Hocphi> {
 
         //Đơn vị
         if (donvi != null) {
-            where += "and e.dovitao_hocphi = :donvi ";
+            where += "and e.donvi = :donvi ";
             params.put("donvi", donvi);
         }
         //Từ ngày
@@ -240,7 +240,7 @@ public class HocphiBrowse extends StandardLookup<Hocphi> {
                 .withMessage("Bạn có muốn xuất các hàng không?")
                 .withActions(
                         new DialogAction(DialogAction.Type.YES, Action.Status.PRIMARY).withCaption("Tất cả các hàng").withHandler(e -> {
-                            xuatExcel(xuatFileExcelService.layDanhSachHocphi(dovitao_hocphiField.getValue(), hovstenField.getValue(), trangthaiField.getValue(), tungayField.getValue(), denngayField.getValue()));
+                            xuatExcel(xuatFileExcelService.layDanhSachHocphi(donViField.getValue(), hovstenField.getValue(), trangthaiField.getValue(), tungayField.getValue(), denngayField.getValue()));
                         }),
                         new DialogAction(DialogAction.Type.NO).withCaption("Hủy")
                 )
@@ -258,7 +258,7 @@ public class HocphiBrowse extends StandardLookup<Hocphi> {
         for (Hocphi e : layDanhSachHocphi) {
             KeyValueEntity row = metadata.create(KeyValueEntity.class);
             row.setValue("stt", count);
-            row.setValue("dovitao_hocphi", e.getValue("dovitao_hocphi"));
+            row.setValue("donvi", e.getValue("donvi"));
             row.setValue("hovaten", e.getValue("hovaten"));
             row.setValue("ghichu", e.getValue("ghichu"));
             row.setValue("sotientamtinh", e.getValue("sotientamtinh"));

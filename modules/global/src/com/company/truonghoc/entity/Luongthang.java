@@ -12,9 +12,9 @@ import java.util.Date;
 public class Luongthang extends StandardEntity {
     private static final long serialVersionUID = 4883554460814975042L;
 
-    @JoinColumn(name = "DONVITAO_LUONGTHANG_ID")
+    @JoinColumn(name = "DONVI_ID")
     @ManyToOne(fetch = FetchType.LAZY)
-    private Donvi donvitao_luongthang;
+    private Donvi donvi;
 
     @JoinColumn(name = "HOVATEN_ID")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -125,12 +125,12 @@ public class Luongthang extends StandardEntity {
         return cachunhat;
     }
 
-    public void setDonvitao_luongthang(Donvi donvitao_luongthang) {
-        this.donvitao_luongthang = donvitao_luongthang;
+    public void setDonvi(Donvi donvi) {
+        this.donvi = donvi;
     }
 
-    public Donvi getDonvitao_luongthang() {
-        return donvitao_luongthang;
+    public Donvi getDonvi() {
+        return donvi;
     }
 
     public String getHinhthucthanhtoan() {

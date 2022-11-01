@@ -35,7 +35,7 @@ public class HocsinhEdit extends StandardEditor<Hocsinh> {
     @Inject
     protected InstanceContainer<Hocsinh> hocsinhDc;
     @Inject
-    protected LookupField<Donvi> donvitao_hocsinhField;
+    protected LookupField<Donvi> donViField;
     @Inject
     protected TextField<String> tenhocsinhField;
 
@@ -52,8 +52,8 @@ public class HocsinhEdit extends StandardEditor<Hocsinh> {
     protected void onInit(InitEvent event) {
         List<String> list = Arrays.asList("Nam", "Nữ");
         gioitinhhocsinhField.setOptionsList(list);
-        donvitao_hocsinhField.setRequired(true);
-        donvitao_hocsinhField.setRequiredMessage("Nhập đơn vị");
+        donViField.setRequired(true);
+        donViField.setRequiredMessage("Nhập đơn vị");
         tenhocsinhField.setRequired(true);
         tenhocsinhField.setRequiredMessage("Nhập tên học sinh");
 
@@ -65,8 +65,8 @@ public class HocsinhEdit extends StandardEditor<Hocsinh> {
     @Subscribe
     protected void onBeforeShow(BeforeShowEvent event) {
         if (!dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam()) {
-            donvitao_hocsinhField.setEditable(false);
-            donvitao_hocsinhField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
+            donViField.setEditable(false);
+            donViField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
         }
     }
 

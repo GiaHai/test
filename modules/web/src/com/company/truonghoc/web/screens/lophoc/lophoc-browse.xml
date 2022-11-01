@@ -41,10 +41,10 @@
                 <button id="timkiemBtn"
                         invoke="timkiemExcute"
                         stylename="Btntimkiem"
-                        caption="Tìm kiếm" align="BOTTOM_LEFT"/>
+                        caption="Tìm kiếm" align="BOTTOM_LEFT" icon="PICKERFIELD_OPEN"/>
                 <button id="xoaBtn"
                         stylename="Btntimkiem"
-                        caption="Xoá" align="BOTTOM_LEFT"/>
+                        caption="Xoá" align="BOTTOM_LEFT" icon="PICKERFIELD_CLEAR"/>
             </hbox>
         </groupBox>
         <table id="lophocsTable"

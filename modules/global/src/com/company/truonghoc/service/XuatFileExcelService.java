@@ -9,7 +9,7 @@ import java.util.UUID;
 public interface XuatFileExcelService {
     String NAME = "truonghoc_XuatFileExcelService";
 
-    List<Giaovien> layDanhSachGiaovien(Donvi donVi);
+    List<Giaovien> layDanhSachGiaovien(Donvi donVi, String giaoVien);
 
     List<Hocsinh> layDanhSachHocsinh(Donvi donVi);
 

@@ -147,10 +147,14 @@ public class UserExtBrowse extends AbstractLookup {
         }
 
         donviField.setOptionsList(searchedService.loaddonvi());
-        if (!dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam()) {
-            donviField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
-            donviField.setEditable(false);
-            excuteSearch();
+        try {
+            if (!dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam()) {
+                donviField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
+                donviField.setEditable(false);
+                excuteSearch();
+            }
+        }catch (Exception e){
+
         }
     }
 

@@ -1,10 +1,9 @@
 package com.company.truonghoc.service;
 
-import com.company.truonghoc.entity.Donvi;
-import com.company.truonghoc.entity.Giaovien;
-import com.company.truonghoc.entity.Hocsinh;
-import com.company.truonghoc.entity.Tenlop;
+import com.company.truonghoc.entity.*;
+import com.haulmont.cuba.core.entity.KeyValueEntity;
 
+import java.util.Date;
 import java.util.List;
 
 public interface SearchedService {
@@ -20,5 +19,10 @@ public interface SearchedService {
 
     List<Hocsinh> loadHs(Object donvi);
 
-//    List<Hocsinh> loadHsDk(String tendonvi, String tengiaovien);
+
+    //    List<Hocsinh> loadHsDk(String tendonvi, String tengiaovien);
+    //    ---------------------- Tính ngày lương -----------------
+    List<Chamconggv> tinhca(Donvi donVi, Giaovien giaoVien, Date tuNgay, Date denNgay, String ngayLam);
+
+    List<KeyValueEntity> caChieudaythem(Donvi donVi, Giaovien giaoVien, Date tuNgay, Date denNgay, String ngayLam);
 }

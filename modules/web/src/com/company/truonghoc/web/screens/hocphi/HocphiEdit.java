@@ -27,7 +27,7 @@ public class HocphiEdit extends StandardEditor<Hocphi> {
     @Inject
     protected CollectionLoader<Hocsinh> hocsinhsDl;
     @Inject
-    protected LookupField<Donvi> dovitao_hocphiField;
+    protected LookupField<Donvi> donViField;
     @Inject
     protected CollectionContainer<Hocsinh> hocsinhsDc;
     @Inject
@@ -50,20 +50,25 @@ public class HocphiEdit extends StandardEditor<Hocphi> {
     protected DateField<Date> ngaydongField;
     @Inject
     protected SearchedService searchedService;
+    @Inject
+    protected TextField<Long> sotienthutheohdField;
 
     @Subscribe
     protected void onInit(InitEvent event) {
         List<String> list = Arrays.asList("Tiền mặt", "Chuyển khoản");
         hinhthucthanhtoanField.setOptionsList(list);
         tinhtrangthanhtoanFiedl.setVisible(false);
+
+        hovatenField.setRequired(true);
+        sotienthutheohdField.setRequired(true);
     }
 
     @Subscribe
     protected void onBeforeShow(BeforeShowEvent event) {
 //        quyền
         if (!dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam()) {
-            dovitao_hocphiField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
-            dovitao_hocphiField.setEditable(false);
+            donViField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
+            donViField.setEditable(false);
         }
         Calendar calendar = Calendar.getInstance();
 
@@ -74,7 +79,7 @@ public class HocphiEdit extends StandardEditor<Hocphi> {
         handongField.setValue(calendar.getTime());
 
         tinhtrangthanhtoanFiedl.setValue("Chưa thanh toán");
-        dovitao_hocphiField.setOptionsList(searchedService.loaddonvi());
+        donViField.setOptionsList(searchedService.loaddonvi());
     }
 
     @Subscribe("hinhthucthanhtoanField")
@@ -107,8 +112,8 @@ public class HocphiEdit extends StandardEditor<Hocphi> {
         hinhthucthanhtoanField.setVisible(false);
     }
 
-    @Subscribe("dovitao_hocphiField")
-    protected void onDovitao_hocphiFieldValueChange(HasValue.ValueChangeEvent<Donvi> event) {
-        hovatenField.setOptionsList(searchedService.loadHs(dovitao_hocphiField.getValue().getTendonvi()));
+    @Subscribe("donViField")
+    protected void onDonViFieldValueChange(HasValue.ValueChangeEvent<Donvi> event) {
+        hovatenField.setOptionsList(searchedService.loadHs(donViField.getValue().getTendonvi()));
     }
 }

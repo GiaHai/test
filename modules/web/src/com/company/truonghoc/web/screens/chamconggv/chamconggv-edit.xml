@@ -9,30 +9,12 @@
             <view extends="chamconggv-view"/>
             <loader/>
         </instance>
-        <collection id="giaoviensDc"
-                    class="com.company.truonghoc.entity.Giaovien"
-                    view="giaovien-view">
-            <loader id="giaoviensDl">
-                <query>
-                    <![CDATA[select e from truonghoc_Giaovien e]]>
-                </query>
-            </loader>
-        </collection>
-        <collection id="donvisDc"
-                    class="com.company.truonghoc.entity.Donvi"
-                    view="donvi-view">
-            <loader id="donvisDl">
-                <query>
-                    <![CDATA[select e from truonghoc_Donvi e]]>
-                </query>
-            </loader>
-        </collection>
     </data>
     <dialogMode height="600"
                 width="800"/>
     <layout expand="editActions" spacing="true">
         <vbox spacing="true">
-            <grid id="form" spacing="true" width="80%">
+            <grid id="form" spacing="true" width="100%">
                 <columns>
                     <column flex="1"/>
                     <column flex="1"/>

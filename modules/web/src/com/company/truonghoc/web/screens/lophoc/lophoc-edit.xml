@@ -9,40 +9,12 @@
             <view extends="lophoc-view"/>
             <loader/>
         </instance>
-        <collection id="tenlopsDc"
-                    class="com.company.truonghoc.entity.Tenlop">
-            <view extends="tenlop-view"/>
-            <loader id="tenlopsDl">
-                <query>
-                    <![CDATA[select e from truonghoc_Tenlop e]]>
-                </query>
-            </loader>
-        </collection>
         <collection id="hocsinhsDc"
                     class="com.company.truonghoc.entity.Hocsinh"
                     view="hocsinh-view">
             <loader id="hocsinhsDl">
                 <query>
                     <![CDATA[select e from truonghoc_Hocsinh e]]>
-                </query>
-            </loader>
-        </collection>
-        <collection id="donvisDc"
-                    class="com.company.truonghoc.entity.Donvi"
-                    view="donvi-view">
-            <loader id="donvisDl">
-                <query>
-                    <![CDATA[select e from truonghoc_Donvi e]]>
-                </query>
-            </loader>
-        </collection>
-
-        <collection id="giaoviensDc"
-                    class="com.company.truonghoc.entity.Giaovien"
-                    view="giaovien-view">
-            <loader id="giaoviensDl">
-                <query>
-                    <![CDATA[select e from truonghoc_Giaovien e]]>
                 </query>
             </loader>
         </collection>
@@ -53,11 +25,6 @@
         <vbox spacing="true" stylename="css-vbox">
             <grid id="form" spacing="true" width="100%">
                 <columns>
-                    <column flex="1"/>
-                    <column flex="1"/>
-                    <column flex="0.1"/>
-                    <column flex="1"/>
-                    <column flex="1"/>
                     <column flex="0.1"/>
                     <column flex="1"/>
                     <column flex="1"/>
@@ -72,7 +39,7 @@
                                 <label value=""/>
                             </column>
                         </form>
-                        <form colspan="3" width="100%" childrenCaptionWidth="80px">
+                        <form colspan="2" width="100%" childrenCaptionWidth="80px">
                             <column>
                                 <lookupField id="DvField"
                                              property="donvi"
@@ -82,7 +49,12 @@
                                              caption="Đơn vị"/>
                             </column>
                         </form>
-                        <form colspan="3" width="100%" childrenCaptionWidth="80px">
+                        <form colspan="1" width="100%">
+                            <column>
+                                <label value=""/>
+                            </column>
+                        </form>
+                        <form colspan="2" width="100%" childrenCaptionWidth="80px">
                             <column>
                                 <lookupField id="giaovienField"
                                              property="giaoviencn"
@@ -100,7 +72,7 @@
                                 <label value=""/>
                             </column>
                         </form>
-                        <form colspan="3" width="100%" childrenCaptionWidth="80px">
+                        <form colspan="2" width="100%" childrenCaptionWidth="80px">
                             <column>
                                 <lookupField id="tenlopField"
                                              property="tenlop"
@@ -110,8 +82,12 @@
                                              caption="mainMsg://lophoc.tenlop"/>
                             </column>
                         </form>
-
-                        <form colspan="3" width="100%" childrenCaptionWidth="80px">
+                        <form colspan="1" width="100%">
+                            <column>
+                                <label value=""/>
+                            </column>
+                        </form>
+                        <form colspan="2" width="100%" childrenCaptionWidth="80px">
                             <column>
                                 <textField id="thanghocField"
                                            width="100%"
@@ -126,7 +102,7 @@
                                 <label value=""/>
                             </column>
                         </form>
-                        <form colspan="6" width="100%"  childrenCaptionWidth="80px">
+                        <form colspan="5" width="100%"  childrenCaptionWidth="80px">
                             <column>
                                 <pickerField id="dsHocsinhField" width="100%"
                                              property="dshocsinh" dataContainer="lophocDc" caption="Danh sách học sinh">

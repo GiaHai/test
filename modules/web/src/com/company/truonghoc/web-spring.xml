@@ -12,7 +12,6 @@
         <property name="remoteServices">
             <map>
                 <entry key="truonghoc_DulieuUserService" value="com.company.truonghoc.service.DulieuUserService"/>
-                <entry key="truonghoc_ThuchiService" value="com.company.truonghoc.service.ThuchiService"/>
                 <entry key="truonghoc_SearchedService" value="com.company.truonghoc.service.SearchedService"/>
                 <entry key="truonghoc_ServerConfigService" value="com.company.truonghoc.service.ServerConfigService"/>
                 <entry key="truonghoc_XuatFileExcelService" value="com.company.truonghoc.service.XuatFileExcelService"/>

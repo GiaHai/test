@@ -159,7 +159,7 @@ public class DiemdanhBrowse extends StandardLookup<Diemdanh> {
         }
         //giáo viên
         if (giaovien != null) {
-            where += "and e.nguoitaodd = :giaovien ";
+            where += "and e.giaoviendd = :giaovien ";
             params.put("giaovien", giaovien);
         }
         //Ngày làm
@@ -241,7 +241,7 @@ public class DiemdanhBrowse extends StandardLookup<Diemdanh> {
             KeyValueEntity row = metadata.create(KeyValueEntity.class);
             row.setValue("stt", count);
             row.setValue("donvidd", e.getValue("donvidd"));
-            row.setValue("nguoitaodd", e.getValue("nguoitaodd"));
+            row.setValue("giaoviendd", e.getValue("giaoviendd"));
             row.setValue("hotenhs.dshocsinh.tenhocsinh", e.getValue("hotenhs"));
             row.setValue("lopdd", e.getValue("lopdd"));
             row.setValue("ngaynghi", e.getValue("ngaynghi"));

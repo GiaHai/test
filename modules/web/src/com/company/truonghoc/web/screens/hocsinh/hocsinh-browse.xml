@@ -32,10 +32,11 @@
             spacing="true"
             stylename="css-layout-hocsinh">
         <groupBox caption="Tìm kiếm"
-                  collapsed="true"
+                  collapsed="false"
+                  collapsable="true"
                   stylename="css-hbox-search"
                   spacing="true"
-                  width="100%" outerMargin="true">
+                  width="100%">
             <hbox width="100%" spacing="true">
                 <vbox spacing="true" width="100%">
                     <lookupField id="donViField"
@@ -53,16 +54,16 @@
                                caption="Học sinh"
                                width="100%"
                                inputPrompt="Tên học sinh"/>
+                    <hbox spacing="true" css="margin-top: 20px;">
+                        <button id="timkiemBtn"
+                                invoke="timkiemExcute"
+                                stylename="Btntimkiem"
+                                caption="Tìm kiếm" icon="PICKERFIELD_OPEN" shortcut="ENTER"/>
+                        <button id="xoaBtn"
+                                stylename="Btntimkiem"
+                                caption="Xoá" icon="PICKERFIELD_CLEAR"/>
+                    </hbox>
                 </vbox>
-                <hbox spacing="true" css="margin-top: 20px;">
-                    <button id="timkiemBtn"
-                            invoke="timkiemExcute"
-                            stylename="Btntimkiem"
-                            caption="Tìm kiếm" align="MIDDLE_LEFT"/>
-                    <button id="xoaBtn"
-                            stylename="Btntimkiem"
-                            caption="Xoá" align="MIDDLE_LEFT"/>
-                </hbox>
             </hbox>
         </groupBox>
         <table id="hocsinhsTable"
@@ -76,7 +77,7 @@
             </actions>
             <columns>
                 <column id="stt" generator="stt" caption="STT"/>
-                <column id="donvitao_hocsinh"
+                <column id="donvi"
                         caption="mainMsg://donvitao"/>
                 <column id="tenhocsinh"
                         caption="mainMsg://hocsinh.tenhocsinh"/>

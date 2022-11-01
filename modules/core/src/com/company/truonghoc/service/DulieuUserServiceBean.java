@@ -24,8 +24,10 @@ public class DulieuUserServiceBean implements DulieuUserService {
                 .parameter("login", login)
                 .list();
     }
-//    -----------------------------------------
+
+    //    -----------------------------------------
     Object abc;
+
     @Override
     public UserExt timEditdonvi(String login) {
         UserExt userExt = LoadtimEditdonvi(login);
@@ -37,17 +39,24 @@ public class DulieuUserServiceBean implements DulieuUserService {
     private UserExt LoadtimEditdonvi(String login) {
         return dataManager.load(UserExt.class)
                 .query("select e from truonghoc_UserExt e where e.login = :login")
-                .parameter("login",login )
+                .parameter("login", login)
                 .one();
     }
     //    -----------------------------------------
 
     @Override
     public UserExt timdovi(String login) {
-        return dataManager.load(UserExt.class)
-                .query("select e from truonghoc_UserExt e where e.login = :login")
-                .parameter("login",login )
-                .view("userExt-view")
-                .one();
+        UserExt test = null;
+        try {
+            test = dataManager.load(UserExt.class)
+                    .query("select e from truonghoc_UserExt e where e.login = :login")
+                    .parameter("login", login)
+                    .view("userExt-view")
+                    .one();
+        }catch (Exception e){
+
+        }
+        return test;
+
     }
 }

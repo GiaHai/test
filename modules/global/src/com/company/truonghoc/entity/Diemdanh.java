@@ -10,9 +10,9 @@ import java.util.Date;
 public class Diemdanh extends StandardEntity {
     private static final long serialVersionUID = 1305572135769904742L;
 
-    @JoinColumn(name = "NGUOITAODD_ID")
+    @JoinColumn(name = "GIAOVIENDD_ID")
     @ManyToOne(fetch = FetchType.LAZY)
-    private Giaovien nguoitaodd;
+    private Giaovien giaoviendd;
 
     @JoinColumn(name = "LOPDD_ID")
     @ManyToOne(fetch = FetchType.LAZY)
@@ -66,12 +66,12 @@ public class Diemdanh extends StandardEntity {
         return donvidd;
     }
 
-    public void setNguoitaodd(Giaovien nguoitaodd) {
-        this.nguoitaodd = nguoitaodd;
+    public void setGiaoviendd(Giaovien giaoviendd) {
+        this.giaoviendd = giaoviendd;
     }
 
-    public Giaovien getNguoitaodd() {
-        return nguoitaodd;
+    public Giaovien getGiaoviendd() {
+        return giaoviendd;
     }
 
     public void setNgaynghi(Date ngaynghi) {

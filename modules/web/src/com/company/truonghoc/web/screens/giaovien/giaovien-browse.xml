@@ -32,7 +32,6 @@
             stylename="css-layout-giaovien"
             spacing="true">
         <groupBox caption="Tìm kiếm"
-                  collapsable="true"
                   collapsed="true"
                   stylename="css-hbox-search"
                   spacing="true"
@@ -47,10 +46,13 @@
                 <button id="timKiemBtn"
                         caption="Tìm kiếm"
                         stylename="Btntimkiem"
-                        invoke="timkiem" align="BOTTOM_CENTER" shortcut="Enter"/>
+                        invoke="timkiem"
+                        icon="PICKERFIELD_OPEN"
+                        align="BOTTOM_CENTER" shortcut="Enter"/>
                 <button id="xoaBtn"
                         caption="Xoá"
                         stylename="Btntimkiem"
+                        icon="PICKERFIELD_CLEAR"
                         align="BOTTOM_CENTER"/>
             </hbox>
         </groupBox>
@@ -65,7 +67,7 @@
             </actions>
             <columns>
                 <column id="stt" generator="stt" caption="STT"/>
-                <column id="donvitao_giaovien"
+                <column id="donvi"
                         caption="mainMsg://donvitao"/>
                 <column id="tengiaovien"
                         caption="mainMsg://giaovien.tengiaovien"/>

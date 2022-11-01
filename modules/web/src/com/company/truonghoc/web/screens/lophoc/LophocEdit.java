@@ -27,17 +27,9 @@ import java.util.List;
 @LoadDataBeforeShow
 public class LophocEdit extends StandardEditor<Lophoc> {
     @Inject
-    protected CollectionContainer<Tenlop> tenlopsDc;
-    @Inject
-    protected CollectionLoader<Tenlop> tenlopsDl;
-    @Inject
-    protected DataManager dataManager;
-    @Inject
     protected CollectionLoader<Hocsinh> hocsinhsDl;
     @Inject
-    protected CollectionContainer<Donvi> donvisDc;
-    @Inject
-    protected CollectionLoader<Donvi> donvisDl;
+    protected DataManager dataManager;
     @Inject
     protected LookupField<Giaovien> giaovienField;
     @Inject

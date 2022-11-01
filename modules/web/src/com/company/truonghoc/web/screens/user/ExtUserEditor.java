@@ -51,10 +51,14 @@ public class ExtUserEditor extends UserEditor {
 
     @Subscribe
     protected void onBeforeShow(BeforeShowEvent event) {
-        if (!dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam()) {
-            loockuptendonvi.setEditable(false);
-            loockuptendonvi.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
+        try {
+            if (!dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam()) {
+                loockuptendonvi.setEditable(false);
+                loockuptendonvi.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
+            }
+        }catch (Exception e){
         }
+
     }
 
     @Subscribe("loockuptendonvi")
@@ -83,7 +87,7 @@ public class ExtUserEditor extends UserEditor {
 
     private List<Giaovien> tengiaovien(Object dvgiaovien) {
         return dataManager.load(Giaovien.class)
-                .query("select e from truonghoc_Giaovien e where e.donvitao_giaovien = :dvgiaovien")
+                .query("select e from truonghoc_Giaovien e where e.donvi = :dvgiaovien")
                 .parameter("dvgiaovien", dvgiaovien)
                 .list();
     }

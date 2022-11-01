@@ -39,28 +39,22 @@
                   width="100%">
             <hbox spacing="true" width="100%">
                 <vbox spacing="true">
-                    <lookupField id="donvitao_luongthangField"
+                    <lookupField id="donViField"
                                  caption="Đơn vị"
                                  width="100%"
                                  nullName="---Lọc tất cả---"/>
-                </vbox>
-                <vbox spacing="true">
-                    <lookupField id="giaovienField"
-                                 caption="Họ tên giáo viên"
-                                 width="100%"
-                                 nullName="---Lọc tất cả---"/>
-                    <lookupField id="trangthaiField"
-                                 caption="Trạng thái"
-                                 width="100%"
-                                 nullName="---Lọc tất cả---"/>
-                </vbox>
-                <vbox spacing="true">
                     <dateField id="tungayField"
                                datatype="date"
                                resolution="DAY"
                                width="100%"
                                caption="mainMsg://tungay"
                                stylename="nhap"/>
+                </vbox>
+                <vbox spacing="true">
+                    <lookupField id="giaovienField"
+                                 caption="Họ tên giáo viên"
+                                 width="100%"
+                                 nullName="---Lọc tất cả---"/>
                     <dateField id="denngayField"
                                datatype="date"
                                resolution="DAY"
@@ -68,14 +62,20 @@
                                caption="mainMsg://denngay"
                                stylename="nhap"/>
                 </vbox>
-                <vbox align="BOTTOM_CENTER" spacing="true" width="30%">
-                    <button id="timkiemBtn"
-                            invoke="timkiemExcute"
-                            stylename="Btntimkiem"
-                            caption="Tìm kiếm" align="TOP_CENTER"/>
-                    <button id="clearBtn"
-                            caption="Xoá"
-                            css="margin-top: 22%;display: grid;"/>
+                <vbox spacing="true">
+                    <lookupField id="trangthaiField"
+                                 caption="Trạng thái"
+                                 width="100%"
+                                 nullName="---Lọc tất cả---"/>
+                    <hbox spacing="true" css="margin-top: 20px;">
+                        <button id="timkiemBtn"
+                                invoke="timkiemExcute"
+                                stylename="Btntimkiem"
+                                caption="Tìm kiếm" icon="PICKERFIELD_OPEN" shortcut="ENTER"/>
+                        <button id="clearBtn"
+                                caption="Xoá"
+                                stylename="Btntimkiem" icon="PICKERFIELD_CLEAR"/>
+                    </hbox>
                 </vbox>
             </hbox>
         </groupBox>
@@ -93,7 +93,7 @@
                 <column id="stt"
                         generator="stt"
                         caption="STT"/>
-                <column id="donvitao_luongthang"
+                <column id="donvi"
                         caption="mainMsg://donvitao"/>
                 <column id="hovaten"
                         caption="mainMsg://luongthang.hovaten"/>

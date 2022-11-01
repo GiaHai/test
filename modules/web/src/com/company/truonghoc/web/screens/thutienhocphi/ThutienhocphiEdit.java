@@ -146,7 +146,7 @@ public class ThutienhocphiEdit extends StandardEditor<Thutienhocphi> {
                 hinhthucthanhtoanField.getValue() != null) {
             Thutienhocphi thutienhocphi = getEditedEntity();
             Map<String, Object> parameters = new HashMap<>();
-            parameters.put("donvithanhtoan", thutienhocphi.getDonvitao_thutienhocphi().getTendonvi());
+            parameters.put("donvithanhtoan", thutienhocphi.getDonvi().getTendonvi());
             parameters.put("tenkhachhang", thutienhocphi.getTenkhachhang());
             parameters.put("diachi", thutienhocphi.getDiachi());
             parameters.put("tenhocsinh", thutienhocphi.getTenhocsinh().getTenhocsinh());

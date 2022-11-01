@@ -141,7 +141,7 @@ public class GiaovienBrowse extends StandardLookup<Giaovien> {
         String where = " where 1=1 ";
 
         if (donvi != null) {
-            where += "and e.donvitao_giaovien = :donvi ";
+            where += "and e.donvi = :donvi ";
             params.put("donvi", donvi);
         }
         if (!StringUtils.isEmpty(giaovien)) {
@@ -163,7 +163,7 @@ public class GiaovienBrowse extends StandardLookup<Giaovien> {
                 .withMessage("Bạn có muốn chỉ xuất các hàng không?")
                 .withActions(
                         new DialogAction(DialogAction.Type.YES, Action.Status.PRIMARY).withCaption("Tất cả các hàng").withHandler(e -> {
-                            xuatExcel(xuatFileExcelService.layDanhSachGiaovien(donViField.getValue()));
+                            xuatExcel(xuatFileExcelService.layDanhSachGiaovien(donViField.getValue(), tenGvField.getValue()));
                         }),
                         new DialogAction(DialogAction.Type.NO).withCaption("Hủy")
                 )
@@ -180,11 +180,12 @@ public class GiaovienBrowse extends StandardLookup<Giaovien> {
         for (Giaovien e : layDanhSachGiaovien) {
             KeyValueEntity row = metadata.create(KeyValueEntity.class);
             row.setValue("stt", count);
-            row.setValue("donvitao_giaovien", e.getValue("donvitao_giaovien"));
+            row.setValue("donvi", e.getValue("donvi"));
             row.setValue("tengiaovien", e.getValue("tengiaovien"));
             row.setValue("ngaysinhgiaovien", e.getValue("ngaysinhgiaovien"));
             row.setValue("quequangiaovien", e.getValue("quequangiaovien"));
             row.setValue("gioitinhgiaovien", e.getValue("gioitinhgiaovien"));
+            row.setValue("luongcoban", e.getValue("luongcoban"));
             row.setValue("ghichu", e.getValue("ghichu"));
 
             collection.add(row);

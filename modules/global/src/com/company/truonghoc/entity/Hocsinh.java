@@ -15,9 +15,9 @@ import javax.persistence.*;
 public class Hocsinh extends StandardEntity {
     private static final long serialVersionUID = 6396620010673039383L;
 
-    @JoinColumn(name = "DONVITAO_HOCSINH_ID")
+    @JoinColumn(name = "DONVI_ID")
     @ManyToOne(fetch = FetchType.LAZY)
-    private Donvi donvitao_hocsinh;
+    private Donvi donvi;
 
     @Column(name = "TENHOCSINH")
     private String tenhocsinh;
@@ -79,12 +79,12 @@ public class Hocsinh extends StandardEntity {
         return ngaysinhhocsinh;
     }
 
-    public void setDonvitao_hocsinh(Donvi donvitao_hocsinh) {
-        this.donvitao_hocsinh = donvitao_hocsinh;
+    public void setDonvi(Donvi donvi) {
+        this.donvi = donvi;
     }
 
-    public Donvi getDonvitao_hocsinh() {
-        return donvitao_hocsinh;
+    public Donvi getDonvi() {
+        return donvi;
     }
 
     public String getGhichu() {

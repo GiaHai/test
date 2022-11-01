@@ -4,7 +4,6 @@ import com.company.truonghoc.entity.*;
 import com.company.truonghoc.service.DulieuUserService;
 import com.company.truonghoc.service.SearchedService;
 import com.haulmont.cuba.core.global.DataManager;
-import com.haulmont.cuba.gui.components.Button;
 import com.haulmont.cuba.gui.components.DateField;
 import com.haulmont.cuba.gui.components.HasValue;
 import com.haulmont.cuba.gui.components.LookupField;
@@ -12,7 +11,6 @@ import com.haulmont.cuba.gui.screen.*;
 import com.haulmont.cuba.security.global.UserSession;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -64,21 +62,6 @@ public class DiemdanhEdit extends StandardEditor<Diemdanh> {
         }
         ngaynghiField.setValue(new Date());
         donviField.setOptionsList(searchedService.loaddonvi());
-    }
-
-    @Subscribe
-    protected void onAfterShow(AfterShowEvent event) {
-//        if (!donViSession.getDonvitrungtam()) {
-//            donviField.setValue(donViSession);
-//            donviField.setEditable(false);
-//            if (giaoVienSession != null) {
-//                nguoitaoField.setValue(giaoVienSession);
-//                nguoitaoField.setEditable(false);
-//            }
-//        }
-//
-//        ngaynghiField.setValue(new Date());
-//        donviField.setOptionsList(searchedService.loaddonvi());
     }
 
     @Subscribe("donviField")

@@ -39,28 +39,22 @@
                   width="100%">
             <hbox spacing="true" width="100%">
                 <vbox spacing="true">
-                    <lookupField id="donvitao_thuchiField"
+                    <lookupField id="donViField"
                                  caption="Đơn vị"
                                  width="100%"
                                  nullName="---Lọc tất cả---"/>
-                </vbox>
-                <vbox spacing="true">
-                    <textField id="khoanchiField"
-                               caption="Khoản chi"
-                               width="100%"
-                               inputPrompt="Tên khoản chi"/>
-                    <lookupField id="trangthaiField"
-                                 caption="Trạng thái"
-                                 width="100%"
-                                 nullName="---Lọc tất cả---"/>
-                </vbox>
-                <vbox spacing="true">
                     <dateField id="tungayField"
                                datatype="date"
                                resolution="DAY"
                                width="100%"
                                caption="mainMsg://tungay"
                                stylename="nhap"/>
+                </vbox>
+                <vbox spacing="true">
+                    <textField id="khoanchiField"
+                               caption="Khoản chi"
+                               width="100%"
+                               inputPrompt="Tên khoản chi"/>
                     <dateField id="denngayField"
                                datatype="date"
                                resolution="DAY"
@@ -68,21 +62,28 @@
                                caption="mainMsg://denngay"
                                stylename="nhap"/>
                 </vbox>
-                <vbox align="BOTTOM_CENTER" spacing="true" width="30%">
-                    <button id="timkiemBtn"
-                            invoke="timkiemExcute"
-                            stylename="Btntimkiem"
-                            caption="Tìm kiếm" align="TOP_CENTER"/>
-                    <button id="clearBtn"
-                            caption="Xoá"
-                            css="margin-top: 22%;display: grid;"/>
+                <vbox spacing="true">
+                    <lookupField id="trangthaiField"
+                                 caption="Trạng thái"
+                                 width="100%"
+                                 nullName="---Lọc tất cả---"/>
+                    <hbox spacing="true" css="margin-top: 20px;">
+                        <button id="timkiemBtn"
+                                invoke="timkiemExcute"
+                                stylename="Btntimkiem"
+                                caption="Tìm kiếm" align="TOP_CENTER" icon="PICKERFIELD_OPEN" shortcut="ENTER"/>
+                        <button id="clearBtn"
+                                caption="Xoá"
+                                stylename="Btntimkiem"
+                                icon="PICKERFIELD_CLEAR"/>
+                    </hbox>
                 </vbox>
             </hbox>
         </groupBox>
         <table id="thuchisTable"
-                    width="100%"
-                    dataContainer="thuchisDc"
-                    aggregatable="true">
+               width="100%"
+               dataContainer="thuchisDc"
+               aggregatable="true">
             <actions>
                 <action id="create" type="create"/>
                 <action id="edit" type="edit"/>
@@ -93,10 +94,12 @@
                 <column id="stt"
                         generator="stt"
                         caption="msg://Thuchi.stt"/>
-                <column id="donvitao_thuchi"
+                <column id="donvi"
                         caption="mainMsg://donvitao"/>
                 <column id="ngaychi"
                         caption="Ngày chi"/>
+                <column id="hanchi"
+                        caption="Hạn chi"/>
                 <column id="khoanchi"
                         caption="msg://Thuchi.khoanchi"/>
                 <column id="soluong"

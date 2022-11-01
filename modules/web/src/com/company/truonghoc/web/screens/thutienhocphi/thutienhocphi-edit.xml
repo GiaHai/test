@@ -49,7 +49,7 @@
                         <form colspan="7" width="100%" childrenCaptionWidth="80px" dataContainer="thutienhocphiDc">
                             <column>
                                 <lookupField id="dovitao_thutienhocphiField"
-                                             property="donvitao_thutienhocphi"
+                                             property="donvi"
                                              width="100%"
                                              nullName="---Lọc tất cả---"
                                              required="true"

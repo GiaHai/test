@@ -3,7 +3,6 @@ package com.company.truonghoc.entity;
 import com.haulmont.cuba.core.entity.StandardEntity;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Table(name = "TRUONGHOC_HOCPHI")
@@ -11,13 +10,12 @@ import java.util.Date;
 public class Hocphi extends StandardEntity {
     private static final long serialVersionUID = 6350442847448829593L;
 
-    @JoinColumn(name = "DOVITAO_HOCPHI_ID")
+    @JoinColumn(name = "DONVI_ID")
     @ManyToOne(fetch = FetchType.LAZY)
-    private Donvi dovitao_hocphi;
+    private Donvi donvi;
 
     @JoinColumn(name = "HOVATEN_ID")
     @ManyToOne(fetch = FetchType.LAZY)
-    @NotNull(message = "{msg://truonghoc_Hocphi.hovaten.validation.NotNull}")
     private Hocsinh hovaten;
 
     @Column(name = "GHICHU")
@@ -43,12 +41,12 @@ public class Hocphi extends StandardEntity {
     @Column(name = "TINHTRANGTHANHTOAN")
     private String tinhtrangthanhtoan;
 
-    public void setDovitao_hocphi(Donvi dovitao_hocphi) {
-        this.dovitao_hocphi = dovitao_hocphi;
+    public void setDonvi(Donvi donvi) {
+        this.donvi = donvi;
     }
 
-    public Donvi getDovitao_hocphi() {
-        return dovitao_hocphi;
+    public Donvi getDonvi() {
+        return donvi;
     }
 
     public String getTinhtrangthanhtoan() {

@@ -15,13 +15,17 @@ public class XuatFileExcelServiceBean implements XuatFileExcelService {
     protected DataManager dataManager;
 
     @Override
-    public List<Giaovien> layDanhSachGiaovien(Donvi donVi) {
+    public List<Giaovien> layDanhSachGiaovien(Donvi donVi, String giaoVien) {
         String query = "select e from truonghoc_Giaovien e ";
         String where = "where 1=1 ";
         Map<String, Object> params = new HashMap<>();
         if (donVi != null) {
-            where += " and e.donvitao_giaovien.id = :donVi";
-            params.put("donVi", donVi.getId());
+            where += "and e.donvi = :donvi ";
+            params.put("donvi", donVi);
+        }
+        if (!StringUtils.isEmpty(giaoVien)) {
+            where += "and e.tengiaovien like :tengv ";
+            params.put("tengv", "%" + giaoVien + "%");
         }
         List<Giaovien> giaoviens = dataManager.load(Giaovien.class).view("giaovien-view")
                 .query(query + where)
@@ -36,7 +40,7 @@ public class XuatFileExcelServiceBean implements XuatFileExcelService {
         String where = "where 1=1 ";
         Map<String, Object> params = new HashMap<>();
         if (donVi != null) {
-            where += " and e.donvitao_hocsinh.id = :donVi";
+            where += " and e.donvi.id = :donVi";
             params.put("donVi", donVi.getId());
         }
         List<Hocsinh> hocsinhs = dataManager.load(Hocsinh.class).view("hocsinh-view")
@@ -115,7 +119,7 @@ public class XuatFileExcelServiceBean implements XuatFileExcelService {
 
         //Đơn vị
         if (donVi != null) {
-            where += "and e.dovitao_hocphi = :donvi ";
+            where += "and e.donvi = :donvi ";
             params.put("donvi", donVi);
         }
         //Từ ngày
@@ -143,7 +147,7 @@ public class XuatFileExcelServiceBean implements XuatFileExcelService {
 
         //Đơn vị
         if (donVi != null) {
-            where += "and e.donvitao_luongthang = :donvi ";
+            where += "and e.donvi = :donvi ";
             params.put("donvi", donVi);
         }
         //Giáo viên
@@ -181,7 +185,7 @@ public class XuatFileExcelServiceBean implements XuatFileExcelService {
         Map<String, Object> params = new HashMap<>();
         //Đơn vị
         if (donVi != null) {
-            where += "and e.donvitao_thuchi = :donvi ";
+            where += "and e.donvi = :donvi ";
             params.put("donvi", donVi);
         }
         //khoản chi
@@ -220,7 +224,7 @@ public class XuatFileExcelServiceBean implements XuatFileExcelService {
 
         //Đơn vị
         if (donVi != null) {
-            where += "and e.donvitao_thutienhocphi = :donvi ";
+            where += "and e.donvi = :donvi ";
             params.put("donvi", donVi);
         }
 
@@ -266,7 +270,7 @@ public class XuatFileExcelServiceBean implements XuatFileExcelService {
             params.put("donVi", donVi);
         }
         if (giaoVien != null) {
-            where += " and e.nguoitaodd = :giaoviencn";
+            where += " and e.giaoviendd = :giaoviencn";
             params.put("giaoviencn", giaoVien);
         }
         if (lopHoc != null) {

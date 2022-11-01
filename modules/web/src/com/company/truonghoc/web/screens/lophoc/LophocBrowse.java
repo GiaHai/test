@@ -147,20 +147,20 @@ public class LophocBrowse extends StandardLookup<Lophoc> {
         }
         // Tên lớp
         if (tenlop != null) {
-            where += "and e.tenlop.tenlop = :tenlop ";
-            params.put("tenlop", searchLopField.getValue().getTenlop());
+            where += "and e.tenlop = :tenlop ";
+            params.put("tenlop", tenlop);
         }
         // Tên giáo viên
         //load nếu lớp học bằng true thì giáo viên mới xem được
         if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null) {
             if (tengv != null) {
-                where += "and e.giaoviencn.tengiaovien like :tengv and e.tenlop.tinhtranglop = true ";
-                params.put("tengv", searchGvcnField.getValue().getTengiaovien());
+                where += "and e.giaoviencn = :tengv and e.tenlop.tinhtranglop = true ";
+                params.put("tengv", tengv);
             }
         } else {
             if (tengv != null) {
-                where += "and e.giaoviencn.tengiaovien like :tengv ";
-                params.put("tengv", searchGvcnField.getValue().getTengiaovien());
+                where += "and e.giaoviencn = :tengv ";
+                params.put("tengv", tengv);
             }
         }
         query = query + where;

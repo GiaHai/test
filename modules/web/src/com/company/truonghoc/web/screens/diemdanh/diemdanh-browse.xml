@@ -62,9 +62,10 @@
                     <button id="timkiemBtn"
                             invoke="timkiemExcute"
                             stylename="Btntimkiem"
-                            caption="Tìm kiếm" align="TOP_CENTER" css="display: grid;"/>
+                            caption="Tìm kiếm" align="TOP_CENTER" css="display: grid;"
+                            icon="PICKERFIELD_OPEN" shortcut="ENTER"/>
                     <button id="clearBtn"
-                            caption="Xoá"
+                            caption="Xoá" icon="PICKERFIELD_CLEAR"
                             stylename="Btntimkiem"
                             css="margin-top: 22%;display: grid;"/>
                 </vbox>
@@ -82,7 +83,7 @@
             <columns>
                 <column id="stt" generator="stt" caption="STT"/>
                 <column id="donvidd" caption="Đơn vị"/>
-                <column id="nguoitaodd" caption="Giáo viên"/>
+                <column id="giaoviendd" caption="Giáo viên"/>
                 <column id="hotenhs.dshocsinh.tenhocsinh"
                         caption="mainMsg://diemdanh.hoten"/>
                 <column id="lopdd"

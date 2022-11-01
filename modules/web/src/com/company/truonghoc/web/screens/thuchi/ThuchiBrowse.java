@@ -70,7 +70,7 @@ public class ThuchiBrowse extends StandardLookup<Thuchi> {
     @Inject
     protected UserSession userSession;
     @Inject
-    protected LookupField<Donvi> donvitao_thuchiField;
+    protected LookupField<Donvi> donViField;
     @Inject
     protected CollectionLoader<Donvi> donvisDl;
     @Inject
@@ -119,7 +119,7 @@ public class ThuchiBrowse extends StandardLookup<Thuchi> {
             denngayField.clear();
         } else {
             //xoá
-            donvitao_thuchiField.clear();
+            donViField.clear();
             khoanchiField.clear();
             trangthaiField.clear();
             tungayField.clear();
@@ -132,21 +132,20 @@ public class ThuchiBrowse extends StandardLookup<Thuchi> {
     private void dkphanquyen() {
         //điều kiện đơn vị trung tâm nếu
         if (!donViSession.getDonvitrungtam()) {
-            donvitao_thuchiField.setEditable(false);
-            donvitao_thuchiField.setValue(donViSession); //Chèn đơn vị từ user vào text
+            donViField.setEditable(false);
+            donViField.setValue(donViSession); //Chèn đơn vị từ user vào text
             if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null) {
-                donvitao_thuchiField.setEditable(false);
+                donViField.setEditable(false);
                 khoanchiField.clear();
                 trangthaiField.clear();
                 tungayField.clear();
                 denngayField.clear();
-                donvitao_thuchiField.setValue(donViSession); //Chèn đơn vị từ user vào text
+                donViField.setValue(donViSession); //Chèn đơn vị từ user vào text
             }
         } else {
-            donvitao_thuchiField.setEditable(true);
+            donViField.setEditable(true);
             //lấy dữ liệu string cho lookup
-            donvitao_thuchiField.setOptionsList(searchedService.loaddonvi());
-            ;
+            donViField.setOptionsList(searchedService.loaddonvi());
         }
     }
 
@@ -179,7 +178,7 @@ public class ThuchiBrowse extends StandardLookup<Thuchi> {
     }
 
     private void excuteSearch(boolean isFromSearchBtn) {
-        Object donvi = donvitao_thuchiField.getValue();
+        Object donvi = donViField.getValue();
         String khoanchi = khoanchiField.getValue();
         Object trangthai = trangthaiField.getValue();
         Date tungay = tungayField.getValue();
@@ -198,7 +197,7 @@ public class ThuchiBrowse extends StandardLookup<Thuchi> {
 
         //Đơn vị
         if (donvi != null) {
-            where += "and e.donvitao_thuchi = :donvi ";
+            where += "and e.donvi = :donvi ";
             params.put("donvi", donvi);
         }
         //khoản chi
@@ -235,7 +234,7 @@ public class ThuchiBrowse extends StandardLookup<Thuchi> {
                 .withMessage("Bạn có muốn xuất các hàng không?")
                 .withActions(
                         new DialogAction(DialogAction.Type.YES, Action.Status.PRIMARY).withCaption("Tất cả các hàng").withHandler(e -> {
-                            xuatExcel(xuatFileExcelService.layDanhSachThuchi(donvitao_thuchiField.getValue(), khoanchiField.getValue(), trangthaiField.getValue(), tungayField.getValue(), denngayField.getValue()));
+                            xuatExcel(xuatFileExcelService.layDanhSachThuchi(donViField.getValue(), khoanchiField.getValue(), trangthaiField.getValue(), tungayField.getValue(), denngayField.getValue()));
                         }),
                         new DialogAction(DialogAction.Type.NO).withCaption("Hủy")
                 )
@@ -253,7 +252,7 @@ public class ThuchiBrowse extends StandardLookup<Thuchi> {
         for (Thuchi e : layDanhSachThuchi) {
             KeyValueEntity row = metadata.create(KeyValueEntity.class);
             row.setValue("stt", count);
-            row.setValue("donvitao_thuchi", e.getValue("donvitao_thuchi"));
+            row.setValue("donvi", e.getValue("donvi"));
             row.setValue("ngaychi", e.getValue("ngaychi"));
             row.setValue("khoanchi", e.getValue("khoanchi"));
             row.setValue("soluong", e.getValue("soluong"));

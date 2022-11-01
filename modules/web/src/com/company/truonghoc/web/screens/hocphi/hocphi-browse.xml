@@ -39,47 +39,49 @@
                   width="100%">
             <hbox spacing="true" width="100%">
                 <vbox spacing="true">
-                    <lookupField id="dovitao_hocphiField"
+                    <lookupField id="donViField"
                                  caption="Đơn vị"
                                  width="100%"
                                  nullName="---Lọc tất cả---"/>
+                    <dateField id="tungayField"
+                               datatype="date"
+                               resolution="DAY"
+                               width="100%"
+                               caption="mainMsg://tungay"/>
                 </vbox>
                 <vbox spacing="true">
                     <textField id="hovstenField"
                                caption="Họ và tên"
                                width="100%"
                                inputPrompt="Họ và tên học sinh"/>
-                    <lookupField id="trangthaiField"
-                                 width="100%"
-                                 caption="Trạng thái"
-                                 nullName="---Lọc tất cả---"/>
-                </vbox>
-                <vbox spacing="true">
-                    <dateField id="tungayField"
-                               datatype="date"
-                               resolution="DAY"
-                               width="100%"
-                               caption="mainMsg://tungay"/>
                     <dateField id="denngayField"
                                datatype="date"
                                resolution="DAY"
                                width="100%"
                                caption="mainMsg://denngay"/>
+
                 </vbox>
-                <vbox align="BOTTOM_CENTER" spacing="true" width="30%">
-                    <button id="timkiemBtn"
-                            invoke="timkiemExcute"
-                            stylename="Btntimkiem"
-                            caption="Tìm kiếm" align="TOP_CENTER"/>
-                    <button id="xoaBtn"
-                            caption="Xoá"
-                            css="margin-top: 22%;display: grid;"/>
+                <vbox spacing="true">
+                    <lookupField id="trangthaiField"
+                                 width="100%"
+                                 caption="Trạng thái"
+                                 nullName="---Lọc tất cả---"/>
+                    <hbox spacing="true" css="margin-top: 20px;">
+                        <button id="timkiemBtn"
+                                invoke="timkiemExcute"
+                                stylename="Btntimkiem"
+                                caption="Tìm kiếm" align="BOTTOM_CENTER" icon="PICKERFIELD_OPEN"/>
+                        <button id="xoaBtn"
+                                caption="Xoá"
+                                stylename="Btntimkiem" icon="PICKERFIELD_CLEAR"/>
+                    </hbox>
                 </vbox>
+
             </hbox>
         </groupBox>
         <table id="hocphisTable"
-                    width="100%"
-                    dataContainer="hocphisDc">
+               width="100%"
+               dataContainer="hocphisDc">
             <actions>
                 <action id="create" type="create"/>
                 <action id="edit" type="edit"/>
@@ -90,7 +92,7 @@
                 <column id="stt"
                         generator="stt"
                         caption="STT"/>
-                <column id="dovitao_hocphi"
+                <column id="donvi"
                         caption="mainMsg://donvitao"/>
                 <column id="hovaten"
                         caption="mainMsg://hocphi.hovaten"/>
@@ -113,7 +115,7 @@
             <rowsCount/>
             <buttonsPanel id="buttonsPanel"
                           alwaysVisible="true">
-<!--                <button id="createBtn" action="hocphisTable.create"/>-->
+                <!--                <button id="createBtn" action="hocphisTable.create"/>-->
                 <button id="createBtn" action="hocphisTable.create"/>
                 <button id="editBtn" action="hocphisTable.edit"/>
                 <button id="removeBtn" action="hocphisTable.remove"/>

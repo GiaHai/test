@@ -55,7 +55,7 @@ public class LuongthangEdit extends StandardEditor<Luongthang> {
     @Inject
     protected Notifications notifications;
     @Inject
-    protected LookupField<Donvi> donvitao_luongthangField;
+    protected LookupField<Donvi> donViField;
     @Inject
     protected DulieuUserService dulieuUserService;
     @Inject
@@ -93,6 +93,10 @@ public class LuongthangEdit extends StandardEditor<Luongthang> {
     protected LookupField<String> hinhthucthanhtoanField;
     @Inject
     protected LookupField<Integer> tienBhField;
+    Integer caNgay;
+    Integer caSang;
+    Integer caChieu;
+    Integer caChuNhat;
 
     @Subscribe
     protected void onInit(InitEvent event) {
@@ -118,7 +122,7 @@ public class LuongthangEdit extends StandardEditor<Luongthang> {
     protected void onBeforeShow(BeforeShowEvent event) {
         if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi() != null) {
 
-            donvitao_luongthangField.setOptionsList(searchedService.loaddonvi());
+            donViField.setOptionsList(searchedService.loaddonvi());
             trachnhiemField.setValue(a);
             daythemField.setValue(a);
             trocapField.setValue(a);
@@ -126,10 +130,11 @@ public class LuongthangEdit extends StandardEditor<Luongthang> {
             thuongField.setValue(a);
             thuclinhField.setValue(a);
             if (!dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam()) {
-                donvitao_luongthangField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
-                donvitao_luongthangField.setEditable(false);
+                donViField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
+                donViField.setEditable(false);
             }
         }
+        tinhNgayCong();
     }
 
     @Subscribe
@@ -248,10 +253,10 @@ public class LuongthangEdit extends StandardEditor<Luongthang> {
         tinhtonglinh();
     }
 
-    @Subscribe("donvitao_luongthangField")
-    protected void onDonvitao_luongthangFieldValueChange(HasValue.ValueChangeEvent<Donvi> event) {
-        if (donvitao_luongthangField.getValue() != null) {
-            hovatenField.setOptionsList(searchedService.loadgiaovien(donvitao_luongthangField.getValue()));
+    @Subscribe("donViField")
+    protected void onDonViFieldValueChange(HasValue.ValueChangeEvent<Donvi> event) {
+        if (donViField.getValue() != null) {
+            hovatenField.setOptionsList(searchedService.loadgiaovien(donViField.getValue()));
         } else {
             hovatenField.clear();
             luongcobanField.clear();
@@ -294,16 +299,27 @@ public class LuongthangEdit extends StandardEditor<Luongthang> {
 
     @Subscribe("searchBLamBtn")
     protected void onSearchBLamBtnClick(Button.ClickEvent event) {
-        buoilamField.setValue(BigDecimal.valueOf(cangay().size() + casang().size() * 0.5 + cachieu().size() * 0.5));
-        casangField.setValue(casang().size());
-        cachunhatField.setValue(cachunhat().size() * 100000);
+        tinhNgayCong();
+    }
 
+    private void tinhNgayCong(){
+        caNgay = searchedService.tinhca(donViField.getValue(), hovatenField.getValue(), tungayField.getValue(), denngayField.getValue(), "Làm cả ngày").size();
+        caSang = searchedService.tinhca(donViField.getValue(), hovatenField.getValue(), tungayField.getValue(), denngayField.getValue(), "Ca sáng").size();
+        caChieu = searchedService.tinhca(donViField.getValue(), hovatenField.getValue(), tungayField.getValue(), denngayField.getValue(), "Ca chiều").size();
+        caChuNhat = searchedService.tinhca(donViField.getValue(), hovatenField.getValue(), tungayField.getValue(), denngayField.getValue(), "Ca chủ nhật").size();
+
+        buoilamField.setValue(BigDecimal.valueOf(caNgay + caSang * 0.5 + caChieu * 0.5));
+        casangField.setValue(caSang);
+        cachunhatField.setValue(caChuNhat * 100000);
+
+        List<KeyValueEntity> caChieuDaythem1 = searchedService.caChieudaythem(donViField.getValue(), hovatenField.getValue(), tungayField.getValue(), denngayField.getValue(), "Ca chiều 5h-6h");
+        List<KeyValueEntity> caChieuDaythem2 = searchedService.caChieudaythem(donViField.getValue(), hovatenField.getValue(), tungayField.getValue(), denngayField.getValue(), "Ca chiều 6h-7h");
         Object cachieu2 = 0;
         Object cachieu1 = 0;
-        for (KeyValueEntity item : cachieu2()) {
+        for (KeyValueEntity item : caChieuDaythem2) {
             cachieu2 = item.getValue("tienBuoi");
         }
-        for (KeyValueEntity item : cachieu1()) {
+        for (KeyValueEntity item : caChieuDaythem1) {
             cachieu1 = item.getValue("tienBuoi");
         }
         if (cachieu1 == null) {
@@ -315,86 +331,85 @@ public class LuongthangEdit extends StandardEditor<Luongthang> {
         cangoaiField.setValue(cachieu1.hashCode() + cachieu2.hashCode());
         tinhthuclinh();
 
-        soCaCnFiled.setValue(cachunhat().size());
+        soCaCnFiled.setValue(caChuNhat);
     }
 
+//    private List<Chamconggv> cangay() {
+//
+//        return dataManager.load(Chamconggv.class)
+//                .query("select e from truonghoc_Chamconggv e where" +
+//                        " e.donvigv = :donvi and e.hotengv = :giaovien and e.buoilam = 'Làm cả ngày'" +
+//                        " and e.ngaylam >= :tungay and :denngay >= e.ngaylam")
+//                .parameter("donvi", donViField.getValue())
+//                .parameter("giaovien", hovatenField.getValue())
+//                .parameter("tungay", tungayField.getValue())
+//                .parameter("denngay", denngayField.getValue())
+//                .list();
+//    }
+//
+//    private List<Chamconggv> casang() {
+//
+//        return dataManager.load(Chamconggv.class)
+//                .query("select e from truonghoc_Chamconggv e where" +
+//                        " e.donvigv = :donvi and e.hotengv = :giaovien and e.buoilam = 'Ca sáng'" +
+//                        " and e.ngaylam >= :tungay and :denngay >= e.ngaylam")
+//                .parameter("donvi", donViField.getValue())
+//                .parameter("giaovien", hovatenField.getValue())
+//                .parameter("tungay", tungayField.getValue())
+//                .parameter("denngay", denngayField.getValue())
+//                .list();
+//    }
+//
+//    private List<Chamconggv> cachieu() {
+//        return dataManager.load(Chamconggv.class)
+//                .query("select e from truonghoc_Chamconggv e where" +
+//                        " e.donvigv = :donvi and e.hotengv = :giaovien and e.buoilam = 'Ca chiều'" +
+//                        " and e.ngaylam >= :tungay and :denngay >= e.ngaylam")
+//                .parameter("donvi", donViField.getValue())
+//                .parameter("giaovien", hovatenField.getValue())
+//                .parameter("tungay", tungayField.getValue())
+//                .parameter("denngay", denngayField.getValue())
+//                .list();
+//    }
+//
+//    private List<Chamconggv> cachunhat() {
+//        return dataManager.load(Chamconggv.class)
+//                .query("select e from truonghoc_Chamconggv e where" +
+//                        " e.donvigv = :donvi and e.hotengv = :giaovien and e.buoilam = 'Ca chủ nhật'" +
+//                        " and e.ngaylam >= :tungay and :denngay >= e.ngaylam")
+//                .parameter("donvi", donViField.getValue())
+//                .parameter("giaovien", hovatenField.getValue())
+//                .parameter("tungay", tungayField.getValue())
+//                .parameter("denngay", denngayField.getValue())
+//                .list();
+//    }
 
-    private List<Chamconggv> cangay() {
-
-        return dataManager.load(Chamconggv.class)
-                .query("select e from truonghoc_Chamconggv e where" +
-                        " e.donvigv = :donvi and e.hotengv = :giaovien and e.buoilam = 'Làm cả ngày'" +
-                        " and e.ngaylam >= :tungay and :denngay >= e.ngaylam")
-                .parameter("donvi", donvitao_luongthangField.getValue())
-                .parameter("giaovien", hovatenField.getValue())
-                .parameter("tungay", tungayField.getValue())
-                .parameter("denngay", denngayField.getValue())
-                .list();
-    }
-
-    private List<Chamconggv> casang() {
-
-        return dataManager.load(Chamconggv.class)
-                .query("select e from truonghoc_Chamconggv e where" +
-                        " e.donvigv = :donvi and e.hotengv = :giaovien and e.buoilam = 'Ca sáng'" +
-                        " and e.ngaylam >= :tungay and :denngay >= e.ngaylam")
-                .parameter("donvi", donvitao_luongthangField.getValue())
-                .parameter("giaovien", hovatenField.getValue())
-                .parameter("tungay", tungayField.getValue())
-                .parameter("denngay", denngayField.getValue())
-                .list();
-    }
-
-    private List<Chamconggv> cachieu() {
-        return dataManager.load(Chamconggv.class)
-                .query("select e from truonghoc_Chamconggv e where" +
-                        " e.donvigv = :donvi and e.hotengv = :giaovien and e.buoilam = 'Ca chiều'" +
-                        " and e.ngaylam >= :tungay and :denngay >= e.ngaylam")
-                .parameter("donvi", donvitao_luongthangField.getValue())
-                .parameter("giaovien", hovatenField.getValue())
-                .parameter("tungay", tungayField.getValue())
-                .parameter("denngay", denngayField.getValue())
-                .list();
-    }
-
-    private List<Chamconggv> cachunhat() {
-        return dataManager.load(Chamconggv.class)
-                .query("select e from truonghoc_Chamconggv e where" +
-                        " e.donvigv = :donvi and e.hotengv = :giaovien and e.buoilam = 'Ca chủ nhật'" +
-                        " and e.ngaylam >= :tungay and :denngay >= e.ngaylam")
-                .parameter("donvi", donvitao_luongthangField.getValue())
-                .parameter("giaovien", hovatenField.getValue())
-                .parameter("tungay", tungayField.getValue())
-                .parameter("denngay", denngayField.getValue())
-                .list();
-    }
-
-    private List<KeyValueEntity> cachieu1() {
-        String queryStr = "select sum(e.tienBuoi) tienBuoi from truonghoc_Chamconggv e where" +
-                " e.donvigv = :donvi and e.hotengv = :giaovien and e.buoilam = 'Ca chiều 5h-6h'" +
-                " and e.ngaylam >= :tungay and :denngay >= e.ngaylam";
-
-        return dataManager.loadValues(queryStr)
-                .properties("tienBuoi")
-                .parameter("donvi", donvitao_luongthangField.getValue())
-                .parameter("giaovien", hovatenField.getValue())
-                .parameter("tungay", tungayField.getValue())
-                .parameter("denngay", denngayField.getValue())
-                .list();
-    }
-
-    private List<KeyValueEntity> cachieu2() {
-        String queryStr = "select sum(e.tienBuoi) tienBuoi from truonghoc_Chamconggv e where" +
-                " e.donvigv = :donvi and e.hotengv = :giaovien and e.buoilam = 'Ca chiều 6h-7h'" +
-                " and e.ngaylam >= :tungay and :denngay >= e.ngaylam";
-
-        return dataManager.loadValues(queryStr)
-                .properties("tienBuoi")
-                .parameter("donvi", donvitao_luongthangField.getValue())
-                .parameter("giaovien", hovatenField.getValue())
-                .parameter("tungay", tungayField.getValue())
-                .parameter("denngay", denngayField.getValue())
-                .list();
-    }
+//    private List<KeyValueEntity> cachieu1() {
+//        String queryStr = "select sum(e.tienBuoi) tienBuoi from truonghoc_Chamconggv e where" +
+//                " e.donvigv = :donvi and e.hotengv = :giaovien and e.buoilam = 'Ca chiều 5h-6h'" +
+//                " and e.ngaylam >= :tungay and :denngay >= e.ngaylam";
+//
+//        return dataManager.loadValues(queryStr)
+//                .properties("tienBuoi")
+//                .parameter("donvi", donViField.getValue())
+//                .parameter("giaovien", hovatenField.getValue())
+//                .parameter("tungay", tungayField.getValue())
+//                .parameter("denngay", denngayField.getValue())
+//                .list();
+//    }
+//
+//    private List<KeyValueEntity> cachieu2() {
+//        String queryStr = "select sum(e.tienBuoi) tienBuoi from truonghoc_Chamconggv e where" +
+//                " e.donvigv = :donvi and e.hotengv = :giaovien and e.buoilam = 'Ca chiều 6h-7h'" +
+//                " and e.ngaylam >= :tungay and :denngay >= e.ngaylam";
+//
+//        return dataManager.loadValues(queryStr)
+//                .properties("tienBuoi")
+//                .parameter("donvi", donViField.getValue())
+//                .parameter("giaovien", hovatenField.getValue())
+//                .parameter("tungay", tungayField.getValue())
+//                .parameter("denngay", denngayField.getValue())
+//                .list();
+//    }
 
 }

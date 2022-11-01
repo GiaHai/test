@@ -18,7 +18,7 @@ import java.util.*;
 @LoadDataBeforeShow
 public class GiaovienEdit extends StandardEditor<Giaovien> {
     @Inject
-    protected LookupField<Donvi> donvitao_giaovienField;
+    protected LookupField<Donvi> donViField;
     @Inject
     protected LookupField<String> gioitinhgiaovienField;
     @Inject
@@ -56,10 +56,10 @@ public class GiaovienEdit extends StandardEditor<Giaovien> {
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
         if (!donViSession.getDonvitrungtam()) {
-            donvitao_giaovienField.setValue(donViSession);
-            donvitao_giaovienField.setEditable(false);
+            donViField.setValue(donViSession);
+            donViField.setEditable(false);
         } else {
-            donvitao_giaovienField.setOptionsList(searchedService.loaddonvi());
+            donViField.setOptionsList(searchedService.loaddonvi());
         }
     }
 }

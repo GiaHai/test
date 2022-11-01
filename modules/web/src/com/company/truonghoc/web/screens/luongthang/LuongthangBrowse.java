@@ -42,7 +42,7 @@ public class LuongthangBrowse extends StandardLookup<Luongthang> {
     @Inject
     protected UserSession userSession;
     @Inject
-    protected LookupField<Donvi> donvitao_luongthangField;
+    protected LookupField<Donvi> donViField;
     @Inject
     protected DateField<Date> denngayField;
     @Inject
@@ -115,7 +115,7 @@ public class LuongthangBrowse extends StandardLookup<Luongthang> {
             denngayField.clear();
         }else {
             //xoá
-            donvitao_luongthangField.clear();
+            donViField.clear();
             giaovienField.clear();
             trangthaiField.clear();
             tungayField.clear();
@@ -130,8 +130,8 @@ public class LuongthangBrowse extends StandardLookup<Luongthang> {
         if (donViSession != null) {
 
             if (!donViSession.getDonvitrungtam()) {
-                donvitao_luongthangField.setEditable(false);
-                donvitao_luongthangField.setValue(donViSession);
+                donViField.setEditable(false);
+                donViField.setValue(donViSession);
 
 
                 if (giaoVienSession != null) {
@@ -139,10 +139,9 @@ public class LuongthangBrowse extends StandardLookup<Luongthang> {
                     giaovienField.setEditable(false);
                 }
             } else {
-                donvitao_luongthangField.setEditable(true);
+                donViField.setEditable(true);
                 //lấy dữ liệu string cho lookup
-                donvitao_luongthangField.setOptionsList(searchedService.loaddonvi());
-
+                donViField.setOptionsList(searchedService.loaddonvi());
             }
         }
     }
@@ -176,7 +175,7 @@ public class LuongthangBrowse extends StandardLookup<Luongthang> {
     }
 
     private void excuteSearch(boolean isFromSearchBtn) {
-        Object donvi = donvitao_luongthangField.getValue();
+        Object donvi = donViField.getValue();
         Object giaovien = giaovienField.getValue();
         Object trangthai = trangthaiField.getValue();
         Date tungay = tungayField.getValue();
@@ -195,7 +194,7 @@ public class LuongthangBrowse extends StandardLookup<Luongthang> {
 
         //Đơn vị
         if (donvi != null) {
-            where += "and e.donvitao_luongthang = :donvi ";
+            where += "and e.donvi = :donvi ";
             params.put("donvi", donvi);
         }
         //Giáo viên
@@ -222,9 +221,9 @@ public class LuongthangBrowse extends StandardLookup<Luongthang> {
         return query;
     }
 
-    @Subscribe("donvitao_luongthangField")
-    protected void onDonvitao_luongthangFieldValueChange(HasValue.ValueChangeEvent event) {
-        giaovienField.setOptionsList(searchedService.loadgiaovien(donvitao_luongthangField.getValue()));
+    @Subscribe("donViField")
+    protected void onDonViFieldValueChange(HasValue.ValueChangeEvent event) {
+        giaovienField.setOptionsList(searchedService.loadgiaovien(donViField.getValue()));
     }
 
     /********* XUẤT FILE EXCEL ********/
@@ -236,7 +235,7 @@ public class LuongthangBrowse extends StandardLookup<Luongthang> {
                 .withMessage("Bạn có muốn xuất các hàng không?")
                 .withActions(
                         new DialogAction(DialogAction.Type.YES, Action.Status.PRIMARY).withCaption("Tất cả các hàng").withHandler(e -> {
-                            xuatExcel(xuatFileExcelService.layDanhSachLuongthang(donvitao_luongthangField.getValue(), giaovienField.getValue(), trangthaiField.getValue(), tungayField.getValue(), denngayField.getValue()));
+                            xuatExcel(xuatFileExcelService.layDanhSachLuongthang(donViField.getValue(), giaovienField.getValue(), trangthaiField.getValue(), tungayField.getValue(), denngayField.getValue()));
                         }),
                         new DialogAction(DialogAction.Type.NO).withCaption("Hủy")
                 )
@@ -253,7 +252,7 @@ public class LuongthangBrowse extends StandardLookup<Luongthang> {
         for (Luongthang e : layDanhSachLuongthang) {
             KeyValueEntity row = metadata.create(KeyValueEntity.class);
             row.setValue("stt", count);
-            row.setValue("donvitao_luongthang", e.getValue("donvitao_luongthang"));
+            row.setValue("donvi", e.getValue("donvi"));
             row.setValue("hovaten", e.getValue("hovaten"));
             row.setValue("ngaynhan", e.getValue("ngaynhan"));
             row.setValue("hannhanluong", e.getValue("hannhanluong"));

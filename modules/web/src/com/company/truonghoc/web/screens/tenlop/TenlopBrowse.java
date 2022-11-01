@@ -106,6 +106,7 @@ public class TenlopBrowse extends StandardLookup<Tenlop> {
                 searchLopField.clear();
             }
         }
+        excuteSearch(true);
     }
 
     /***Tìm kiếm***/
@@ -124,7 +125,7 @@ public class TenlopBrowse extends StandardLookup<Tenlop> {
     private void excuteSearch(boolean isFromSearchBtn) {
 
         Object donvi = searchDvField.getValue();
-        Object tenlop = searchLopField.getValue();
+        Tenlop tenlop = searchLopField.getValue();
         Object tengv = searchGvcnField.getValue();
         Map<String, Object> params = new HashMap<>();
         String query = returnQuery(donvi, tenlop, tengv, params);
@@ -134,7 +135,7 @@ public class TenlopBrowse extends StandardLookup<Tenlop> {
         tenlopsDl.load();
     }
 
-    private String returnQuery(Object donvi, Object tenlop, Object tengv, Map<String, Object> params) {
+    private String returnQuery(Object donvi, Tenlop tenlop, Object tengv, Map<String, Object> params) {
 
         String query = "select e from truonghoc_Tenlop e ";
         String where = " where 1=1 ";
@@ -146,13 +147,13 @@ public class TenlopBrowse extends StandardLookup<Tenlop> {
         }
         //Tên lớp
         if (tenlop != null) {
-            where += "and e.tenlop = :tenlop ";
-            params.put("tenlop", searchLopField.getValue().getTenlop());
+            where += "and e.tenlop like :tenlop ";
+            params.put("tenlop", "%" + tenlop.getTenlop() + "%");
         }
         //Tên giáo viên
         if (tengv != null) {
-            where += "and e.giaoviencn.tengiaovien like :giaovien ";
-            params.put("giaovien", searchGvcnField.getValue().getTengiaovien());
+            where += "and e.giaoviencn = :giaovien ";
+            params.put("giaovien", tengv);
         }
 
         query = query + where;

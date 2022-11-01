@@ -9,44 +9,15 @@
             <view extends="diemdanh-view"/>
             <loader/>
         </instance>
-        <collection id="giaoviensDc"
-                    class="com.company.truonghoc.entity.Giaovien"
-                    view="giaovien-view">
-            <loader id="giaoviensDl">
-                <query>
-                    <![CDATA[select e from truonghoc_Giaovien e]]>
-                </query>
-            </loader>
-        </collection>
-
-        <collection id="hocsinhsDc"
-                    class="com.company.truonghoc.entity.Hocsinh"
-                    view="hocsinh-view">
-            <loader id="hocsinhsDl">
-                <query>
-                    <![CDATA[select e from truonghoc_Hocsinh e]]>
-                </query>
-            </loader>
-        </collection>
-
-        <collection id="lophocsDc"
-                    class="com.company.truonghoc.entity.Lophoc">
-            <view extends="lophoc-view"/>
-            <loader id="lophocsDl">
-                <query>
-                    <![CDATA[select e from truonghoc_Lophoc e]]>
-                </query>
-            </loader>
-        </collection>
     </data>
     <layout expand="editActions" spacing="true">
         <vbox spacing="true">
-            <grid id="form" spacing="true" width="80%">
+            <grid id="form" spacing="true" width="100%">
                 <columns>
                     <column flex="1"/>
                     <column flex="1"/>
                     <column flex="1"/>
-                    <column flex="0.1"/>
+
                     <column flex="1"/>
                     <column flex="1"/>
                     <column flex="1"/>
@@ -65,15 +36,11 @@
                                              caption="Đơn vị"/>
                             </column>
                         </form>
-                        <form colspan="1" width="100%">
-                            <column>
-                                <label value=""/>
-                            </column>
-                        </form>
+
                         <form colspan="3" width="100%" childrenCaptionWidth="80px" dataContainer="diemdanhDc">
                             <column>
                                 <lookupField id="nguoitaoField"
-                                             property="nguoitaodd"
+                                             property="giaoviendd"
                                              width="100%"
                                              nullName="--Lọc tất cả---"
                                              requiredMessage="mainMsg://giaovien.requiredMessage"
@@ -84,7 +51,7 @@
                     </row>
                     <!--                    dòng 2-->
                     <row>
-                        <form colspan="7" width="100%" childrenCaptionWidth="180px" dataContainer="diemdanhDc">
+                        <form colspan="6" width="100%" childrenCaptionWidth="180px" dataContainer="diemdanhDc">
                             <column>
                                 <lookupField id="lopField"
                                              property="lopdd"

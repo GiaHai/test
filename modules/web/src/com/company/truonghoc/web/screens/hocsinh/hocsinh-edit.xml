@@ -48,8 +48,8 @@
                     <row>
                         <form colspan="7" width="100%" childrenCaptionWidth="80px">
                             <column>
-                                <lookupField id="donvitao_hocsinhField"
-                                             property="donvitao_hocsinh"
+                                <lookupField id="donViField"
+                                             property="donvi"
                                              dataContainer="hocsinhDc"
                                              width="100%"
                                              optionsContainer="donvisDc"

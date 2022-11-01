@@ -119,7 +119,7 @@ public class ChamconggvEdit extends StandardEditor<Chamconggv> {
 
     public List<Giaovien> timtengiaovien(Donvi donvitao) {
         return dataManager.load(Giaovien.class)
-                .query("select e from truonghoc_Giaovien e where e.donvitao_giaovien = :donvitao")
+                .query("select e from truonghoc_Giaovien e where e.donvi = :donvitao")
                 .parameter("donvitao", donvitao)
                 .list();
     }

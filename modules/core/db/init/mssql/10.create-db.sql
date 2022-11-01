@@ -9,7 +9,7 @@ create table TRUONGHOC_THUTIENHOCPHI (
     DELETE_TS datetime2,
     DELETED_BY nvarchar(50),
     --
-    DONVITAO_THUTIENHOCPHI_ID uniqueidentifier,
+    DONVI_ID uniqueidentifier,
     TENKHACHHANG nvarchar(255),
     DIACHI nvarchar(255),
     TUNGAY datetime2,
@@ -34,7 +34,7 @@ create table TRUONGHOC_LUONGTHANG (
     DELETE_TS datetime2,
     DELETED_BY nvarchar(50),
     --
-    DONVITAO_LUONGTHANG_ID uniqueidentifier,
+    DONVI_ID uniqueidentifier,
     HOVATEN_ID uniqueidentifier not null,
     NGAYNHAN datetime2,
     HANNHANLUONG datetime2,
@@ -71,7 +71,7 @@ create table TRUONGHOC_THUCHI (
     DELETE_TS datetime2,
     DELETED_BY nvarchar(50),
     --
-    DONVITAO_THUCHI_ID uniqueidentifier,
+    DONVI_ID uniqueidentifier,
     KHOANCHI nvarchar(255),
     NGAYCHI datetime2,
     HANCHI datetime2,
@@ -96,7 +96,7 @@ create table TRUONGHOC_HOCSINH (
     DELETE_TS datetime2,
     DELETED_BY nvarchar(50),
     --
-    DONVITAO_HOCSINH_ID uniqueidentifier,
+    DONVI_ID uniqueidentifier,
     TENHOCSINH nvarchar(255),
     NGAYSINHHOCSINH_ID uniqueidentifier,
     GIOITINHHOCSINH nvarchar(255),
@@ -141,7 +141,7 @@ create table TRUONGHOC_DIEMDANH (
     DELETE_TS datetime2,
     DELETED_BY nvarchar(50),
     --
-    NGUOITAODD_ID uniqueidentifier,
+    GIAOVIENDD_ID uniqueidentifier,
     LOPDD_ID uniqueidentifier,
     DONVIDD_ID uniqueidentifier,
     HOTENHS_ID uniqueidentifier,
@@ -182,7 +182,7 @@ create table TRUONGHOC_GIAOVIEN (
     DELETE_TS datetime2,
     DELETED_BY nvarchar(50),
     --
-    DONVITAO_GIAOVIEN_ID uniqueidentifier,
+    DONVI_ID uniqueidentifier,
     TENGIAOVIEN nvarchar(255) not null,
     NGAYSINHGIAOVIEN datetime2,
     QUEQUANGIAOVIEN nvarchar(255),
@@ -204,7 +204,7 @@ create table TRUONGHOC_HOCPHI (
     DELETE_TS datetime2,
     DELETED_BY nvarchar(50),
     --
-    DOVITAO_HOCPHI_ID uniqueidentifier,
+    DONVI_ID uniqueidentifier,
     HOVATEN_ID uniqueidentifier,
     GHICHU nvarchar(255),
     SOTIENTAMTINH bigint,
