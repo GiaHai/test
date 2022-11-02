@@ -2,6 +2,8 @@ package com.company.truonghoc.entity;
 
 import com.haulmont.chile.core.annotations.NamePattern;
 import com.haulmont.cuba.core.entity.StandardEntity;
+import com.haulmont.cuba.core.entity.annotation.OnDeleteInverse;
+import com.haulmont.cuba.core.global.DeletePolicy;
 
 import javax.persistence.*;
 
@@ -13,18 +15,22 @@ public class Lophoc extends StandardEntity {
 
     @JoinColumn(name = "DONVI_ID")
     @ManyToOne(fetch = FetchType.LAZY)
+    @OnDeleteInverse(DeletePolicy.CASCADE)
     private Donvi donvi;
 
     @JoinColumn(name = "GIAOVIENCN_ID")
     @ManyToOne(fetch = FetchType.LAZY)
+    @OnDeleteInverse(DeletePolicy.CASCADE)
     private Giaovien giaoviencn;
 
     @JoinColumn(name = "TENLOP_ID")
     @ManyToOne(fetch = FetchType.LAZY)
+    @OnDeleteInverse(DeletePolicy.CASCADE)
     private Tenlop tenlop;
 
     @JoinColumn(name = "DSHOCSINH_ID")
     @ManyToOne(fetch = FetchType.LAZY)
+    @OnDeleteInverse(DeletePolicy.CASCADE)
     private Hocsinh dshocsinh;
 
     public void setDshocsinh(Hocsinh dshocsinh) {

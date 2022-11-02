@@ -1,6 +1,8 @@
 package com.company.truonghoc.entity;
 
 import com.haulmont.cuba.core.entity.StandardEntity;
+import com.haulmont.cuba.core.entity.annotation.OnDeleteInverse;
+import com.haulmont.cuba.core.global.DeletePolicy;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -12,10 +14,12 @@ public class Hocphi extends StandardEntity {
 
     @JoinColumn(name = "DONVI_ID")
     @ManyToOne(fetch = FetchType.LAZY)
+    @OnDeleteInverse(DeletePolicy.CASCADE)
     private Donvi donvi;
 
     @JoinColumn(name = "HOVATEN_ID")
     @ManyToOne(fetch = FetchType.LAZY)
+    @OnDeleteInverse(DeletePolicy.CASCADE)
     private Hocsinh hovaten;
 
     @Column(name = "GHICHU")

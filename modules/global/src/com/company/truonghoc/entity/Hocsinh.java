@@ -6,6 +6,8 @@ import com.company.truonghoc.entity.tienich.TinhThanh;
 import com.company.truonghoc.entity.tienich.XaPhuong;
 import com.haulmont.chile.core.annotations.NamePattern;
 import com.haulmont.cuba.core.entity.StandardEntity;
+import com.haulmont.cuba.core.entity.annotation.OnDeleteInverse;
+import com.haulmont.cuba.core.global.DeletePolicy;
 
 import javax.persistence.*;
 
@@ -17,6 +19,7 @@ public class Hocsinh extends StandardEntity {
 
     @JoinColumn(name = "DONVI_ID")
     @ManyToOne(fetch = FetchType.LAZY)
+    @OnDeleteInverse(DeletePolicy.CASCADE)
     private Donvi donvi;
 
     @Column(name = "TENHOCSINH")

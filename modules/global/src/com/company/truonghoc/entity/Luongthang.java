@@ -1,6 +1,8 @@
 package com.company.truonghoc.entity;
 
 import com.haulmont.cuba.core.entity.StandardEntity;
+import com.haulmont.cuba.core.entity.annotation.OnDeleteInverse;
+import com.haulmont.cuba.core.global.DeletePolicy;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -14,11 +16,13 @@ public class Luongthang extends StandardEntity {
 
     @JoinColumn(name = "DONVI_ID")
     @ManyToOne(fetch = FetchType.LAZY)
+    @OnDeleteInverse(DeletePolicy.CASCADE)
     private Donvi donvi;
 
     @JoinColumn(name = "HOVATEN_ID")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @NotNull(message = "{msg://truonghoc_Luongthang.hovaten.validation.NotNull}")
+    @OnDeleteInverse(DeletePolicy.CASCADE)
     private Giaovien hovaten;
 
     @Temporal(TemporalType.DATE)

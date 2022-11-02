@@ -69,6 +69,7 @@
                             <column>
                                 <lookupField id="hocsinhField" width="100%"
                                              property="hotenhs" caption="Danh sách học sinh nghỉ"
+                                             required="true"
                                              nullName="---Danh sách học sinh---"/>
                             </column>
                         </form>

@@ -1,7 +1,9 @@
 package com.company.truonghoc.entity;
 
 import com.haulmont.cuba.core.entity.annotation.Extends;
+import com.haulmont.cuba.core.entity.annotation.OnDeleteInverse;
 import com.haulmont.cuba.core.global.DbView;
+import com.haulmont.cuba.core.global.DeletePolicy;
 import com.haulmont.cuba.security.entity.User;
 
 import javax.persistence.Entity;
@@ -18,10 +20,12 @@ public class UserExt extends User {
 
     @JoinColumn(name = "LOOCKUP_DONVI_ID")
     @ManyToOne(fetch = FetchType.LAZY)
+    @OnDeleteInverse(DeletePolicy.CASCADE)
     private Donvi loockup_donvi;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "GIAOVIEN_ID")
+    @OnDeleteInverse(DeletePolicy.CASCADE)
     private Giaovien giaovien;
 
     public Giaovien getGiaovien() {

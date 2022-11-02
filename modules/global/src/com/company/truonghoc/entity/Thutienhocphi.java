@@ -4,6 +4,7 @@ import com.haulmont.chile.core.annotations.Composition;
 import com.haulmont.chile.core.annotations.NamePattern;
 import com.haulmont.cuba.core.entity.StandardEntity;
 import com.haulmont.cuba.core.entity.annotation.OnDelete;
+import com.haulmont.cuba.core.entity.annotation.OnDeleteInverse;
 import com.haulmont.cuba.core.global.DeletePolicy;
 
 import javax.persistence.*;
@@ -18,6 +19,7 @@ public class Thutienhocphi extends StandardEntity {
 
     @JoinColumn(name = "DONVI_ID")
     @ManyToOne(fetch = FetchType.LAZY)
+    @OnDeleteInverse(DeletePolicy.CASCADE)
     private Donvi donvi;
 
     @Column(name = "TENKHACHHANG")
@@ -40,6 +42,7 @@ public class Thutienhocphi extends StandardEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "TENHOCSINH_ID")
+    @OnDeleteInverse(DeletePolicy.CASCADE)
     private Hocsinh tenhocsinh;
 
     @Column(name = "THANHTIEN")
