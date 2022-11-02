@@ -72,6 +72,8 @@
                                              width="100%"
                                              caption="mainMsg://chamcong.buoilam"
                                              nullName="--Lọc tất cả---"
+                                             required="true"
+                                             requiredMessage="Không để trống buổi làm"
                                              property="buoilam"/>
                             </column>
                         </form>
@@ -94,7 +96,11 @@
             </grid>
         </vbox>
         <hbox id="editActions" spacing="true">
-            <button id="commitAndCloseBtn" action="windowCommitAndClose"/>
+            <!--            <button id="commitAndCloseBtn" action="windowCommitAndClose"/>-->
+            <button id="commitAndCloseBtn" caption="OK" icon="OK" css="border-style: solid;
+                    border-color: var(--button-primary-color);
+                    background: var(--button-primary-color);
+                    color: var(--button-primary-text-color);"/>
             <button id="closeBtn" action="windowClose"/>
         </hbox>
     </layout>
