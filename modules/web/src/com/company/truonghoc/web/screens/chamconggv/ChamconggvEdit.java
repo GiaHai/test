@@ -2,6 +2,7 @@ package com.company.truonghoc.web.screens.chamconggv;
 
 import com.company.truonghoc.entity.Donvi;
 import com.company.truonghoc.entity.Giaovien;
+import com.company.truonghoc.entity.enums.BuoiLamEnum;
 import com.company.truonghoc.service.DulieuUserService;
 import com.company.truonghoc.service.SearchedService;
 import com.haulmont.cuba.core.global.DataManager;
@@ -32,7 +33,7 @@ public class ChamconggvEdit extends StandardEditor<Chamconggv> {
     @Inject
     protected LookupField<Donvi> donvigvField;
     @Inject
-    protected LookupField<String> buoilamField;
+    protected LookupField<Integer> buoilamField;
     @Inject
     protected DateField<Date> ngaylamField;
     @Inject
@@ -46,8 +47,20 @@ public class ChamconggvEdit extends StandardEditor<Chamconggv> {
     protected void onInit(InitEvent event) {
         hotenGvField.setRequired(true);
         ngaylamField.setRequired(true);
-        List<String> buoilam = Arrays.asList("Làm cả ngày", "Ca sáng", "Ca chiều", "Ca chủ nhật", "Ca chiều 5h-6h", "Ca chiều 6h-7h");
-        buoilamField.setOptionsList(buoilam);
+
+
+        Map<String, Integer> buoiLam = new LinkedHashMap<>();
+        buoiLam.put("Làm cả ngày", BuoiLamEnum.LAM_CA_NGAY.getId());
+        buoiLam.put("Ca sáng", BuoiLamEnum.CA_SANG.getId());
+        buoiLam.put("Ca chiều", BuoiLamEnum.CA_CHIEU.getId());
+        buoiLam.put("Ca chủ nhật", BuoiLamEnum.CA_CHU_NHAT.getId());
+        buoiLam.put("Ca chiều 5h-6h", BuoiLamEnum.CA_CHIEU_5H_6H.getId());
+        buoiLam.put("Ca chiều 6h-7h", BuoiLamEnum.CA_CHIEU_6H_7H.getId());
+        buoilamField.setOptionsMap(buoiLam);
+
+
+//        List<String> buoilam = Arrays.asList("Làm cả ngày", "Ca sáng", "Ca chiều", "Ca chủ nhật", "Ca chiều 5h-6h", "Ca chiều 6h-7h");
+
     }
 
     @Subscribe
@@ -58,27 +71,39 @@ public class ChamconggvEdit extends StandardEditor<Chamconggv> {
             if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null) {
                 hotenGvField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien());
                 hotenGvField.setEditable(false);
+                ngaylamField.setValue(new Date());
+                ngaylamField.setEditable(false);
             }
         } else {
             donvigvField.setOptionsList(searchedService.loaddonvi());
         }
+
     }
 
     @Subscribe("buoilamField")
     protected void onBuoilamFieldValueChange(HasValue.ValueChangeEvent<String> event) {
-        if (buoilamField.getValue() == "Ca chủ nhật") {
+        if (buoilamField.getValue() == BuoiLamEnum.CA_CHU_NHAT.getId()) {
+            tienbuoiField.clear();
+
             tienbuoiField.setValue(Integer.valueOf("100000"));
+            tienbuoiField.setEditable(false);
         }
-        if (buoilamField.getValue() == "Ca chiều 5h-6h" || buoilamField.getValue() == "Ca chiều 6h-7h") {
+        if (buoilamField.getValue() == BuoiLamEnum.CA_CHIEU_5H_6H.getId() || buoilamField.getValue() == BuoiLamEnum.CA_CHIEU_6H_7H.getId()) {
+            tienbuoiField.clear();
+
             List<Integer> tienbuoi = new ArrayList<>();
             tienbuoi.add(50000);
             tienbuoi.add(60000);
             tienbuoi.add(80000);
+            tienbuoiField.setRequired(true);
+            tienbuoiField.setEditable(true);
 
             tienbuoiField.setOptionsList(tienbuoi);
         }
-        if (buoilamField.getValue() == "Làm cả ngày" || buoilamField.getValue() == "Ca sáng" || buoilamField.getValue() == "Ca chiều") {
+        if (buoilamField.getValue() == BuoiLamEnum.LAM_CA_NGAY.getId() || buoilamField.getValue() == BuoiLamEnum.CA_SANG.getId() || buoilamField.getValue() == BuoiLamEnum.CA_CHIEU.getId()) {
             tienbuoiField.clear();
+            tienbuoiField.setRequired(false);
+
         }
     }
 
@@ -98,17 +123,32 @@ public class ChamconggvEdit extends StandardEditor<Chamconggv> {
                 .list();
     }
 
-    public List<Chamconggv> chamCongLoadDkKhongTrung(Donvi donVi, Giaovien giaoVien, Date ngayLam, String buoiLam) {
+    public List<Chamconggv> chamCongLoadDkKhongTrung(Donvi donVi, Giaovien giaoVien, Date ngayLam, Integer buoiLam) {
         String query = "select e from truonghoc_Chamconggv e ";
         String where = "where e.donvigv = :donvi and e.hotengv = :giaovien " +
-                "and e.ngaylam = :ngaylam and e.buoilam like :buoilam";
+                "and e.ngaylam = :ngaylam and e.buoilam = :buoilam";
 
         Map<String, Object> params = new HashMap<>();
 
         params.put("donvi", donVi);
         params.put("giaovien", giaoVien);
         params.put("ngaylam", ngayLam);
-        params.put("buoilam", "%"+ buoiLam +"%");
+        params.put("buoilam", buoiLam);
+        return dataManager.load(Chamconggv.class)
+                .query(query + where)
+                .setParameters(params)
+                .list();
+    }
+    public List<Chamconggv> chamCongLoadDkKhongTrungVoiCaNgay(Donvi donVi, Giaovien giaoVien, Date ngayLam) {
+        String query = "select e from truonghoc_Chamconggv e ";
+        String where = "where e.donvigv = :donvi and e.hotengv = :giaovien and e.ngaylam = :ngaylam" +
+                " and e.buoilam in ("+ BuoiLamEnum.CA_CHIEU.getId()+ "," + BuoiLamEnum.CA_SANG.getId() + "," + BuoiLamEnum.LAM_CA_NGAY.getId() +")";
+
+        Map<String, Object> params = new HashMap<>();
+
+        params.put("donvi", donVi);
+        params.put("giaovien", giaoVien);
+        params.put("ngaylam", ngayLam);
         return dataManager.load(Chamconggv.class)
                 .query(query + where)
                 .setParameters(params)
@@ -117,17 +157,35 @@ public class ChamconggvEdit extends StandardEditor<Chamconggv> {
 
     @Subscribe("commitAndCloseBtn")
     protected void onCommitAndCloseBtnClick(Button.ClickEvent event) {
+        Integer chamCongLoadDkKhongTrungVoiCaNgay = chamCongLoadDkKhongTrungVoiCaNgay(donvigvField.getValue(), hotenGvField.getValue(), ngaylamField.getValue()).size();
         Integer chamCongLoadDkKhongTrungLap = chamCongLoadDkKhongTrung(donvigvField.getValue(), hotenGvField.getValue(), ngaylamField.getValue(), buoilamField.getValue()).size();
-        if (chamCongLoadDkKhongTrungLap == 0){
-            closeWithCommit();
+
+        if (buoilamField.getValue() == BuoiLamEnum.CA_CHIEU.getId() || buoilamField.getValue() == BuoiLamEnum.CA_SANG.getId() || buoilamField.getValue() == BuoiLamEnum.LAM_CA_NGAY.getId())
+        {
+            if (chamCongLoadDkKhongTrungVoiCaNgay == 0){
+                closeWithCommit();
+            }else {
+                notifications.create()
+                        .withCaption("Bạn đã điểm danh cho buổi này rồi !")
+                        .withPosition(Notifications.Position.BOTTOM_RIGHT)
+                        .withType(Notifications.NotificationType.HUMANIZED)
+                        .show();
+                buoilamField.clear();
+                tienbuoiField.clear();
+            }
         }else {
-            notifications.create()
-                    .withCaption("Bạn đã điểm danh cho buổi này rồi !")
-                    .withPosition(Notifications.Position.BOTTOM_RIGHT)
-                    .withType(Notifications.NotificationType.HUMANIZED)
-                    .show();
-            buoilamField.clear();
+            if (chamCongLoadDkKhongTrungLap == 0){
+                closeWithCommit();
+            }else {
+                notifications.create()
+                        .withCaption("Bạn đã điểm danh cho buổi này rồi !")
+                        .withPosition(Notifications.Position.BOTTOM_RIGHT)
+                        .withType(Notifications.NotificationType.HUMANIZED)
+                        .show();
+                buoilamField.clear();
+            }
         }
     }
+
 
 }

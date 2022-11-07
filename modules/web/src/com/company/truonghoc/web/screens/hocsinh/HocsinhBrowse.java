@@ -113,19 +113,6 @@ public class HocsinhBrowse extends StandardLookup<Hocsinh> {
         }
     }
 
-    //    Điều kiện là giáo viên login vào
-    @Subscribe("editBtn")
-    protected void onEditBtnClick(Button.ClickEvent event) {
-        if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() != null) {
-            this.hocsinhsTableEdit.execute();
-        } else {
-            dialogs.createMessageDialog()
-                    .withCaption("THÔNG BÁO")
-                    .withMessage("Bạn không có quyền")
-                    .withType(Dialogs.MessageType.WARNING)
-                    .show();
-        }
-    }
 
     /***
      * Xoá

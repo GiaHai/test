@@ -27,5 +27,5 @@ public interface XuatFileExcelService {
 
     List<Diemdanh> layDanhSachDiemdanh(Donvi donVi, Giaovien giaoVien, Date ngayNghi, Tenlop lopHoc);
 
-    List<Chamconggv> layDanhSachChamconggv(Donvi donVi, Giaovien giaoVien, Date ngayLam, String buoiLam);
+    List<Chamconggv> layDanhSachChamconggv(Donvi donVi, Giaovien giaoVien, Date ngayLam, Integer buoiLam);
 }

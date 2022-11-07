@@ -290,7 +290,7 @@ public class XuatFileExcelServiceBean implements XuatFileExcelService {
     }
 
     @Override
-    public List<Chamconggv> layDanhSachChamconggv(Donvi donVi, Giaovien giaoVien, Date ngayLam, String buoiLam) {
+    public List<Chamconggv> layDanhSachChamconggv(Donvi donVi, Giaovien giaoVien, Date ngayLam, Integer buoiLam) {
         String query = "select e from truonghoc_Chamconggv e ";
         String where = "where 1=1 ";
         Map<String, Object> params = new HashMap<>();
@@ -303,8 +303,8 @@ public class XuatFileExcelServiceBean implements XuatFileExcelService {
             params.put("giaoviencn", giaoVien);
         }
         if (buoiLam != null) {
-            where += " and e.buoilam like :buoiLam";
-            params.put("buoiLam", "%" + buoiLam + "%");
+            where += " and e.buoilam = :buoiLam";
+            params.put("buoiLam", buoiLam);
         }
         if (ngayLam != null) {
             where += " and e.ngaylam = :ngayLam";

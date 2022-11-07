@@ -81,7 +81,7 @@
         </groupBox>
         <table id="hocphisTable"
                width="100%"
-               dataContainer="hocphisDc">
+               dataContainer="hocphisDc" aggregatable="true">
             <actions>
                 <action id="create" type="create"/>
                 <action id="edit" type="edit"/>
@@ -99,9 +99,13 @@
                 <column id="ghichu"
                         caption="mainMsg://hocphi.ghichu"/>
                 <column id="sotientamtinh"
-                        caption="mainMsg://hocphi.sotientamtinh"/>
+                        caption="mainMsg://hocphi.sotientamtinh">
+                    <aggregation type="SUM"/>
+                </column>
                 <column id="sotienthutheohd"
-                        caption="mainMsg://hocphi.sotienthutheohd"/>
+                        caption="mainMsg://hocphi.sotienthutheohd">
+                    <aggregation type="SUM"/>
+                </column>
                 <column id="ngaydong"
                         caption="mainMsg://hocphi.ngaydong"/>
                 <column id="handong"

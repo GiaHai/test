@@ -54,7 +54,7 @@ public class GiaovienEdit extends StandardEditor<Giaovien> {
     }
 
     @Subscribe
-    protected void onAfterShow(AfterShowEvent event) {
+    protected void onBeforeShow(BeforeShowEvent event) {
         if (!donViSession.getDonvitrungtam()) {
             donViField.setValue(donViSession);
             donViField.setEditable(false);
@@ -62,4 +62,5 @@ public class GiaovienEdit extends StandardEditor<Giaovien> {
             donViField.setOptionsList(searchedService.loaddonvi());
         }
     }
+
 }

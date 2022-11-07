@@ -68,7 +68,7 @@ public class SearchedServiceBean implements SearchedService {
 
 
     @Override
-    public List<Chamconggv> tinhca(Donvi donVi, Giaovien giaoVien, Date tuNgay, Date denNgay, String ngayLam) {
+    public List<Chamconggv> tinhca(Donvi donVi, Giaovien giaoVien, Date tuNgay, Date denNgay, Integer ngayLam) {
         List<Chamconggv> resultList;
         try (Transaction tx = persistence.createTransaction()) {
             EntityManager entityManager = persistence.getEntityManager();
@@ -90,7 +90,7 @@ public class SearchedServiceBean implements SearchedService {
     }
 
     @Override
-    public List<KeyValueEntity> caChieudaythem(Donvi donVi, Giaovien giaoVien, Date tuNgay, Date denNgay, String ngayLam) {
+    public List<KeyValueEntity> caChieudaythem(Donvi donVi, Giaovien giaoVien, Date tuNgay, Date denNgay, Integer ngayLam) {
         String sql = "select sum(e.tienBuoi) tienBuoi from truonghoc_Chamconggv e ";
         String where = "where e.donvigv = :donvi and e.hotengv = :giaovien and e.buoilam = :ngayLam " +
                 " and e.ngaylam >= :tungay and :denngay >= e.ngaylam";

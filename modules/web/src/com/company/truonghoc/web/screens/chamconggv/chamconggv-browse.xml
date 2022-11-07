@@ -90,7 +90,7 @@
                 <column id="ngaylam"
                         caption="mainMsg://chamcong.ngaylam"/>
                 <column id="buoilam"
-                        caption="mainMsg://chamcong.buoilam"/>
+                        caption="mainMsg://chamcong.buoilam" generator="buoiLam"/>
                 <column id="tienBuoi"
                         caption="Tiền công"/>
             </columns>

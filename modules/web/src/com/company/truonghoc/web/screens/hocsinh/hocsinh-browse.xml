@@ -100,7 +100,7 @@
             <buttonsPanel id="buttonsPanel"
                           alwaysVisible="true">
                 <button id="createBtn" action="hocsinhsTable.create"/>
-                <button id="editBtn" caption="Chỉnh sửa"/>
+                <button id="editBtn" caption="Chỉnh sửa" action="hocsinhsTable.edit"/>
                 <button id="removeBtn" action="hocsinhsTable.remove"/>
                 <button id="excelBtn" caption="Xuất Excel"
                         icon="font-icon:FILE_EXCEL_O" stylename="style-button-all"/>

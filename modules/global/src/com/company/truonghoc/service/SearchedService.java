@@ -22,7 +22,7 @@ public interface SearchedService {
 
     //    List<Hocsinh> loadHsDk(String tendonvi, String tengiaovien);
     //    ---------------------- Tính ngày lương -----------------
-    List<Chamconggv> tinhca(Donvi donVi, Giaovien giaoVien, Date tuNgay, Date denNgay, String ngayLam);
+    List<Chamconggv> tinhca(Donvi donVi, Giaovien giaoVien, Date tuNgay, Date denNgay, Integer ngayLam);
 
-    List<KeyValueEntity> caChieudaythem(Donvi donVi, Giaovien giaoVien, Date tuNgay, Date denNgay, String ngayLam);
+    List<KeyValueEntity> caChieudaythem(Donvi donVi, Giaovien giaoVien, Date tuNgay, Date denNgay, Integer ngayLam);
 }

@@ -3,6 +3,7 @@ package com.company.truonghoc.web.screens.luongthang;
 import com.company.truonghoc.entity.Chamconggv;
 import com.company.truonghoc.entity.Donvi;
 import com.company.truonghoc.entity.Giaovien;
+import com.company.truonghoc.entity.enums.BuoiLamEnum;
 import com.company.truonghoc.service.DulieuUserService;
 import com.company.truonghoc.service.SearchedService;
 import com.haulmont.cuba.core.entity.KeyValueEntity;
@@ -135,11 +136,13 @@ public class LuongthangEdit extends StandardEditor<Luongthang> {
             }
         }
         tinhNgayCong();
+        tinhthuclinh();
+
     }
 
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
-        tinhthuclinh();
+//        tinhthuclinh();
     }
 
     @Subscribe("hovatenField")
@@ -303,17 +306,17 @@ public class LuongthangEdit extends StandardEditor<Luongthang> {
     }
 
     private void tinhNgayCong(){
-        caNgay = searchedService.tinhca(donViField.getValue(), hovatenField.getValue(), tungayField.getValue(), denngayField.getValue(), "Làm cả ngày").size();
-        caSang = searchedService.tinhca(donViField.getValue(), hovatenField.getValue(), tungayField.getValue(), denngayField.getValue(), "Ca sáng").size();
-        caChieu = searchedService.tinhca(donViField.getValue(), hovatenField.getValue(), tungayField.getValue(), denngayField.getValue(), "Ca chiều").size();
-        caChuNhat = searchedService.tinhca(donViField.getValue(), hovatenField.getValue(), tungayField.getValue(), denngayField.getValue(), "Ca chủ nhật").size();
+        caNgay = searchedService.tinhca(donViField.getValue(), hovatenField.getValue(), tungayField.getValue(), denngayField.getValue(), BuoiLamEnum.LAM_CA_NGAY.getId()).size();
+        caSang = searchedService.tinhca(donViField.getValue(), hovatenField.getValue(), tungayField.getValue(), denngayField.getValue(), BuoiLamEnum.CA_SANG.getId()).size();
+        caChieu = searchedService.tinhca(donViField.getValue(), hovatenField.getValue(), tungayField.getValue(), denngayField.getValue(), BuoiLamEnum.CA_CHIEU.getId()).size();
+        caChuNhat = searchedService.tinhca(donViField.getValue(), hovatenField.getValue(), tungayField.getValue(), denngayField.getValue(), BuoiLamEnum.CA_CHU_NHAT.getId()).size();
 
         buoilamField.setValue(BigDecimal.valueOf(caNgay + caSang * 0.5 + caChieu * 0.5));
         casangField.setValue(caSang);
         cachunhatField.setValue(caChuNhat * 100000);
 
-        List<KeyValueEntity> caChieuDaythem1 = searchedService.caChieudaythem(donViField.getValue(), hovatenField.getValue(), tungayField.getValue(), denngayField.getValue(), "Ca chiều 5h-6h");
-        List<KeyValueEntity> caChieuDaythem2 = searchedService.caChieudaythem(donViField.getValue(), hovatenField.getValue(), tungayField.getValue(), denngayField.getValue(), "Ca chiều 6h-7h");
+        List<KeyValueEntity> caChieuDaythem1 = searchedService.caChieudaythem(donViField.getValue(), hovatenField.getValue(), tungayField.getValue(), denngayField.getValue(), BuoiLamEnum.CA_CHIEU_5H_6H.getId());
+        List<KeyValueEntity> caChieuDaythem2 = searchedService.caChieudaythem(donViField.getValue(), hovatenField.getValue(), tungayField.getValue(), denngayField.getValue(), BuoiLamEnum.CA_CHIEU_6H_7H.getId());
         Object cachieu2 = 0;
         Object cachieu1 = 0;
         for (KeyValueEntity item : caChieuDaythem2) {

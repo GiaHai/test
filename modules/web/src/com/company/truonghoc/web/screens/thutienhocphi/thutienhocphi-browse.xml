@@ -87,7 +87,7 @@
         </groupBox>
         <table id="thutienhocphisTable"
                     width="100%"
-                    dataContainer="thutienhocphisDc">
+                    dataContainer="thutienhocphisDc" aggregatable="true">
             <actions>
                 <action id="create" type="create"/>
                 <action id="edit" type="edit"/>
@@ -109,7 +109,9 @@
                 <column id="tenhocsinh"
                         caption="mainMsg://thuvienhocphi.tenhocsinh"/>
                 <column id="thanhtien"
-                        caption="mainMsg://thuvienhocphi.thanhtien"/>
+                        caption="mainMsg://thuvienhocphi.thanhtien">
+                    <aggregation type="SUM"/>
+                </column>
                 <column id="checkhan"
                         generator="checkhan"
                         caption="mainMsg://thuvienhocphi.trangthai"/>

@@ -2,6 +2,7 @@ package com.company.truonghoc.web.screens.chamconggv;
 
 import com.company.truonghoc.entity.Donvi;
 import com.company.truonghoc.entity.Giaovien;
+import com.company.truonghoc.entity.enums.BuoiLamEnum;
 import com.company.truonghoc.service.DulieuUserService;
 import com.company.truonghoc.service.SearchedService;
 import com.company.truonghoc.service.XuatFileExcelService;
@@ -53,7 +54,7 @@ public class ChamconggvBrowse extends StandardLookup<Chamconggv> {
     @Inject
     protected DataManager dataManager;
     @Inject
-    protected LookupField<String> buoilamField;
+    protected LookupField<Integer> buoilamField;
     @Inject
     protected Dialogs dialogs;
     @Inject
@@ -92,8 +93,15 @@ public class ChamconggvBrowse extends StandardLookup<Chamconggv> {
     private void dkphanquyen() {
         //điều kiện đơn vị trung tâm
         // lấy dữ liệu buổi làm
-        List<String> list = Arrays.asList("Làm cả ngày", "Ca sáng", "Ca chiều");
-        buoilamField.setOptionsList(list);
+        Map<String, Integer> buoiLam = new LinkedHashMap<>();
+        buoiLam.put("Làm cả ngày", BuoiLamEnum.LAM_CA_NGAY.getId());
+        buoiLam.put("Ca sáng", BuoiLamEnum.CA_SANG.getId());
+        buoiLam.put("Ca chiều", BuoiLamEnum.CA_CHIEU.getId());
+        buoiLam.put("Ca chủ nhật", BuoiLamEnum.CA_CHU_NHAT.getId());
+        buoiLam.put("Ca chiều 5h-6h", BuoiLamEnum.CA_CHIEU_5H_6H.getId());
+        buoiLam.put("Ca chiều 6h-7h", BuoiLamEnum.CA_CHIEU_6H_7H.getId());
+        buoilamField.setOptionsMap(buoiLam);
+
         if (!donViSession.getDonvitrungtam()) {
             tendonviField.setEditable(false);
             tendonviField.setValue(donViSession); //Chèn đơn vị từ user vào text
@@ -148,7 +156,7 @@ public class ChamconggvBrowse extends StandardLookup<Chamconggv> {
         Object donvi = tendonviField.getValue();
         Object giaovien = tengiaovienField.getValue();
         Date ngaylam = ngaylamField.getValue();
-        Object buoilam = buoilamField.getValue();
+        Integer buoilam = buoilamField.getValue();
 
         Map<String, Object> params = new HashMap<>();
 
@@ -159,7 +167,7 @@ public class ChamconggvBrowse extends StandardLookup<Chamconggv> {
         chamconggvsDl.load();
     }
 
-    private String returnQuery(Object donvi, Object giaovien, Date ngaylam, Object
+    private String returnQuery(Object donvi, Object giaovien, Date ngaylam, Integer
             buoilam, Map<String, Object> params) {
         String query = "select e from truonghoc_Chamconggv e ";
         String where = " where 1=1 ";
@@ -239,4 +247,30 @@ public class ChamconggvBrowse extends StandardLookup<Chamconggv> {
     }
 
 
+    public Component buoiLam(Chamconggv e) {
+        Label label = uiComponents.create(Label.class);
+        switch (e.getBuoilam()) {
+            case 1:
+                label.setValue("Làm cả ngày");
+                return label;
+            case 2:
+                label.setValue("Ca Sáng");
+                return label;
+            case 3:
+                label.setValue("Ca Chiều");
+                return label;
+            case 4:
+                label.setValue("Ca Chủ nhật");
+                return label;
+            case 5:
+                label.setValue("Ca Chiều 5h - 6h");
+                return label;
+            case 6:
+                label.setValue("Ca Chiều 6h - 7h");
+                return label;
+            default:
+                label.setValue("Chưa chọn ngày làm");
+        }
+        return label;
+    }
 }
