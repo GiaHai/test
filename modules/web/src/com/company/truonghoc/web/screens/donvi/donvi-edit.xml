@@ -19,9 +19,12 @@
                            property="tendonvi"
                            inputPrompt="Nhập đơn vị"
                            caption="mainMsg://donvi.tendonvi"/>
+                <textField id="sdtField"
+                           property="sotienthoai"
+                           inputPrompt="Số điện thoại"
+                           caption="mainMsg://donvi.sdt"/>
                 <checkBox id="donvitrungtamField"
                           property="donvitrungtam"
-
                           caption="mainMsg://donvi.donvitrungtam"/>
             </column>
         </form>

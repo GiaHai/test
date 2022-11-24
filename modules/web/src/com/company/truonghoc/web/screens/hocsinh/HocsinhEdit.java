@@ -115,4 +115,21 @@ public class HocsinhEdit extends StandardEditor<Hocsinh> {
 
     }
 
+    public static String toTitleCase(String word) {
+        return Character.toUpperCase(word.charAt(0)) + word.substring(1);
+    }
+
+    @Subscribe("tenhocsinhField")
+    protected void onTenhocsinhFieldValueChange(HasValue.ValueChangeEvent<String> event) {
+        if (tenhocsinhField.getValue() != null){
+            String[] splitPhrase = tenhocsinhField.getValue().split(" ");
+            String result = "";
+
+            for (String word : splitPhrase) {
+                result += toTitleCase(word) + " ";
+            }
+            tenhocsinhField.setValue(result.trim());
+        }
+    }
+
 }

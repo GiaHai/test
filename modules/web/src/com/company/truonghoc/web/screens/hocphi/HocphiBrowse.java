@@ -1,21 +1,25 @@
 package com.company.truonghoc.web.screens.hocphi;
 
+import com.aspose.words.*;
 import com.company.truonghoc.entity.Donvi;
-import com.company.truonghoc.entity.Giaovien;
+import com.company.truonghoc.entity.Thutienhocphi;
 import com.company.truonghoc.service.DulieuUserService;
 import com.company.truonghoc.service.SearchedService;
+import com.company.truonghoc.service.ServerConfigService;
 import com.company.truonghoc.service.XuatFileExcelService;
+import com.company.truonghoc.utils.GlobalFunctionHelper;
 import com.company.truonghoc.web.screens.utils.ExtendExcelExporter;
+import com.company.truonghoc.web.screens.utils.WebFunctionHelper;
 import com.haulmont.cuba.core.entity.Entity;
 import com.haulmont.cuba.core.entity.KeyValueEntity;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.core.global.Metadata;
+import com.haulmont.cuba.core.sys.AppContext;
 import com.haulmont.cuba.gui.Dialogs;
 import com.haulmont.cuba.gui.Notifications;
-import com.haulmont.cuba.gui.ScreenBuilders;
 import com.haulmont.cuba.gui.UiComponents;
-import com.haulmont.cuba.gui.actions.list.CreateAction;
 import com.haulmont.cuba.gui.components.*;
+import com.haulmont.cuba.gui.components.Table;
 import com.haulmont.cuba.gui.export.ExportDisplay;
 import com.haulmont.cuba.gui.model.CollectionContainer;
 import com.haulmont.cuba.gui.model.CollectionLoader;
@@ -23,13 +27,14 @@ import com.haulmont.cuba.gui.screen.*;
 import com.company.truonghoc.entity.Hocphi;
 import com.haulmont.cuba.gui.screen.LookupComponent;
 import com.haulmont.cuba.security.global.UserSession;
+import com.haulmont.cuba.web.gui.components.JavaScriptComponent;
 import org.springframework.util.StringUtils;
+import java.util.Calendar;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.stream.Collectors;
+import java.util.List;
 
 @UiController("truonghoc_Hocphi.browse")
 @UiDescriptor("hocphi-browse.xml")
@@ -59,8 +64,6 @@ public class HocphiBrowse extends StandardLookup<Hocphi> {
     @Inject
     protected TextField<String> hovstenField;
     @Inject
-    protected Button createBtn;
-    @Inject
     protected DataManager dataManager;
     @Inject
     protected SearchedService searchedService;
@@ -76,10 +79,23 @@ public class HocphiBrowse extends StandardLookup<Hocphi> {
     protected Metadata metadata;
     @Inject
     protected ExportDisplay exportDisplay;
+    @Inject
+    protected Notifications notifications;
+    @Inject
+    protected ServerConfigService serverConfigService;
     private Donvi donViSession = null;
+    @Inject
+    protected JavaScriptComponent printerJsLb;
+    @Inject
+    protected JavaScriptComponent printerPdf;
+    private String pathPdf;
+    private String webBaseFolder;
 
     @Subscribe
     protected void onInit(InitEvent event) {
+        pathPdf = AppContext.getProperty("knkx.temp.printer");
+        webBaseFolder = AppContext.getProperty("knkx.printer.web.base.folder");
+
         //tình trạng thanh toán
         List<String> list = Arrays.asList("Đã thanh toán", "Chưa thanh toán");
         trangthaiField.setOptionsList(list);
@@ -90,12 +106,14 @@ public class HocphiBrowse extends StandardLookup<Hocphi> {
     protected void onBeforeShow(BeforeShowEvent event) {
         //load phân quyền
         dkphanquyen();
+        Calendar calendar = Calendar.getInstance();
     }
 
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
         //load tìm kiếm
         excuteSearch(true);
+
     }
 
     /*** Tìm kiếm***/
@@ -113,12 +131,12 @@ public class HocphiBrowse extends StandardLookup<Hocphi> {
 
     @Subscribe("xoaBtn")
     protected void onXoaBtnClick(Button.ClickEvent event) {
-        if (!donViSession.getDonvitrungtam()){
+        if (!donViSession.getDonvitrungtam()) {
             denngayField.clear();
             tungayField.clear();
             trangthaiField.clear();
             hovstenField.clear();
-        }else {
+        } else {
             denngayField.clear();
             tungayField.clear();
             trangthaiField.clear();
@@ -305,4 +323,42 @@ public class HocphiBrowse extends StandardLookup<Hocphi> {
         exporter.exportDataCollectionTitleInFile(collection, columns, properties, exportDisplay, "Danh sách học phí" +
                 " Khoảng thời gian từ " + tuNgay + " đến " + denNgay + "");
     }
+
+    @Subscribe("printBtn")
+    protected void onPrintBtnClick(Button.ClickEvent event) {
+        Calendar calendar = Calendar.getInstance();
+
+        Hocphi hocphi = hocphisTable.getSingleSelected();
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("donvithanhtoan", donViSession.getTendonvi());
+        parameters.put("tenhocsinh", hocphi.getHovaten().getTenhocsinh());
+        parameters.put("thanhtien", hocphi.getSotienthutheohd());
+        parameters.put("hinhthucthanhtoan", hocphi.getHinhthucthanhtoan());
+        parameters.put("ngay", calendar.get(Calendar.DATE));
+        parameters.put("thang", calendar.get(Calendar.MONTH) + 1 );
+        parameters.put("nam", calendar.get(Calendar.YEAR));
+        parameters.put("sodienthoaicoso", donViSession.getSotienthoai());
+        parameters.put("nguoitao", userSession.getUser().getName());
+
+        String path = AppContext.getProperty("knkx.template");
+
+        String fileTemplate = WebFunctionHelper.modifiedTemplate(path + "/phieuinthanhtoanhocphi.docx", serverConfigService, parameters);
+        String fileName = WebFunctionHelper.convertDocToPdf(fileTemplate, pathPdf, true);
+        if (!StringUtils.isEmpty(fileName)) {
+            List<String> filesPrint = new ArrayList<>();
+            filesPrint.add(fileName);
+            WebFunctionHelper.printFiles(printerPdf, filesPrint, callbackEvent -> {
+                if (callbackEvent.getArguments() != null) {
+                    String urlFile = callbackEvent.getArguments().getString(0);
+                    if (!org.apache.commons.lang3.StringUtils.isBlank(urlFile) && !StringUtils.isEmpty(webBaseFolder)) {
+                        GlobalFunctionHelper.deleteFile(webBaseFolder + "/" + urlFile);
+                    }
+                }
+            });
+        }
+    }
+
+
+
+
 }

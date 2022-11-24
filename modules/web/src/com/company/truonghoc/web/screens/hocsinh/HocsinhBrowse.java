@@ -1,6 +1,7 @@
 package com.company.truonghoc.web.screens.hocsinh;
 
 import com.company.truonghoc.entity.*;
+import com.company.truonghoc.entity.tienich.Namsinh;
 import com.company.truonghoc.service.DulieuUserService;
 import com.company.truonghoc.service.SearchedService;
 import com.company.truonghoc.service.XuatFileExcelService;
@@ -72,6 +73,8 @@ public class HocsinhBrowse extends StandardLookup<Hocsinh> {
     @Inject
     protected ExportDisplay exportDisplay;
     private Donvi donViSession = null;
+    @Inject
+    protected LookupField<Namsinh> namSinhField;
 
     @Subscribe
     protected void onInit(InitEvent event) {
@@ -80,7 +83,6 @@ public class HocsinhBrowse extends StandardLookup<Hocsinh> {
         gioitinh.add("Nam");
         gioitinh.add("Nữ");
         gioiTinhField.setOptionsList(gioitinh);
-
         //Đơn vị
         donViSession = dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi();
     }
@@ -89,6 +91,7 @@ public class HocsinhBrowse extends StandardLookup<Hocsinh> {
     protected void onBeforeShow(BeforeShowEvent event) {
         //Tìm đơn vị
         donViField.setOptionsList(searchedService.loaddonvi());
+        namSinhField.setOptionsList(searchedService.loadNamSinh());
     }
 
     @Subscribe
@@ -124,6 +127,8 @@ public class HocsinhBrowse extends StandardLookup<Hocsinh> {
         }
         gioiTinhField.clear();
         hocSinhField.clear();
+        namSinhField.clear();
+        excuteSearch(true);
     }
 
 
@@ -136,15 +141,16 @@ public class HocsinhBrowse extends StandardLookup<Hocsinh> {
         String hocsinh = hocSinhField.getValue();
         String gioitinh = gioiTinhField.getValue();
         Object donvi = donViField.getValue();
+        Object namsinh = namSinhField.getValue();
         Map<String, Object> params = new HashMap<>();
-        String query = returnQuery(donvi, params, hocsinh, gioitinh);
+        String query = returnQuery(donvi, params, hocsinh, gioitinh, namsinh);
 
         hocsinhsDl.setQuery(query);
         hocsinhsDl.setParameters(params);
         hocsinhsDl.load();
     }
 
-    private String returnQuery(Object donvi, Map<String, Object> params, String hocsinh, String gioitinh) {
+    private String returnQuery(Object donvi, Map<String, Object> params, String hocsinh, String gioitinh, Object namsinh) {
         String query = "select e from truonghoc_Hocsinh e ";
         String where = " where 1=1 ";
 
@@ -162,6 +168,10 @@ public class HocsinhBrowse extends StandardLookup<Hocsinh> {
         if (gioitinh != null) {
             where += "and e.gioitinhhocsinh = :gioitinh ";
             params.put("gioitinh", gioitinh);
+        }
+        if (namsinh != null){
+            where += "and e.ngaysinhhocsinh = :namsinh ";
+            params.put("namsinh", namsinh);
         }
         query = query + where;
         return query;
@@ -186,7 +196,7 @@ public class HocsinhBrowse extends StandardLookup<Hocsinh> {
                 .withMessage("Bạn có muốn chỉ xuất các hàng không?")
                 .withActions(
                         new DialogAction(DialogAction.Type.YES, Action.Status.PRIMARY).withCaption("Tất cả các hàng").withHandler(e -> {
-                            xuatExcel(xuatFileExcelService.layDanhSachHocsinh(donViField.getValue()));
+                            xuatExcel(xuatFileExcelService.layDanhSachHocsinh(donViField.getValue(), hocSinhField.getValue(), gioiTinhField.getValue(), namSinhField.getValue()));
                         }),
                         new DialogAction(DialogAction.Type.NO).withCaption("Hủy")
                 )

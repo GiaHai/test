@@ -136,5 +136,19 @@
             <button id="commitAndCloseBtn" action="windowCommitAndClose"/>
             <button id="closeBtn" action="windowClose"/>
         </hbox>
+<!--        <button id="printBtn" caption="Print" icon="PRINT" stylename="style-button-all"/>-->
+<!--        <jsComponent id="printCuba" initFunctionName="printCuba"-->
+<!--                     height="0px" width="0px">-->
+<!--            <dependencies>-->
+<!--                <dependency path="vaadin://pdfjsdist/jquery-1.7.1.min.js" type="JAVASCRIPT"/>-->
+<!--                <dependency path="vaadin://prints/printTheoBieuMau.js" type="JAVASCRIPT"/>-->
+<!--            </dependencies>-->
+<!--        </jsComponent>-->
+<!--        <hbox width="AUTO" spacing="true" align="TOP_LEFT">-->
+<!--            <label id="labelGhiChuSoLuongBanGhi" stylename="knkx-label-success" align="MIDDLE_LEFT"/>-->
+<!--        </hbox>-->
+<!--        <scrollBox id="scrollBoxReport">-->
+<!--            <vbox stylename="style-box htmlContent" id="vboxHtmlLayout" height="100%"/>-->
+<!--        </scrollBox>-->
     </layout>
 </window>

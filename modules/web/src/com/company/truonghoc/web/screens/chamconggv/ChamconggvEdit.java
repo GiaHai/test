@@ -72,7 +72,7 @@ public class ChamconggvEdit extends StandardEditor<Chamconggv> {
                 hotenGvField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien());
                 hotenGvField.setEditable(false);
                 ngaylamField.setValue(new Date());
-                ngaylamField.setEditable(false);
+//                ngaylamField.setEditable(false);
             }
         } else {
             donvigvField.setOptionsList(searchedService.loaddonvi());

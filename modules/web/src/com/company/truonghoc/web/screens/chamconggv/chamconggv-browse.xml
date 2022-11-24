@@ -91,6 +91,7 @@
                         caption="mainMsg://chamcong.ngaylam"/>
                 <column id="buoilam"
                         caption="mainMsg://chamcong.buoilam" generator="buoiLam"/>
+<!--                <column id="buoilam"/>-->
                 <column id="tienBuoi"
                         caption="Tiền công"/>
             </columns>

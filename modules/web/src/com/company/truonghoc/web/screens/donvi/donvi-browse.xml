@@ -25,8 +25,8 @@
             <properties include=".*"/>
         </filter>
         <table id="donvisTable"
-                    width="100%"
-                    dataContainer="donvisDc">
+               width="100%"
+               dataContainer="donvisDc">
             <actions>
                 <action id="create" type="create"/>
                 <action id="edit" type="edit"/>
@@ -35,9 +35,10 @@
             <columns>
                 <column id="stt" generator="stt" caption="STT"/>
                 <column id="tendonvi"
-                caption="mainMsg://donvi.tendonvi"/>
+                        caption="mainMsg://donvi.tendonvi"/>
+                <column id="sotienthoai" caption="mainMsg://donvi.sdt"/>
                 <column id="donvitrungtam"
-                caption="mainMsg://donvi.donvitrungtam"/>
+                        caption="mainMsg://donvi.donvitrungtam"/>
             </columns>
             <rowsCount/>
             <buttonsPanel id="buttonsPanel"

@@ -54,15 +54,19 @@
                                caption="Học sinh"
                                width="100%"
                                inputPrompt="Tên học sinh"/>
-                    <hbox spacing="true" css="margin-top: 20px;">
-                        <button id="timkiemBtn"
-                                invoke="timkiemExcute"
-                                stylename="Btntimkiem"
-                                caption="Tìm kiếm" icon="PICKERFIELD_OPEN" shortcut="ENTER"/>
-                        <button id="xoaBtn"
-                                stylename="Btntimkiem"
-                                caption="Xoá" icon="PICKERFIELD_CLEAR"/>
-                    </hbox>
+                    <lookupField id="namSinhField"
+                               caption="Năm sinh"
+                               width="100%"
+                               inputPrompt="Năm sinh" nullName="Năm sinh"/>
+                </vbox>
+                <vbox spacing="true" css="margin-top: 20px;">
+                    <button id="timkiemBtn"
+                            invoke="timkiemExcute"
+                            stylename="Btntimkiem"
+                            caption="Tìm kiếm" icon="PICKERFIELD_OPEN" shortcut="ENTER"/>
+                    <button id="xoaBtn"
+                            stylename="Btntimkiem"
+                            caption="Xoá" icon="PICKERFIELD_CLEAR" css="margin-top: 20px;"/>
                 </vbox>
             </hbox>
         </groupBox>

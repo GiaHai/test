@@ -6,18 +6,25 @@ import com.company.truonghoc.entity.Hocsinh;
 import com.company.truonghoc.service.DulieuUserService;
 import com.company.truonghoc.service.SearchedService;
 import com.haulmont.cuba.core.global.DataManager;
+import com.haulmont.cuba.core.sys.AppContext;
+import com.haulmont.cuba.gui.UiComponents;
 import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.model.CollectionContainer;
 import com.haulmont.cuba.gui.model.CollectionLoader;
 import com.haulmont.cuba.gui.screen.*;
 import com.company.truonghoc.entity.Hocphi;
 import com.haulmont.cuba.security.global.UserSession;
+import com.haulmont.cuba.web.gui.components.JavaScriptComponent;
+import freemarker.template.Configuration;
+import freemarker.template.Template;
+import freemarker.template.TemplateExceptionHandler;
+import freemarker.template.Version;
 
 import javax.inject.Inject;
-import java.util.Arrays;
+import java.io.File;
+import java.io.StringWriter;
+import java.util.*;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 
 @UiController("truonghoc_Hocphi.edit")
 @UiDescriptor("hocphi-edit.xml")
@@ -52,9 +59,21 @@ public class HocphiEdit extends StandardEditor<Hocphi> {
     protected SearchedService searchedService;
     @Inject
     protected TextField<Long> sotienthutheohdField;
+//    @Inject
+//    protected JavaScriptComponent printCuba;
+//    @Inject
+//    protected VBoxLayout vboxHtmlLayout;
+    @Inject
+    protected UiComponents uiComponents;
+//    private String webBaseFolder;
+//    private String pathPdf;
+//    private HtmlBoxLayout htmlBoxReport;
+//    private String PATH_TEMPLATE = "";
 
     @Subscribe
     protected void onInit(InitEvent event) {
+//        PATH_TEMPLATE = AppContext.getProperty("knkx.report.template.html");
+
         List<String> list = Arrays.asList("Tiền mặt", "Chuyển khoản");
         hinhthucthanhtoanField.setOptionsList(list);
         tinhtrangthanhtoanFiedl.setVisible(false);
@@ -116,4 +135,49 @@ public class HocphiEdit extends StandardEditor<Hocphi> {
     protected void onDonViFieldValueChange(HasValue.ValueChangeEvent<Donvi> event) {
         hovatenField.setOptionsList(searchedService.loadHs(donViField.getValue().getTendonvi()));
     }
+
+
+//    @Subscribe("printBtn")
+//    protected void onPrintBtnClick(Button.ClickEvent event) {
+//        Map<String, Object> input = new HashMap<>();
+//
+//
+//        loadTemplate(input);
+//        printCuba.callFunction("printNow");
+//    }
+
+//    private void loadTemplate(Map<String, Object> input) {
+//        try {
+//            if (htmlBoxReport != null) {
+//                vboxHtmlLayout.remove(htmlBoxReport);
+//            }
+//
+//            htmlBoxReport = uiComponents.create(HtmlBoxLayout.NAME);
+//
+//            Version version = new Version("2.3.0");
+//            Configuration cfg = new Configuration(version);
+//
+//            // Where do we load the templates from:
+//            cfg.setDirectoryForTemplateLoading(new File(PATH_TEMPLATE));
+//
+//            // Some other recommended settings:
+//            cfg.setIncompatibleImprovements(new Version(2, 3, 20));
+//            cfg.setDefaultEncoding("UTF-8");
+//            cfg.setLocale(Locale.US);
+//            cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
+//
+//            Template template = cfg.getTemplate("phieuin.html");
+//
+//            StringWriter sw = new StringWriter();
+//            template.process(input, sw);
+//
+//
+//            htmlBoxReport.setWidth("100%");
+//            htmlBoxReport.setHeight("100%");
+//            htmlBoxReport.setTemplateContents(sw.toString());
+//
+//            vboxHtmlLayout.add(htmlBoxReport);
+//        } catch (Exception ex) {
+//        }
+//    }
 }

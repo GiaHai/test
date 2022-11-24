@@ -21,8 +21,19 @@ public class Donvi extends StandardEntity {
     @NotNull(message = "{msg://truonghoc_Donvi.tendonvi.validation.NotNull}")
     private String tendonvi;
 
+    @Column(name = "SOTIENTHOAI")
+    private String sotienthoai;
+
     @Column(name = "DONVITRUNGTAM")
     private Boolean donvitrungtam = false;
+
+    public String getSotienthoai() {
+        return sotienthoai;
+    }
+
+    public void setSotienthoai(String sotienthoai) {
+        this.sotienthoai = sotienthoai;
+    }
 
     public void setDonvitrungtam(Boolean donvitrungtam) {
         this.donvitrungtam = donvitrungtam;

@@ -13,7 +13,10 @@
             <property name="ghichu"/>
             <property name="donvi"/>
         </property>
-        <property name="donvi" view="_minimal"/>
+        <property name="donvi" view="_minimal">
+            <property name="sotienthoai"/>
+            <property name="donvitrungtam"/>
+        </property>
     </view>
     <view entity="truonghoc_Hocsinh" name="hocsinh-view" extends="_local" systemProperties="true">
         <property name="donvi" view="_minimal"/>
@@ -51,6 +54,7 @@
         <property name="substitutions" view="user.edit"/>
         <property name="loockup_donvi" view="_minimal">
             <property name="donvitrungtam"/>
+            <property name="sotienthoai"/>
         </property>
         <property name="giaovien" view="_minimal"/>
 

@@ -1,6 +1,7 @@
 package com.company.truonghoc.service;
 
 import com.company.truonghoc.entity.*;
+import com.company.truonghoc.entity.tienich.Namsinh;
 
 import java.util.Date;
 import java.util.List;
@@ -11,7 +12,7 @@ public interface XuatFileExcelService {
 
     List<Giaovien> layDanhSachGiaovien(Donvi donVi, String giaoVien);
 
-    List<Hocsinh> layDanhSachHocsinh(Donvi donVi);
+    List<Hocsinh> layDanhSachHocsinh(Donvi donVi, String hocsinh, String gioitinh, Namsinh namsinh);
 
     List<Lophoc> layDanhSachLophoc(Donvi donVi, Giaovien giaoVien, Tenlop lopHoc);
 

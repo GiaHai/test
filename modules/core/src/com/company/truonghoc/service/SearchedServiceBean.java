@@ -1,6 +1,7 @@
 package com.company.truonghoc.service;
 
 import com.company.truonghoc.entity.*;
+import com.company.truonghoc.entity.tienich.Namsinh;
 import com.haulmont.cuba.core.EntityManager;
 import com.haulmont.cuba.core.Persistence;
 import com.haulmont.cuba.core.Query;
@@ -101,6 +102,13 @@ public class SearchedServiceBean implements SearchedService {
                 .parameter("tungay", tuNgay)
                 .parameter("denngay", denNgay)
                 .parameter("ngayLam", ngayLam)
+                .list();
+    }
+
+    @Override
+    public List<Namsinh> loadNamSinh() {
+        return dataManager.load(Namsinh.class)
+                .query("select e from truonghoc_Namsinh e")
                 .list();
     }
 }

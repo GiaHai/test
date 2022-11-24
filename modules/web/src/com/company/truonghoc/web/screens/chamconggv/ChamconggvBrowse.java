@@ -246,7 +246,6 @@ public class ChamconggvBrowse extends StandardLookup<Chamconggv> {
         exporter.exportDataCollectionTitleInFile(collection, columns, properties, exportDisplay, "Danh sách chấm công giáo viên");
     }
 
-
     public Component buoiLam(Chamconggv e) {
         Label label = uiComponents.create(Label.class);
         switch (e.getBuoilam()) {

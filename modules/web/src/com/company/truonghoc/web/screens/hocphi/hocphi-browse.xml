@@ -125,11 +125,19 @@
                 <button id="removeBtn" action="hocphisTable.remove"/>
                 <button id="excelBtn" caption="Xuất Excel"
                         icon="font-icon:FILE_EXCEL_O" stylename="style-button-all"/>
+                <button id="printBtn" caption="In" stylename="style-button-all" icon="PRINT"/>
+                <jsComponent id="printerJsLb" initFunctionName="knkxPrinter" height="0px" width="0px">
+                    <dependencies>
+                        <dependency path="vaadin://prints/print.min.js" type="JAVASCRIPT"/>
+                    </dependencies>
+                </jsComponent>
+                <jsComponent id="printerPdf" initFunctionName="knkxPrinter" height="0px" width="0px">
+                    <dependencies>
+                        <dependency path="vaadin://prints/knkxPrint.js" type="JAVASCRIPT"/>
+                    </dependencies>
+                </jsComponent>
             </buttonsPanel>
         </table>
-        <hbox id="lookupActions" spacing="true" visible="false">
-            <button action="lookupSelectAction"/>
-            <button action="lookupCancelAction"/>
-        </hbox>
+
     </layout>
 </window>

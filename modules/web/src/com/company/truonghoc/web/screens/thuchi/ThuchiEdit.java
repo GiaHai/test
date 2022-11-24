@@ -4,6 +4,7 @@ import com.company.truonghoc.entity.Donvi;
 import com.company.truonghoc.entity.Giaovien;
 import com.company.truonghoc.service.DulieuUserService;
 import com.company.truonghoc.service.SearchedService;
+import com.company.truonghoc.utils.StringUtility;
 import com.haulmont.cuba.gui.Dialogs;
 import com.haulmont.cuba.gui.Notifications;
 import com.haulmont.cuba.gui.components.*;
@@ -51,6 +52,8 @@ public class ThuchiEdit extends StandardEditor<Thuchi> {
     protected Dialogs dialogs;
     @Inject
     protected SearchedService searchedService;
+    @Inject
+    protected TextField<String> khoanchiField;
 
     @Subscribe
     protected void onInit(InitEvent event) {
@@ -119,4 +122,5 @@ public class ThuchiEdit extends StandardEditor<Thuchi> {
     protected void onHanchiFieldValueChange(HasValue.ValueChangeEvent<Date> event) {
         tinhtrangchiField.setValue("Chưa thanh toán");
     }
+
 }

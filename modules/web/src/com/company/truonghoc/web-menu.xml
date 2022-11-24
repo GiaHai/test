@@ -6,8 +6,6 @@
         <item screen="truonghoc_Hocsinh.browse" caption="mainMsg://menu_config.truonghoc_Hocsinh.browse"/>
         <item screen="truonghoc_Lophoc.browse" caption="mainMsg://menu_config.truonghoc_Lophoc.browse"/>
         <item screen="truonghoc_Tenlop.browse" caption="mainMsg://menu_config.truonghoc_Tenlop.browse"/>
-
-
     </menu>
     <menu id="application-nhap" caption="mainMsg://menu_config.application-truonghoc5" expanded="true">
         <item screen="truonghoc_Lophoc.edit" caption="Nhập Lớp"/>

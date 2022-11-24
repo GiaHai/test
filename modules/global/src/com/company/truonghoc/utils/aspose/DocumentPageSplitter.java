@@ -1,5 +1,5 @@
-//                    xoá ngày 04-10-2022
-
+////                    xoá ngày 04-10-2022
+//
 //package com.company.truonghoc.utils.aspose;
 //
 //import com.aspose.words.Document;
@@ -8,7 +8,7 @@
 //
 //public class DocumentPageSplitter {
 //
-//    private PageNumberFinder pageNumberFinder;
+////    private PageNumberFinder pageNumberFinder;
 //
 //    /// <summary>
 //    /// Initializes a new instance of the <see cref="DocumentPageSplitter"/> class.
@@ -16,16 +16,16 @@
 //    /// It is recommended not to modify the document afterwards.
 //    /// </summary>
 //    /// <param name="source">source document</param>
-//    public DocumentPageSplitter(Document source) throws Exception {
-//        this.pageNumberFinder = PageNumberFinderFactory.create(source);
-//    }
+////    public DocumentPageSplitter(Document source) throws Exception {
+////        this.pageNumberFinder = PageNumberFinderFactory.create(source);
+////    }
 //
 //    /// <summary>
 //    /// Gets the document this instance works with.
 //    /// </summary>
-//    private Document getDocument() {
-//        return this.pageNumberFinder.getDocument();
-//    }
+////    private Document getDocument() {
+////        return this.pageNumberFinder.getDocument();
+////    }
 //
 //    /// <summary>
 //    /// Gets the document of a page.
@@ -52,12 +52,12 @@
 //    /// <returns>
 //    /// The <see cref="Document"/>.
 //    /// </returns>
-//    public Document getDocumentOfPageRange(int startIndex, int endIndex) throws Exception {
-//        Document result = (Document) this.getDocument().deepClone(false);
-//        for (Section section : (Iterable<Section>) this.pageNumberFinder.retrieveAllNodesOnPages(startIndex, endIndex, NodeType.SECTION)) {
-//            result.appendChild(result.importNode(section, true));
-//        }
-//
-//        return result;
-//    }
+////    public Document getDocumentOfPageRange(int startIndex, int endIndex) throws Exception {
+////        Document result = (Document) this.getDocument().deepClone(false);
+////        for (Section section : (Iterable<Section>) this.pageNumberFinder.retrieveAllNodesOnPages(startIndex, endIndex, NodeType.SECTION)) {
+////            result.appendChild(result.importNode(section, true));
+////        }
+////
+////        return result;
+////    }
 //}

@@ -7,6 +7,7 @@ import com.company.truonghoc.service.SearchedService;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.gui.components.HasValue;
 import com.haulmont.cuba.gui.components.LookupField;
+import com.haulmont.cuba.gui.components.TextField;
 import com.haulmont.cuba.gui.model.CollectionContainer;
 import com.haulmont.cuba.gui.model.CollectionLoader;
 import com.haulmont.cuba.gui.screen.*;
@@ -42,6 +43,8 @@ public class TenlopEdit extends StandardEditor<Tenlop> {
     protected LookupField<String> thanghocField;
     @Inject
     protected SearchedService searchedService;
+    @Inject
+    protected TextField<String> tenlopField;
 
     @Subscribe
     protected void onInit(InitEvent event) {
@@ -70,4 +73,22 @@ public class TenlopEdit extends StandardEditor<Tenlop> {
             giaoviencnField.clear();
         }
     }
+
+    public static String toTitleCase(String word) {
+        return Character.toUpperCase(word.charAt(0)) + word.substring(1);
+    }
+
+    @Subscribe("tenlopField")
+    protected void onTenlopFieldValueChange(HasValue.ValueChangeEvent<String> event) {
+        if (tenlopField.getValue() != null) {
+            String[] splitPhrase = tenlopField.getValue().split(" ");
+            String result = "";
+
+            for (String word : splitPhrase) {
+                result += toTitleCase(word) + " ";
+            }
+            tenlopField.setValue(result.trim());
+        }
+    }
+
 }

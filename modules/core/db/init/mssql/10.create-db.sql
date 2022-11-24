@@ -165,7 +165,7 @@ create table TRUONGHOC_CHAMCONGGV (
     HOTENGV_ID uniqueidentifier,
     DONVIGV_ID uniqueidentifier,
     NGAYLAM datetime2,
-    BUOILAM nvarchar(255),
+    BUOILAM integer,
     TIEN_BUOI integer,
     --
     primary key nonclustered (ID)
@@ -249,6 +249,7 @@ create table TRUONGHOC_DONVI (
     --
     UPDATE_ datetime2,
     TENDONVI nvarchar(255) not null,
+    SOTIENTHOAI nvarchar(255),
     DONVITRUNGTAM tinyint,
     --
     primary key nonclustered (ID)

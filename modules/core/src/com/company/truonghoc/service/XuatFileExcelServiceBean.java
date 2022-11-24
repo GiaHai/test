@@ -1,6 +1,7 @@
 package com.company.truonghoc.service;
 
 import com.company.truonghoc.entity.*;
+import com.company.truonghoc.entity.tienich.Namsinh;
 import com.haulmont.cuba.core.Persistence;
 import com.haulmont.cuba.core.global.DataManager;
 import org.springframework.stereotype.Service;
@@ -35,10 +36,29 @@ public class XuatFileExcelServiceBean implements XuatFileExcelService {
     }
 
     @Override
-    public List<Hocsinh> layDanhSachHocsinh(Donvi donVi) {
+    public List<Hocsinh> layDanhSachHocsinh(Donvi donVi, String hocsinh, String gioitinh, Namsinh namsinh) {
         String query = "select e from truonghoc_Hocsinh e ";
         String where = "where 1=1 ";
         Map<String, Object> params = new HashMap<>();
+        if (donVi != null) {
+            where += "and e.donvi = :donvi ";
+            params.put("donvi", donVi);
+        }
+
+        //Học sinh
+        if (!StringUtils.isEmpty(hocsinh)) {
+            where += "and e.tenhocsinh like :tenhocsinh ";
+            params.put("tenhocsinh", "%" + hocsinh + "%");
+        }
+        if (gioitinh != null) {
+            where += "and e.gioitinhhocsinh = :gioitinh ";
+            params.put("gioitinh", gioitinh);
+        }
+        if (namsinh != null){
+            where += "and e.ngaysinhhocsinh = :namsinh ";
+            params.put("namsinh", namsinh);
+        }
+
         if (donVi != null) {
             where += " and e.donvi.id = :donVi";
             params.put("donVi", donVi.getId());

@@ -12,7 +12,8 @@ public class TruonghocWebTestContainer extends TestContainer {
                 "com.haulmont.cuba",
                 "com.haulmont.addon.helium",
                 "com.haulmont.charts",
-                "com.haulmont.addon.globalevents");
+                "com.haulmont.addon.globalevents",
+                "com.haulmont.addon.restapi");
         appPropertiesFiles = Arrays.asList(
                 // List the files defined in your web.xml
                 // in appPropertiesConfig context parameter of the web module

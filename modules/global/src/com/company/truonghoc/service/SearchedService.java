@@ -1,6 +1,7 @@
 package com.company.truonghoc.service;
 
 import com.company.truonghoc.entity.*;
+import com.company.truonghoc.entity.tienich.Namsinh;
 import com.haulmont.cuba.core.entity.KeyValueEntity;
 
 import java.util.Date;
@@ -25,4 +26,6 @@ public interface SearchedService {
     List<Chamconggv> tinhca(Donvi donVi, Giaovien giaoVien, Date tuNgay, Date denNgay, Integer ngayLam);
 
     List<KeyValueEntity> caChieudaythem(Donvi donVi, Giaovien giaoVien, Date tuNgay, Date denNgay, Integer ngayLam);
+
+    List<Namsinh> loadNamSinh();
 }

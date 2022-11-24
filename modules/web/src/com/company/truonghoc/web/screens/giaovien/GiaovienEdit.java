@@ -62,5 +62,21 @@ public class GiaovienEdit extends StandardEditor<Giaovien> {
             donViField.setOptionsList(searchedService.loaddonvi());
         }
     }
+    public static String toTitleCase(String word) {
+        return Character.toUpperCase(word.charAt(0)) + word.substring(1);
+    }
+
+    @Subscribe("tengiaovienField")
+    protected void onTengiaovienFieldValueChange(HasValue.ValueChangeEvent<String> event) {
+        if (tengiaovienField.getValue() != null){
+            String[] splitPhrase = tengiaovienField.getValue().split(" ");
+            String result = "";
+
+            for (String word : splitPhrase) {
+                result += toTitleCase(word) + " ";
+            }
+            tengiaovienField.setValue(result.trim());
+        }
+    }
 
 }
