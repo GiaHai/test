@@ -29,6 +29,9 @@ import com.haulmont.cuba.gui.screen.LookupComponent;
 import com.haulmont.cuba.security.global.UserSession;
 import com.haulmont.cuba.web.gui.components.JavaScriptComponent;
 import org.springframework.util.StringUtils;
+
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.Calendar;
 
 import javax.inject.Inject;
@@ -285,6 +288,7 @@ public class HocphiBrowse extends StandardLookup<Hocphi> {
             row.setValue("handong", e.getValue("handong"));
             row.setValue("hinhthucthanhtoan", e.getValue("hinhthucthanhtoan"));
             row.setValue("ngaydong", e.getValue("ngaydong"));
+
             if (e.getNgaydong() != null) {
                 row.setValue("checkhandong", "Đã đóng");
             } else {
@@ -327,12 +331,13 @@ public class HocphiBrowse extends StandardLookup<Hocphi> {
     @Subscribe("printBtn")
     protected void onPrintBtnClick(Button.ClickEvent event) {
         Calendar calendar = Calendar.getInstance();
+        DecimalFormat currency = new DecimalFormat ("##,###,###.##");
 
         Hocphi hocphi = hocphisTable.getSingleSelected();
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("donvithanhtoan", donViSession.getTendonvi());
         parameters.put("tenhocsinh", hocphi.getHovaten().getTenhocsinh());
-        parameters.put("thanhtien", hocphi.getSotienthutheohd());
+        parameters.put("thanhtien", currency.format(hocphi.getSotienthutheohd()));
         parameters.put("hinhthucthanhtoan", hocphi.getHinhthucthanhtoan());
         parameters.put("ngay", calendar.get(Calendar.DATE));
         parameters.put("thang", calendar.get(Calendar.MONTH) + 1 );
@@ -356,6 +361,8 @@ public class HocphiBrowse extends StandardLookup<Hocphi> {
                 }
             });
         }
+
+
     }
 
 
