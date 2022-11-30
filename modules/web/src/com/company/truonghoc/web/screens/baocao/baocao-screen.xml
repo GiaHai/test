@@ -64,16 +64,16 @@
                                            resolution="DAY"
                                            caption="mainMsg://denngay"
                                            stylename="nhap"/>
+                                <hbox stylename="css-hbox-timkiem" spacing="true" align="BOTTOM_LEFT">
+                                    <button id="timkiemBtn"
+                                            caption="Tìm kiếm"
+                                            stylename="Btntimkiem"/>
+                                    <button id="clearBtn"
+                                            caption="Xóa"
+                                            stylename="Btntimkiem"/>
+                                </hbox>
+                            </hbox>
 
-                            </hbox>
-                            <hbox stylename="css-hbox-timkiem" spacing="true">
-                                <button id="timkiemBtn"
-                                        caption="Tìm kiếm"
-                                        stylename="Btntimkiem"/>
-                                <button id="clearBtn"
-                                        caption="Xóa"
-                                        stylename="Btntimkiem"/>
-                            </hbox>
                         </vbox>
                     </hbox>
                 </groupBox>
@@ -85,7 +85,7 @@
                                            categoryField="title"
                                            height="auto"
                                            marginBottom="26"
-                                           marginLeft="100"
+                                           marginLeft="105"
                                            marginRight="8"
                                            marginTop="10"
                                            startDuration="1"
@@ -116,6 +116,8 @@
                                                 tickLength="0"/>
                             <chart:export/>
                         </chart:serialChart>
+                    </hbox>
+                    <hbox width="100%">
                         <!--LƯƠNG THÁNG-->
                         <chart:serialChart additionalFields="additional"
                                            addClassNames="true"
@@ -157,42 +159,42 @@
                     </hbox>
                     <!--            THUCHITIENHOCPHI-->
                     <hbox width="100%">
-                        <chart:serialChart additionalFields="additional"
-                                           addClassNames="true"
-                                           autoMargins="false"
-                                           categoryField="title"
-                                           height="auto"
-                                           marginBottom="26"
-                                           marginLeft="100"
-                                           marginRight="8"
-                                           marginTop="10"
-                                           startDuration="1"
-                                           theme="LIGHT"
-                                           id="thutienhocphi"
-                                           align="TOP_LEFT"
-                                           width="100%">
-                            <chart:valueAxes>
-                                <chart:axis
-                                        title="Thu chi tiền học phi"
-                                        position="BOTTOM"/>
-                            </chart:valueAxes>
-                            <chart:balloon adjustBorderColor="false"
-                                           color="BLACK"
-                                           horizontalPadding="10"
-                                           verticalPadding="8"/>
-                            <chart:graphs>
-                                <chart:graph alphaField="alpha"
-                                             dashLengthField="dashLengthColumn"
-                                             fillAlphas="1"
-                                             title="value"
-                                             type="COLUMN"
-                                             valueField="value"/>
-                            </chart:graphs>
-                            <chart:categoryAxis axisAlpha="0"
-                                                gridPosition="START"
-                                                tickLength="0"/>
-                            <chart:export/>
-                        </chart:serialChart>
+<!--                        <chart:serialChart additionalFields="additional"-->
+<!--                                           addClassNames="true"-->
+<!--                                           autoMargins="false"-->
+<!--                                           categoryField="title"-->
+<!--                                           height="auto"-->
+<!--                                           marginBottom="26"-->
+<!--                                           marginLeft="100"-->
+<!--                                           marginRight="8"-->
+<!--                                           marginTop="10"-->
+<!--                                           startDuration="1"-->
+<!--                                           theme="LIGHT"-->
+<!--                                           id="thutienhocphi"-->
+<!--                                           align="TOP_LEFT"-->
+<!--                                           width="100%">-->
+<!--                            <chart:valueAxes>-->
+<!--                                <chart:axis-->
+<!--                                        title="Thu chi tiền học phi"-->
+<!--                                        position="BOTTOM"/>-->
+<!--                            </chart:valueAxes>-->
+<!--                            <chart:balloon adjustBorderColor="false"-->
+<!--                                           color="BLACK"-->
+<!--                                           horizontalPadding="10"-->
+<!--                                           verticalPadding="8"/>-->
+<!--                            <chart:graphs>-->
+<!--                                <chart:graph alphaField="alpha"-->
+<!--                                             dashLengthField="dashLengthColumn"-->
+<!--                                             fillAlphas="1"-->
+<!--                                             title="value"-->
+<!--                                             type="COLUMN"-->
+<!--                                             valueField="value"/>-->
+<!--                            </chart:graphs>-->
+<!--                            <chart:categoryAxis axisAlpha="0"-->
+<!--                                                gridPosition="START"-->
+<!--                                                tickLength="0"/>-->
+<!--                            <chart:export/>-->
+<!--                        </chart:serialChart>-->
                         <!--THU CHI-->
                         <chart:serialChart additionalFields="additional"
                                            addClassNames="true"
@@ -210,7 +212,7 @@
                                            width="100%">
                             <chart:valueAxes>
                                 <chart:axis axisAlpha="0"
-                                            title="Thu chi"
+                                            title="Khoản chi"
                                             position="BOTTOM"/>
                             </chart:valueAxes>
                             <chart:balloon adjustBorderColor="false"
@@ -259,12 +261,12 @@
                                    resolution="DAY"
                                    caption="mainMsg://denngay"
                                    stylename="nhap"/>
-                    </hbox>
-                    <hbox stylename="css-hbox-timkiem" spacing="true">
-                        <button id="timkiemtab2"
-                                caption="Tìm kiếm"/>
-                        <button id="cleartab2Btn"
-                                caption="Xóa"/>
+                        <hbox stylename="css-hbox-timkiem" spacing="true" align="BOTTOM_LEFT">
+                            <button id="timkiemtab2"
+                                    caption="Tìm kiếm"/>
+                            <button id="cleartab2Btn"
+                                    caption="Xóa"/>
+                        </hbox>
                     </hbox>
                 </vbox>
                 <chart:pieChart id="donutChart"

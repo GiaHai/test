@@ -26,22 +26,22 @@ public class DulieuUserServiceBean implements DulieuUserService {
     }
 
     //    -----------------------------------------
-    Object abc;
-
-    @Override
-    public UserExt timEditdonvi(String login) {
-        UserExt userExt = LoadtimEditdonvi(login);
-        abc = userExt.getLoockup_donvi();
-        return userExt;
-    }
-
-
-    private UserExt LoadtimEditdonvi(String login) {
-        return dataManager.load(UserExt.class)
-                .query("select e from truonghoc_UserExt e where e.login = :login")
-                .parameter("login", login)
-                .one();
-    }
+//    Object abc;
+//
+//    @Override
+//    public UserExt timEditdonvi(String login) {
+//        UserExt userExt = LoadtimEditdonvi(login);
+//        abc = userExt.getLoockup_donvi();
+//        return userExt;
+//    }
+//
+//
+//    private UserExt LoadtimEditdonvi(String login) {
+//        return dataManager.load(UserExt.class)
+//                .query("select e from truonghoc_UserExt e where e.login = :login")
+//                .parameter("login", login)
+//                .one();
+//    }
     //    -----------------------------------------
 
     @Override
@@ -57,6 +57,5 @@ public class DulieuUserServiceBean implements DulieuUserService {
 
         }
         return test;
-
     }
 }

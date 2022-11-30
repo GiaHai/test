@@ -39,8 +39,8 @@ public class BaocaoScreen extends Screen {
     protected SerialChart luongthang;
     @Inject
     protected SerialChart thuchi;
-    @Inject
-    protected SerialChart thutienhocphi;
+//    @Inject
+//    protected SerialChart thutienhocphi;
     @Inject
     protected CollectionLoader<Donvi> donvisDl;
     @Inject
@@ -108,13 +108,13 @@ public class BaocaoScreen extends Screen {
                         "value", item.getValue("sotien")));
 
             }
-            List<MapDataItem> thutienhocphis = new ArrayList<>();
-            for (KeyValueEntity item : Loadthutienhocphi1()) {
-                thutienhocphis.add(MapDataItem.of(
-                        "title", item.getValue("donvi"),
-                        "value", item.getValue("sotien")));
-
-            }
+//            List<MapDataItem> thutienhocphis = new ArrayList<>();
+//            for (KeyValueEntity item : Loadthutienhocphi1()) {
+//                thutienhocphis.add(MapDataItem.of(
+//                        "title", item.getValue("donvi"),
+//                        "value", item.getValue("sotien")));
+//
+//            }
             List<MapDataItem> thuchis = new ArrayList<>();
             for (KeyValueEntity item : Loadthuchi1()) {
                 thuchis.add(MapDataItem.of(
@@ -123,7 +123,7 @@ public class BaocaoScreen extends Screen {
 
             }
             hocphi.setDataProvider(new ListDataProvider(hocphis));
-            thutienhocphi.setDataProvider(new ListDataProvider(thutienhocphis));
+//            thutienhocphi.setDataProvider(new ListDataProvider(thutienhocphis));
             luongthang.setDataProvider(new ListDataProvider(luongthangs));
             thuchi.setDataProvider(new ListDataProvider(thuchis));
         }
@@ -145,13 +145,13 @@ public class BaocaoScreen extends Screen {
                     "value", item.getValue("sotien")));
 
         }
-        List<MapDataItem> thutienhocphis = new ArrayList<>();
-        for (KeyValueEntity item : Loadthutienhocphi(tungayField.getValue(), denngayField.getValue())) {
-            thutienhocphis.add(MapDataItem.of(
-                    "title", item.getValue("donvi"),
-                    "value", item.getValue("sotien")));
-
-        }
+//        List<MapDataItem> thutienhocphis = new ArrayList<>();
+//        for (KeyValueEntity item : Loadthutienhocphi(tungayField.getValue(), denngayField.getValue())) {
+//            thutienhocphis.add(MapDataItem.of(
+//                    "title", item.getValue("donvi"),
+//                    "value", item.getValue("sotien")));
+//
+//        }
         List<MapDataItem> thuchis = new ArrayList<>();
         for (KeyValueEntity item : Loadthuchi(tungayField.getValue(), denngayField.getValue())) {
             thuchis.add(MapDataItem.of(
@@ -160,7 +160,7 @@ public class BaocaoScreen extends Screen {
 
         }
         hocphi.setDataProvider(new ListDataProvider(hocphis));
-        thutienhocphi.setDataProvider(new ListDataProvider(thutienhocphis));
+//        thutienhocphi.setDataProvider(new ListDataProvider(thutienhocphis));
         luongthang.setDataProvider(new ListDataProvider(luongthangs));
         thuchi.setDataProvider(new ListDataProvider(thuchis));
     }
@@ -212,18 +212,18 @@ public class BaocaoScreen extends Screen {
 
     }
 
-    private List<KeyValueEntity> Loadthutienhocphi(Date tungay, Date dengay) {
-        String queryStr = "select sum(e.thanhtien) sotien, e.donvi.tendonvi donvi from truonghoc_Thutienhocphi e" +
-                " where e.thanhtien is not null and e.hinhthucthanhtoan is not null and e.ngaythanhtoan >= :tungay and :denngay >= e.ngaythanhtoan";
-        queryStr += " group by e.donvi ";
-
-        return dataManager.loadValues(queryStr)
-                .properties("sotien", "donvi")
-                .parameter("tungay", tungay)
-                .parameter("denngay", dengay)
-                .list();
-
-    }
+//    private List<KeyValueEntity> Loadthutienhocphi(Date tungay, Date dengay) {
+//        String queryStr = "select sum(e.thanhtien) sotien, e.donvi.tendonvi donvi from truonghoc_Thutienhocphi e" +
+//                " where e.thanhtien is not null and e.hinhthucthanhtoan is not null and e.ngaythanhtoan >= :tungay and :denngay >= e.ngaythanhtoan";
+//        queryStr += " group by e.donvi ";
+//
+//        return dataManager.loadValues(queryStr)
+//                .properties("sotien", "donvi")
+//                .parameter("tungay", tungay)
+//                .parameter("denngay", dengay)
+//                .list();
+//
+//    }
 
 
 
@@ -261,16 +261,16 @@ public class BaocaoScreen extends Screen {
 
     }
 
-    private List<KeyValueEntity> Loadthutienhocphi1() {
-        String queryStr = "select sum(e.thanhtien) sotien, e.donvi.tendonvi donvi from truonghoc_Thutienhocphi e" +
-                " where e.thanhtien is not null and e.hinhthucthanhtoan is not null";
-        queryStr += " group by e.donvi ";
-
-        return dataManager.loadValues(queryStr)
-                .properties("sotien", "donvi")
-                .list();
-
-    }
+//    private List<KeyValueEntity> Loadthutienhocphi1() {
+//        String queryStr = "select sum(e.thanhtien) sotien, e.donvi.tendonvi donvi from truonghoc_Thutienhocphi e" +
+//                " where e.thanhtien is not null and e.hinhthucthanhtoan is not null";
+//        queryStr += " group by e.donvi ";
+//
+//        return dataManager.loadValues(queryStr)
+//                .properties("sotien", "donvi")
+//                .list();
+//
+//    }
 
     @Subscribe("clearBtn")
     protected void onClearBtnClick(Button.ClickEvent event) {
@@ -291,13 +291,13 @@ public class BaocaoScreen extends Screen {
                     "value", item.getValue("sotien")));
 
         }
-        List<MapDataItem> thutienhocphis = new ArrayList<>();
-        for (KeyValueEntity item : Loadthutienhocphi1()) {
-            thutienhocphis.add(MapDataItem.of(
-                    "title", item.getValue("donvi"),
-                    "value", item.getValue("sotien")));
-
-        }
+//        List<MapDataItem> thutienhocphis = new ArrayList<>();
+//        for (KeyValueEntity item : Loadthutienhocphi1()) {
+//            thutienhocphis.add(MapDataItem.of(
+//                    "title", item.getValue("donvi"),
+//                    "value", item.getValue("sotien")));
+//
+//        }
         List<MapDataItem> thuchis = new ArrayList<>();
         for (KeyValueEntity item : Loadthuchi1()) {
             thuchis.add(MapDataItem.of(
@@ -306,7 +306,7 @@ public class BaocaoScreen extends Screen {
 
         }
         hocphi.setDataProvider(new ListDataProvider(hocphis));
-        thutienhocphi.setDataProvider(new ListDataProvider(thutienhocphis));
+//        thutienhocphi.setDataProvider(new ListDataProvider(thutienhocphis));
         luongthang.setDataProvider(new ListDataProvider(luongthangs));
         thuchi.setDataProvider(new ListDataProvider(thuchis));
     }
@@ -325,15 +325,15 @@ public class BaocaoScreen extends Screen {
                 .one();
     }
 
-    public Long LoadthutienhocphiTab2(String donvi, Date tungay, Date dengay) {
-        return dataManager.loadValue("select sum(e.thanhtien) from truonghoc_Thutienhocphi e" +
-                        " where e.donvi.tendonvi = :donvi and e.thanhtien is not null and e.hinhthucthanhtoan is not null and e.ngaythanhtoan >= :tungay and :denngay >= e.ngaythanhtoan"
-                , Long.class)
-                .parameter("donvi", donvi)
-                .parameter("tungay", tungay)
-                .parameter("denngay", dengay)
-                .one();
-    }
+//    public Long LoadthutienhocphiTab2(String donvi, Date tungay, Date dengay) {
+//        return dataManager.loadValue("select sum(e.thanhtien) from truonghoc_Thutienhocphi e" +
+//                        " where e.donvi.tendonvi = :donvi and e.thanhtien is not null and e.hinhthucthanhtoan is not null and e.ngaythanhtoan >= :tungay and :denngay >= e.ngaythanhtoan"
+//                , Long.class)
+//                .parameter("donvi", donvi)
+//                .parameter("tungay", tungay)
+//                .parameter("denngay", dengay)
+//                .one();
+//    }
 
     public Long LoadluongthangTab2(String donvi, Date tungay, Date dengay) {
         return dataManager.loadValue("select sum(e.tonglinh) from truonghoc_Luongthang e" +
@@ -368,19 +368,20 @@ public class BaocaoScreen extends Screen {
             try {
                 ListDataProvider dataProvider = new ListDataProvider();
                 Long hocphi = LoadhocphiTab2(timkiemdonviField.getValue(), tungaytab2Field.getValue(), denngaytab2Field.getValue());
-                Long thutienhocphi = LoadthutienhocphiTab2(timkiemdonviField.getValue().toString(), tungaytab2Field.getValue(), denngaytab2Field.getValue());
+//                Long thutienhocphi = LoadthutienhocphiTab2(timkiemdonviField.getValue().toString(), tungaytab2Field.getValue(), denngaytab2Field.getValue());
 
                 Long luongthang = LoadluongthangTab2(timkiemdonviField.getValue().toString(), tungaytab2Field.getValue(), denngaytab2Field.getValue());
                 Long thuchi = LoadthuchiTab2(timkiemdonviField.getValue().toString(), tungaytab2Field.getValue(), denngaytab2Field.getValue());
 
-                dataProvider.addItem(new MapDataItem().add("title", "Thu: ").add("value", hocphi + thutienhocphi));
+//                dataProvider.addItem(new MapDataItem().add("title", "Thu: ").add("value", hocphi + thutienhocphi));
+                dataProvider.addItem(new MapDataItem().add("title", "Thu: ").add("value", hocphi));
                 dataProvider.addItem(new MapDataItem().add("title", "Chi: ").add("value", luongthang + thuchi));
                 System.out.println("chuẩn");
                 donutChart.setDataProvider(dataProvider);
             } catch (NullPointerException ex) {
 
                 Long hocphi = LoadhocphiTab2(timkiemdonviField.getValue(), tungaytab2Field.getValue(), denngaytab2Field.getValue());
-                Long thutienhocphi = LoadthutienhocphiTab2(timkiemdonviField.getValue().toString(), tungaytab2Field.getValue(), denngaytab2Field.getValue());
+//                Long thutienhocphi = LoadthutienhocphiTab2(timkiemdonviField.getValue().toString(), tungaytab2Field.getValue(), denngaytab2Field.getValue());
 
                 Long luongthang = LoadluongthangTab2(timkiemdonviField.getValue().toString(), tungaytab2Field.getValue(), denngaytab2Field.getValue());
                 Long thuchi = LoadthuchiTab2(timkiemdonviField.getValue().toString(), tungaytab2Field.getValue(), denngaytab2Field.getValue());
@@ -388,15 +389,15 @@ public class BaocaoScreen extends Screen {
                 ListDataProvider dataProvider = new ListDataProvider();
 
                 Long hp = Long.valueOf(0);
-                Long tthp = Long.valueOf(0);
+//                Long tthp = Long.valueOf(0);
                 Long lt = Long.valueOf(0);
                 Long tt = Long.valueOf(0);
                 if (hocphi != null) {
                     hp = hocphi;
                 }
-                if (thutienhocphi != null) {
-                    tthp = thutienhocphi;
-                }
+//                if (thutienhocphi != null) {
+//                    tthp = thutienhocphi;
+//                }
                 if (luongthang != null) {
                     lt = luongthang;
                 }
@@ -404,7 +405,8 @@ public class BaocaoScreen extends Screen {
                     tt = thuchi;
                 }
 
-                Long thu = hp + tthp;
+//                Long thu = hp + tthp;
+                Long thu = hp;
                 Long chi = lt + tt;
                 dataProvider.addItem(new MapDataItem().add("title", "Thu: ").add("value", thu));
                 dataProvider.addItem(new MapDataItem().add("title", "Chi: ").add("value", chi));

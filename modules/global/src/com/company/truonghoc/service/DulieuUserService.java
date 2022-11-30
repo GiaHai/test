@@ -10,7 +10,7 @@ public interface DulieuUserService {
 
     List<UserExt> timbrowerdonvi(String login);
 
-    UserExt timEditdonvi(String login);
+//    UserExt timEditdonvi(String login);
 
     UserExt timdovi(String login);
 
