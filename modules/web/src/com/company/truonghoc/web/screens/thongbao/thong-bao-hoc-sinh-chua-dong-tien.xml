@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://thongBaoHocSinhChuaDongTien.caption"
+        messagesPack="com.company.truonghoc.web.screens.thongbao">
+    <data>
+        <keyValueCollection id="thongBaoHocSinhChuaDongTiensDc">
+            <loader/>
+            <properties>
+                <property name="stt" datatype="int"/>
+                <property name="hoVaTen" datatype="string"/>
+            </properties>
+        </keyValueCollection>
+    </data>
+    <layout expand="thongBaoHsChuaDongTienTable"
+            stylename="css-layout-giaovien"
+
+            spacing="true">
+        <groupBox caption="Tìm kiếm"
+                  collapsable="true"
+                  collapsed="false"
+                  spacing="true"
+                  stylename="css-hbox-search"
+
+                  width="100%">
+            <hbox spacing="true" width="100%">
+                <vbox spacing="true">
+                    <dateField id="tungayField"
+                               datatype="date"
+                               resolution="DAY"
+                               width="100%"
+                               caption="mainMsg://tungay"/>
+                </vbox>
+                <vbox spacing="true">
+                    <dateField id="denngayField"
+                               datatype="date"
+                               resolution="DAY"
+                               width="100%"
+                               caption="mainMsg://denngay"/>
+
+                </vbox>
+                <vbox spacing="true">
+                    <hbox spacing="true" css="margin-top: 20px;">
+                        <button id="timkiemBtn"
+                                stylename="Btntimkiem"
+                                caption="Tìm kiếm" align="BOTTOM_CENTER" icon="PICKERFIELD_OPEN"/>
+                        <button id="xoaBtn"
+                                caption="Xoá"
+                                stylename="Btntimkiem" icon="PICKERFIELD_CLEAR"/>
+                    </hbox>
+                </vbox>
+
+            </hbox>
+        </groupBox>
+
+        <groupTable id="thongBaoHsChuaDongTienTable" width="100%" dataContainer="thongBaoHocSinhChuaDongTiensDc"
+                    height="100%">
+            <columns>
+                <column id="stt" caption="STT"/>
+                <column id="hoVaTen" caption="Họ và tên"/>
+            </columns>
+            <rows/>
+        </groupTable>
+    </layout>
+</window>
