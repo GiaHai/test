@@ -28,4 +28,6 @@ public interface SearchedService {
     List<KeyValueEntity> caChieudaythem(Donvi donVi, Giaovien giaoVien, Date tuNgay, Date denNgay, Integer ngayLam);
 
     List<Namsinh> loadNamSinh();
+
+    List<Hocsinh> getthongBaoHsChuaDongTien(Date tuNgay, Date denNgay);
 }

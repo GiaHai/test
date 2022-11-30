@@ -12,18 +12,18 @@ public class DulieuUserServiceBean implements DulieuUserService {
     @Inject
     protected DataManager dataManager;
 
-    public List<UserExt> timbrowerdonvi(String login) {
-        List<UserExt> userExts = Loadtimbrowertendonvi(login);
-        return userExts;
-    }
-
-
-    private List<UserExt> Loadtimbrowertendonvi(String login) {
-        return dataManager.load(UserExt.class)
-                .query("select e from truonghoc_UserExt e where e.donvitrungtam = 1 and e.login = :login")
-                .parameter("login", login)
-                .list();
-    }
+//    public List<UserExt> timbrowerdonvi(String login) {
+//        List<UserExt> userExts = Loadtimbrowertendonvi(login);
+//        return userExts;
+//    }
+//
+//
+//    private List<UserExt> Loadtimbrowertendonvi(String login) {
+//        return dataManager.load(UserExt.class)
+//                .query("select e from truonghoc_UserExt e where e.donvitrungtam = 1 and e.login = :login")
+//                .parameter("login", login)
+//                .list();
+//    }
 
     //    -----------------------------------------
 //    Object abc;

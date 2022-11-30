@@ -13,6 +13,8 @@
     </menu>
     <menu id="application-bang" caption="mainMsg://menu_config.application-truonghoc2" expanded="true">
         <item screen="truonghoc_Hocphi.browse" caption="mainMsg://menu_config.truonghoc_Hocphi.browse"/>
+        <item screen="truonghoc_ThongBaoHocSinhChuaDongTien"
+              caption="mainMsg://menu_config.truonghoc_ThongBaoHocSinhChuaDongTien"/>
         <item screen="truonghoc_Luongthang.browse" caption="mainMsg://menu_config.truonghoc_Luongthang.browse"/>
         <item screen="truonghoc_Thuchi.browse" caption="mainMsg://menu_config.truonghoc_Thuchi.browse"/>
         <item screen="truonghoc_Thutienhocphi.browse" caption="mainMsg://menu_config.truonghoc_Thutienhocphi.browse"/>

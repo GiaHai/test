@@ -12,7 +12,9 @@ import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service(SearchedService.NAME)
 public class SearchedServiceBean implements SearchedService {
@@ -110,5 +112,32 @@ public class SearchedServiceBean implements SearchedService {
         return dataManager.load(Namsinh.class)
                 .query("select e from truonghoc_Namsinh e")
                 .list();
+    }
+
+    @Override
+    public List<Hocsinh> getthongBaoHsChuaDongTien(Date tuNgay, Date denNgay) {
+        String tungaysql = "";
+        String denngaysql = "";
+        Map<String, Object>  params = new HashMap<>();
+        String query = "select e from truonghoc_Hocsinh e";
+        String where = " where 1=1 ";
+        if (tuNgay != null) {
+            tungaysql += " and a.ngaydong >= :tungay";
+            params.put("tungay", tuNgay);
+        } else {
+            tungaysql = "";
+        }
+        if (denNgay != null) {
+            denngaysql += " and :denngay >= a.ngaydong";
+            params.put("denngay", denNgay);
+        } else {
+            denngaysql = "";
+        }
+        String dieukien = " and e.id not in (select a.hovaten.id from truonghoc_Hocphi a where 1=1 and a.ngaydong is not null " + tungaysql + " " + denngaysql + ")";
+        return dataManager.load(Hocsinh.class)
+                .query(query + where + dieukien)
+                .setParameters(params)
+                .list();
+
     }
 }
