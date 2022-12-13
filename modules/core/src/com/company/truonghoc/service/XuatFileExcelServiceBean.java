@@ -54,7 +54,7 @@ public class XuatFileExcelServiceBean implements XuatFileExcelService {
             where += "and e.gioitinhhocsinh = :gioitinh ";
             params.put("gioitinh", gioitinh);
         }
-        if (namsinh != null){
+        if (namsinh != null) {
             where += "and e.ngaysinhhocsinh = :namsinh ";
             params.put("namsinh", namsinh);
         }
@@ -95,7 +95,7 @@ public class XuatFileExcelServiceBean implements XuatFileExcelService {
     }
 
     @Override
-    public List<Tenlop> layDanhSachTenlop(Donvi donVi, Giaovien giaoVien, String lopHoc) {
+    public List<Tenlop> layDanhSachTenlop(Donvi donVi, Giaovien giaoVien, Tenlop lopHoc) {
 
         String query = "select e from truonghoc_Tenlop e ";
         String where = "where 1=1 ";
@@ -109,8 +109,8 @@ public class XuatFileExcelServiceBean implements XuatFileExcelService {
             params.put("giaoviencn", giaoVien);
         }
         if (lopHoc != null) {
-            where += " and e.tenlop like :tenlop";
-            params.put("tenlop", "%" + lopHoc + "%");
+            where += " and e.tenlop = :tenlop";
+            params.put("tenlop", lopHoc);
         }
 
         List<Tenlop> tenlops = dataManager.load(Tenlop.class).view("tenlop-view")
@@ -256,7 +256,7 @@ public class XuatFileExcelServiceBean implements XuatFileExcelService {
         //học sinh
         if (!StringUtils.isEmpty(tenHocSinh)) {
             where += "and e.tenhocsinh.tenhocsinh like :tenHs ";
-            params.put("tenHs","%"+ tenHocSinh +"%");
+            params.put("tenHs", "%" + tenHocSinh + "%");
         }
         //từ ngày
         if (tuNgay != null) {

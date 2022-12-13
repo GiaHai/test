@@ -114,8 +114,9 @@
                         </form>
                         <form colspan="1" width="100%" align="TOP_RIGHT">
                             <column>
-                                <button id="searchBLamBtn" width="50%" caption="Ngày làm" invoke="timkiem"
-                                        align="TOP_RIGHT"/>
+                                <button id="searchBLamBtn" width="50%" caption="Tính tiền"
+                                        align="TOP_RIGHT"
+                                        css="border: 2px solid #0068ff;background-color: blueviolet;color: cornsilk;"/>
                             </column>
                         </form>
                     </row>
@@ -174,7 +175,7 @@
                                 <textField id="daythemField"
                                            property="daythem"
                                            width="100%"
-                                           caption="mainMsg://luongthang.daythem"/>
+                                           caption="mainMsg://luongthang.daythem" editable="false"/>
                             </column>
                         </form>
                     </row>
@@ -274,6 +275,14 @@
                                              caption="Hình thức thanh toán"/>
                                 <textField id="tinhtrangnhanluongField"
                                            property="tinhtrangnhanluong"/>
+                            </column>
+                        </form>
+                    </row>
+                    <!--                    dòng 9-->
+                    <row>
+                        <form colspan="8" width="100%" childrenCaptionWidth="80px" dataContainer="luongthangDc">
+                            <column>
+                                <textArea id="ghiChuField" property="ghichu" caption="Ghi chú" width="100%"/>
                             </column>
                         </form>
                     </row>

@@ -30,12 +30,8 @@ import java.util.stream.Collectors;
 @UiController("truonghoc_Tenlop.browse")
 @UiDescriptor("tenlop-browse.xml")
 @LookupComponent("tenlopsTable")
-@LoadDataBeforeShow
+//@LoadDataBeforeShow
 public class TenlopBrowse extends StandardLookup<Tenlop> {
-    @Inject
-    protected CollectionLoader<Donvi> donvisDl;
-    @Inject
-    protected CollectionContainer<Donvi> donvisDc;
     @Inject
     protected LookupField<Donvi> searchDvField;
     @Inject
@@ -88,8 +84,9 @@ public class TenlopBrowse extends StandardLookup<Tenlop> {
         if (!donViSession.getDonvitrungtam()) {
             searchDvField.setEditable(false);
             searchDvField.setValue(donViSession);
-            excuteSearch(true);
         }
+        excuteSearch(true);
+
     }
 
     @Subscribe("xoaBtn")
@@ -98,11 +95,11 @@ public class TenlopBrowse extends StandardLookup<Tenlop> {
             searchLopField.clear();
             searchGvcnField.clear();
             searchDvField.clear();
-        }else {
-            if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() == null){
+        } else {
+            if (dulieuUserService.timdovi(userSession.getUser().getLogin()).getGiaovien() == null) {
                 searchLopField.clear();
                 searchGvcnField.clear();
-            }else {
+            } else {
                 searchLopField.clear();
             }
         }
@@ -139,6 +136,7 @@ public class TenlopBrowse extends StandardLookup<Tenlop> {
 
         String query = "select e from truonghoc_Tenlop e ";
         String where = " where 1=1 ";
+        String orderBy = " order by e.thanghoc desc";
 
         //Đơn vị
         if (donvi != null) {
@@ -156,7 +154,7 @@ public class TenlopBrowse extends StandardLookup<Tenlop> {
             params.put("giaovien", tengv);
         }
 
-        query = query + where;
+        query = query + where + orderBy;
         return query;
     }
 
@@ -222,7 +220,7 @@ public class TenlopBrowse extends StandardLookup<Tenlop> {
                 .withMessage("Bạn có muốn chỉ xuất các hàng đã chọn không?")
                 .withActions(
                         new DialogAction(DialogAction.Type.YES, Action.Status.PRIMARY).withCaption("Tất cả các hàng").withHandler(e -> {
-                            xuatExcel(xuatFileExcelService.layDanhSachTenlop(searchDvField.getValue(), searchGvcnField.getValue(), searchLopField.getValue().getTenlop()));
+                            xuatExcel(xuatFileExcelService.layDanhSachTenlop(searchDvField.getValue(), searchGvcnField.getValue(), searchLopField.getValue()));
                         }),
                         new DialogAction(DialogAction.Type.NO).withCaption("Hủy")
                 )

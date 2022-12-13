@@ -23,21 +23,21 @@
 
                   width="100%">
             <hbox spacing="true" width="100%">
-                <vbox spacing="true">
-                    <dateField id="tungayField"
-                               datatype="date"
-                               resolution="DAY"
-                               width="100%"
-                               caption="mainMsg://tungay"/>
-                </vbox>
-                <vbox spacing="true">
-                    <dateField id="denngayField"
-                               datatype="date"
-                               resolution="DAY"
-                               width="100%"
-                               caption="mainMsg://denngay"/>
+                <lookupField id="donviField" caption="Đơn vị" width="100%" inputPrompt="Chọn đơn vị"/>
 
-                </vbox>
+                <dateField id="tungayField"
+                           datatype="date"
+                           resolution="DAY"
+                           width="100%"
+                           caption="mainMsg://tungay"/>
+
+                <dateField id="denngayField"
+                           datatype="date"
+                           resolution="DAY"
+                           width="100%"
+                           caption="mainMsg://denngay"/>
+
+
                 <vbox spacing="true">
                     <hbox spacing="true" css="margin-top: 20px;">
                         <button id="timkiemBtn"
@@ -53,7 +53,7 @@
         </groupBox>
 
         <groupTable id="thongBaoHsChuaDongTienTable" width="100%" dataContainer="thongBaoHocSinhChuaDongTiensDc"
-                    height="100%">
+                    height="100%" visible="false">
             <columns>
                 <column id="stt" caption="STT"/>
                 <column id="hoVaTen" caption="Họ và tên"/>

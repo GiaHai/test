@@ -14,15 +14,6 @@
                 </query>
             </loader>
         </collection>
-        <collection id="donvisDc"
-                    class="com.company.truonghoc.entity.Donvi"
-                    view="donvi-view">
-            <loader id="donvisDl">
-                <query>
-                    <![CDATA[select e from truonghoc_Donvi e]]>
-                </query>
-            </loader>
-        </collection>
     </data>
     <facets>
         <dataLoadCoordinator auto="true">

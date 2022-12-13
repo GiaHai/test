@@ -26,22 +26,19 @@ import org.springframework.util.StringUtils;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @UiController("truonghoc_Diemdanh.browse")
 @UiDescriptor("diemdanh-browse.xml")
 @LookupComponent("diemdanhsTable")
-@LoadDataBeforeShow
+//@LoadDataBeforeShow
 public class DiemdanhBrowse extends StandardLookup<Diemdanh> {
     @Inject
     protected DataManager dataManager;
     @Inject
     protected LookupField<Donvi> tendonviField;
-    @Inject
-    protected CollectionContainer<Donvi> donvisDc;
-    @Inject
-    protected CollectionLoader<Donvi> donvisDl;
     @Inject
     protected CollectionLoader<Diemdanh> diemdanhsDl;
     @Inject
@@ -122,10 +119,8 @@ public class DiemdanhBrowse extends StandardLookup<Diemdanh> {
                 tengiaovienField.setValue(giaoVienSession);  //chèn tên giáo viên từ user vào text
             }
         } else {
-            donvisDl.load();
+            diemdanhsDl.load();
             tendonviField.setOptionsList(searchedService.loaddonvi());
-
-
         }
     }
 
@@ -151,7 +146,7 @@ public class DiemdanhBrowse extends StandardLookup<Diemdanh> {
         String query = "select e from truonghoc_Diemdanh e ";
         String where = " where 1=1 ";
 
-
+        String orderBy = " order by e.ngaynghi desc";
         //Tên đơn vị
         if (donvi != null) {
             where += "and e.donvidd = :donvi ";
@@ -183,7 +178,7 @@ public class DiemdanhBrowse extends StandardLookup<Diemdanh> {
                 params.put("lop", lop);
             }
         }
-        query = query + where;
+        query = query + where + orderBy;
         return query;
     }
 
@@ -230,6 +225,7 @@ public class DiemdanhBrowse extends StandardLookup<Diemdanh> {
     }
 
     private void xuatExcel(List<Diemdanh> layDanhSachDiemdanh) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
         Table table = diemdanhsTable;
         Map<String, String> columns = new HashMap<>();
@@ -244,9 +240,12 @@ public class DiemdanhBrowse extends StandardLookup<Diemdanh> {
             row.setValue("giaoviendd", e.getValue("giaoviendd"));
             row.setValue("hotenhs.dshocsinh.tenhocsinh", e.getValue("hotenhs"));
             row.setValue("lopdd", e.getValue("lopdd"));
-            row.setValue("ngaynghi", e.getValue("ngaynghi"));
-            row.setValue("ngayHocbu", e.getValue("ngayHocbu"));
-
+            if (e.getValue("ngaynghi") != null){
+                row.setValue("ngaynghi", simpleDateFormat.format(e.getValue("ngaynghi")));
+            }
+            if (e.getValue("ngaynghi") != null){
+                row.setValue("ngayHocbu", simpleDateFormat.format(e.getValue("ngayHocbu")));
+            }
             collection.add(row);
             count++;
         }

@@ -39,6 +39,8 @@
                 <column id="sotienthoai" caption="mainMsg://donvi.sdt"/>
                 <column id="donvitrungtam"
                         caption="mainMsg://donvi.donvitrungtam"/>
+                <column id="tenquanly"
+                        caption="mainMsg://donvi.tenquanly"/>
             </columns>
             <rowsCount/>
             <buttonsPanel id="buttonsPanel"

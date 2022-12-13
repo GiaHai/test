@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 
 @UiController("truonghoc_BaocaoScreen")
 @UiDescriptor("baocao-screen.xml")
-@LoadDataBeforeShow
+//@LoadDataBeforeShow
 public class BaocaoScreen extends Screen {
     @Inject
     protected DataManager dataManager;
@@ -86,48 +86,48 @@ public class BaocaoScreen extends Screen {
         }
     }
 
-    @Subscribe
-    protected void onAfterShow(AfterShowEvent event) {
-        if (!donVi.getDonvitrungtam()) {
-            timkiemBtn.setVisible(false);
-            clearBtn.setVisible(false);
-            timkiemdonviField.setValue(donVi.getTendonvi());
-            timkiemdonviField.setEditable(false);
-        }else {
-            List<MapDataItem> hocphis = new ArrayList<>();
-            for (KeyValueEntity item : Loadhocphi1()) {
-                hocphis.add(MapDataItem.of(
-                        "title", item.getValue("donvi"),
-                        "value", item.getValue("sotien")));
-            }
-
-            List<MapDataItem> luongthangs = new ArrayList<>();
-            for (KeyValueEntity item : Loadluongthang1()) {
-                luongthangs.add(MapDataItem.of(
-                        "title", item.getValue("donvi"),
-                        "value", item.getValue("sotien")));
-
-            }
-//            List<MapDataItem> thutienhocphis = new ArrayList<>();
-//            for (KeyValueEntity item : Loadthutienhocphi1()) {
-//                thutienhocphis.add(MapDataItem.of(
+//    @Subscribe
+//    protected void onAfterShow(AfterShowEvent event) {
+//        if (!donVi.getDonvitrungtam()) {
+//            timkiemBtn.setVisible(false);
+//            clearBtn.setVisible(false);
+//            timkiemdonviField.setValue(donVi.getTendonvi());
+//            timkiemdonviField.setEditable(false);
+//        }else {
+//            List<MapDataItem> hocphis = new ArrayList<>();
+//            for (KeyValueEntity item : Loadhocphi1()) {
+//                hocphis.add(MapDataItem.of(
+//                        "title", item.getValue("donvi"),
+//                        "value", item.getValue("sotien")));
+//            }
+//
+//            List<MapDataItem> luongthangs = new ArrayList<>();
+//            for (KeyValueEntity item : Loadluongthang1()) {
+//                luongthangs.add(MapDataItem.of(
 //                        "title", item.getValue("donvi"),
 //                        "value", item.getValue("sotien")));
 //
 //            }
-            List<MapDataItem> thuchis = new ArrayList<>();
-            for (KeyValueEntity item : Loadthuchi1()) {
-                thuchis.add(MapDataItem.of(
-                        "title", item.getValue("donvi"),
-                        "value", item.getValue("sotien")));
-
-            }
-            hocphi.setDataProvider(new ListDataProvider(hocphis));
-//            thutienhocphi.setDataProvider(new ListDataProvider(thutienhocphis));
-            luongthang.setDataProvider(new ListDataProvider(luongthangs));
-            thuchi.setDataProvider(new ListDataProvider(thuchis));
-        }
-    }
+////            List<MapDataItem> thutienhocphis = new ArrayList<>();
+////            for (KeyValueEntity item : Loadthutienhocphi1()) {
+////                thutienhocphis.add(MapDataItem.of(
+////                        "title", item.getValue("donvi"),
+////                        "value", item.getValue("sotien")));
+////
+////            }
+//            List<MapDataItem> thuchis = new ArrayList<>();
+//            for (KeyValueEntity item : Loadthuchi1()) {
+//                thuchis.add(MapDataItem.of(
+//                        "title", item.getValue("donvi"),
+//                        "value", item.getValue("sotien")));
+//
+//            }
+//            hocphi.setDataProvider(new ListDataProvider(hocphis));
+////            thutienhocphi.setDataProvider(new ListDataProvider(thutienhocphis));
+//            luongthang.setDataProvider(new ListDataProvider(luongthangs));
+//            thuchi.setDataProvider(new ListDataProvider(thuchis));
+//        }
+//    }
     @Subscribe("timkiemBtn")
     protected void onTimkiemBtnClick(Button.ClickEvent event) {
 

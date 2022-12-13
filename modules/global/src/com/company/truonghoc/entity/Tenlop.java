@@ -9,7 +9,7 @@ import javax.persistence.*;
 
 @Table(name = "TRUONGHOC_TENLOP")
 @Entity(name = "truonghoc_Tenlop")
-@NamePattern("%s - %s - %s|tenlop,thanghoc,namhoc")
+@NamePattern("%s - Tháng %s - Năm %s|tenlop,thanghoc,namhoc")
 public class Tenlop extends StandardEntity {
     private static final long serialVersionUID = 4124330793891358741L;
 
@@ -27,13 +27,13 @@ public class Tenlop extends StandardEntity {
     private Giaovien giaoviencn;
 
     @Column(name = "THANGHOC")
-    private String thanghoc;
+    private Integer thanghoc;
 
     @Column(name = "NAMHOC")
     private String namhoc;
 
     @Column(name = "TINHTRANGLOP")
-    private Boolean tinhtranglop;
+    private Boolean tinhtranglop = false;
 
     public void setNamhoc(String namhoc) {
         this.namhoc = namhoc;
@@ -43,11 +43,11 @@ public class Tenlop extends StandardEntity {
         return namhoc;
     }
 
-    public void setThanghoc(String thanghoc) {
+    public void setThanghoc(Integer thanghoc) {
         this.thanghoc = thanghoc;
     }
 
-    public String getThanghoc() {
+    public Integer getThanghoc() {
         return thanghoc;
     }
 

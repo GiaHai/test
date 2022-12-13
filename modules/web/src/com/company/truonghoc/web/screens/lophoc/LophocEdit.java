@@ -49,7 +49,7 @@ public class LophocEdit extends StandardEditor<Lophoc> {
     @Inject
     protected SearchedService searchedService;
     @Inject
-    protected TextField<String> thanghocField;
+    protected TextField<Integer> thanghocField;
     @Inject
     protected DataContext dataContext;
     @Inject
@@ -116,7 +116,7 @@ public class LophocEdit extends StandardEditor<Lophoc> {
         if (tenlopField.getValue() == null) {
             thanghocField.clear();
         } else {
-            thanghocField.setValue(tenlopField.getValue().getThanghoc());
+            thanghocField.setValue(tenlopField.getValue().getThanghoc().intValue());
         }
     }
 

@@ -29,5 +29,5 @@ public interface SearchedService {
 
     List<Namsinh> loadNamSinh();
 
-    List<Hocsinh> getthongBaoHsChuaDongTien(Date tuNgay, Date denNgay);
+    List<Hocsinh> getthongBaoHsChuaDongTien(Date tuNgay, Date denNgay, Donvi donvi);
 }

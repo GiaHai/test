@@ -22,12 +22,12 @@ public class Thuchi extends StandardEntity {
     @NotNull(message = "{msg://truonghoc_Thuchi.khoanchi.validation.NotNull}")
     private String khoanchi;
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     @Column(name = "NGAYCHI")
     private Date ngaychi;
 
     @Column(name = "HANCHI")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date hanchi;
 
     @Column(name = "SOLUONG")

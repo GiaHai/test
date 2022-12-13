@@ -1,1 +1,0 @@
-alter table TRUONGHOC_CHAMCONGGV drop column TIEN_BUOI__U11220 ;

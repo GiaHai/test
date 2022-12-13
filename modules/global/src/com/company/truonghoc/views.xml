@@ -55,6 +55,7 @@
         <property name="loockup_donvi" view="_minimal">
             <property name="donvitrungtam"/>
             <property name="sotienthoai"/>
+            <property name="tenquanly"/>
         </property>
         <property name="giaovien" view="_minimal"/>
 
@@ -112,6 +113,7 @@
         <property name="donvi" view="_minimal"/>
         <property name="tenlop" view="_minimal">
             <property name="tinhtranglop"/>
+            <property name="thanghoc"/>
         </property>
     </view>
     <view entity="truonghoc_Tenlop" name="tenlop-view" extends="_local">

@@ -30,11 +30,11 @@ public class Luongthang extends StandardEntity {
     private Date ngaynhan;
 
     @Column(name = "HANNHANLUONG")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date hannhanluong;
 
     @Column(name = "LUONGCOBAN")
-    private Long luongcoban;
+    private Double luongcoban;
 
     @Column(name = "TUNGAY")
     @Temporal(TemporalType.DATE)
@@ -45,7 +45,7 @@ public class Luongthang extends StandardEntity {
     private Date denngay;
 
     @Column(name = "BUOILAM")
-    private BigDecimal buoilam;
+    private Double buoilam;
 
     @Column(name = "CANGOAI")
     private Integer cangoai;
@@ -60,34 +60,37 @@ public class Luongthang extends StandardEntity {
     private Integer casang;
 
     @Column(name = "THUCLINH")
-    private Long thuclinh;
+    private Double thuclinh;
 
     @Column(name = "DAYTHEM")
-    private Long daythem;
+    private Double daythem;
 
     @Column(name = "TROCAP")
-    private Long trocap;
+    private Double trocap;
 
     @Column(name = "TRACHNHIEM")
-    private Long trachnhiem;
+    private Double trachnhiem;
 
     @Column(name = "CHUYENCAN")
-    private Long chuyencan;
+    private Double chuyencan;
 
     @Column(name = "THUONG")
-    private Long thuong;
+    private Double thuong;
 
     @Column(name = "TIEN_BH")
     private Integer tienBh;
 
     @Column(name = "TONGLINH")
-    private Long tonglinh;
+    private Double tonglinh;
 
     @Column(name = "HINHTHUCTHANHTOAN")
     private String hinhthucthanhtoan;
 
     @Column(name = "TINHTRANGNHANLUONG")
     private String tinhtrangnhanluong;
+
+    @Column(name = "GHICHU")
+    private String ghichu;
 
     public void setSoCaCn(Integer soCaCn) {
         this.soCaCn = soCaCn;
@@ -169,19 +172,19 @@ public class Luongthang extends StandardEntity {
         this.ngaynhan = ngaynhan;
     }
 
-    public void setBuoilam(BigDecimal buoilam) {
+    public void setBuoilam(Double buoilam) {
         this.buoilam = buoilam;
     }
 
-    public BigDecimal getBuoilam() {
+    public Double getBuoilam() {
         return buoilam;
     }
 
-    public void setLuongcoban(Long luongcoban) {
+    public void setLuongcoban(Double luongcoban) {
         this.luongcoban = luongcoban;
     }
 
-    public Long getLuongcoban() {
+    public Double getLuongcoban() {
         return luongcoban;
     }
 
@@ -201,59 +204,59 @@ public class Luongthang extends StandardEntity {
         return casang;
     }
 
-    public void setThuclinh(Long thuclinh) {
+    public void setThuclinh(Double thuclinh) {
         this.thuclinh = thuclinh;
     }
 
-    public Long getThuclinh() {
+    public Double getThuclinh() {
         return thuclinh;
     }
 
-    public void setDaythem(Long daythem) {
+    public void setDaythem(Double daythem) {
         this.daythem = daythem;
     }
 
-    public Long getDaythem() {
+    public Double getDaythem() {
         return daythem;
     }
 
-    public void setTrocap(Long trocap) {
+    public void setTrocap(Double trocap) {
         this.trocap = trocap;
     }
 
-    public Long getTrocap() {
+    public Double getTrocap() {
         return trocap;
     }
 
-    public void setTrachnhiem(Long trachnhiem) {
+    public void setTrachnhiem(Double trachnhiem) {
         this.trachnhiem = trachnhiem;
     }
 
-    public Long getTrachnhiem() {
+    public Double getTrachnhiem() {
         return trachnhiem;
     }
 
-    public void setChuyencan(Long chuyencan) {
+    public void setChuyencan(Double chuyencan) {
         this.chuyencan = chuyencan;
     }
 
-    public Long getChuyencan() {
+    public Double getChuyencan() {
         return chuyencan;
     }
 
-    public void setThuong(Long thuong) {
+    public void setThuong(Double thuong) {
         this.thuong = thuong;
     }
 
-    public Long getThuong() {
+    public Double getThuong() {
         return thuong;
     }
 
-    public void setTonglinh(Long tonglinh) {
+    public void setTonglinh(Double tonglinh) {
         this.tonglinh = tonglinh;
     }
 
-    public Long getTonglinh() {
+    public Double getTonglinh() {
         return tonglinh;
     }
 
@@ -265,4 +268,11 @@ public class Luongthang extends StandardEntity {
         return hovaten;
     }
 
+    public String getGhichu() {
+        return ghichu;
+    }
+
+    public void setGhichu(String ghichu) {
+        this.ghichu = ghichu;
+    }
 }

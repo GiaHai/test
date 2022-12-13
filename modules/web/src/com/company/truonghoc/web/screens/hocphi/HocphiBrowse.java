@@ -1,6 +1,5 @@
 package com.company.truonghoc.web.screens.hocphi;
 
-import com.aspose.words.*;
 import com.company.truonghoc.entity.Donvi;
 import com.company.truonghoc.entity.Thutienhocphi;
 import com.company.truonghoc.service.DulieuUserService;
@@ -42,7 +41,7 @@ import java.util.List;
 @UiController("truonghoc_Hocphi.browse")
 @UiDescriptor("hocphi-browse.xml")
 @LookupComponent("hocphisTable")
-@LoadDataBeforeShow
+//@LoadDataBeforeShow
 public class HocphiBrowse extends StandardLookup<Hocphi> {
     @Inject
     protected CollectionLoader<Hocphi> hocphisDl;
@@ -109,15 +108,10 @@ public class HocphiBrowse extends StandardLookup<Hocphi> {
     protected void onBeforeShow(BeforeShowEvent event) {
         //load phân quyền
         dkphanquyen();
-        Calendar calendar = Calendar.getInstance();
-    }
-
-    @Subscribe
-    protected void onAfterShow(AfterShowEvent event) {
         //load tìm kiếm
         excuteSearch(true);
-
     }
+
 
     /*** Tìm kiếm***/
     public Component stt(Entity entity) {
@@ -248,8 +242,9 @@ public class HocphiBrowse extends StandardLookup<Hocphi> {
             where += "and :denngay >= e.ngaydong ";
             params.put("denngay", denngay);
         }
+        String orderBy = " order by e.ngaydong desc";
 
-        query = query + where;
+        query = query + where + orderBy;
         return query;
     }
 
@@ -275,6 +270,7 @@ public class HocphiBrowse extends StandardLookup<Hocphi> {
         Map<Integer, String> properties = new HashMap<>();
         List<KeyValueEntity> collection = new ArrayList<>();
         int count = 1;
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
         for (Hocphi e : layDanhSachHocphi) {
             KeyValueEntity row = metadata.create(KeyValueEntity.class);
@@ -284,10 +280,15 @@ public class HocphiBrowse extends StandardLookup<Hocphi> {
             row.setValue("ghichu", e.getValue("ghichu"));
             row.setValue("sotientamtinh", e.getValue("sotientamtinh"));
             row.setValue("sotienthutheohd", e.getValue("sotienthutheohd"));
-            row.setValue("ngaydong", e.getValue("ngaydong"));
-            row.setValue("handong", e.getValue("handong"));
+
+            if (e.getValue("handong") != null){
+                row.setValue("handong", simpleDateFormat.format(e.getValue("handong")));
+            }
+            if (e.getValue("ngaydong") !=null){
+                row.setValue("ngaydong", simpleDateFormat.format(e.getNgaydong()));
+            }
             row.setValue("hinhthucthanhtoan", e.getValue("hinhthucthanhtoan"));
-            row.setValue("ngaydong", e.getValue("ngaydong"));
+//            row.setValue("ngaydong", e.getValue("ngaydong"));
 
             if (e.getNgaydong() != null) {
                 row.setValue("checkhandong", "Đã đóng");
@@ -310,7 +311,6 @@ public class HocphiBrowse extends StandardLookup<Hocphi> {
             properties.put(i, column.getIdString());
             i++;
         }
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
         String tuNgay;
         String denNgay;
         if (tungayField.getValue() == null) {
@@ -335,6 +335,8 @@ public class HocphiBrowse extends StandardLookup<Hocphi> {
 
         Hocphi hocphi = hocphisTable.getSingleSelected();
         Map<String, Object> parameters = new HashMap<>();
+        Date ngaydong = hocphi.getNgaydong();
+        calendar.setTime(ngaydong);
         parameters.put("donvithanhtoan", donViSession.getTendonvi());
         parameters.put("tenhocsinh", hocphi.getHovaten().getTenhocsinh());
         parameters.put("thanhtien", currency.format(hocphi.getSotienthutheohd()));
@@ -343,7 +345,7 @@ public class HocphiBrowse extends StandardLookup<Hocphi> {
         parameters.put("thang", calendar.get(Calendar.MONTH) + 1 );
         parameters.put("nam", calendar.get(Calendar.YEAR));
         parameters.put("sodienthoaicoso", donViSession.getSotienthoai());
-        parameters.put("nguoitao", userSession.getUser().getName());
+        parameters.put("nguoitao", donViSession.getTenquanly());
 
         String path = AppContext.getProperty("knkx.template");
 

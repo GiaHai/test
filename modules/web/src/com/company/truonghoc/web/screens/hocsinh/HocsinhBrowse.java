@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
 @UiController("truonghoc_Hocsinh.browse")
 @UiDescriptor("hocsinh-browse.xml")
 @LookupComponent("hocsinhsTable")
-@LoadDataBeforeShow
+//@LoadDataBeforeShow
 public class HocsinhBrowse extends StandardLookup<Hocsinh> {
     @Inject
     protected UserSession userSession;
@@ -56,8 +56,6 @@ public class HocsinhBrowse extends StandardLookup<Hocsinh> {
     protected CollectionContainer<Hocsinh> hocsinhsDc;
     @Inject
     protected Button timkiemBtn;
-    @Named("hocsinhsTable.edit")
-    protected EditAction<Hocsinh> hocsinhsTableEdit;
     @Inject
     protected Dialogs dialogs;
     @Inject
@@ -92,10 +90,7 @@ public class HocsinhBrowse extends StandardLookup<Hocsinh> {
         //Tìm đơn vị
         donViField.setOptionsList(searchedService.loaddonvi());
         namSinhField.setOptionsList(searchedService.loadNamSinh());
-    }
 
-    @Subscribe
-    protected void onAfterShow(AfterShowEvent event) {
         if (!donViSession.getDonvitrungtam()) {
             if (lookupActions.isVisible() == true) {
                 donViField.setValue(donViSession);
@@ -103,9 +98,9 @@ public class HocsinhBrowse extends StandardLookup<Hocsinh> {
                 excuteSearch(true);
             }
             donViField.setValue(donViSession);
-            excuteSearch(true);
             donViField.setEditable(false);
         }
+        excuteSearch(true);
     }
 
     @Subscribe("donViField")
@@ -153,7 +148,7 @@ public class HocsinhBrowse extends StandardLookup<Hocsinh> {
     private String returnQuery(Object donvi, Map<String, Object> params, String hocsinh, String gioitinh, Object namsinh) {
         String query = "select e from truonghoc_Hocsinh e ";
         String where = " where 1=1 ";
-
+        String orderBy = " order by e.donvi";
         // Đơn vị
         if (donvi != null) {
             where += "and e.donvi = :donvi ";
@@ -173,7 +168,7 @@ public class HocsinhBrowse extends StandardLookup<Hocsinh> {
             where += "and e.ngaysinhhocsinh = :namsinh ";
             params.put("namsinh", namsinh);
         }
-        query = query + where;
+        query = query + where + orderBy;
         return query;
     }
 

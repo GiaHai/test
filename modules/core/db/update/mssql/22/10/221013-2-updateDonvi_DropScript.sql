@@ -1,1 +1,0 @@
-alter table TRUONGHOC_DONVI drop column DONVITRUNGTAM__U85936 ;

@@ -26,6 +26,9 @@
                 <checkBox id="donvitrungtamField"
                           property="donvitrungtam"
                           caption="mainMsg://donvi.donvitrungtam"/>
+                <textField id="tenQuanLyField"
+                          property="tenquanly"
+                          caption="mainMsg://donvi.tenquanly"/>
             </column>
         </form>
         <hbox id="editActions" spacing="true">

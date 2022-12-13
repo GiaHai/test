@@ -35,7 +35,7 @@ import java.util.stream.Collectors;
 @UiController("truonghoc_Lophoc.browse")
 @UiDescriptor("lophoc-browse.xml")
 @LookupComponent("lophocsTable")
-@LoadDataBeforeShow
+//@LoadDataBeforeShow
 public class LophocBrowse extends StandardLookup<Lophoc> {
     @Inject
     protected LookupField<Giaovien> searchGvcnField;
@@ -49,10 +49,6 @@ public class LophocBrowse extends StandardLookup<Lophoc> {
     protected DulieuUserService dulieuUserService;
     @Inject
     protected UserSession userSession;
-    @Inject
-    protected CollectionContainer<Donvi> donvisDc;
-    @Inject
-    protected CollectionLoader<Donvi> donvisDl;
     @Inject
     protected UiComponents uiComponents;
     @Inject
@@ -96,13 +92,12 @@ public class LophocBrowse extends StandardLookup<Lophoc> {
         if (!donViSession.getDonvitrungtam()) {
             searchDvField.setEditable(false);
             searchDvField.setValue(donViSession);
-            excuteSearch(true);
             if (giaoVienSession != null) {
                 searchGvcnField.setValue(giaoVienSession);
                 searchGvcnField.setEditable(false);
-                excuteSearch(true);
             }
         }
+        excuteSearch(true);
     }
 
     @Subscribe("xoaBtn")
@@ -140,6 +135,7 @@ public class LophocBrowse extends StandardLookup<Lophoc> {
     private String returnQuery(Object donvi, Object tenlop, Object tengv, Map<String, Object> params) {
         String query = "select e from truonghoc_Lophoc e ";
         String where = " where 1=1 ";
+        String orderBy = " order by e.tenlop.thanghoc desc";
         //Đơn vị
         if (donvi != null) {
             where += "and e.donvi = :donvi ";
@@ -163,7 +159,7 @@ public class LophocBrowse extends StandardLookup<Lophoc> {
                 params.put("tengv", tengv);
             }
         }
-        query = query + where;
+        query = query + where + orderBy;
         return query;
     }
 

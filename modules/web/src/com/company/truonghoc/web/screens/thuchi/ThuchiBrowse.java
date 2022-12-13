@@ -28,13 +28,14 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @UiController("truonghoc_Thuchi.browse")
 @UiDescriptor("thuchi-browse.xml")
 @LookupComponent("thuchisTable")
-@LoadDataBeforeShow
+//@LoadDataBeforeShow
 public class ThuchiBrowse extends StandardLookup<Thuchi> {
     @Inject
     protected CollectionLoader<Thuchi> thuchisDl;
@@ -90,11 +91,12 @@ public class ThuchiBrowse extends StandardLookup<Thuchi> {
     @Subscribe
     protected void onBeforeShow(BeforeShowEvent event) {
         dkphanquyen();
+        excuteSearch(true);
+
     }
 
     @Subscribe
     protected void onAfterShow(AfterShowEvent event) {
-        excuteSearch(true);
     }
 
     public Component stt(Entity entity) {
@@ -194,7 +196,7 @@ public class ThuchiBrowse extends StandardLookup<Thuchi> {
     private String returnQuery(Object donvi, String khoanchi, Object trangthai, Date tungay, Date denngay, Map<String, Object> params) {
         String query = "select e from truonghoc_Thuchi e ";
         String where = " where 1=1 ";
-
+        String orderBy = " order by e.ngaychi desc";
         //Đơn vị
         if (donvi != null) {
             where += "and e.donvi = :donvi ";
@@ -220,7 +222,7 @@ public class ThuchiBrowse extends StandardLookup<Thuchi> {
             where += "and :denngay >= e.ngaychi ";
             params.put("denngay", denngay);
         }
-        query = query + where;
+        query = query + where + orderBy;
         return query;
     }
 
@@ -242,7 +244,7 @@ public class ThuchiBrowse extends StandardLookup<Thuchi> {
     }
 
     private void xuatExcel(List<Thuchi> layDanhSachThuchi) {
-
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
         Table table = thuchisTable;
         Map<String, String> columns = new HashMap<>();
         Map<Integer, String> properties = new HashMap<>();
@@ -253,7 +255,9 @@ public class ThuchiBrowse extends StandardLookup<Thuchi> {
             KeyValueEntity row = metadata.create(KeyValueEntity.class);
             row.setValue("stt", count);
             row.setValue("donvi", e.getValue("donvi"));
-            row.setValue("ngaychi", e.getValue("ngaychi"));
+            if (e.getValue("ngaychi") != null) {
+                row.setValue("ngaychi", simpleDateFormat.format(e.getValue("ngaychi")));
+            }
             row.setValue("khoanchi", e.getValue("khoanchi"));
             row.setValue("soluong", e.getValue("soluong"));
             row.setValue("thanhtien", e.getValue("thanhtien"));

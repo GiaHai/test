@@ -24,6 +24,7 @@ import com.haulmont.cuba.security.global.UserSession;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.text.SimpleDateFormat;
 import java.time.Month;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -31,7 +32,7 @@ import java.util.stream.Collectors;
 @UiController("truonghoc_Luongthang.browse")
 @UiDescriptor("luongthang-browse.xml")
 @LookupComponent("luongthangsTable")
-@LoadDataBeforeShow
+//@LoadDataBeforeShow
 public class LuongthangBrowse extends StandardLookup<Luongthang> {
     @Inject
     protected CollectionLoader<Luongthang> luongthangsDl;
@@ -83,12 +84,14 @@ public class LuongthangBrowse extends StandardLookup<Luongthang> {
     @Subscribe
     protected void onBeforeShow(BeforeShowEvent event) {
         dkphanquyen();
+        excuteSearch(true);
+
     }
 
-    @Subscribe
-    protected void onAfterShow(AfterShowEvent event) {
-        excuteSearch(true);
-    }
+//    @Subscribe
+//    protected void onAfterShow(AfterShowEvent event) {
+//        excuteSearch(true);
+//    }
 
     // đánh số thứ tự
     public Component stt(Entity entity) {
@@ -105,15 +108,15 @@ public class LuongthangBrowse extends StandardLookup<Luongthang> {
 
     @Subscribe("clearBtn")
     protected void onClearBtnClick(Button.ClickEvent event) {
-        if (!donViSession.getDonvitrungtam()){
+        if (!donViSession.getDonvitrungtam()) {
             //Xoá
-            if (giaoVienSession == null){
+            if (giaoVienSession == null) {
                 giaovienField.clear();
             }
             trangthaiField.clear();
             tungayField.clear();
             denngayField.clear();
-        }else {
+        } else {
             //xoá
             donViField.clear();
             giaovienField.clear();
@@ -170,6 +173,19 @@ public class LuongthangBrowse extends StandardLookup<Luongthang> {
         return htmlBoxLayout;
     }
 
+    @Subscribe("trangthaiField")
+    public void onTrangthaiFieldValueChange(HasValue.ValueChangeEvent event) {
+        if (trangthaiField.getValue() == "Chưa nhận lương") {
+            tungayField.setVisible(false);
+            denngayField.setVisible(false);
+            tungayField.clear();
+            denngayField.clear();
+        } else {
+            tungayField.setVisible(true);
+            denngayField.setVisible(true);
+        }
+    }
+
     public void timkiemExcute() {
         excuteSearch(true);
     }
@@ -204,8 +220,8 @@ public class LuongthangBrowse extends StandardLookup<Luongthang> {
         }
         //Trạng thái
         if (trangthai != null) {
-            where += "and e.tinhtrangnhanluong = :trangthai ";
-            params.put("trangthai", trangthai);
+            where += "and e.tinhtrangnhanluong like :trangthai ";
+            params.put("trangthai", "%" + trangthai + "%");
         }
         //Từ ngày
         if (tungay != null) {
@@ -243,6 +259,7 @@ public class LuongthangBrowse extends StandardLookup<Luongthang> {
     }
 
     private void xuatExcel(List<Luongthang> layDanhSachLuongthang) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
         Table table = luongthangsTable;
         Map<String, String> columns = new HashMap<>();
         Map<Integer, String> properties = new HashMap<>();
@@ -254,11 +271,25 @@ public class LuongthangBrowse extends StandardLookup<Luongthang> {
             row.setValue("stt", count);
             row.setValue("donvi", e.getValue("donvi"));
             row.setValue("hovaten", e.getValue("hovaten"));
-            row.setValue("ngaynhan", e.getValue("ngaynhan"));
-            row.setValue("hannhanluong", e.getValue("hannhanluong"));
+            if (e.getValue("ngaynhan") != null) {
+                row.setValue("ngaynhan", simpleDateFormat.format(e.getValue("ngaynhan")));
+            }
+            if (e.getValue("hannhanluong") != null) {
+                row.setValue("hannhanluong", simpleDateFormat.format(e.getValue("hannhanluong")));
+            }
             row.setValue("luongcoban", e.getValue("luongcoban"));
             row.setValue("buoilam", e.getValue("buoilam"));
             row.setValue("cangoai", e.getValue("cangoai"));
+            if (e.getTungay() != null) {
+                row.setValue("tungay", simpleDateFormat.format(e.getValue("tungay")));
+            } else {
+                row.setValue("tungay", "");
+            }
+            if (e.getDenngay() != null) {
+                row.setValue("denngay", simpleDateFormat.format(e.getValue("denngay")));
+            } else {
+                row.setValue("denngay", "");
+            }
             row.setValue("casang", e.getValue("casang"));
             row.setValue("cachunhat", e.getValue("cachunhat"));
             row.setValue("thuclinh", e.getValue("thuclinh"));

@@ -1,2 +1,0 @@
-exec sp_rename 'TRUONGHOC_CHAMCONGGV.TIEN_BUOI', 'TIEN_BUOI__U11220', 'COLUMN' ^
-alter table TRUONGHOC_CHAMCONGGV add TIEN_BUOI_ID uniqueidentifier ;

@@ -16,7 +16,7 @@ public interface XuatFileExcelService {
 
     List<Lophoc> layDanhSachLophoc(Donvi donVi, Giaovien giaoVien, Tenlop lopHoc);
 
-    List<Tenlop> layDanhSachTenlop(Donvi donVi, Giaovien giaoVien, String lopHoc);
+    List<Tenlop> layDanhSachTenlop(Donvi donVi, Giaovien giaoVien, Tenlop lopHoc);
 
     List<Hocphi> layDanhSachHocphi(Donvi donVi, String hoVaTen, Object trangThai, Date tuNgay, Date denNgay);
 

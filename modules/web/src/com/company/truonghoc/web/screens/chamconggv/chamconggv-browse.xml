@@ -10,16 +10,7 @@
             <view extends="chamconggv-view"/>
             <loader id="chamconggvsDl">
                 <query>
-                    <![CDATA[select e from truonghoc_Chamconggv e]]>
-                </query>
-            </loader>
-        </collection>
-        <collection id="donvisDc"
-                    class="com.company.truonghoc.entity.Donvi"
-                    view="donvi-view">
-            <loader id="donvisDl">
-                <query>
-                    <![CDATA[select e from truonghoc_Donvi e]]>
+                    <![CDATA[select e from truonghoc_Chamconggv e ORDER BY e.ngaylam]]>
                 </query>
             </loader>
         </collection>
@@ -31,6 +22,80 @@
     <layout expand="chamconggvsTable"
             spacing="true"
             stylename="css-layout-chamconggv">
+        <hbox id="infoMain" spacing="true" width="100%" expand="mainAccountBox">
+            <vbox width="100%" height="15%" id="mainAccountBox" spacing="true">
+                <vbox spacing="true" id="surplusBox" width="100%"
+                      stylename="main-account">
+                    <vbox width="100%" height="100%" expand="vBoxX" caption="Ngày công">
+                        <vbox width="100%" height="100%" id="vBoxX">
+                            <vbox width="100%" height="AUTO" visible="true" id="tabBoxAccount">
+                                <hbox width="100%" css="padding: 10px 15px 0px 15px;" spacing="true"
+                                      align="MIDDLE_CENTER">
+                                    <vbox stylename="style-info"
+                                          css="box-shadow: 2px 3px 4px #908f8f;border-top: 6px solid #41B4A6;">
+                                        <hbox width="100%" css="padding: 10px 10px 5px 10px;">
+                                            <label css="padding-left: 5px;" value="Tổng ngày công" stylename="bold"
+                                                   align="MIDDLE_LEFT"/>
+                                        </hbox>
+                                        <hbox spacing="true" expand="tongNgayCong"
+                                              css="padding: 0px 10px 10px 10px;">
+                                            <label id="tongNgayCong" css="color: #31c899; font-size: 30px;"
+                                                   stylename="bold h1" align="MIDDLE_LEFT" value="0"/>
+                                            <label stylename="h4 bold" css="color: #31c899;" align="MIDDLE_LEFT"
+                                                   value="Buổi"/>
+                                        </hbox>
+                                    </vbox>
+                                    <vbox stylename="style-info"
+                                          css="box-shadow: 2px 3px 4px #908f8f;border-top: 6px solid #41B4A6;">
+                                        <hbox width="100%" css="padding: 10px 10px 5px 10px;">
+                                            <label css="padding-left: 5px;" value="Tổng số ngày làm chính" stylename="bold"
+                                                   align="MIDDLE_LEFT"/>
+                                        </hbox>
+                                        <hbox spacing="true" expand="tongSoBuoiLamChinh"
+                                              css="padding: 0px 10px 10px 10px;">
+                                            <label id="tongSoBuoiLamChinh" css="color: #31c899; font-size: 30px;"
+                                                   stylename="bold h1" align="MIDDLE_LEFT" value="0"/>
+                                            <label stylename="h4 bold" css="color: #31c899;" align="MIDDLE_LEFT"
+                                                   value="Buổi"/>
+                                        </hbox>
+                                    </vbox>
+                                </hbox>
+                                <hbox width="100%" css="padding: 10px 15px 0px 15px;" spacing="true"
+                                      align="MIDDLE_CENTER">
+                                    <vbox stylename="style-info"
+                                          css="box-shadow: rgb(0 223 79) 2px 3px 4px;border-top: 6px solid rgb(0 255 55);">
+                                        <hbox width="100%" css="padding: 10px 10px 5px 10px;">
+                                            <label css="padding-left: 5px;" value="Tổng số buổi làm thêm ngoài giờ" stylename="bold"
+                                                   align="MIDDLE_LEFT"/>
+                                        </hbox>
+                                        <hbox spacing="true" expand="tongBuoiLamNgoaiGio" css="padding: 0px 10px 10px 10px;">
+                                            <label id="tongBuoiLamNgoaiGio" css="color: #2ea764; font-size: 30px;"
+                                                   stylename="bold h1" align="MIDDLE_LEFT" value="0"/>
+                                            <label stylename="h4 bold" css="color: #2ea764" align="MIDDLE_LEFT"
+                                                   value="Buổi"/>
+                                        </hbox>
+                                    </vbox>
+                                    <vbox stylename="style-info"
+                                          css="box-shadow: rgb(217 0 0) 2px 3px 4px;border-top: 6px solid rgb(180 65 65);">
+                                        <hbox width="100%" css="padding: 10px 10px 5px 10px;">
+                                            <label css="padding-left: 5px;" value="Tổng số tiền cho buổi làm thêm ngoài giờ" stylename="bold"
+                                                   align="MIDDLE_LEFT"/>
+                                        </hbox>
+                                        <hbox spacing="true" expand="tongTienLamThemNgoaiGio" css="padding: 0px 10px 10px 10px;">
+                                            <label id="tongTienLamThemNgoaiGio" css="color: red; font-size: 30px;"
+                                                   stylename="bold h1" align="MIDDLE_LEFT" value="0"/>
+                                            <label stylename="h4 bold" css="color: red;" align="MIDDLE_LEFT"
+                                                   value="VNĐ"/>
+                                        </hbox>
+                                    </vbox>
+                                </hbox>
+                            </vbox>
+                        </vbox>
+                    </vbox>
+                </vbox>
+
+            </vbox>
+        </hbox>
         <groupBox caption="Tìm kiếm"
                   collapsable="true"
                   collapsed="false"
@@ -62,7 +127,7 @@
                     <button id="timkiemBtn"
                             invoke="timkiemExcute"
                             stylename="Btntimkiem"
-                            caption="Tìm kiếm" align="TOP_CENTER"  css="display: grid;"
+                            caption="Tìm kiếm" align="TOP_CENTER" css="display: grid;"
                             icon="PICKERFIELD_OPEN" shortcut="ENTER"/>
                     <button id="clearBtn"
                             caption="Xoá" icon="PICKERFIELD_CLEAR"
@@ -72,8 +137,8 @@
             </hbox>
         </groupBox>
         <table id="chamconggvsTable"
-                    width="100%"
-                    dataContainer="chamconggvsDc">
+               width="100%"
+               dataContainer="chamconggvsDc">
             <actions>
                 <action id="create" type="create"/>
                 <action id="edit" type="edit"/>
@@ -91,7 +156,7 @@
                         caption="mainMsg://chamcong.ngaylam"/>
                 <column id="buoilam"
                         caption="mainMsg://chamcong.buoilam" generator="buoiLam"/>
-<!--                <column id="buoilam"/>-->
+                <!--                <column id="buoilam"/>-->
                 <column id="tienBuoi"
                         caption="Tiền công"/>
             </columns>

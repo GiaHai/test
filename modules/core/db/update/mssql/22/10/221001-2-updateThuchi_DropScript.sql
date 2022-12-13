@@ -1,1 +1,0 @@
-alter table TRUONGHOC_THUCHI drop column USERTAO_THUCHI_ID__U51392 ;

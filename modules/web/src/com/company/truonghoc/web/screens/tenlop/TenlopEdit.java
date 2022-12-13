@@ -13,11 +13,11 @@ import com.haulmont.cuba.gui.model.CollectionLoader;
 import com.haulmont.cuba.gui.screen.*;
 import com.company.truonghoc.entity.Tenlop;
 import com.haulmont.cuba.security.global.UserSession;
+import com.company.truonghoc.entity.enums.ThangHocEnum;
+
 
 import javax.inject.Inject;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @UiController("truonghoc_Tenlop.edit")
@@ -40,7 +40,7 @@ public class TenlopEdit extends StandardEditor<Tenlop> {
     @Inject
     protected DulieuUserService dulieuUserService;
     @Inject
-    protected LookupField<String> thanghocField;
+    protected LookupField<Integer> thanghocField;
     @Inject
     protected SearchedService searchedService;
     @Inject
@@ -51,10 +51,24 @@ public class TenlopEdit extends StandardEditor<Tenlop> {
         donvisDl.load();
         donviFiled.setOptionsList(searchedService.loaddonvi());
 
-        List<String> thang = Arrays.asList(
-                "Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"
-        );
-        thanghocField.setOptionsList(thang);
+//        List<String> thang = Arrays.asList(
+//                "Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"
+//        );
+        Map<String, Integer> map = new LinkedHashMap<>();
+        map.put("Tháng 1", ThangHocEnum.THANG_MOT.getId());
+        map.put("Tháng 2", ThangHocEnum.THANG_HAI.getId());
+        map.put("Tháng 3", ThangHocEnum.THANG_BA.getId());
+        map.put("Tháng 4", ThangHocEnum.THANG_TU.getId());
+        map.put("Tháng 5", ThangHocEnum.THANG_NAM.getId());
+        map.put("Tháng 6", ThangHocEnum.THANG_SAU.getId());
+        map.put("Tháng 7", ThangHocEnum.THANG_BAY.getId());
+        map.put("Tháng 8", ThangHocEnum.THANG_TAM.getId());
+        map.put("Tháng 9", ThangHocEnum.THANG_CHIN.getId());
+        map.put("Tháng 10", ThangHocEnum.THANG_MUOI.getId());
+        map.put("Tháng 11", ThangHocEnum.THANG_MUOI_MOT.getId());
+        map.put("Tháng 12", ThangHocEnum.THANG_MUOI_HAI.getId());
+        
+        thanghocField.setOptionsMap(map);
     }
 
     @Subscribe

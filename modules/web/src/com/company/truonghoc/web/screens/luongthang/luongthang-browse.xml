@@ -100,7 +100,7 @@
                 <column id="ngaynhan"
                         caption="mainMsg://luongthang.ngaynhan"/>
                 <column id="hannhanluong"
-                        caption="Hạn nhận lương"/>
+                        caption="Hạn nhận lương" type="date"/>
                 <column id="luongcoban"
                         caption="mainMsg://luongthang.luongcoban"/>
                 <column id="tungay"
@@ -138,6 +138,7 @@
                 <column id="checkhannhanluong"
                         generator="checkhannhanluong"
                         caption="Tình trạng"/>
+                <column id="ghichu" caption="Ghi chú"/>
             </columns>
             <rowsCount/>
             <buttonsPanel id="buttonsPanel"

@@ -1,2 +1,0 @@
-alter table TRUONGHOC_LOPHOC add constraint FK_TRUONGHOC_LOPHOC_ON_NAM foreign key (NAM_ID) references TRUONGHOC_TENLOP(ID);
-create index IDX_TRUONGHOC_LOPHOC_ON_NAM on TRUONGHOC_LOPHOC (NAM_ID);

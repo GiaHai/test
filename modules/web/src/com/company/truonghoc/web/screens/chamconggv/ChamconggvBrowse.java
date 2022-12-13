@@ -23,13 +23,15 @@ import com.haulmont.cuba.gui.screen.LookupComponent;
 import com.haulmont.cuba.security.global.UserSession;
 
 import javax.inject.Inject;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Calendar;
 
 @UiController("truonghoc_Chamconggv.browse")
 @UiDescriptor("chamconggv-browse.xml")
 @LookupComponent("chamconggvsTable")
-@LoadDataBeforeShow
+//@LoadDataBeforeShow
 public class ChamconggvBrowse extends StandardLookup<Chamconggv> {
     @Inject
     protected CollectionContainer<Chamconggv> chamconggvsDc;
@@ -43,10 +45,6 @@ public class ChamconggvBrowse extends StandardLookup<Chamconggv> {
     protected LookupField<Donvi> tendonviField;
     @Inject
     protected LookupField<Giaovien> tengiaovienField;
-    @Inject
-    protected CollectionContainer<Donvi> donvisDc;
-    @Inject
-    protected CollectionLoader<Donvi> donvisDl;
     @Inject
     protected DulieuUserService dulieuUserService;
     @Inject
@@ -69,6 +67,26 @@ public class ChamconggvBrowse extends StandardLookup<Chamconggv> {
     protected SearchedService searchedService;
     private Donvi donViSession = null;
     private Giaovien giaoVienSession = null;
+    @Inject
+    private HBoxLayout infoMain;
+    Date denNgay = new Date();
+    Integer caNgay;
+    Integer caSang;
+    Integer caChieu;
+    Integer caChuNhat;
+    Integer caNgoai1;
+    Integer caNgoai2;
+    Date tuNgay;
+    @Inject
+    private Label<Double> tongNgayCong;
+    @Inject
+    private Label<Double> tongSoBuoiLamChinh;
+    @Inject
+    private Label<Double> tongTienLamThemNgoaiGio;
+    @Inject
+    private Label<Integer> tongBuoiLamNgoaiGio;
+    @Inject
+    private ButtonsPanel buttonsPanel;
 
     @Subscribe
     protected void onInit(InitEvent event) {
@@ -79,8 +97,54 @@ public class ChamconggvBrowse extends StandardLookup<Chamconggv> {
     @Subscribe
     protected void onBeforeShow(BeforeShowEvent event) {
         dkphanquyen();
-        excuteSearch(true);
 
+        excuteSearch(true);
+        if (giaoVienSession == null) {
+            infoMain.setVisible(false);
+        } else {
+            tinhBuoiLam();
+        }
+    }
+
+    private void tinhBuoiLam() {
+        Calendar cal = Calendar.getInstance();
+
+        cal.set(Calendar.DAY_OF_MONTH, 1);
+        cal.set(Calendar.HOUR_OF_DAY, 00);
+        cal.set(Calendar.MINUTE, 00);
+        cal.set(Calendar.SECOND, 00);
+//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+//        simpleDateFormat.format(cal.getTime());
+        tuNgay = cal.getTime();
+
+        caNgay = searchedService.tinhca(donViSession, giaoVienSession, tuNgay, denNgay, BuoiLamEnum.LAM_CA_NGAY.getId()).size();
+        caSang = searchedService.tinhca(donViSession, giaoVienSession, tuNgay, denNgay, BuoiLamEnum.CA_SANG.getId()).size();
+        caChieu = searchedService.tinhca(donViSession, giaoVienSession, tuNgay, denNgay, BuoiLamEnum.CA_CHIEU.getId()).size();
+        caChuNhat = searchedService.tinhca(donViSession, giaoVienSession, tuNgay, denNgay, BuoiLamEnum.CA_CHU_NHAT.getId()).size();
+        caNgoai1 = searchedService.tinhca(donViSession, giaoVienSession, tuNgay, denNgay, BuoiLamEnum.CA_CHIEU_5H_6H.getId()).size();
+        caNgoai2 = searchedService.tinhca(donViSession, giaoVienSession, tuNgay, denNgay, BuoiLamEnum.CA_CHIEU_6H_7H.getId()).size();
+
+        tongSoBuoiLamChinh.setValue(caNgay + caSang * 0.5 + caChieu * 0.5);
+        tongBuoiLamNgoaiGio.setValue(caNgoai1 + caNgoai2);
+        tongNgayCong.setValue(caNgay + caSang * 0.5 + caChieu * 0.5 + caNgoai1 * 0.5 + caNgoai2 * 0.5);
+
+        List<KeyValueEntity> caChieuDaythem1 = searchedService.caChieudaythem(donViSession, giaoVienSession, tuNgay, denNgay, BuoiLamEnum.CA_CHIEU_5H_6H.getId());
+        List<KeyValueEntity> caChieuDaythem2 = searchedService.caChieudaythem(donViSession, giaoVienSession, tuNgay, denNgay, BuoiLamEnum.CA_CHIEU_6H_7H.getId());
+        Object cachieu2 = 0;
+        Object cachieu1 = 0;
+        for (KeyValueEntity item : caChieuDaythem2) {
+            cachieu2 = item.getValue("tienBuoi");
+        }
+        for (KeyValueEntity item : caChieuDaythem1) {
+            cachieu1 = item.getValue("tienBuoi");
+        }
+        if (cachieu1 == null) {
+            cachieu1 = 0;
+        }
+        if (cachieu2 == null) {
+            cachieu2 = 0;
+        }
+        tongTienLamThemNgoaiGio.setValue((double) (cachieu1.hashCode() + cachieu2.hashCode()));
     }
 
     @Subscribe("clearBtn")
@@ -133,7 +197,6 @@ public class ChamconggvBrowse extends StandardLookup<Chamconggv> {
             tengiaovienField.setOptionsList(searchedService.loadgiaovien(tendonviField.getValue()));
         }
     }
-
 
     public Component stt(Chamconggv entity) {
         int lineNumber = 1;
@@ -192,7 +255,8 @@ public class ChamconggvBrowse extends StandardLookup<Chamconggv> {
             where += "and e.buoilam = :buoilam ";
             params.put("buoilam", buoilam);
         }
-        query = query + where;
+        String orderBy = " order by e.ngaylam desc";
+        query = query + where + orderBy;
         return query;
     }
 
@@ -221,12 +285,36 @@ public class ChamconggvBrowse extends StandardLookup<Chamconggv> {
         int count = 1;
 
         for (Chamconggv e : layDanhSachChamconggv) {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
             KeyValueEntity row = metadata.create(KeyValueEntity.class);
             row.setValue("stt", count);
             row.setValue("donvigv", e.getValue("donvigv"));
             row.setValue("hotengv", e.getValue("hotengv"));
-            row.setValue("ngaylam", e.getValue("ngaylam"));
-            row.setValue("buoilam", e.getValue("buoilam"));
+            row.setValue("ngaylam", simpleDateFormat.format(e.getNgaylam()));
+            String buoilam = "";
+            switch (e.getBuoilam()) {
+                case 1:
+                    buoilam = "Làm cả ngày";
+                    break;
+                case 2:
+                    buoilam = "Ca Sáng";
+                    break;
+                case 3:
+                    buoilam = "Ca Chiều";
+                    break;
+                case 4:
+                    buoilam = "Ca Chủ nhật";
+                    break;
+                case 5:
+                    buoilam = "Ca Chiều 5h - 6h";
+                    break;
+                case 6:
+                    buoilam = "Ca Chiều 6h - 7h";
+                    break;
+                default:
+                    buoilam = "Chưa chọn ngày làm";
+            }
+            row.setValue("buoilam", buoilam);
             row.setValue("tienBuoi", e.getValue("tienBuoi"));
 
             collection.add(row);

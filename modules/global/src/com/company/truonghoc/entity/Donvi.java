@@ -27,6 +27,9 @@ public class Donvi extends StandardEntity {
     @Column(name = "DONVITRUNGTAM")
     private Boolean donvitrungtam = false;
 
+    @Column(name = "TENQUANLY")
+    private String tenquanly;
+
     public String getSotienthoai() {
         return sotienthoai;
     }
@@ -57,5 +60,13 @@ public class Donvi extends StandardEntity {
 
     public void setTendonvi(String tendonvi) {
         this.tendonvi = tendonvi;
+    }
+
+    public String getTenquanly() {
+        return tenquanly;
+    }
+
+    public void setTenquanly(String tenquanly) {
+        this.tenquanly = tenquanly;
     }
 }

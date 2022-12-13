@@ -34,7 +34,7 @@ import java.util.stream.Collectors;
 @UiController("truonghoc_Giaovien.browse")
 @UiDescriptor("giaovien-browse.xml")
 @LookupComponent("giaoviensTable")
-@LoadDataBeforeShow
+//@LoadDataBeforeShow
 public class GiaovienBrowse extends StandardLookup<Giaovien> {
     @Inject
     protected UserSession userSession;
@@ -81,12 +81,12 @@ public class GiaovienBrowse extends StandardLookup<Giaovien> {
         if (!donViSession.getDonvitrungtam()) {
             donViField.setEditable(false);
             donViField.setValue(donViSession);
-            excuteSearch(true);
         } else {
             donViField.setEditable(true);
         }
         //Tìm đơn vị
         donViField.setOptionsList(searchedService.loaddonvi());
+        excuteSearch(true);
     }
 
     @Subscribe("donViField")
@@ -139,6 +139,7 @@ public class GiaovienBrowse extends StandardLookup<Giaovien> {
     private String returnQuery(Object donvi, String giaovien, Map<String, Object> params) {
         String query = "select e from truonghoc_Giaovien e ";
         String where = " where 1=1 ";
+        String orderBy = " order by e.donvi";
 
         if (donvi != null) {
             where += "and e.donvi = :donvi ";
@@ -149,7 +150,7 @@ public class GiaovienBrowse extends StandardLookup<Giaovien> {
             params.put("tengv", "%" + giaovien + "%");
         }
 
-        query = query + where;
+        query = query + where + orderBy;
 
         return query;
     }

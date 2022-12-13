@@ -92,6 +92,7 @@
                                 <textField id="thanghocField"
                                            width="100%"
                                            editable="false"
+                                           datatype="int"
                                            caption="Tháng học"/>
                             </column>
                         </form>
