@@ -9,24 +9,6 @@
                   view="luongthang-view">
             <loader/>
         </instance>
-        <collection id="giaoviensDc"
-                    class="com.company.truonghoc.entity.Giaovien"
-                    view="giaovien-view">
-            <loader id="giaoviensDl">
-                <query>
-                    <![CDATA[select e from truonghoc_Giaovien e]]>
-                </query>
-            </loader>
-        </collection>
-        <collection id="chamconggvsDc"
-                    class="com.company.truonghoc.entity.Chamconggv">
-            <view extends="chamconggv-view"/>
-            <loader id="chamconggvsDl">
-                <query>
-                    <![CDATA[select e from truonghoc_Chamconggv e]]>
-                </query>
-            </loader>
-        </collection>
     </data>
     <dialogMode height="600"
                 width="800"/>
@@ -64,8 +46,8 @@
                     <row>
                         <form colspan="3" width="100%" childrenCaptionWidth="80px" dataContainer="luongthangDc">
                             <column>
-                                <lookupField id="hovatenField" property="hovaten"
-                                             optionsContainer="giaoviensDc"
+                                <lookupField id="hovatenField"
+                                             property="hovaten"
                                              width="100%"
                                              nullName="---Lọc tất cả---"
                                              caption="mainMsg://luongthang.hovaten"/>
@@ -289,6 +271,7 @@
                 </rows>
             </grid>
             <textField id="soCaCnFiled" dataContainer="luongthangDc" property="soCaCn" visible="false"/>
+            <textField id="caChieuField" dataContainer="luongthangDc" property="cachieu" visible="false"/>
         </vbox>
         <hbox id="editActions" spacing="true">
             <button id="commitAndCloseBtn" action="windowCommitAndClose"/>

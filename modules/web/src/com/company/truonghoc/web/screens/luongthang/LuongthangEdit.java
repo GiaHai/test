@@ -30,11 +30,7 @@ import java.util.Calendar;
 public class LuongthangEdit extends StandardEditor<Luongthang> {
 
     @Inject
-    protected CollectionLoader<Giaovien> giaoviensDl;
-    @Inject
     protected TextField<Double> luongcobanField;
-    @Inject
-    protected CollectionContainer<Giaovien> giaoviensDc;
     @Inject
     protected TextField<Double> thuclinhField;
     @Inject
@@ -97,6 +93,8 @@ public class LuongthangEdit extends StandardEditor<Luongthang> {
     Integer caNgoai1;
     Integer caNgoai2;
     protected Donvi donvi = null;
+    @Inject
+    private TextField<Integer> caChieuField;
 
     @Subscribe
     protected void onInit(InitEvent event) {
@@ -121,6 +119,7 @@ public class LuongthangEdit extends StandardEditor<Luongthang> {
 
     @Subscribe
     protected void onBeforeShow(BeforeShowEvent event) {
+
         if (donvi != null) {
 
             donViField.setOptionsList(searchedService.loaddonvi());
@@ -136,6 +135,12 @@ public class LuongthangEdit extends StandardEditor<Luongthang> {
             }
         }
     }
+
+//    @Subscribe
+//    public void onAfterShow(AfterShowEvent event) {
+//        caChieu = searchedService.tinhca(donViField.getValue(), hovatenField.getValue(), tungayField.getValue(), denngayField.getValue(), BuoiLamEnum.CA_CHIEU.getId()).size();
+//        caChieuField.setValue(caChieu);
+//    }
 
     @Subscribe("hovatenField")
     protected void onHovatenFieldValueChange(HasValue.ValueChangeEvent<Giaovien> event) {
@@ -289,7 +294,6 @@ public class LuongthangEdit extends StandardEditor<Luongthang> {
         Calendar denngaytru1 = Calendar.getInstance();
         denngaytru1.setTime(denngayField.getValue());
         denngaytru1.add(Calendar.DAY_OF_MONTH, -1);
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
     }
 
     private void tinhNgayCong() {
@@ -302,6 +306,7 @@ public class LuongthangEdit extends StandardEditor<Luongthang> {
 
         buoilamField.setValue(caNgay + caSang * 0.5 + caChieu * 0.5);
         casangField.setValue(caSang);
+        caChieuField.setValue(caChieu);
         cachunhatField.setValue(caChuNhat * 100000);
 
         if (buoilamField.getValue() != null) {

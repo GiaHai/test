@@ -43,6 +43,7 @@ create table TRUONGHOC_LUONGTHANG (
     DENNGAY datetime2,
     BUOILAM double precision,
     CANGOAI integer,
+    CACHIEU integer,
     SO_CA_CN integer,
     CACHUNHAT integer,
     CASANG integer,

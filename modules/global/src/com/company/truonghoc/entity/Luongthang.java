@@ -50,6 +50,9 @@ public class Luongthang extends StandardEntity {
     @Column(name = "CANGOAI")
     private Integer cangoai;
 
+    @Column(name = "CACHIEU")
+    private Integer cachieu;
+
     @Column(name = "SO_CA_CN")
     private Integer soCaCn;
 
@@ -202,6 +205,14 @@ public class Luongthang extends StandardEntity {
 
     public Integer getCasang() {
         return casang;
+    }
+
+    public void setCachieu(Integer cachieu) {
+        this.cachieu = cachieu;
+    }
+
+    public Integer getCachieu() {
+        return cachieu;
     }
 
     public void setThuclinh(Double thuclinh) {

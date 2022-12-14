@@ -346,6 +346,7 @@ public class HocphiBrowse extends StandardLookup<Hocphi> {
         parameters.put("nam", calendar.get(Calendar.YEAR));
         parameters.put("sodienthoaicoso", donViSession.getSotienthoai());
         parameters.put("nguoitao", donViSession.getTenquanly());
+        parameters.put("ghichu", hocphi.getGhichu());
 
         String path = AppContext.getProperty("knkx.template");
 

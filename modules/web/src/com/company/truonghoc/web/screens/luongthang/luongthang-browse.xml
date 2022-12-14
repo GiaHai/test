@@ -113,6 +113,8 @@
                         caption="mainMsg://luongthang.cangoai"/>
                 <column id="casang"
                         caption="mainMsg://luongthang.casang"/>
+                <column id="cachieu"
+                        caption="Ca chiều"/>
                 <column id="cachunhat"
                         caption="Ca chủ nhật"/>
                 <column id="thuclinh"
