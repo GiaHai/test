@@ -32,11 +32,7 @@ import java.util.Calendar;
 @LoadDataBeforeShow
 public class HocphiEdit extends StandardEditor<Hocphi> {
     @Inject
-    protected CollectionLoader<Hocsinh> hocsinhsDl;
-    @Inject
     protected LookupField<Donvi> donViField;
-    @Inject
-    protected CollectionContainer<Hocsinh> hocsinhsDc;
     @Inject
     protected UserSession userSession;
     @Inject

@@ -43,10 +43,6 @@ public class HocsinhBrowse extends StandardLookup<Hocsinh> {
     @Inject
     protected CollectionLoader<Hocsinh> hocsinhsDl;
     @Inject
-    protected CollectionLoader<Donvi> donvisDl;
-    @Inject
-    protected CollectionContainer<Donvi> donvisDc;
-    @Inject
     protected TextField<String> hocSinhField;
     @Inject
     protected LookupField<String> gioiTinhField;

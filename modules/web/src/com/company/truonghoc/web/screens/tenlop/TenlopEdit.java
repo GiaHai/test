@@ -26,10 +26,6 @@ import java.util.stream.Collectors;
 @LoadDataBeforeShow
 public class TenlopEdit extends StandardEditor<Tenlop> {
     @Inject
-    protected CollectionLoader<Donvi> donvisDl;
-    @Inject
-    protected CollectionContainer<Donvi> donvisDc;
-    @Inject
     protected DataManager dataManager;
     @Inject
     protected LookupField<Giaovien> giaoviencnField;
@@ -48,7 +44,6 @@ public class TenlopEdit extends StandardEditor<Tenlop> {
 
     @Subscribe
     protected void onInit(InitEvent event) {
-        donvisDl.load();
         donviFiled.setOptionsList(searchedService.loaddonvi());
 
 //        List<String> thang = Arrays.asList(

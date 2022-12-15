@@ -49,10 +49,6 @@ public class GiaovienBrowse extends StandardLookup<Giaovien> {
     @Inject
     protected DulieuUserService dulieuUserService;
     @Inject
-    protected CollectionLoader<Donvi> donvisDl;
-    @Inject
-    protected CollectionContainer<Donvi> donvisDc;
-    @Inject
     protected TextField<String> tenGvField;
     @Inject
     protected DataManager dataManager;

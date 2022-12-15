@@ -9,24 +9,6 @@
                   view="thuchi-view">
             <loader/>
         </instance>
-        <collection id="thuchisDc"
-                    class="com.company.truonghoc.entity.Thuchi"
-                    view="thuchi-view">
-            <loader id="thuchisDl">
-                <query>
-                    <![CDATA[select e from truonghoc_Thuchi e]]>
-                </query>
-            </loader>
-        </collection>
-        <collection id="donvisDc"
-                    class="com.company.truonghoc.entity.Donvi"
-                    view="donvi-view">
-            <loader id="donvisDl">
-                <query>
-                    <![CDATA[select e from truonghoc_Donvi e]]>
-                </query>
-            </loader>
-        </collection>
     </data>
     <dialogMode height="600"
                 width="800"/>

@@ -39,10 +39,6 @@ public class ThutienhocphiBrowse extends StandardLookup<Thutienhocphi> {
     @Inject
     protected DulieuUserService dulieuUserService;
     @Inject
-    protected CollectionContainer<Donvi> donvisDc;
-    @Inject
-    protected CollectionLoader<Donvi> donvisDl;
-    @Inject
     protected LookupField<Donvi> donViField;
     @Inject
     protected LookupField trangthaiField;

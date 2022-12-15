@@ -10,24 +10,6 @@
             <loader/>
             <collection id="lkchitietthu" property="lkchitieuthu"/>
         </instance>
-        <collection id="hocsinhsDc"
-                    class="com.company.truonghoc.entity.Hocsinh"
-                    view="hocsinh-view">
-            <loader id="hocsinhsDl">
-                <query>
-                    <![CDATA[select e from truonghoc_Hocsinh e]]>
-                </query>
-            </loader>
-        </collection>
-        <collection id="chitietthusDc"
-                    class="com.company.truonghoc.entity.Chitietthu">
-            <view extends="chitietthu-view"/>
-            <loader id="chitietthusDl">
-                <query>
-                    <![CDATA[select e from truonghoc_Chitietthu e]]>
-                </query>
-            </loader>
-        </collection>
     </data>
     <dialogMode height="600"
                 width="800"/>

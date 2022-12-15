@@ -38,7 +38,6 @@ public class HocsinhEdit extends StandardEditor<Hocsinh> {
     protected LookupField<Donvi> donViField;
     @Inject
     protected TextField<String> tenhocsinhField;
-
     @Inject
     protected LookupField<XaPhuong> noiSinh_XaPhuongField;
     @Inject
@@ -47,6 +46,8 @@ public class HocsinhEdit extends StandardEditor<Hocsinh> {
     protected LookupField<QuanHuyen> noiSinh_QuanHuyenField;
     @Inject
     protected TienIchService tienIchService;
+    protected List<XaPhuong> xaPhuongList = new ArrayList<>();
+    protected Boolean afterShow = false;
 
     @Subscribe
     protected void onInit(InitEvent event) {
@@ -56,7 +57,6 @@ public class HocsinhEdit extends StandardEditor<Hocsinh> {
         donViField.setRequiredMessage("Nhập đơn vị");
         tenhocsinhField.setRequired(true);
         tenhocsinhField.setRequiredMessage("Nhập tên học sinh");
-
 
         xaPhuongList = tienIchService.getFullDmXaPhuong();
         initTinhThanhQuanHuyenXaPhuong();
@@ -74,8 +74,6 @@ public class HocsinhEdit extends StandardEditor<Hocsinh> {
     protected void onAfterShow(AfterShowEvent event) {
         initEventOnChangeXaHuyenTinh(noiSinh_XaPhuongField, noiSinh_QuanHuyenField, noiSinh_TinhThanhField);
     }
-
-    protected List<XaPhuong> xaPhuongList = new ArrayList<>();
 
     private void initTinhThanhQuanHuyenXaPhuong() {
         noiSinh_XaPhuongField.setOptionsList(xaPhuongList);
@@ -106,13 +104,11 @@ public class HocsinhEdit extends StandardEditor<Hocsinh> {
             }
         });
     }
-    protected Boolean afterShow = false;
 
     @Subscribe("quequanhocsinhField")
     protected void onQuequanhocsinhFieldValueChange(HasValue.ValueChangeEvent<String> event) {
         if (!org.apache.commons.lang3.StringUtils.isEmpty(event.getValue()) && afterShow)
             getEditedEntity().setQuequanhocsinh(StringUtility.capitalizeString(event.getValue()));
-
     }
 
     public static String toTitleCase(String word) {

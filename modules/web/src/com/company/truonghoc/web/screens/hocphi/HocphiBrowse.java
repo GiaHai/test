@@ -54,10 +54,6 @@ public class HocphiBrowse extends StandardLookup<Hocphi> {
     @Inject
     protected LookupField<Donvi> donViField;
     @Inject
-    protected CollectionLoader<Donvi> donvisDl;
-    @Inject
-    protected CollectionContainer<Donvi> donvisDc;
-    @Inject
     protected DateField<Date> denngayField;
     @Inject
     protected DateField<Date> tungayField;

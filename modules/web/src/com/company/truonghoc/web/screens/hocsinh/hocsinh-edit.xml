@@ -9,26 +9,6 @@
                   view="hocsinh-view">
             <loader/>
         </instance>
-
-        <collection id="donvisDc"
-                    class="com.company.truonghoc.entity.Donvi"
-                    view="donvi-view">
-            <loader id="donvisDl">
-                <query>
-                    <![CDATA[select e from truonghoc_Donvi e]]>
-                </query>
-            </loader>
-        </collection>
-
-        <collection id="namsinhsDc"
-                    class="com.company.truonghoc.entity.tienich.Namsinh">
-            <view extends="_local"/>
-            <loader id="namsinhsDl">
-                <query>
-                    <![CDATA[select e from truonghoc_Namsinh e]]>
-                </query>
-            </loader>
-        </collection>
     </data>
     <dialogMode height="600"
                 width="800"/>

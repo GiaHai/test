@@ -49,10 +49,6 @@ public class LuongthangBrowse extends StandardLookup<Luongthang> {
     @Inject
     protected DateField<Date> tungayField;
     @Inject
-    protected CollectionContainer<Donvi> donvisDc;
-    @Inject
-    protected CollectionLoader<Donvi> donvisDl;
-    @Inject
     protected LookupField trangthaiField;
     @Inject
     protected LookupField<Giaovien> giaovienField;

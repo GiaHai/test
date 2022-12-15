@@ -13,24 +13,6 @@
                 </query>
             </loader>
         </collection>
-        <collection id="hocphisDc"
-                    class="com.company.truonghoc.entity.Hocphi"
-                    view="hocphi-view">
-            <loader id="hocphisDl">
-                <query>
-                    <![CDATA[select e from truonghoc_Hocphi e]]>
-                </query>
-            </loader>
-        </collection>
-        <collection id="luongthangsDc"
-                    class="com.company.truonghoc.entity.Luongthang"
-                    view="luongthang-view">
-            <loader id="luongthangsDl">
-                <query>
-                    <![CDATA[select e from truonghoc_Luongthang e]]>
-                </query>
-            </loader>
-        </collection>
     </data>
     <facets>
         <dataLoadCoordinator auto="true">

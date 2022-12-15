@@ -40,8 +40,6 @@ public class ThuchiBrowse extends StandardLookup<Thuchi> {
     @Inject
     protected CollectionLoader<Thuchi> thuchisDl;
     @Inject
-    protected UserSessionSource userSessionSource;
-    @Inject
     protected UiComponents uiComponents;
     @Inject
     protected Table<Thuchi> thuchisTable;
@@ -65,17 +63,12 @@ public class ThuchiBrowse extends StandardLookup<Thuchi> {
     protected Metadata metadata;
     @Inject
     protected ExportDisplay exportDisplay;
-    private DecimalFormat percentFormat;
     @Inject
     protected DulieuUserService dulieuUserService;
     @Inject
     protected UserSession userSession;
     @Inject
     protected LookupField<Donvi> donViField;
-    @Inject
-    protected CollectionLoader<Donvi> donvisDl;
-    @Inject
-    protected CollectionContainer<Donvi> donvisDc;
     @Inject
     protected LookupField trangthaiField;
     private Donvi donViSession = null;

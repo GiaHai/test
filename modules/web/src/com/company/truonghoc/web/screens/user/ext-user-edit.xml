@@ -13,20 +13,7 @@
             <collectionDatasource id="substitutionsDs" property="substitutions"/>
 
         </datasource>
-        <collectionDatasource id="donvisDc"
-                              class="com.company.truonghoc.entity.Donvi"
-                              view="donvi-view">
-            <query>
-                <![CDATA[select e from truonghoc_Donvi e]]>
-            </query>
-        </collectionDatasource>
-        <collectionDatasource id="giaoviensDc"
-                              class="com.company.truonghoc.entity.Giaovien"
-                              view="giaovien-view">
-            <query>
-                <![CDATA[select e from truonghoc_Giaovien e]]>
-            </query>
-        </collectionDatasource>
+
     </dsContext>
     <layout spacing="true">
         <groupBox id="propertiesBox">

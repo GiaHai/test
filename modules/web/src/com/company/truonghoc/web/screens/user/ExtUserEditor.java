@@ -17,8 +17,6 @@ import java.util.UUID;
 
 public class ExtUserEditor extends UserEditor {
     @Inject
-    protected CollectionDatasource<Donvi, UUID> donvisDc;
-    @Inject
     protected LookupField<Donvi> loockuptendonvi;
     @Inject
     protected DataManager dataManager;

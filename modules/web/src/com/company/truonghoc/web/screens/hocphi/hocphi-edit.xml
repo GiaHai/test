@@ -9,15 +9,6 @@
                   view="hocphi-view">
             <loader/>
         </instance>
-        <collection id="hocsinhsDc"
-                    class="com.company.truonghoc.entity.Hocsinh"
-                    view="hocsinh-view">
-            <loader id="hocsinhsDl">
-                <query>
-                    <![CDATA[select e from truonghoc_Hocsinh e]]>
-                </query>
-            </loader>
-        </collection>
     </data>
     <dialogMode height="600"
                 width="800"/>
