@@ -72,6 +72,9 @@
                 <column id="ghichu"
                         caption="mainMsg://hocsinh.ghichu" maxTextLength="15"/>
             </columns>
+            <buttonsPanel>
+                <button id="xuatExcelBtn" caption="Excel" icon="font-icon:FILE_EXCEL_O" css="background-color: brown;color: white;"/>
+            </buttonsPanel>
             <rows/>
         </groupTable>
     </layout>

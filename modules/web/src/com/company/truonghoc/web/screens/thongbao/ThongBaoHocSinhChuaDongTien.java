@@ -4,12 +4,13 @@ import com.company.truonghoc.entity.Donvi;
 import com.company.truonghoc.entity.Hocsinh;
 import com.company.truonghoc.service.DulieuUserService;
 import com.company.truonghoc.service.SearchedService;
+import com.company.truonghoc.service.XuatFileExcelService;
+import com.company.truonghoc.web.screens.utils.ExtendExcelExporter;
 import com.haulmont.cuba.core.entity.KeyValueEntity;
+import com.haulmont.cuba.gui.Dialogs;
 import com.haulmont.cuba.gui.Notifications;
-import com.haulmont.cuba.gui.components.Button;
-import com.haulmont.cuba.gui.components.DateField;
-import com.haulmont.cuba.gui.components.GroupTable;
-import com.haulmont.cuba.gui.components.LookupField;
+import com.haulmont.cuba.gui.components.*;
+import com.haulmont.cuba.gui.export.ExportDisplay;
 import com.haulmont.cuba.gui.model.KeyValueCollectionContainer;
 import com.haulmont.cuba.gui.screen.Screen;
 import com.haulmont.cuba.gui.screen.Subscribe;
@@ -18,9 +19,8 @@ import com.haulmont.cuba.gui.screen.UiDescriptor;
 import com.haulmont.cuba.security.global.UserSession;
 
 import javax.inject.Inject;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @UiController("truonghoc_ThongBaoHocSinhChuaDongTien")
 @UiDescriptor("thong-bao-hoc-sinh-chua-dong-tien.xml")
@@ -44,6 +44,13 @@ public class ThongBaoHocSinhChuaDongTien extends Screen {
     private LookupField<Donvi> donviField;
     @Inject
     private Notifications notifications;
+    @Inject
+    private Dialogs dialogs;
+    @Inject
+    private ExportDisplay exportDisplay;
+    @Inject
+    private Button excelBtn;
+
 
     @Subscribe
     public void onInit(InitEvent event) {
@@ -53,6 +60,7 @@ public class ThongBaoHocSinhChuaDongTien extends Screen {
     @Subscribe
     public void onBeforeShow(BeforeShowEvent event) {
         donviField.setOptionsList(searchedService.loaddonvi());
+        donviField.setResponsive(true);
         if (!donvi.getDonvitrungtam()) {
             donviField.setValue(donvi);
             donviField.setEditable(false);
@@ -71,14 +79,15 @@ public class ThongBaoHocSinhChuaDongTien extends Screen {
                     .withType(Notifications.NotificationType.WARNING)
                     .show();
         }
+        excelBtn.setVisible(true);
     }
 
     @Subscribe("xoaBtn")
     public void onXoaBtnClick(Button.ClickEvent event) {
-        if (donvi.getDonvitrungtam()){
+        if (donvi.getDonvitrungtam()) {
             donviField.clear();
             thongBaoHsChuaDongTienTable.setVisible(false);
-        }else {
+        } else {
             List<KeyValueEntity> result = thongBaoHsChuaDongTien();
             thongBaoHocSinhChuaDongTiensDc.setItems(result);
             thongBaoHsChuaDongTienTable.setVisible(true);
@@ -101,6 +110,59 @@ public class ThongBaoHocSinhChuaDongTien extends Screen {
             stt++;
         }
         return result;
+    }
+
+    @Subscribe("excelBtn")
+    public void onExcelBtnClick(Button.ClickEvent event) {
+        dialogs.createOptionDialog()
+                .withCaption("Xác nhận")
+                .withMessage("Bạn có muốn chỉ xuất các hàng không?")
+                .withActions(
+                        new DialogAction(DialogAction.Type.YES, Action.Status.PRIMARY).withCaption("Tất cả các hàng").withHandler(e -> {
+                            xuatExcel(searchedService.getthongBaoHsChuaDongTien(tungayField.getValue(), denngayField.getValue(), donviField.getValue()));
+                        }),
+                        new DialogAction(DialogAction.Type.NO).withCaption("Hủy")
+                )
+                .show();
+    }
+
+    private void xuatExcel(List<Hocsinh> getthongBaoHsChuaDongTien) {
+        Table table = thongBaoHsChuaDongTienTable;
+        Map<String, String> columns = new HashMap<>();
+        Map<Integer, String> properties = new HashMap<>();
+        List<KeyValueEntity> collection = thongBaoHocSinhChuaDongTiensDc.getItems();
+
+        List<Table.Column> tableColumns = table.getColumns();
+        int i = 0;
+        for (Table.Column column : tableColumns) {
+            columns.put(column.getIdString(), column.getCaption());
+            properties.put(i, column.getIdString());
+            i++;
+        }
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
+        String tuNgay;
+        String denNgay;
+        String donVi;
+        if (donviField.getValue() == null){
+            donVi = "";
+        }else {
+            donVi = donviField.getValue().getTendonvi();
+        }
+        String title = "Danh sách học sinh chưa đóng tiền của Trung tâm " + donVi + " ";
+
+        if (tungayField.getValue() == null) {
+            tuNgay = "";
+        } else {
+            tuNgay = " Khoảng thời gian từ " + simpleDateFormat.format(tungayField.getValue()) + "";
+        }
+        if (denngayField.getValue() == null) {
+            denNgay = "";
+        } else {
+            denNgay = " đến " + simpleDateFormat.format(denngayField.getValue()) + "";
+        }
+        ExtendExcelExporter exporter = new ExtendExcelExporter(title);
+        exporter.exportDataCollectionTitleInFile(collection, columns, properties, exportDisplay, title + tuNgay + denNgay);
     }
 
 }

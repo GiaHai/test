@@ -22,20 +22,16 @@
                   width="100%">
             <hbox spacing="true" width="100%">
                 <lookupField id="donviField" caption="Đơn vị" width="100%" inputPrompt="Chọn đơn vị"/>
-
                 <dateField id="tungayField"
                            datatype="date"
                            resolution="DAY"
                            width="100%"
                            caption="mainMsg://tungay"/>
-
                 <dateField id="denngayField"
                            datatype="date"
                            resolution="DAY"
                            width="100%"
                            caption="mainMsg://denngay"/>
-
-
                 <vbox spacing="true">
                     <hbox spacing="true" css="margin-top: 20px;">
                         <button id="timkiemBtn"
@@ -44,12 +40,12 @@
                         <button id="xoaBtn"
                                 caption="Xoá"
                                 stylename="Btntimkiem" icon="PICKERFIELD_CLEAR"/>
+                        <button id="excelBtn" caption="Xuất Excel"
+                                icon="font-icon:FILE_EXCEL_O" stylename="Btntimkiem" visible="false"/>
                     </hbox>
                 </vbox>
-
             </hbox>
         </groupBox>
-
         <groupTable id="thongBaoHsChuaDongTienTable" width="100%" dataContainer="thongBaoHocSinhChuaDongTiensDc"
                     height="100%" visible="false">
             <columns>

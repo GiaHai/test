@@ -6,10 +6,11 @@ import com.company.truonghoc.entity.tienich.Namsinh;
 import com.company.truonghoc.service.DulieuUserService;
 import com.company.truonghoc.service.SearchedService;
 import com.company.truonghoc.service.XuatFileExcelService;
+import com.company.truonghoc.web.screens.utils.ExtendExcelExporter;
 import com.haulmont.cuba.core.entity.KeyValueEntity;
-import com.haulmont.cuba.gui.components.GroupTable;
-import com.haulmont.cuba.gui.components.LookupField;
-import com.haulmont.cuba.gui.components.TextField;
+import com.haulmont.cuba.gui.Dialogs;
+import com.haulmont.cuba.gui.components.*;
+import com.haulmont.cuba.gui.export.ExportDisplay;
 import com.haulmont.cuba.gui.model.KeyValueCollectionContainer;
 import com.haulmont.cuba.gui.model.KeyValueCollectionLoader;
 import com.haulmont.cuba.gui.screen.Screen;
@@ -20,6 +21,7 @@ import com.haulmont.cuba.security.global.UserSession;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.inject.Inject;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -50,6 +52,12 @@ public class ManHinhDanhSachHsNghi extends Screen {
     @Inject
     private LookupField<Namsinh> namSinhField;
     private Donvi donvi = null;
+    @Inject
+    private Dialogs dialogs;
+    @Inject
+    private GroupTable danhSachHSDaNghisTable;
+    @Inject
+    private ExportDisplay exportDisplay;
 
     @Subscribe
     public void onInit(InitEvent event) {
@@ -140,4 +148,45 @@ public class ManHinhDanhSachHsNghi extends Screen {
         query = query + where + orderBy;
         return query;
     }
+
+    @Subscribe("xuatExcelBtn")
+    public void onXuatExcelBtnClick(Button.ClickEvent event) {
+        dialogs.createOptionDialog()
+                .withCaption("Xác nhận")
+                .withMessage("Bạn có muốn chỉ xuất các hàng không?")
+                .withActions(
+                        new DialogAction(DialogAction.Type.YES, Action.Status.PRIMARY).withCaption("Tất cả các hàng").withHandler(e -> {
+                            xuatExcel(xuatFileExcelService.layDanhSachHocsinh(donViField.getValue(), hocSinhField.getValue(), gioiTinhField.getValue(), namSinhField.getValue(), true));
+                        }),
+                        new DialogAction(DialogAction.Type.NO).withCaption("Hủy")
+                )
+                .show();
+    }
+
+    private void xuatExcel(List<Hocsinh> layDanhSachHocsinh) {
+        Table table = danhSachHSDaNghisTable;
+        Map<String, String> columns = new HashMap<>();
+        Map<Integer, String> properties = new HashMap<>();
+        List<KeyValueEntity> collection = danhSachHSDaNghisDc.getItems();
+
+        List<Table.Column> tableColumns = table.getColumns();
+        int i = 0;
+        for (Table.Column column : tableColumns) {
+            columns.put(column.getIdString(), column.getCaption());
+            properties.put(i, column.getIdString());
+            i++;
+        }
+        String donVi;
+        if (donViField.getValue() == null) {
+            donVi = "";
+        } else {
+            donVi = donViField.getValue().getTendonvi();
+        }
+
+        String title = "Danh sách học sinh nghỉ học " + donVi + "";
+
+        ExtendExcelExporter exporter = new ExtendExcelExporter(title);
+        exporter.exportDataCollectionTitleInFile(collection, columns, properties, exportDisplay, title);
+    }
+
 }

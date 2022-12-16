@@ -115,13 +115,13 @@ public class SearchedServiceBean implements SearchedService {
     }
 
     @Override
-    public List<Hocsinh> getthongBaoHsChuaDongTien(Date tuNgay, Date denNgay, Donvi donvi) {
+    public List<Hocsinh> getthongBaoHsChuaDongTien(Date tuNgay, Date denNgay, Object donvi) {
         String tungaysql = "";
         String denngaysql = "";
         Map<String, Object>  params = new HashMap<>();
         String query = "select e from truonghoc_Hocsinh e";
         String where = " where 1=1 ";
-        if (!donvi.getDonvitrungtam()){
+        if (donvi != null){
             where += " and e.donvi = :donvi";
             params.put("donvi", donvi);
         }
