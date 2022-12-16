@@ -32,7 +32,6 @@
                                              property="donvi"
                                              dataContainer="hocsinhDc"
                                              width="100%"
-                                             optionsContainer="donvisDc"
                                              captionProperty="tendonvi"
                                              nullName="---Lọc tất cả---"
                                              caption="mainMsg://donvitao"/>
@@ -73,7 +72,6 @@
                                              property="ngaysinhhocsinh"
                                              dataContainer="hocsinhDc"
                                              width="100%"
-                                             optionsContainer="namsinhsDc"
                                              captionProperty="namSinh"
                                              nullName="---Năm sinh---"
                                              caption="mainMsg://hocsinh.ngaysinhhocsinh"/>
@@ -122,6 +120,17 @@
                                           width="100%"
                                           inputPrompt="Nhập ghi chú"
                                           caption="mainMsg://hocsinh.ghichu"/>
+                            </column>
+                        </form>
+                    </row>
+                    <row>
+                        <form colspan="7" width="100%" childrenCaptionWidth="150px">
+                            <column>
+                                <checkBox id="tinhtrangField"
+                                          property="tinhtranghocsinh"
+                                          dataContainer="hocsinhDc"
+                                          width="100%"
+                                          caption="Tình trạng học sinh"/>
                             </column>
                         </form>
                     </row>

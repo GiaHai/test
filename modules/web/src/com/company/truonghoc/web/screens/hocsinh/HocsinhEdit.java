@@ -2,10 +2,12 @@ package com.company.truonghoc.web.screens.hocsinh;
 
 import com.company.truonghoc.entity.Donvi;
 import com.company.truonghoc.entity.Giaovien;
+import com.company.truonghoc.entity.tienich.Namsinh;
 import com.company.truonghoc.entity.tienich.QuanHuyen;
 import com.company.truonghoc.entity.tienich.TinhThanh;
 import com.company.truonghoc.entity.tienich.XaPhuong;
 import com.company.truonghoc.service.DulieuUserService;
+import com.company.truonghoc.service.SearchedService;
 import com.company.truonghoc.service.TienIchService;
 import com.company.truonghoc.utils.StringUtility;
 import com.haulmont.cuba.gui.components.HasValue;
@@ -15,6 +17,7 @@ import com.haulmont.cuba.gui.model.InstanceContainer;
 import com.haulmont.cuba.gui.screen.*;
 import com.company.truonghoc.entity.Hocsinh;
 import com.haulmont.cuba.security.global.UserSession;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -48,6 +51,10 @@ public class HocsinhEdit extends StandardEditor<Hocsinh> {
     protected TienIchService tienIchService;
     protected List<XaPhuong> xaPhuongList = new ArrayList<>();
     protected Boolean afterShow = false;
+    @Inject
+    private LookupField<Namsinh> ngaysinhhocsinhField;
+    @Inject
+    private SearchedService searchedService;
 
     @Subscribe
     protected void onInit(InitEvent event) {
@@ -64,6 +71,8 @@ public class HocsinhEdit extends StandardEditor<Hocsinh> {
 
     @Subscribe
     protected void onBeforeShow(BeforeShowEvent event) {
+        donViField.setOptionsList(searchedService.loaddonvi());
+        ngaysinhhocsinhField.setOptionsList(searchedService.loadNamSinh());
         if (!dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam()) {
             donViField.setEditable(false);
             donViField.setValue(dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi());
@@ -107,7 +116,7 @@ public class HocsinhEdit extends StandardEditor<Hocsinh> {
 
     @Subscribe("quequanhocsinhField")
     protected void onQuequanhocsinhFieldValueChange(HasValue.ValueChangeEvent<String> event) {
-        if (!org.apache.commons.lang3.StringUtils.isEmpty(event.getValue()) && afterShow)
+        if (!StringUtils.isEmpty(event.getValue()) && afterShow)
             getEditedEntity().setQuequanhocsinh(StringUtility.capitalizeString(event.getValue()));
     }
 

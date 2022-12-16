@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <menu-config xmlns="http://schemas.haulmont.com/cuba/menu.xsd">
     <menu id="application-truonghoc" caption="mainMsg://menu_config.application-truonghoc1" expanded="true">
-        <item screen="truonghoc_Giaovien.browse" caption="mainMsg://menu_config.truonghoc_Giaovien.browse"/>
         <item screen="truonghoc_Donvi.browse" caption="mainMsg://menu_config.truonghoc_Donvi.browse"/>
+        <item screen="truonghoc_Giaovien.browse" caption="mainMsg://menu_config.truonghoc_Giaovien.browse"/>
         <item screen="truonghoc_Hocsinh.browse" caption="mainMsg://menu_config.truonghoc_Hocsinh.browse"/>
+        <item screen="truonghoc_ManHinhDanhSachHsNghi" caption="mainMsg://menu_config.truonghoc_ManHinhDanhSachHsNghi"/>
         <item screen="truonghoc_Lophoc.browse" caption="mainMsg://menu_config.truonghoc_Lophoc.browse"/>
         <item screen="truonghoc_Tenlop.browse" caption="mainMsg://menu_config.truonghoc_Tenlop.browse"/>
-<!--        <item screen="truonghoc_" caption="mainMsg://menu_config.truonghoc_"/>-->
+        <!--        <item screen="truonghoc_" caption="mainMsg://menu_config.truonghoc_"/>-->
     </menu>
     <menu id="application-nhap" caption="mainMsg://menu_config.application-truonghoc5" expanded="true">
         <item screen="truonghoc_Lophoc.edit" caption="Nhập Lớp"/>

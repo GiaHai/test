@@ -2,7 +2,6 @@ package com.company.truonghoc.service;
 
 import com.company.truonghoc.entity.*;
 import com.company.truonghoc.entity.tienich.Namsinh;
-import com.haulmont.cuba.core.Persistence;
 import com.haulmont.cuba.core.global.DataManager;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -36,7 +35,7 @@ public class XuatFileExcelServiceBean implements XuatFileExcelService {
     }
 
     @Override
-    public List<Hocsinh> layDanhSachHocsinh(Donvi donVi, String hocsinh, String gioitinh, Namsinh namsinh) {
+    public List<Hocsinh> layDanhSachHocsinh(Donvi donVi, String hocsinh, String gioitinh, Namsinh namsinh, Boolean tinhTrang) {
         String query = "select e from truonghoc_Hocsinh e ";
         String where = "where 1=1 ";
         Map<String, Object> params = new HashMap<>();
@@ -59,9 +58,13 @@ public class XuatFileExcelServiceBean implements XuatFileExcelService {
             params.put("namsinh", namsinh);
         }
 
-        if (donVi != null) {
-            where += " and e.donvi.id = :donVi";
-            params.put("donVi", donVi.getId());
+//        if (donVi != null) {
+//            where += " and e.donvi.id = :donVi";
+//            params.put("donVi", donVi.getId());
+//        }
+        if (tinhTrang != null) {
+            where += " and e.tinhtranghocsinh = :tinhTrang";
+            params.put("tinhTrang", tinhTrang);
         }
         List<Hocsinh> hocsinhs = dataManager.load(Hocsinh.class).view("hocsinh-view")
                 .query(query + where)

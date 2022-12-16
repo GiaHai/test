@@ -38,15 +38,16 @@
                 <button id="timkiemBtn"
                         invoke="timkiemExcute"
                         stylename="Btntimkiem"
-                        caption="Tìm kiếm" align="BOTTOM_LEFT"  icon="PICKERFIELD_OPEN"/>
+                        caption="Tìm kiếm" align="BOTTOM_LEFT" icon="PICKERFIELD_OPEN"/>
                 <button id="xoaBtn"
                         stylename="Btntimkiem"
                         caption="Xoá" align="BOTTOM_LEFT" icon="PICKERFIELD_CLEAR"/>
             </hbox>
         </groupBox>
         <table id="tenlopsTable"
-                    width="100%"
-                    dataContainer="tenlopsDc">
+               width="100%"
+               editable="true"
+               dataContainer="tenlopsDc">
             <actions>
                 <action id="create" type="create"/>
                 <action id="edit" type="edit"/>
@@ -60,7 +61,7 @@
                 <column id="giaoviencn" caption="Giáo viên chủ nhiệm"/>
                 <column id="thanghoc" caption="Tháng học"/>
                 <column id="namhoc" caption="Năm học"/>
-                <column id="tinhtranglop" visible="false"/>
+                <column id="tinhtranglop" visible="true" editable="true" caption="Chọn Đóng/Mở lớp"/>
                 <column id="tinhtranglopss" generator="tinhtranglop" caption="Tình trạng lớp"/>
             </columns>
             <rowsCount/>

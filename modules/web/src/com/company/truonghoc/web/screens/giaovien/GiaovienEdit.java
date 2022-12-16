@@ -55,6 +55,7 @@ public class GiaovienEdit extends StandardEditor<Giaovien> {
 
     @Subscribe
     protected void onBeforeShow(BeforeShowEvent event) {
+        donViField.setOptionsList(searchedService.loaddonvi());
         if (!donViSession.getDonvitrungtam()) {
             donViField.setValue(donViSession);
             donViField.setEditable(false);

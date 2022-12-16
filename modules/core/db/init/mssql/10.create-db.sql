@@ -106,6 +106,7 @@ create table TRUONGHOC_HOCSINH (
     NOI_SINH_XA_PHUONG_ID uniqueidentifier,
     NOI_SINH_QUAN_HUYEN_ID uniqueidentifier,
     NOI_SINH_TINH_THANH_ID uniqueidentifier,
+    TINHTRANGHOCSINH tinyint,
     GHICHU nvarchar(255),
     --
     primary key nonclustered (ID)

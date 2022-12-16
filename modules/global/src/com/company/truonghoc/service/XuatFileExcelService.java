@@ -5,14 +5,13 @@ import com.company.truonghoc.entity.tienich.Namsinh;
 
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 public interface XuatFileExcelService {
     String NAME = "truonghoc_XuatFileExcelService";
 
     List<Giaovien> layDanhSachGiaovien(Donvi donVi, String giaoVien);
 
-    List<Hocsinh> layDanhSachHocsinh(Donvi donVi, String hocsinh, String gioitinh, Namsinh namsinh);
+    List<Hocsinh> layDanhSachHocsinh(Donvi donVi, String hocsinh, String gioitinh, Namsinh namsinh, Boolean tinhTrang);
 
     List<Lophoc> layDanhSachLophoc(Donvi donVi, Giaovien giaoVien, Tenlop lopHoc);
 

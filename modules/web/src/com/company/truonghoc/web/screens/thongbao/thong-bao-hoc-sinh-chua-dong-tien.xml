@@ -13,14 +13,12 @@
     </data>
     <layout expand="thongBaoHsChuaDongTienTable"
             stylename="css-layout-giaovien"
-
             spacing="true">
         <groupBox caption="Tìm kiếm"
                   collapsable="true"
                   collapsed="false"
                   spacing="true"
                   stylename="css-hbox-search"
-
                   width="100%">
             <hbox spacing="true" width="100%">
                 <lookupField id="donviField" caption="Đơn vị" width="100%" inputPrompt="Chọn đơn vị"/>

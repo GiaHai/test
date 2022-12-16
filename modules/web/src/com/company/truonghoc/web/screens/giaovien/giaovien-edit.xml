@@ -33,7 +33,6 @@
                                              caption="mainMsg://donvitao"
                                              width="100%"
                                              dataContainer="giaovienDc"
-                                             optionsContainer="donvisDc"
                                              nullName="---Lọc tất cả---"
                                              captionProperty="tendonvi"/>
                             </column>

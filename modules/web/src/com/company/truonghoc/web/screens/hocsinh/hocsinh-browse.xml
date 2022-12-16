@@ -50,6 +50,12 @@
                                width="100%"
                                inputPrompt="Năm sinh" nullName="Năm sinh"/>
                 </vbox>
+                <vbox spacing="true" width="100%">
+                    <lookupField id="tinhTrangField"
+                               caption="Tình trạng"
+                               width="100%"
+                               inputPrompt="Chọn tình trạng"/>
+                </vbox>
                 <vbox spacing="true" css="margin-top: 20px;">
                     <button id="timkiemBtn"
                             invoke="timkiemExcute"
@@ -89,7 +95,9 @@
                 <column id="noiSinh_TinhThanh"
                         caption="Tỉnh/Thành"/>
                 <column id="ghichu"
-                        caption="mainMsg://hocsinh.ghichu"/>
+                        caption="mainMsg://hocsinh.ghichu" maxTextLength="15"/>
+                <column id="tinhtranghocsinh"
+                        caption="Tình trạng học sinh"/>
             </columns>
             <rowsCount/>
             <buttonsPanel id="buttonsPanel"

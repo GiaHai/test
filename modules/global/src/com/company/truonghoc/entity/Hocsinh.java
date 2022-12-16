@@ -47,6 +47,9 @@ public class Hocsinh extends StandardEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private TinhThanh noiSinh_TinhThanh;
 
+    @Column(name = "TINHTRANGHOCSINH")
+    private Boolean tinhtranghocsinh = false;
+
     @Column(name = "GHICHU")
     private String ghichu;
 
@@ -104,6 +107,14 @@ public class Hocsinh extends StandardEntity {
 
     public void setQuequanhocsinh(String quequanhocsinh) {
         this.quequanhocsinh = quequanhocsinh;
+    }
+
+    public Boolean getTinhtranghocsinh() {
+        return tinhtranghocsinh;
+    }
+
+    public void setTinhtranghocsinh(Boolean tinhtranghocsinh) {
+        this.tinhtranghocsinh = tinhtranghocsinh;
     }
 
     public String getGioitinhhocsinh() {

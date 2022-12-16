@@ -15,7 +15,7 @@
     <layout expand="editActions" spacing="true">
         <form id="form" dataContainer="tenlopDc">
             <hbox width="100%" spacing="true">
-                <vbox>
+                <vbox width="100%">
                     <lookupField id="donviFiled"
                                  dataContainer="tenlopDc"
                                  property="dovi" caption="Đơn vị"
@@ -30,7 +30,7 @@
                                inputPrompt="Nhập tên lớp"
                                requiredMessage="mainMsg://tenlop.requiredMessage"/>
                 </vbox>
-                <vbox>
+                <vbox width="100%">
                     <lookupField id="giaoviencnField"
                                  dataContainer="tenlopDc"
                                  property="giaoviencn"
@@ -45,7 +45,7 @@
                                  required="true"
                                  requiredMessage="mainMsg://thanghoc.requiredMessage"/>
                 </vbox>
-                <vbox align="BOTTOM_CENTER">
+                <vbox align="BOTTOM_CENTER" width="100%">
                     <checkBox id="ttLopcheck"
                               caption="Tình trạng lớp"
                               dataContainer="tenlopDc"

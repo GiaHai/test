@@ -69,6 +69,8 @@ public class HocsinhBrowse extends StandardLookup<Hocsinh> {
     private Donvi donViSession = null;
     @Inject
     protected LookupField<Namsinh> namSinhField;
+    @Inject
+    private LookupField<Boolean> tinhTrangField;
 
     @Subscribe
     protected void onInit(InitEvent event) {
@@ -77,6 +79,12 @@ public class HocsinhBrowse extends StandardLookup<Hocsinh> {
         gioitinh.add("Nam");
         gioitinh.add("Nữ");
         gioiTinhField.setOptionsList(gioitinh);
+
+        Map<String, Boolean> tinhtrang = new LinkedHashMap<>();
+        tinhtrang.put("Còn đi học", false);
+        tinhtrang.put("Đã nghỉ học", true);
+        tinhTrangField.setOptionsMap(tinhtrang);
+
         //Đơn vị
         donViSession = dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi();
     }
@@ -89,9 +97,8 @@ public class HocsinhBrowse extends StandardLookup<Hocsinh> {
 
         if (!donViSession.getDonvitrungtam()) {
             if (lookupActions.isVisible() == true) {
-                donViField.setValue(donViSession);
-                donViField.setEditable(false);
-                excuteSearch(true);
+                tinhTrangField.setValue(false);
+                tinhTrangField.setEditable(false);
             }
             donViField.setValue(donViSession);
             donViField.setEditable(false);
@@ -133,15 +140,16 @@ public class HocsinhBrowse extends StandardLookup<Hocsinh> {
         String gioitinh = gioiTinhField.getValue();
         Object donvi = donViField.getValue();
         Object namsinh = namSinhField.getValue();
+        Boolean tinhTrang = tinhTrangField.getValue();
         Map<String, Object> params = new HashMap<>();
-        String query = returnQuery(donvi, params, hocsinh, gioitinh, namsinh);
+        String query = returnQuery(donvi, params, hocsinh, gioitinh, namsinh, tinhTrang);
 
         hocsinhsDl.setQuery(query);
         hocsinhsDl.setParameters(params);
         hocsinhsDl.load();
     }
 
-    private String returnQuery(Object donvi, Map<String, Object> params, String hocsinh, String gioitinh, Object namsinh) {
+    private String returnQuery(Object donvi, Map<String, Object> params, String hocsinh, String gioitinh, Object namsinh, Boolean tinhTrang) {
         String query = "select e from truonghoc_Hocsinh e ";
         String where = " where 1=1 ";
         String orderBy = " order by e.donvi";
@@ -163,6 +171,10 @@ public class HocsinhBrowse extends StandardLookup<Hocsinh> {
         if (namsinh != null){
             where += "and e.ngaysinhhocsinh = :namsinh ";
             params.put("namsinh", namsinh);
+        }
+        if (tinhTrang != null){
+            where += "and e.tinhtranghocsinh = :tinhtrang ";
+            params.put("tinhtrang", tinhTrang);
         }
         query = query + where + orderBy;
         return query;
@@ -187,7 +199,7 @@ public class HocsinhBrowse extends StandardLookup<Hocsinh> {
                 .withMessage("Bạn có muốn chỉ xuất các hàng không?")
                 .withActions(
                         new DialogAction(DialogAction.Type.YES, Action.Status.PRIMARY).withCaption("Tất cả các hàng").withHandler(e -> {
-                            xuatExcel(xuatFileExcelService.layDanhSachHocsinh(donViField.getValue(), hocSinhField.getValue(), gioiTinhField.getValue(), namSinhField.getValue()));
+                            xuatExcel(xuatFileExcelService.layDanhSachHocsinh(donViField.getValue(), hocSinhField.getValue(), gioiTinhField.getValue(), namSinhField.getValue(), tinhTrangField.getValue()));
                         }),
                         new DialogAction(DialogAction.Type.NO).withCaption("Hủy")
                 )
@@ -214,6 +226,11 @@ public class HocsinhBrowse extends StandardLookup<Hocsinh> {
             row.setValue("noiSinh_QuanHuyen", e.getValue("noiSinh_QuanHuyen"));
             row.setValue("noiSinh_TinhThanh", e.getValue("noiSinh_TinhThanh"));
             row.setValue("ghichu", e.getValue("ghichu"));
+            if (e.getTinhtranghocsinh() == true){
+                row.setValue("tinhtranghocsinh", "Đã nghỉ học");
+            }else {
+                row.setValue("tinhtranghocsinh", "Còn đi học");
+            }
             collection.add(row);
             count++;
         }
