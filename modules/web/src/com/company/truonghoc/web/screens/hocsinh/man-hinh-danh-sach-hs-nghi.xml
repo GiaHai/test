@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://manHinhDanhSachHsNghi.caption"
+        messagesPack="com.company.truonghoc.web.screens.hocsinh">
+    <data>
+        <keyValueCollection id="danhSachHSDaNghisDc">
+            <loader id="danhSachHSDaNghisDl"/>
+            <properties>
+                <property name="stt" datatype="int"/>
+                <property name="donvi" datatype="string"/>
+                <property name="tenhocsinh" datatype="string"/>
+                <property name="ngaysinhhocsinh" datatype="string"/>
+                <property name="gioitinhhocsinh" datatype="string"/>
+                <property name="quequanhocsinh" datatype="string"/>
+                <property name="ghichu" datatype="string"/>
+                <property name="tinhtranghocsinh" datatype="string"/>
+            </properties>
+        </keyValueCollection>
+    </data>
+    <layout expand="danhSachHSDaNghisTable" spacing="true" stylename="css-layout-giaovien">
+        <groupBox caption="Tìm kiếm"
+                  collapsed="false"
+                  collapsable="true"
+                  stylename="css-hbox-search"
+                  spacing="true"
+                  width="100%">
+            <hbox width="100%" spacing="true">
+                <vbox spacing="true" width="100%">
+                    <lookupField id="donViField"
+                                 caption="Đơn vị"
+                                 width="100%"
+                                 nullName="---Tất cả đơn vị---"/>
+                    <lookupField id="gioiTinhField"
+                                 caption="Giới tính"
+                                 width="100%"
+                                 nullName="---Tất cả giới tính---"/>
+                </vbox>
+
+                <vbox spacing="true" width="100%">
+                    <textField id="hocSinhField"
+                               caption="Học sinh"
+                               width="100%"
+                               inputPrompt="Tên học sinh"/>
+                    <lookupField id="namSinhField"
+                                 caption="Năm sinh"
+                                 width="100%"
+                                 inputPrompt="Năm sinh" nullName="Năm sinh"/>
+                </vbox>
+                <vbox spacing="true" css="margin-top: 20px;">
+                    <button id="timkiemBtn"
+                            stylename="Btntimkiem"
+                            caption="Tìm kiếm" icon="PICKERFIELD_OPEN" shortcut="ENTER"/>
+                    <button id="xoaBtn"
+                            stylename="Btntimkiem"
+                            caption="Xoá" icon="PICKERFIELD_CLEAR" css="margin-top: 20px;"/>
+                </vbox>
+            </hbox>
+        </groupBox>
+        <groupTable id="danhSachHSDaNghisTable" dataContainer="danhSachHSDaNghisDc" width="100%">
+            <columns>
+                <column id="stt" caption="STT"/>
+                <column id="donvi"
+                        caption="mainMsg://donvitao"/>
+                <column id="tenhocsinh"
+                        caption="mainMsg://hocsinh.tenhocsinh"/>
+                <column id="ngaysinhhocsinh"
+                        caption="mainMsg://hocsinh.ngaysinhhocsinh"/>
+                <column id="gioitinhhocsinh"
+                        caption="mainMsg://hocsinh.gioitinhhocsinh"/>
+                <column id="quequanhocsinh"
+                        caption="mainMsg://hocsinh.quequanhocsinh"/>
+                <column id="ghichu"
+                        caption="mainMsg://hocsinh.ghichu" maxTextLength="15"/>
+            </columns>
+            <rows/>
+        </groupTable>
+    </layout>
+</window>
