@@ -3,6 +3,7 @@ package com.company.truonghoc.web.screens.user;
 import com.company.truonghoc.entity.Donvi;
 import com.company.truonghoc.entity.Giaovien;
 import com.company.truonghoc.service.DulieuUserService;
+import com.company.truonghoc.service.SearchedService;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.core.global.UserSessionSource;
 import com.haulmont.cuba.gui.app.security.user.edit.UserEditor;
@@ -34,6 +35,8 @@ public class ExtUserEditor extends UserEditor {
     protected TextField<String> middleNameField;
     @Named("fieldGroupLeft.login")
     protected TextField<String> loginField;
+    @Inject
+    private SearchedService searchedService;
 
 
     @Subscribe
@@ -49,6 +52,7 @@ public class ExtUserEditor extends UserEditor {
 
     @Subscribe
     protected void onBeforeShow(BeforeShowEvent event) {
+        loockuptendonvi.setOptionsList(searchedService.loaddonvi());
         try {
             if (!dulieuUserService.timdovi(userSession.getUser().getLogin()).getLoockup_donvi().getDonvitrungtam()) {
                 loockuptendonvi.setEditable(false);

@@ -36,7 +36,7 @@ public class Hocphi extends StandardEntity {
     private Date ngaydong;
 
     @Column(name = "HANDONG")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date handong;
 
     @Column(name = "HINHTHUCTHANHTOAN")

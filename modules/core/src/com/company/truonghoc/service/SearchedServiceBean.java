@@ -120,7 +120,7 @@ public class SearchedServiceBean implements SearchedService {
         String denngaysql = "";
         Map<String, Object>  params = new HashMap<>();
         String query = "select e from truonghoc_Hocsinh e";
-        String where = " where 1=1 ";
+        String where = " where 1=1 and e.tinhtranghocsinh = false ";
         if (donvi != null){
             where += " and e.donvi = :donvi";
             params.put("donvi", donvi);

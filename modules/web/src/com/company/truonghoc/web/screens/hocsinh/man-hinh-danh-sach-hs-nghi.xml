@@ -35,7 +35,6 @@
                                  width="100%"
                                  nullName="---Tất cả giới tính---"/>
                 </vbox>
-
                 <vbox spacing="true" width="100%">
                     <textField id="hocSinhField"
                                caption="Học sinh"
