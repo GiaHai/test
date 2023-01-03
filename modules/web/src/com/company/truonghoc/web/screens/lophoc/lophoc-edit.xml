@@ -19,8 +19,8 @@
             </loader>
         </collection>
     </data>
-    <dialogMode height="600"
-                width="800"/>
+    <dialogMode height="AUTO" width="AUTO" forceDialog="true"/>
+
     <layout expand="editActions" spacing="true" stylename="css-layout-lophocedit">
         <vbox spacing="true" stylename="css-vbox">
             <grid id="form" spacing="true" width="100%">

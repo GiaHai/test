@@ -10,8 +10,8 @@
             <loader/>
         </instance>
     </data>
-    <dialogMode height="600"
-                width="800"/>
+<!--    <dialogMode height="AUTO" width="AUTO" forceDialog="true"/>-->
+
     <layout expand="editActions" spacing="true">
         <vbox spacing="true">
             <grid id="form" spacing="true" width="100%">

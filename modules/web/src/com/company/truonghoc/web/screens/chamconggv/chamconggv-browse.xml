@@ -48,7 +48,8 @@
                                     <vbox stylename="style-info"
                                           css="box-shadow: 2px 3px 4px #908f8f;border-top: 6px solid #41B4A6;">
                                         <hbox width="100%" css="padding: 10px 10px 5px 10px;">
-                                            <label css="padding-left: 5px;" value="Tổng số ngày làm chính" stylename="bold"
+                                            <label css="padding-left: 5px;" value="Tổng số ngày làm chính"
+                                                   stylename="bold"
                                                    align="MIDDLE_LEFT"/>
                                         </hbox>
                                         <hbox spacing="true" expand="tongSoBuoiLamChinh"
@@ -65,10 +66,12 @@
                                     <vbox stylename="style-info"
                                           css="box-shadow: rgb(0 223 79) 2px 3px 4px;border-top: 6px solid rgb(0 255 55);">
                                         <hbox width="100%" css="padding: 10px 10px 5px 10px;">
-                                            <label css="padding-left: 5px;" value="Tổng số buổi làm thêm ngoài giờ" stylename="bold"
+                                            <label css="padding-left: 5px;" value="Tổng số buổi làm thêm ngoài giờ"
+                                                   stylename="bold"
                                                    align="MIDDLE_LEFT"/>
                                         </hbox>
-                                        <hbox spacing="true" expand="tongBuoiLamNgoaiGio" css="padding: 0px 10px 10px 10px;">
+                                        <hbox spacing="true" expand="tongBuoiLamNgoaiGio"
+                                              css="padding: 0px 10px 10px 10px;">
                                             <label id="tongBuoiLamNgoaiGio" css="color: #2ea764; font-size: 30px;"
                                                    stylename="bold h1" align="MIDDLE_LEFT" value="0"/>
                                             <label stylename="h4 bold" css="color: #2ea764" align="MIDDLE_LEFT"
@@ -78,10 +81,12 @@
                                     <vbox stylename="style-info"
                                           css="box-shadow: rgb(217 0 0) 2px 3px 4px;border-top: 6px solid rgb(180 65 65);">
                                         <hbox width="100%" css="padding: 10px 10px 5px 10px;">
-                                            <label css="padding-left: 5px;" value="Tổng số tiền cho buổi làm thêm ngoài giờ" stylename="bold"
+                                            <label css="padding-left: 5px;"
+                                                   value="Tổng số tiền cho buổi làm thêm ngoài giờ" stylename="bold"
                                                    align="MIDDLE_LEFT"/>
                                         </hbox>
-                                        <hbox spacing="true" expand="tongTienLamThemNgoaiGio" css="padding: 0px 10px 10px 10px;">
+                                        <hbox spacing="true" expand="tongTienLamThemNgoaiGio"
+                                              css="padding: 0px 10px 10px 10px;">
                                             <label id="tongTienLamThemNgoaiGio" css="color: red; font-size: 30px;"
                                                    stylename="bold h1" align="MIDDLE_LEFT" value="0"/>
                                             <label stylename="h4 bold" css="color: red;" align="MIDDLE_LEFT"
@@ -163,7 +168,8 @@
             <rowsCount/>
             <buttonsPanel id="buttonsPanel"
                           alwaysVisible="true">
-                <button id="createBtn" action="chamconggvsTable.create"/>
+                <!--                <button id="createBtn" action="chamconggvsTable.create"/>-->
+                <button id="createBtn" caption="Thêm mới" icon="CREATE_ACTION" css="background: #6f5cc3;color: white;"/>
                 <button id="editBtn" action="chamconggvsTable.edit"/>
                 <button id="removeBtn" action="chamconggvsTable.remove"/>
                 <button id="excelBtn" caption="Xuất Excel"

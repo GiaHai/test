@@ -12,7 +12,9 @@ import com.haulmont.cuba.core.entity.KeyValueEntity;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.core.global.Metadata;
 import com.haulmont.cuba.gui.Dialogs;
+import com.haulmont.cuba.gui.Notifications;
 import com.haulmont.cuba.gui.UiComponents;
+import com.haulmont.cuba.gui.actions.list.CreateAction;
 import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.export.ExportDisplay;
 import com.haulmont.cuba.gui.model.CollectionContainer;
@@ -23,8 +25,10 @@ import com.haulmont.cuba.gui.screen.LookupComponent;
 import com.haulmont.cuba.security.global.UserSession;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.Calendar;
 
@@ -86,7 +90,9 @@ public class ChamconggvBrowse extends StandardLookup<Chamconggv> {
     @Inject
     private Label<Integer> tongBuoiLamNgoaiGio;
     @Inject
-    private ButtonsPanel buttonsPanel;
+    private Notifications notifications;
+    @Named("chamconggvsTable.create")
+    private CreateAction<Chamconggv> chamconggvsTableCreate;
 
     @Subscribe
     protected void onInit(InitEvent event) {
@@ -106,6 +112,19 @@ public class ChamconggvBrowse extends StandardLookup<Chamconggv> {
         }
     }
 
+    @Subscribe("createBtn")
+    public void onCreateBtnClick(Button.ClickEvent event) {
+        LocalDateTime ngayHienTai = LocalDateTime.now();
+        Integer gioHienTai = ngayHienTai.getHour();
+        if (gioHienTai >= 17) {
+            chamconggvsTableCreate.execute();
+        }else {
+            notifications.create()
+                    .withCaption("Bạn không được điểm danh trước 17h !")
+                    .show();
+        }
+    }
+
     private void tinhBuoiLam() {
         Calendar cal = Calendar.getInstance();
 
@@ -113,8 +132,6 @@ public class ChamconggvBrowse extends StandardLookup<Chamconggv> {
         cal.set(Calendar.HOUR_OF_DAY, 00);
         cal.set(Calendar.MINUTE, 00);
         cal.set(Calendar.SECOND, 00);
-//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-//        simpleDateFormat.format(cal.getTime());
         tuNgay = cal.getTime();
 
         caNgay = searchedService.tinhca(donViSession, giaoVienSession, tuNgay, denNgay, BuoiLamEnum.LAM_CA_NGAY.getId()).size();
