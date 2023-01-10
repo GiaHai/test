@@ -61,7 +61,7 @@
                 <column id="giaoviencn" caption="Giáo viên chủ nhiệm"/>
                 <column id="thanghoc" caption="Tháng học"/>
                 <column id="namhoc" caption="Năm học"/>
-                <column id="tinhtranglop" editable="true" caption="Chọn Đóng/Mở lớp"/>
+<!--                <column id="tinhtranglop" editable="true" caption="Chọn Đóng/Mở lớp"/>-->
                 <column id="tinhtranglopss" generator="tinhtranglop" caption="Tình trạng lớp"/>
             </columns>
             <rowsCount/>
@@ -72,7 +72,6 @@
                 <button id="removeBtn" action="tenlopsTable.remove"/>
                 <button id="excelBtn" caption="Xuất Excel"
                         icon="font-icon:FILE_EXCEL_O" stylename="style-button-all"/>
-                <button id="commitBtn" caption="Lưu"/>
             </buttonsPanel>
         </table>
         <hbox id="lookupActions" spacing="true" visible="false">

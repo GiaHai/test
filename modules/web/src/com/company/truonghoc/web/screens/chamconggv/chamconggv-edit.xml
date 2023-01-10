@@ -11,6 +11,7 @@
         </instance>
     </data>
 <!--    <dialogMode height="AUTO" width="AUTO" forceDialog="true"/>-->
+    <dialogMode height="AUTO" width="AUTO" forceDialog="true"/>
 
     <layout expand="editActions" spacing="true">
         <vbox spacing="true">
@@ -18,17 +19,16 @@
                 <columns>
                     <column flex="1"/>
                     <column flex="1"/>
-                    <column flex="0.1"/>
                     <column flex="1"/>
+
                     <column flex="1"/>
-                    <column flex="0.1"/>
                     <column flex="1"/>
                     <column flex="1"/>
                 </columns>
                 <rows>
                     <!--                    dòng 1-->
                     <row>
-                        <form colspan="4" width="100%" childrenCaptionWidth="80px" dataContainer="chamconggvDc">
+                        <form colspan="3" width="100%" childrenCaptionWidth="100px" dataContainer="chamconggvDc">
                             <column>
                                 <lookupField id="donvigvField"
                                              width="100%"
@@ -39,7 +39,7 @@
                             </column>
                         </form>
 
-                        <form colspan="4" width="100%" childrenCaptionWidth="80px" dataContainer="chamconggvDc">
+                        <form colspan="3" width="100%" childrenCaptionWidth="100px" dataContainer="chamconggvDc">
                             <column>
                                 <lookupField id="hotenGvField"
                                              property="hotengv"
@@ -53,20 +53,15 @@
                     </row>
                     <!--                    dòng 2-->
                     <row>
-                        <form colspan="2" width="100%" childrenCaptionWidth="80px" dataContainer="chamconggvDc">
+                        <form colspan="3" width="100%" childrenCaptionWidth="100px" dataContainer="chamconggvDc">
                             <column>
                                 <dateField id="ngaylamField"
-                                           width="100%"
+                                           width="275px"
                                            caption="mainMsg://chamcong.ngaylam"
                                            property="ngaylam"/>
                             </column>
                         </form>
-                        <form colspan="1" width="100%">
-                            <column>
-                                <label value=""/>
-                            </column>
-                        </form>
-                        <form colspan="2" width="100%" childrenCaptionWidth="80px" dataContainer="chamconggvDc">
+                        <form colspan="3" width="100%" childrenCaptionWidth="100px" dataContainer="chamconggvDc">
                             <column>
                                 <lookupField id="buoilamField"
                                              width="100%"
@@ -77,15 +72,12 @@
                                              property="buoilam"/>
                             </column>
                         </form>
-                        <form colspan="1" width="100%">
-                            <column>
-                                <label value=""/>
-                            </column>
-                        </form>
-                        <form colspan="2" width="100%" childrenCaptionWidth="100px" dataContainer="chamconggvDc">
+                    </row>
+                    <row>
+                        <form colspan="6" width="100%" childrenCaptionWidth="100px" dataContainer="chamconggvDc">
                             <column>
                                 <lookupField id="tienbuoiField"
-                                             width="100%"
+                                             width="680px"
                                              caption="Tiền theo buổi"
                                              nullName="---Số tiền theo ca---"
                                              property="tienBuoi"/>

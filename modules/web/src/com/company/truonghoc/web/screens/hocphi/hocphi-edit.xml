@@ -10,8 +10,8 @@
             <loader/>
         </instance>
     </data>
-    <dialogMode height="600"
-                width="800"/>
+    <dialogMode height="AUTO" width="AUTO" forceDialog="true"/>
+
     <layout expand="editActions" spacing="true">
         <vbox spacing="true">
             <grid id="form" spacing="true" width="100%">
@@ -59,7 +59,7 @@
                             <column>
                                 <textArea id="ghichuField"
                                           property="ghichu"
-                                          width="100%"
+                                          width="665px"
                                           caption="mainMsg://hocphi.ghichu"/>
                             </column>
                         </form>
@@ -94,7 +94,7 @@
                             <column>
                                 <dateField id="ngaydongField"
                                            property="ngaydong"
-                                           width="100%"
+                                           width="275px"
                                            caption="mainMsg://hocphi.ngaydong"/>
                             </column>
                         </form>
@@ -107,7 +107,7 @@
                             <column>
                                 <dateField id="handongField"
                                            property="handong"
-                                           width="100%"
+                                           width="275px"
                                            caption="Hạn đóng"/>
                                 <lookupField id="hinhthucthanhtoanField"
                                              property="hinhthucthanhtoan"
@@ -115,8 +115,7 @@
                                              caption="mainMsg://hocphi.hinhthucthanhtoan"
                                              nullName="Hình thức thanh toán"/>
                                 <textField id="tinhtrangthanhtoanFiedl"
-                                           property="tinhtrangthanhtoan"
-                                />
+                                           property="tinhtrangthanhtoan"/>
                             </column>
                         </form>
                     </row>

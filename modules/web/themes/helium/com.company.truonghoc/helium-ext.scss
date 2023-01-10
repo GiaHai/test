@@ -257,4 +257,8 @@
     .hide-tabs {
         display: none;
     }
+    .v-window.v-widget.v-window-modal.c-app-dialog-window.v-window-c-app-dialog-window {
+            border: 4px #ff9494 solid;
+            border-radius: 18px;
+    }
 }

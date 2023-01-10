@@ -92,7 +92,11 @@ public class ManHinhDanhSachHsNghi extends Screen {
             entity.setValue("stt", stt);
             entity.setValue("donvi", hocsinh.getDonvi().getTendonvi());
             entity.setValue("tenhocsinh", hocsinh.getTenhocsinh());
-            entity.setValue("ngaysinhhocsinh", hocsinh.getNgaysinhhocsinh().getNamSinh());
+            if (hocsinh.getNgaysinhhocsinh() != null){
+                entity.setValue("ngaysinhhocsinh", hocsinh.getNgaysinhhocsinh().getNamSinh());
+            }else {
+                entity.setValue("ngaysinhhocsinh", "");
+            }
             entity.setValue("gioitinhhocsinh", hocsinh.getGioitinhhocsinh());
             entity.setValue("quequanhocsinh", hocsinh.getQuequanhocsinh());
             entity.setValue("ghichu", hocsinh.getGhichu());

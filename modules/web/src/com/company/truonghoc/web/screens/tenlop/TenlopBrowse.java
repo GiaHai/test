@@ -265,10 +265,4 @@ public class TenlopBrowse extends StandardLookup<Tenlop> {
         exporter.exportDataCollectionTitleInFile(collection, columns, properties, exportDisplay, "Danh sách tên lớp");
     }
 
-//    @Subscribe("commitBtn")
-//    public void onCommitBtnClick(Button.ClickEvent event) {
-//        Tenlop orderLine = metadata.create(Tenlop.class);
-//        orderLine.setTinhtranglop(true);
-//        tenlopsDc.getMutableItems().add(orderLine);
-//    }
 }

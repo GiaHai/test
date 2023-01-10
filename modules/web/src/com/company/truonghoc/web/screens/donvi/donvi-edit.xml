@@ -14,7 +14,7 @@
                 width="800"/>
     <layout expand="editActions" spacing="true">
         <form id="form" dataContainer="donviDc">
-            <column width="350px">
+            <column width="350px" >
                 <textField id="tendonviField"
                            property="tendonvi"
                            inputPrompt="Nhập đơn vị"
